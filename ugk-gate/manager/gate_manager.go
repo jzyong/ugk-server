@@ -6,7 +6,7 @@ import (
 	"sync"
 )
 
-// GateManager 活动 基础入口
+// GateManager  入口
 type GateManager struct {
 	util.DefaultModule
 }
