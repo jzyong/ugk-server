@@ -1,0 +1,10 @@
+{
+  "id": 1,
+  "rpcUrl": "192.168.110.16:5021",
+  "profile": "develop",
+  "logLevel": "DEBUG",
+  "publicIp": "127.0.0.1",
+  "privateIp": "127.0.0.1",
+  "clientPort": 5000,
+  "gamePort": 5001
+}
