@@ -1,6 +1,6 @@
 # UGK-Server
 
-多人联网游戏demo，UGK-Server：unity、go、kcp server 
+多人联网游戏demo，UGK-Server：unity、go、kcp server 。开发中......
 
 ## 服务
 
