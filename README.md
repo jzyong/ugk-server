@@ -26,5 +26,5 @@
 * 添加kcp-go
 * Unity客户端开发，使用kcp，添加插值，网络同步，使用unity的官方demo改造？
 * 架构类似slots，登录大厅后，可选择多个小游戏进行玩耍
-* ugk-client kcp 参考Mirror
+* ugk-client kcp 参考Mirror，版本管理使用git-lfs
 
