@@ -4,12 +4,15 @@
 
 ## 服务
 
-| 服务	        | 描述      |
-|------------|---------|
-| ugk-common | 公共逻辑封装  |
-| ugk-game   | 游戏      |
-| ugk-gate   | 网关，消息转换 |
-| ugk-lobby  | 大厅，一般逻辑 |
+| 服务	         | 描述               |
+|-------------|------------------|
+| ugk-api     | HTTP Restful请求接口 |
+| ugk-common  | 公共逻辑封装           |
+| ugk-game    | 游戏微服务            |
+| ugk-gate    | 网关，消息转换          |
+| ugk-lobby   | 大厅，一般逻辑          |
+| ugk-login   | 登录、账号            |
+| ugk-message | 协议消息             |
 
 
 

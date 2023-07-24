@@ -33,13 +33,16 @@ func (m *ClientManager) Init() error {
 // 启动kcp服务器
 func (m *ClientManager) runKcpServer() {
 	url := fmt.Sprintf("%v:%v", config.AppConfigManager.PublicIp, config.AppConfigManager.ClientPort)
+	log.Info("玩家udp监听地址：%s", url)
 	if listener, err := kcp.ListenWithOptions(url, nil, 0, 0); err == nil {
 		for {
 			s, err := listener.AcceptKCP()
 			if err != nil {
 				log.Error("kcp启动失败：%v", err)
 			}
-			go handleEcho(s)
+			channelActive(s)
+			go channelRead(s)
+
 		}
 	} else {
 		log.Error("kcp启动失败：%v", err)
@@ -47,8 +50,19 @@ func (m *ClientManager) runKcpServer() {
 
 }
 
-// handleEcho send back everything it received  TODO 编写自定义逻辑
-func handleEcho(conn *kcp.UDPSession) {
+// 连接激活
+func channelActive(session *kcp.UDPSession) {
+	//TODO
+	log.Info("%s 连接创建", session.RemoteAddr().String())
+}
+
+// 连接关闭 TODO
+func channelInactive(session *kcp.UDPSession) {
+
+}
+
+// handleEcho send back everything it received  TODO 编写自定义逻辑,连接建立和断开事件监测
+func channelRead(conn *kcp.UDPSession) {
 	buf := make([]byte, 4096)
 	for {
 		n, err := conn.Read(buf)
