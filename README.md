@@ -41,7 +41,7 @@
 * 添加kcp-go
 * Unity客户端开发，使用kcp，添加插值，网络同步，使用unity的官方demo改造？
 * 架构类似slots，登录大厅后，可选择多个小游戏进行玩耍
-* ugk-client kcp 参考Mirror，版本管理使用git-lfs
+* ugk-client kcp 参考Mirror，版本管理使用git-lfs,unity使用2023版本
 * 网关消息转发，消息ID右移20位switch1 2 4 8判断，奇数客户端请求，偶数服务器返回，可能模块100个消息，游戏模块1000个消息
 * 网络同步、延迟、插值、回退（延迟补偿），物理同步，动画同步，位置方向同步
 

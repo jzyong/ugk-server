@@ -56,24 +56,31 @@ func channelActive(session *kcp.UDPSession) {
 	log.Info("%s 连接创建", session.RemoteAddr().String())
 }
 
-// 连接关闭 TODO
-func channelInactive(session *kcp.UDPSession) {
-
+// 连接关闭
+// 客户端强制杀进程，服务器不知道连接断开。kcp-go源码没有示例,因此使用自定义心跳（每2s请求一次心跳，超过10s断开连接）
+func channelInactive(session *kcp.UDPSession, err error) {
+	log.Info("%s 连接关闭:%s", session.RemoteAddr(), err)
 }
 
-// handleEcho send back everything it received  TODO 编写自定义逻辑,连接建立和断开事件监测
+//	处理接收消息
+//	UDPSession Read和Write都可能阻塞，公用routine是否会被阻塞自定义逻辑？
+//
+// TODO 编写自定义逻辑,需要关闭此routine
 func channelRead(conn *kcp.UDPSession) {
 	buf := make([]byte, 4096)
 	for {
+		//会阻塞
 		n, err := conn.Read(buf)
 		if err != nil {
 			log.Error("kcp启动失败：%v", err)
+			channelInactive(conn, err)
 			return
 		}
 
 		n, err = conn.Write(buf[:n])
 		if err != nil {
 			log.Error("kcp启动失败：%v", err)
+			channelInactive(conn, err)
 			return
 		}
 	}
