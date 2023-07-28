@@ -40,6 +40,20 @@ func (m *ClientManager) runKcpServer() {
 			if err != nil {
 				log.Error("kcp启动失败：%v", err)
 			}
+
+			//设置参数 https://github.com/skywind3000/kcp/blob/master/README.en.md#protocol-configuration
+			//s.SetACKNoDelay(true)
+			s.SetWindowSize(4096, 4096)
+			s.SetReadBuffer(8 * 1024 * 1024)
+			s.SetWriteBuffer(16 * 1024 * 1024)
+			//nodelay : Whether nodelay mode is enabled, 0 is not enabled; 1 enabled.
+			//interval ：Protocol internal work interval, in milliseconds, such as 10 ms or 20 ms.
+			//resend ：Fast retransmission mode, 0 represents off by default, 2 can be set (2 ACK spans will result in direct retransmission)
+			//nc ：Whether to turn off flow control, 0 represents “Do not turn off” by default, 1 represents “Turn off”.
+			//Normal Mode: ikcp_nodelay(kcp, 0, 40, 0, 0);
+			//Turbo Mode： ikcp_nodelay(kcp, 1, 10, 2, 1);
+			//s.SetNoDelay(0, 40, 0, 0)
+			s.SetNoDelay(1, 10, 2, 1)
 			channelActive(s)
 			go channelRead(s)
 
@@ -76,6 +90,8 @@ func channelRead(conn *kcp.UDPSession) {
 			channelInactive(conn, err)
 			return
 		}
+
+		//TODO 转发消息到User routine
 
 		n, err = conn.Write(buf[:n])
 		if err != nil {
