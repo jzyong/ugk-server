@@ -43,6 +43,7 @@ func (m *ClientManager) runKcpServer() {
 
 			//设置参数 https://github.com/skywind3000/kcp/blob/master/README.en.md#protocol-configuration
 			//s.SetACKNoDelay(true)
+			s.SetMtu(4096)
 			s.SetWindowSize(4096, 4096)
 			s.SetReadBuffer(8 * 1024 * 1024)
 			s.SetWriteBuffer(16 * 1024 * 1024)
@@ -54,8 +55,8 @@ func (m *ClientManager) runKcpServer() {
 			//Turbo Mode： ikcp_nodelay(kcp, 1, 10, 2, 1);
 			//s.SetNoDelay(0, 40, 0, 0)
 			s.SetNoDelay(1, 10, 2, 1)
-			channelActive(s)
-			go channelRead(s)
+			user := channelActive(s)
+			go channelRead(user)
 
 		}
 	} else {
@@ -65,9 +66,9 @@ func (m *ClientManager) runKcpServer() {
 }
 
 // 连接激活
-func channelActive(session *kcp.UDPSession) {
-	//TODO
+func channelActive(session *kcp.UDPSession) *User {
 	log.Info("%s 连接创建", session.RemoteAddr().String())
+	return NewUser(session)
 }
 
 // 连接关闭
@@ -76,29 +77,44 @@ func channelInactive(session *kcp.UDPSession, err error) {
 	log.Info("%s 连接关闭:%s", session.RemoteAddr(), err)
 }
 
-//	处理接收消息
-//	UDPSession Read和Write都可能阻塞，公用routine是否会被阻塞自定义逻辑？
-//
-// TODO 编写自定义逻辑,需要关闭此routine
-func channelRead(conn *kcp.UDPSession) {
-	buf := make([]byte, 4096)
+// 处理接收消息
+// UDPSession Read和Write都可能阻塞，共用routine是否会被阻塞自定义逻辑？
+func channelRead(user *User) {
+	session := user.ClientSession
 	for {
 		//会阻塞
-		n, err := conn.Read(buf)
+		//TODO 最多读取1352 字节，超过的消息包怎么读取？
+		n, err := session.Read(user.ReceiveReadCache)
 		if err != nil {
 			log.Error("kcp启动失败：%v", err)
-			channelInactive(conn, err)
+			channelInactive(session, err)
 			return
 		}
 
-		//TODO 转发消息到User routine
-
-		n, err = conn.Write(buf[:n])
-		if err != nil {
-			log.Error("kcp启动失败：%v", err)
-			channelInactive(conn, err)
-			return
+		// 转发消息到User routine
+		// 通过比较n和 length循环获取批量消息包
+		//`消息长度4+消息id4+序列号4+时间戳8+protobuf消息体`
+		remainBytes := n
+		index := 0
+		//解析批量消息包
+		for remainBytes > 0 {
+			//小端
+			length := int(uint32(user.ReceiveReadCache[index]) | uint32(user.ReceiveReadCache[index+1])<<8 | uint32(user.ReceiveReadCache[index+2])<<16 | uint32(user.ReceiveReadCache[index+3])<<24)
+			length += 4 //客户端请求长度不包含自身
+			packetData := make([]byte, length)
+			copy(packetData, user.ReceiveReadCache[index:index+length])
+			user.ReceiveBytes <- packetData
+			remainBytes = remainBytes - length
+			index += length
+			log.Info("收到消息：读取长度=%v 消息长度=%v 剩余长度=%v", n, length, remainBytes)
 		}
+
+		//n, err = session.Write(user.ReceiveReadCache[:n])
+		//if err != nil {
+		//	log.Error("kcp启动失败：%v", err)
+		//	channelInactive(session, err)
+		//	return
+		//}
 	}
 }
 

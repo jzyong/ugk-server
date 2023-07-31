@@ -13,7 +13,7 @@
 | ugk-lobby          | 大厅，一般逻辑          |
 | ugk-login          | 登录、账号            |
 | ugk-message        | 协议消息             |
-| ugk-message        | 文档、脚本            |
+| ugk-resource       | 文档、脚本            |
 | ugk-stress-testing | 压力测试客户端集群        |
 
 
