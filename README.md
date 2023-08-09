@@ -1,6 +1,6 @@
 # UGK-Server
 
-多人联网游戏demo，UGK-Server：unity、go、kcp server 。开发中......
+快节奏多人联网游戏demo，UGK-Server：unity、go、kcp server 。开发中......
 
 ## 服务
 
@@ -22,6 +22,7 @@
 * Unity 客户端
 * go 服务器
 * kcp 网络通信
+* protobuf+grpc
 
 ### 参考资料
 #### 网络
