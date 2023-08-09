@@ -4,8 +4,8 @@ import (
 	"bytes"
 	"encoding/binary"
 	"github.com/jzyong/golib/util"
+	"github.com/jzyong/ugk/common/constant"
 	"github.com/xtaci/kcp-go/v5"
-	"io"
 	"log"
 	"testing"
 	"time"
@@ -14,12 +14,14 @@ import (
 // 测试创建连接
 func TestConnect(t *testing.T) {
 	// dial to the echo server
+
 	if sess, err := kcp.DialWithOptions("127.0.0.1:5000", nil, 0, 0); err == nil {
-		sess.SetMtu(4096)
+		sess.SetMtu(constant.MTU)
+		sess.SetStreamMode(true) //true 流模式：使每个段数据填充满,避免浪费
+		sess.SetNoDelay(1, 10, 2, 1)
 		var seq uint32 = 1
 		for {
 			data := time.Now().String()
-			buf := make([]byte, len(data))
 			log.Println("sent:", data)
 
 			//`消息长度4+消息id4+序列号4+时间戳8+protobuf消息体`
@@ -47,17 +49,24 @@ func TestConnect(t *testing.T) {
 				seq++
 			}
 
-			if _, err := sess.Write(sendDatas.Bytes()); err == nil {
-				// read back the data
-				if _, err := io.ReadFull(sess, buf); err == nil {
-					log.Println("recv:", string(buf))
+			// 循环发送几次
+			sendBytes := sendDatas.Bytes()
+			for i := 0; i < 3; i++ {
+				if _, err := sess.Write(sendBytes); err == nil {
+					//buf := make([]byte, len(data))
+					////read back the data
+					//if _, err := io.ReadFull(sess, buf); err == nil {
+					//	log.Println("recv:", string(buf))
+					//} else {
+					//	log.Fatal(err)
+					//}
 				} else {
 					log.Fatal(err)
 				}
-			} else {
-				log.Fatal(err)
+				time.Sleep(time.Second * 3)
 			}
-			time.Sleep(time.Second)
+
+			time.Sleep(time.Minute * 60)
 		}
 	} else {
 		log.Fatal(err)

@@ -1,9 +1,11 @@
 package manager
 
 import (
+	"errors"
 	"fmt"
 	"github.com/jzyong/golib/log"
 	"github.com/jzyong/golib/util"
+	"github.com/jzyong/ugk/common/constant"
 	"github.com/jzyong/ugk/gate/config"
 	"github.com/xtaci/kcp-go/v5"
 	"sync"
@@ -42,11 +44,13 @@ func (m *ClientManager) runKcpServer() {
 			}
 
 			//设置参数 https://github.com/skywind3000/kcp/blob/master/README.en.md#protocol-configuration
-			//s.SetACKNoDelay(true)
-			s.SetMtu(4096)
-			s.SetWindowSize(4096, 4096)
+			//UDPSession mtu最大限制为1500，发送消息大于1500字节kcp底层默认分为几段进行消息发送（标识每段frg=0），
+			//但是接收端每次只能读取1段（因为每段frg=0）， 需要自己截取几段字节流封装
+			s.SetMtu(constant.MTU)
+			s.SetWindowSize(constant.WindowSize, constant.WindowSize)
 			s.SetReadBuffer(8 * 1024 * 1024)
 			s.SetWriteBuffer(16 * 1024 * 1024)
+			s.SetStreamMode(true) //true 流模式：使每个段数据填充满,避免浪费; false 消息模式 每个消息一个数据段
 			//nodelay : Whether nodelay mode is enabled, 0 is not enabled; 1 enabled.
 			//interval ：Protocol internal work interval, in milliseconds, such as 10 ms or 20 ms.
 			//resend ：Fast retransmission mode, 0 represents off by default, 2 can be set (2 ACK spans will result in direct retransmission)
@@ -73,36 +77,52 @@ func channelActive(session *kcp.UDPSession) *User {
 
 // 连接关闭
 // 客户端强制杀进程，服务器不知道连接断开。kcp-go源码没有示例,因此使用自定义心跳（每2s请求一次心跳，超过10s断开连接）
-func channelInactive(session *kcp.UDPSession, err error) {
-	log.Info("%s 连接关闭:%s", session.RemoteAddr(), err)
+func channelInactive(user *User, err error) {
+	log.Info("%s 连接关闭:%s", user.ClientSession.RemoteAddr(), err)
+	close(user.CloseChan)
 }
 
 // 处理接收消息
 // UDPSession Read和Write都可能阻塞，共用routine是否会被阻塞自定义逻辑？
 func channelRead(user *User) {
 	session := user.ClientSession
-	for {
+	for user.State != Offline {
 		//会阻塞
-		//TODO 最多读取1352 字节，超过的消息包怎么读取？
+		//最多读取mtu - kcp消息头 字节
+		//UDPSession mtu最大限制为1500，发送消息大于1500字节kcp底层默认分为几段进行消息发送（标识每段frg=0），
+		//但是接收端每次只能读取1段（因为每段frg=0）， 需要自己截取几段字节流封装
 		n, err := session.Read(user.ReceiveReadCache)
 		if err != nil {
 			log.Error("kcp启动失败：%v", err)
-			channelInactive(session, err)
+			channelInactive(user, err)
 			return
 		}
+		user.ReceiveBuffer.Write(user.ReceiveReadCache[0:n])
 
 		// 转发消息到User routine
 		// 通过比较n和 length循环获取批量消息包
 		//`消息长度4+消息id4+序列号4+时间戳8+protobuf消息体`
-		remainBytes := n
+		receiveBytes := user.ReceiveBuffer.Bytes()
+		user.ReceiveBuffer.Reset()
+		remainBytes := len(receiveBytes)
 		index := 0
 		//解析批量消息包
 		for remainBytes > 0 {
 			//小端
-			length := int(uint32(user.ReceiveReadCache[index]) | uint32(user.ReceiveReadCache[index+1])<<8 | uint32(user.ReceiveReadCache[index+2])<<16 | uint32(user.ReceiveReadCache[index+3])<<24)
+			length := int(uint32(receiveBytes[index]) | uint32(receiveBytes[index+1])<<8 | uint32(receiveBytes[index+2])<<16 | uint32(receiveBytes[index+3])<<24)
 			length += 4 //客户端请求长度不包含自身
+			if length > constant.MessageLimit {
+				channelInactive(user, errors.New(fmt.Sprintf("消息太长")))
+				return
+			}
+			//消息不够,缓存下次使用
+			if length > remainBytes {
+				user.ReceiveBuffer.Write(receiveBytes[index:])
+				break
+			}
+
 			packetData := make([]byte, length)
-			copy(packetData, user.ReceiveReadCache[index:index+length])
+			copy(packetData, receiveBytes[index:index+length])
 			user.ReceiveBytes <- packetData
 			remainBytes = remainBytes - length
 			index += length
