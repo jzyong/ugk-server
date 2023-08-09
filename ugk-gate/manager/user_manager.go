@@ -2,8 +2,11 @@ package manager
 
 import (
 	"bytes"
+	"errors"
+	"fmt"
 	"github.com/jzyong/golib/log"
 	"github.com/jzyong/golib/util"
+	"github.com/jzyong/ugk/common/constant"
 	"github.com/xtaci/kcp-go/v5"
 	"sync"
 	"time"
@@ -61,6 +64,7 @@ type User struct {
 	ReceiveReadCache []byte          // 接收端读取Byte缓存
 	CloseChan        chan struct{}   //离线等关闭Chan
 	State            UserState       //用户状态
+	HeartTime        time.Time       //心跳时间
 }
 
 // NewUser 构建用户
@@ -81,8 +85,8 @@ func NewUser(clientSession *kcp.UDPSession) *User {
 
 // 玩家routine运行
 func (user *User) run() {
-	ticker := time.Tick(time.Millisecond * 10) //最小10ms进行一次心跳
-
+	messageMergeTicker := time.Tick(time.Millisecond * 10) //最小10ms进行一次心跳
+	secondTicker := time.Tick(time.Second)
 	for {
 		select {
 		case receiveByte := <-user.ReceiveBytes:
@@ -91,19 +95,31 @@ func (user *User) run() {
 			log.Info("%v %v chan关闭", user.Id, user.ClientSession.RemoteAddr().String())
 			user.State = Offline
 			return
-		case <-ticker:
-			user.update()
+		case <-messageMergeTicker:
+			user.sendMergeMessage()
+		case <-secondTicker:
+			user.secondUpdate()
 		}
 
 	}
 }
 
 // 玩家更新逻辑
-func (user *User) update() {
+func (user *User) secondUpdate() {
+	// 心跳监测
+	if time.Now().Sub(user.HeartTime) > constant.ClientHeartInterval {
+		channelInactive(user, errors.New(fmt.Sprintf("心跳超时%f", time.Now().Sub(user.HeartTime).Seconds())))
+	}
+
+}
+
+// 将缓存的消息合并批量发送
+func (user *User) sendMergeMessage() {
 	//TODO 合并消息包等逻辑
 }
 
 func (user *User) messageDistribute(bytes []byte) {
+	user.HeartTime = time.Now()
 	//`消息长度4+消息id4+序列号4+时间戳8+protobuf消息体`
 	//小端
 	messageId := uint32(bytes[4]) | uint32(bytes[5])<<8 | uint32(bytes[6])<<16 | uint32(bytes[7])<<24
