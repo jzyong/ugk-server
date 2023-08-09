@@ -2,6 +2,7 @@ package manager
 
 import (
 	"bytes"
+	"encoding/binary"
 	"errors"
 	"fmt"
 	"github.com/jzyong/golib/log"
@@ -118,20 +119,55 @@ func (user *User) sendMergeMessage() {
 	//TODO 合并消息包等逻辑
 }
 
-func (user *User) messageDistribute(bytes []byte) {
+func (user *User) messageDistribute(data []byte) {
 	user.HeartTime = time.Now()
 	//`消息长度4+消息id4+序列号4+时间戳8+protobuf消息体`
 	//小端
-	messageId := uint32(bytes[4]) | uint32(bytes[5])<<8 | uint32(bytes[6])<<16 | uint32(bytes[7])<<24
+	messageId := uint32(data[4]) | uint32(data[5])<<8 | uint32(data[6])<<16 | uint32(data[7])<<24
 	handlerServer := messageId >> 20 //0本地处理，1lobby，2游戏
-	log.Info("%v 消息Id=%v 处理服务=%v", user.Id, messageId, handlerServer)
+	//log.Info("%v 消息Id=%v 处理服务=%v", user.Id, messageId, handlerServer)
 	switch handlerServer {
 	case 0:
-	//TODO 本地逻辑处理
+		// 本地逻辑处理
+		handFunc := ClientHandlers[messageId]
+		if handFunc == nil {
+			log.Warn("%d mid=%d执行失败，未找到执行函数", user.Id, messageId)
+			return
+		}
+
+		//截取消息
+		dataReader := bytes.NewReader(data)
+		var messageLength int32
+		if err := binary.Read(dataReader, binary.LittleEndian, &messageLength); err != nil {
+			channelInactive(user, errors.New("读取消息长度错误"))
+			return
+		}
+		if err := binary.Read(dataReader, binary.LittleEndian, &messageId); err != nil {
+			channelInactive(user, errors.New("读取消息ID错误"))
+			return
+		}
+		var seq uint32
+		if err := binary.Read(dataReader, binary.LittleEndian, &seq); err != nil {
+			channelInactive(user, errors.New("读取消息seq错误"))
+			return
+		}
+		var timeStamp int64
+		if err := binary.Read(dataReader, binary.LittleEndian, &timeStamp); err != nil {
+			channelInactive(user, errors.New("读取消息timeStamp错误"))
+			return
+		}
+		protoData := make([]byte, messageLength-16)
+		if err := binary.Read(dataReader, binary.LittleEndian, &protoData); err != nil {
+			channelInactive(user, errors.New("读取消息proto数据错误"))
+			return
+		}
+		handFunc(user, protoData, seq, timeStamp)
+
 	case 1:
 
 	case 2:
-
+	default:
+		log.Warn("%d - %s 收到未知消息mid=%d", user.Id, user.ClientSession.RemoteAddr().String(), messageId)
 	}
 
 }

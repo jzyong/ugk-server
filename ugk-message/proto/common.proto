@@ -1,0 +1,18 @@
+syntax = "proto3";
+option go_package = "/message";
+
+
+//向量
+message Vector3{
+  float x = 1;
+  float y = 2;
+  float z = 3;
+}
+
+//变化
+message Transform{
+  Vector3 position =1; //位置
+  float rotation =2; //选择
+  Vector3 scale =3; //缩放
+}
+

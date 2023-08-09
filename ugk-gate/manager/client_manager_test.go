@@ -5,7 +5,9 @@ import (
 	"encoding/binary"
 	"github.com/jzyong/golib/util"
 	"github.com/jzyong/ugk/common/constant"
+	"github.com/jzyong/ugk/message/message"
 	"github.com/xtaci/kcp-go/v5"
+	"google.golang.org/protobuf/proto"
 	"log"
 	"testing"
 	"time"
@@ -64,11 +66,35 @@ func TestConnect(t *testing.T) {
 					log.Fatal(err)
 				}
 				time.Sleep(time.Second * 3)
+				seq++
+				sendMsg(sess, &message.HeartRequest{}, message.MID_HeartReq, seq)
 			}
 
 			time.Sleep(time.Minute * 60)
 		}
 	} else {
+		log.Fatal(err)
+	}
+}
+
+// 发送消息
+func sendMsg(session *kcp.UDPSession, message proto.Message, mid message.MID, seq uint32) {
+	//`消息长度4+消息id4+序列号4+时间戳8+protobuf消息体`
+	var data, err = proto.Marshal(message)
+	if err != nil {
+		log.Fatal(err)
+		return
+	}
+	length := 20 + len(data)
+	sendDatas := bytes.NewBuffer([]byte{}) //每个玩家可以缓存？
+	var messageLength = uint32(length - 4)
+	binary.Write(sendDatas, binary.LittleEndian, messageLength)
+	binary.Write(sendDatas, binary.LittleEndian, int32(mid))
+	binary.Write(sendDatas, binary.LittleEndian, seq)
+	binary.Write(sendDatas, binary.LittleEndian, util.CurrentTimeMillisecond())
+	binary.Write(sendDatas, binary.LittleEndian, []byte(data))
+	seq++
+	if _, err := session.Write(sendDatas.Bytes()); err != nil {
 		log.Fatal(err)
 	}
 }

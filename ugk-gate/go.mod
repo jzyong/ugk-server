@@ -5,7 +5,9 @@ go 1.19
 require (
 	github.com/jzyong/golib v0.0.21
 	github.com/jzyong/ugk/common v0.0.0-00010101000000-000000000000
+	github.com/jzyong/ugk/message v0.0.0-00010101000000-000000000000
 	github.com/xtaci/kcp-go/v5 v5.6.2
+	google.golang.org/protobuf v1.28.1
 )
 
 require (
@@ -22,3 +24,5 @@ require (
 )
 
 replace github.com/jzyong/ugk/common => ../ugk-common
+
+replace github.com/jzyong/ugk/message => ../ugk-message

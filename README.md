@@ -43,16 +43,13 @@
 
 
 ## TODO
-* 添加kcp-go
 * Unity客户端开发，使用kcp，添加插值，网络同步，使用unity的官方demo改造？
-* 架构类似slots，登录大厅后，可选择多个小游戏进行玩耍
+* 架构类似slots，登录大厅后，可选择多个小游戏进行玩耍，一个玩家网关可以同时和多个后端服务通信
 * ugk-client kcp 参考Mirror，版本管理使用git-lfs,unity使用2023版本
 * 网络同步、延迟、插值、回退（延迟补偿），物理同步，动画同步，位置方向同步
-* kcp网关和游戏服连接一个接收routine一个转发routine
 * 压测客户端嵌入到ugk-client中？
 * 压力测试客户端使用ugk-web开发界面（vue3）
 * 服务器帧率30
-* 协议添加时间戳？在网关添加？
 * ugk-client 消息处理器参考slots-tool 同服务器一致（优化：注册方法而不是类，继承MessageHandler,注解加在方法上，方法不止传消息，还传上下文，参考grpc和springBoot实现）
     Mirror是手动注册的，自己实现使用注解扫描包自动注册
 * 心跳2s每次，10s超时

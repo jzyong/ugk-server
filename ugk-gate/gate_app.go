@@ -4,6 +4,7 @@ import (
 	"github.com/jzyong/golib/log"
 	"github.com/jzyong/golib/util"
 	"github.com/jzyong/ugk/gate/config"
+	"github.com/jzyong/ugk/gate/handler"
 	"github.com/jzyong/ugk/gate/manager"
 	"runtime"
 )
@@ -20,6 +21,9 @@ func main() {
 		log.Error("gate 启动错误: %s", err.Error())
 		return
 	}
+
+	handler.RegisterClientHandler() // 没引用handler不执行init，手动执行一下
+
 	m.Run()
 	util.WaitForTerminate()
 	m.Stop()

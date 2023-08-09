@@ -26,6 +26,12 @@ func GetClientManager() *ClientManager {
 	return clientManager
 }
 
+// 消息执行函数
+type handFunc func(user *User, data []byte, seq uint32, timeStamp int64)
+
+// ClientHandlers 客户端消息处理器
+var ClientHandlers = make(map[uint32]handFunc)
+
 func (m *ClientManager) Init() error {
 	log.Info("ClientManager 初始化......")
 	go m.runKcpServer()
