@@ -63,4 +63,5 @@
 * ugk-client 网络时间封装 NetworkTime
 * kcp2k 自定义了5字节标识符，需要修改KcpPeer
 * 添加断开连接消息包处理逻辑
+* 优先使用GalacticKittens 进行改造
 

@@ -79,6 +79,7 @@ func NewUser(clientSession *kcp.UDPSession) *User {
 		ReceiveReadCache: make([]byte, 1500), //每次最多读取1500-消息头字节
 		CloseChan:        make(chan struct{}),
 		State:            NetWorkActive,
+		HeartTime:        time.Now(),
 	}
 	//只在此处添加
 	GetUserManager().IpUsers[clientSession.RemoteAddr().String()] = user
