@@ -33,6 +33,7 @@
 * [kcp2k](https://github.com/vis2k/kcp2k) unity前端
 * [kcp-go](https://github.com/xtaci/kcp-go) go服务器
 * [grpc](https://grpc.io/) 服务器之间通信
+* [可靠UDP，KCP协议快在哪？](https://wetest.qq.com/lab/view/391.html)
 #### 同步
 * [Prediction,Reconciliation,Lag Compensation](https://www.gabrielgambetta.com/client-server-game-architecture.html)
 * [Latency Compensating Methods in Client/Server In-game Protocol Design and Optimization](https://developer.valvesoftware.com/wiki/Latency_Compensating_Methods_in_Client/Server_In-game_Protocol_Design_and_Optimization)
@@ -58,4 +59,8 @@
 * 场景对象同步分为消除和隐藏？
 * 请求返回消息需要添加时间戳（延迟补偿需要？），客户端需要维护同步服务器时间戳？（Mirror怎样实现的？）[延迟补偿](https://www.gabrielgambetta.com/lag-compensation.html)
 * 客户端封装NetworkBehavior？（参考Mirror）
+* ugk-client NetworkManager 使用Kcp和Websocket组件,网络循环参考 NetworkLoop
+* ugk-client 网络时间封装 NetworkTime
+* kcp2k 自定义了5字节标识符，需要修改KcpPeer
+* 添加断开连接消息包处理逻辑
 

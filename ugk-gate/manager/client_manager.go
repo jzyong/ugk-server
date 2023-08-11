@@ -49,6 +49,7 @@ func (m *ClientManager) runKcpServer() {
 				log.Error("kcp启动失败：%v", err)
 			}
 
+			//kcp文档 https://wetest-qq-com.translate.goog/labs/391?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=zh-CN
 			//设置参数 https://github.com/skywind3000/kcp/blob/master/README.en.md#protocol-configuration
 			//UDPSession mtu最大限制为1500，发送消息大于1500字节kcp底层默认分为几段进行消息发送（标识每段frg=0），
 			//但是接收端每次只能读取1段（因为每段frg=0）， 需要自己截取几段字节流封装
