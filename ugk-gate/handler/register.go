@@ -9,6 +9,7 @@ import (
 //	registerClientHandler()
 //}
 
+// RegisterClientHandler 注册客户端处理消息
 func RegisterClientHandler() {
 	//登录模块
 	manager.ClientHandlers[uint32(message.MID_HeartReq)] = heart
