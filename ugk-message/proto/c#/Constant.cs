@@ -23,8 +23,8 @@ public static partial class ConstantReflection {
     byte[] descriptorData = global::System.Convert.FromBase64String(
         string.Concat(
           "Cg5jb25zdGFudC5wcm90bypPCgNNSUQSCAoETm9uZRAAEg4KCEhlYXJ0UmVx",
-          "EMGEPRIOCghIZWFydFJlcxDChD0SDgoITG9naW5SZXEQmYBAEg4KCExvZ2lu",
-          "UmVzEJqAQEIKWggvbWVzc2FnZWIGcHJvdG8z"));
+          "EMGEPRIOCghIZWFydFJlcxDChD0SDgoITG9naW5SZXEQw4Q9Eg4KCExvZ2lu",
+          "UmVzEMSEPUIKWggvbWVzc2FnZWIGcHJvdG8z"));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
         new pbr::FileDescriptor[] { },
         new pbr::GeneratedClrTypeInfo(new[] {typeof(global::MID), }, null, null));
@@ -34,7 +34,7 @@ public static partial class ConstantReflection {
 }
 #region Enums
 /// <summary>
-/// 消息ID右移20位switch 0 1 2 4 8判断转发给那个服务器（0截取本地、1lobby、2game）
+/// 消息ID右移20位switch 0 1 2 4 8判断转发给那个服务器（0截取本地、1lobby、2功能微服务，3游戏微服务）
 /// 消息ID奇数客户端请求，偶数服务器返回
 /// 功能模块100个消息，游戏模块1000个消息
 /// </summary>
@@ -52,13 +52,13 @@ public enum MID {
   /// </summary>
   [pbr::OriginalName("HeartRes")] HeartRes = 1000002,
   /// <summary>
-  /// 登录模块 1048601-1048700
+  ///登录
   /// </summary>
-  [pbr::OriginalName("LoginReq")] LoginReq = 1048601,
+  [pbr::OriginalName("LoginReq")] LoginReq = 1000003,
   /// <summary>
   ///登录
   /// </summary>
-  [pbr::OriginalName("LoginRes")] LoginRes = 1048602,
+  [pbr::OriginalName("LoginRes")] LoginRes = 1000004,
 }
 
 #endregion

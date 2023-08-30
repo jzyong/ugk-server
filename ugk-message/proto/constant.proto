@@ -1,7 +1,7 @@
 syntax = "proto3";
 option go_package = "/message";
 
-// 消息ID右移20位switch 0 1 2 4 8判断转发给那个服务器（0截取本地、1lobby、2game）
+// 消息ID右移20位switch 0 1 2 4 8判断转发给那个服务器（0截取本地、1lobby、2功能微服务，3游戏微服务）
 // 消息ID奇数客户端请求，偶数服务器返回
 // 功能模块100个消息，游戏模块1000个消息
 enum MID {
@@ -11,10 +11,11 @@ enum MID {
 
   HeartReq=1000001; //心跳
   HeartRes=1000002; //心跳
+  LoginReq =1000003; //登录
+  LoginRes =1000004; //登录
 
   // 登录模块 1048601-1048700
-  LoginReq =1048601; //登录
-  LoginRes =1048602; //登录
+
 }
 
 

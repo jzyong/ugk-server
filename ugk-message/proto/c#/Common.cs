@@ -23,9 +23,9 @@ public static partial class CommonReflection {
     byte[] descriptorData = global::System.Convert.FromBase64String(
         string.Concat(
           "Cgxjb21tb24ucHJvdG8iKgoHVmVjdG9yMxIJCgF4GAEgASgCEgkKAXkYAiAB",
-          "KAISCQoBehgDIAEoAiJSCglUcmFuc2Zvcm0SGgoIcG9zaXRpb24YASABKAsy",
-          "CC5WZWN0b3IzEhAKCHJvdGF0aW9uGAIgASgCEhcKBXNjYWxlGAMgASgLMggu",
-          "VmVjdG9yM0IKWggvbWVzc2FnZWIGcHJvdG8z"));
+          "KAISCQoBehgDIAEoAiJcCglUcmFuc2Zvcm0SGgoIcG9zaXRpb24YASABKAsy",
+          "CC5WZWN0b3IzEhoKCHJvdGF0aW9uGAIgASgLMgguVmVjdG9yMxIXCgVzY2Fs",
+          "ZRgDIAEoCzIILlZlY3RvcjNCCloIL21lc3NhZ2ViBnByb3RvMw=="));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
         new pbr::FileDescriptor[] { },
         new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
@@ -341,7 +341,7 @@ public sealed partial class Transform : pb::IMessage<Transform>
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public Transform(Transform other) : this() {
     position_ = other.position_ != null ? other.position_.Clone() : null;
-    rotation_ = other.rotation_;
+    rotation_ = other.rotation_ != null ? other.rotation_.Clone() : null;
     scale_ = other.scale_ != null ? other.scale_.Clone() : null;
     _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
   }
@@ -369,13 +369,13 @@ public sealed partial class Transform : pb::IMessage<Transform>
 
   /// <summary>Field number for the "rotation" field.</summary>
   public const int RotationFieldNumber = 2;
-  private float rotation_;
+  private global::Vector3 rotation_;
   /// <summary>
   ///选择
   /// </summary>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  public float Rotation {
+  public global::Vector3 Rotation {
     get { return rotation_; }
     set {
       rotation_ = value;
@@ -413,7 +413,7 @@ public sealed partial class Transform : pb::IMessage<Transform>
       return true;
     }
     if (!object.Equals(Position, other.Position)) return false;
-    if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(Rotation, other.Rotation)) return false;
+    if (!object.Equals(Rotation, other.Rotation)) return false;
     if (!object.Equals(Scale, other.Scale)) return false;
     return Equals(_unknownFields, other._unknownFields);
   }
@@ -423,7 +423,7 @@ public sealed partial class Transform : pb::IMessage<Transform>
   public override int GetHashCode() {
     int hash = 1;
     if (position_ != null) hash ^= Position.GetHashCode();
-    if (Rotation != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(Rotation);
+    if (rotation_ != null) hash ^= Rotation.GetHashCode();
     if (scale_ != null) hash ^= Scale.GetHashCode();
     if (_unknownFields != null) {
       hash ^= _unknownFields.GetHashCode();
@@ -447,9 +447,9 @@ public sealed partial class Transform : pb::IMessage<Transform>
       output.WriteRawTag(10);
       output.WriteMessage(Position);
     }
-    if (Rotation != 0F) {
-      output.WriteRawTag(21);
-      output.WriteFloat(Rotation);
+    if (rotation_ != null) {
+      output.WriteRawTag(18);
+      output.WriteMessage(Rotation);
     }
     if (scale_ != null) {
       output.WriteRawTag(26);
@@ -469,9 +469,9 @@ public sealed partial class Transform : pb::IMessage<Transform>
       output.WriteRawTag(10);
       output.WriteMessage(Position);
     }
-    if (Rotation != 0F) {
-      output.WriteRawTag(21);
-      output.WriteFloat(Rotation);
+    if (rotation_ != null) {
+      output.WriteRawTag(18);
+      output.WriteMessage(Rotation);
     }
     if (scale_ != null) {
       output.WriteRawTag(26);
@@ -490,8 +490,8 @@ public sealed partial class Transform : pb::IMessage<Transform>
     if (position_ != null) {
       size += 1 + pb::CodedOutputStream.ComputeMessageSize(Position);
     }
-    if (Rotation != 0F) {
-      size += 1 + 4;
+    if (rotation_ != null) {
+      size += 1 + pb::CodedOutputStream.ComputeMessageSize(Rotation);
     }
     if (scale_ != null) {
       size += 1 + pb::CodedOutputStream.ComputeMessageSize(Scale);
@@ -514,8 +514,11 @@ public sealed partial class Transform : pb::IMessage<Transform>
       }
       Position.MergeFrom(other.Position);
     }
-    if (other.Rotation != 0F) {
-      Rotation = other.Rotation;
+    if (other.rotation_ != null) {
+      if (rotation_ == null) {
+        Rotation = new global::Vector3();
+      }
+      Rotation.MergeFrom(other.Rotation);
     }
     if (other.scale_ != null) {
       if (scale_ == null) {
@@ -545,8 +548,11 @@ public sealed partial class Transform : pb::IMessage<Transform>
           input.ReadMessage(Position);
           break;
         }
-        case 21: {
-          Rotation = input.ReadFloat();
+        case 18: {
+          if (rotation_ == null) {
+            Rotation = new global::Vector3();
+          }
+          input.ReadMessage(Rotation);
           break;
         }
         case 26: {
@@ -578,8 +584,11 @@ public sealed partial class Transform : pb::IMessage<Transform>
           input.ReadMessage(Position);
           break;
         }
-        case 21: {
-          Rotation = input.ReadFloat();
+        case 18: {
+          if (rotation_ == null) {
+            Rotation = new global::Vector3();
+          }
+          input.ReadMessage(Rotation);
           break;
         }
         case 26: {

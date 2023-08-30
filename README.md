@@ -66,8 +66,9 @@
 * 优先使用GalacticKittens 进行改造，服务器帧率30
 * kcp实现ugk-login，ugk-lobby 和网关通信，ugk-client注册，登录流程
 * unity 专用服务器中实现和网关kcp相互连接
+* 网关服务器连接分为三个大类：lobby、功能微服务、游戏微服务
 
-010### 计划
+### 计划
 * 使用mongodb和redis存储数据  
 * 使用zookeeper做服务发现
 

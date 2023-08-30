@@ -167,11 +167,12 @@ func (user *User) messageDistribute(data []byte) {
 		handFunc(user, protoData, seq, timeStamp)
 
 	case 1:
+		//TODO 大厅
 
 	case 2:
-		//TODO messageId >> 19 子游戏服务器类型 21
+	//TODO messageId >> 19 公共微服务类型 21
 	case 3:
-		//TODO messageId >> 19 公共微服务类型 31
+		//TODO messageId >> 19 子游戏服务器类型 31
 	default:
 		log.Warn("%d - %s 收到未知消息mid=%d", user.Id, user.ClientSession.RemoteAddr().String(), messageId)
 	}

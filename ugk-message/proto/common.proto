@@ -12,7 +12,7 @@ message Vector3{
 //变化
 message Transform{
   Vector3 position =1; //位置
-  float rotation =2; //选择
+  Vector3 rotation =2; //选择
   Vector3 scale =3; //缩放
 }
 
