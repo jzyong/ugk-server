@@ -16,3 +16,9 @@ message Transform{
   Vector3 scale =3; //缩放
 }
 
+//消息结果
+message MessageResult{
+  int32 status =1; //状态 200成功
+  string msg = 2; //错误信息
+}
+

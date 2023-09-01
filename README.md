@@ -67,8 +67,9 @@
 * kcp实现ugk-login，ugk-lobby 和网关通信，ugk-client注册，登录流程
 * unity 专用服务器中实现和网关kcp相互连接
 * 网关服务器连接分为三个大类：lobby、功能微服务、游戏微服务
+* 登录服实现gprc和网关通信
 
 ### 计划
 * 使用mongodb和redis存储数据  
-* 使用zookeeper做服务发现
+* 使用zookeeper做服务发现（暂时通过读本地配置）
 

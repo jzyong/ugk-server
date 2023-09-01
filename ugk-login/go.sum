@@ -1,0 +1,4 @@
+github.com/go-zookeeper/zk v1.0.2 h1:4mx0EYENAdX/B/rbunjlt5+4RTA/a9SMHBRuSKdGxPM=
+github.com/go-zookeeper/zk v1.0.2/go.mod h1:nOB03cncLtlp4t+UAkGSV+9beXP/akpekBwL+UX1Qcw=
+github.com/jzyong/golib v0.0.21 h1:nhwuQXw0Lwu4nktLOOxp4wS5QYzhw5n6tBOBBUYNDOQ=
+github.com/jzyong/golib v0.0.21/go.mod h1:PoXeJ5Lz63cJ8XymT7OWtdGsg/12ay87fZbnglO+pVg=
