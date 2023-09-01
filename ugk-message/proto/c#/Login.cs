@@ -22,15 +22,17 @@ public static partial class LoginReflection {
   static LoginReflection() {
     byte[] descriptorData = global::System.Convert.FromBase64String(
         string.Concat(
-          "Cgtsb2dpbi5wcm90byIxCgxMb2dpblJlcXVlc3QSDwoHYWNjb3VudBgBIAEo",
-          "CRIQCghwYXNzd29yZBgCIAEoCSIhCg1Mb2dpblJlc3BvbnNlEhAKCHBsYXll",
-          "cklkGAEgASgDIg4KDEhlYXJ0UmVxdWVzdCIPCg1IZWFydFJlc3BvbnNlQgpa",
-          "CC9tZXNzYWdlYgZwcm90bzM="));
+          "Cgtsb2dpbi5wcm90bxoMY29tbW9uLnByb3RvIjEKDExvZ2luUmVxdWVzdBIP",
+          "CgdhY2NvdW50GAEgASgJEhAKCHBhc3N3b3JkGAIgASgJIkEKDUxvZ2luUmVz",
+          "cG9uc2USEAoIcGxheWVySWQYASABKAMSHgoGcmVzdWx0GAIgASgLMg4uTWVz",
+          "c2FnZVJlc3VsdCIOCgxIZWFydFJlcXVlc3QiDwoNSGVhcnRSZXNwb25zZTI2",
+          "CgxMb2dpblNlcnZpY2USJgoFbG9naW4SDS5Mb2dpblJlcXVlc3QaDi5Mb2dp",
+          "blJlc3BvbnNlQgpaCC9tZXNzYWdlYgZwcm90bzM="));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
-        new pbr::FileDescriptor[] { },
+        new pbr::FileDescriptor[] { global::CommonReflection.Descriptor, },
         new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
           new pbr::GeneratedClrTypeInfo(typeof(global::LoginRequest), global::LoginRequest.Parser, new[]{ "Account", "Password" }, null, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::LoginResponse), global::LoginResponse.Parser, new[]{ "PlayerId" }, null, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::LoginResponse), global::LoginResponse.Parser, new[]{ "PlayerId", "Result" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::HeartRequest), global::HeartRequest.Parser, null, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::HeartResponse), global::HeartResponse.Parser, null, null, null, null, null)
         }));
@@ -312,6 +314,7 @@ public sealed partial class LoginResponse : pb::IMessage<LoginResponse>
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public LoginResponse(LoginResponse other) : this() {
     playerId_ = other.playerId_;
+    result_ = other.result_ != null ? other.result_.Clone() : null;
     _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
   }
 
@@ -336,6 +339,21 @@ public sealed partial class LoginResponse : pb::IMessage<LoginResponse>
     }
   }
 
+  /// <summary>Field number for the "result" field.</summary>
+  public const int ResultFieldNumber = 2;
+  private global::MessageResult result_;
+  /// <summary>
+  ///错误信息
+  /// </summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public global::MessageResult Result {
+    get { return result_; }
+    set {
+      result_ = value;
+    }
+  }
+
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public override bool Equals(object other) {
@@ -352,6 +370,7 @@ public sealed partial class LoginResponse : pb::IMessage<LoginResponse>
       return true;
     }
     if (PlayerId != other.PlayerId) return false;
+    if (!object.Equals(Result, other.Result)) return false;
     return Equals(_unknownFields, other._unknownFields);
   }
 
@@ -360,6 +379,7 @@ public sealed partial class LoginResponse : pb::IMessage<LoginResponse>
   public override int GetHashCode() {
     int hash = 1;
     if (PlayerId != 0L) hash ^= PlayerId.GetHashCode();
+    if (result_ != null) hash ^= Result.GetHashCode();
     if (_unknownFields != null) {
       hash ^= _unknownFields.GetHashCode();
     }
@@ -382,6 +402,10 @@ public sealed partial class LoginResponse : pb::IMessage<LoginResponse>
       output.WriteRawTag(8);
       output.WriteInt64(PlayerId);
     }
+    if (result_ != null) {
+      output.WriteRawTag(18);
+      output.WriteMessage(Result);
+    }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(output);
     }
@@ -396,6 +420,10 @@ public sealed partial class LoginResponse : pb::IMessage<LoginResponse>
       output.WriteRawTag(8);
       output.WriteInt64(PlayerId);
     }
+    if (result_ != null) {
+      output.WriteRawTag(18);
+      output.WriteMessage(Result);
+    }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(ref output);
     }
@@ -408,6 +436,9 @@ public sealed partial class LoginResponse : pb::IMessage<LoginResponse>
     int size = 0;
     if (PlayerId != 0L) {
       size += 1 + pb::CodedOutputStream.ComputeInt64Size(PlayerId);
+    }
+    if (result_ != null) {
+      size += 1 + pb::CodedOutputStream.ComputeMessageSize(Result);
     }
     if (_unknownFields != null) {
       size += _unknownFields.CalculateSize();
@@ -423,6 +454,12 @@ public sealed partial class LoginResponse : pb::IMessage<LoginResponse>
     }
     if (other.PlayerId != 0L) {
       PlayerId = other.PlayerId;
+    }
+    if (other.result_ != null) {
+      if (result_ == null) {
+        Result = new global::MessageResult();
+      }
+      Result.MergeFrom(other.Result);
     }
     _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
   }
@@ -443,6 +480,13 @@ public sealed partial class LoginResponse : pb::IMessage<LoginResponse>
           PlayerId = input.ReadInt64();
           break;
         }
+        case 18: {
+          if (result_ == null) {
+            Result = new global::MessageResult();
+          }
+          input.ReadMessage(Result);
+          break;
+        }
       }
     }
   #endif
@@ -460,6 +504,13 @@ public sealed partial class LoginResponse : pb::IMessage<LoginResponse>
           break;
         case 8: {
           PlayerId = input.ReadInt64();
+          break;
+        }
+        case 18: {
+          if (result_ == null) {
+            Result = new global::MessageResult();
+          }
+          input.ReadMessage(Result);
           break;
         }
       }

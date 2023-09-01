@@ -22,6 +22,9 @@ func login(user *manager.User, data []byte, seq uint32, timeStamp int64) {
 	//TODO 消息转发到login，创建网关和用户的连接关系，
 	log.Info("%d 登录 序号=%d %+v", user.Id, seq, request)
 
-	user.SendToClient(message.MID_LoginRes, &message.LoginResponse{PlayerId: 1}, seq)
+	user.SendToClient(message.MID_LoginRes, &message.LoginResponse{PlayerId: 1, Result: &message.MessageResult{
+		Status: 200,
+		Msg:    "Login Success",
+	}}, seq)
 
 }
