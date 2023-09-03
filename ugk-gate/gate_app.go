@@ -33,9 +33,10 @@ func main() {
 
 type ModuleManager struct {
 	*util.DefaultModuleManager
-	GateManager   *manager.GateManager
-	ClientManager *manager.ClientManager
-	UserManager   *manager.UserManager
+	GateManager        *manager.GateManager
+	ClientManager      *manager.ClientManager
+	UserManager        *manager.UserManager
+	LoginClientManager *manager.LoginClientManager
 }
 
 // Init 初始化模块
@@ -43,6 +44,7 @@ func (m *ModuleManager) Init() error {
 	m.GateManager = m.AppendModule(manager.GetGateManager()).(*manager.GateManager)
 	m.ClientManager = m.AppendModule(manager.GetClientManager()).(*manager.ClientManager)
 	m.UserManager = m.AppendModule(manager.GetUserManager()).(*manager.UserManager)
+	m.LoginClientManager = m.AppendModule(manager.GetLoginClientManager()).(*manager.LoginClientManager)
 	return m.DefaultModuleManager.Init()
 }
 

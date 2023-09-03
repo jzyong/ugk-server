@@ -1,6 +1,6 @@
 {
   "id": 1,
-  "rpcUrl": "192.168.110.2:3002",
+  "rpcUrl": "192.168.110.2:3011",
   "profile": "develop",
   "logLevel": "DEBUG"
 }

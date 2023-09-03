@@ -5,6 +5,7 @@ import (
 	"github.com/jzyong/golib/util"
 	"github.com/jzyong/ugk/login/config"
 	"github.com/jzyong/ugk/login/manager"
+	"github.com/jzyong/ugk/login/rpc"
 	"runtime"
 )
 
@@ -31,11 +32,13 @@ func main() {
 type ModuleManager struct {
 	*util.DefaultModuleManager
 	LoginManager *manager.LoginManager
+	GrpcManager  *rpc.GRpcManager
 }
 
 // Init 初始化模块
 func (m *ModuleManager) Init() error {
 	m.LoginManager = m.AppendModule(manager.GetLoginManager()).(*manager.LoginManager)
+	m.GrpcManager = m.AppendModule(&rpc.GRpcManager{}).(*rpc.GRpcManager)
 	return m.DefaultModuleManager.Init()
 }
 

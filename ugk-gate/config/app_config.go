@@ -17,6 +17,7 @@ var FilePath string
 type AppConfig struct {
 	Id            uint16   `json:"id"`            //服务器ID
 	RpcUrl        string   `json:"rpcUrl"`        //rpc 地址
+	LoginUrl      string   `json:"loginUrl"`      //登录服地址，TODO通过zookeeper进行
 	ZookeeperUrls []string `json:"zookeeperUrls"` //zookeeper 地址
 	Profile       string   `json:"profile"`       //个性化配置
 	LogLevel      string   `json:"logLevel"`      //日志级别
