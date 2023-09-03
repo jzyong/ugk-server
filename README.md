@@ -53,14 +53,11 @@
 ## TODO
 * Unity客户端开发，使用kcp，添加插值，网络同步，使用unity的官方demo改造？
 * 架构类似slots，登录大厅后，可选择多个小游戏进行玩耍，一个玩家网关可以同时和多个后端服务通信
-* ugk-client kcp 参考Mirror，版本管理使用git-lfs,unity使用2023版本
 * 网络同步、延迟、插值、回退（延迟补偿），物理同步，动画同步，位置方向同步
-* 压力测试客户端使用ugk-web开发界面（vue3）
 * 场景同步消息，transform同步消息，aoi管理
 * 场景对象同步分为消除和隐藏？
 * 请求返回消息需要添加时间戳（延迟补偿需要？），客户端需要维护同步服务器时间戳？（Mirror怎样实现的？）[延迟补偿](https://www.gabrielgambetta.com/lag-compensation.html)
 * 客户端封装NetworkBehavior？（参考Mirror）
-* ugk-client NetworkManager 添加Websocket组件
 * ugk-client 网络时间封装 NetworkTime
 * 添加断开连接消息包处理逻辑
 * 优先使用GalacticKittens 进行改造，服务器帧率30
@@ -68,10 +65,15 @@
 * unity 专用服务器中实现和网关kcp相互连接
 * 网关服务器连接分为三个大类：lobby、功能微服务、游戏微服务
 * 展示大厅面板数据
-* 排行榜功能
+
 
 
 ### 计划
 * 使用mongodb和redis存储数据  
 * 使用zookeeper或etcd做服务发现（暂时通过读本地配置）
+* Websocket网络通信
+* ugk-agent 游戏服务进程管理
+* 压力测试客户端使用ugk-web开发界面（vue3）
+* 添加聊天、排行、匹配服务
+* 广告、充值接取
 
