@@ -2,7 +2,13 @@ syntax = "proto3";
 import "common.proto";
 option go_package = "/message";
 
+//心跳消息
+message HeartRequest{
 
+}
+//心跳消息
+message HeartResponse{
+}
 
 //用户登录
 message LoginRequest {
@@ -15,13 +21,18 @@ message LoginResponse {
   MessageResult result= 2; //错误信息
 }
 
-//心跳消息
-message HeartRequest{
+//加载玩家数据
+message LoadPlayerRequest{
+  int64 playerId=1; //玩家id
+}
+//加载玩家数据
+message LoadPlayerResponse{
+  MessageResult result =1; //结果
+  PlayerInfo playerInfo=2; //玩家信息
+  repeated GameInfo gameInfo=3; //游戏信息
+}
 
-}
-//心跳消息
-message HeartResponse{
-}
+
 
 
 //登录服务
@@ -29,6 +40,23 @@ service LoginService{
   rpc login(LoginRequest) returns (LoginResponse);
 }
 
+
+//玩家信息
+message PlayerInfo{
+  int64 playerId=1; //玩家id
+  string nick =2; //昵称
+  uint32 level=3; //等级
+  uint32 exp=4; //经验
+  uint64 gold=5; //金币
+}
+
+// 小游戏信息
+message GameInfo{
+  uint32 gameId=1; //游戏id
+  string name=2; //名称
+  uint64 status=3;// 状态 0开启，1关闭
+  string icon =4; //图标
+}
 
 
 

@@ -15,7 +15,8 @@ enum MID {
   LoginRes =1000004; //登录
 
   // 登录模块 1048601-1048700
-
+  LoadPlayerReq=1048601; //加载玩家数据
+  LoadPlayerRes=1048602; //加载玩家数据
 }
 
 

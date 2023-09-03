@@ -22,9 +22,10 @@ public static partial class ConstantReflection {
   static ConstantReflection() {
     byte[] descriptorData = global::System.Convert.FromBase64String(
         string.Concat(
-          "Cg5jb25zdGFudC5wcm90bypPCgNNSUQSCAoETm9uZRAAEg4KCEhlYXJ0UmVx",
+          "Cg5jb25zdGFudC5wcm90byp5CgNNSUQSCAoETm9uZRAAEg4KCEhlYXJ0UmVx",
           "EMGEPRIOCghIZWFydFJlcxDChD0SDgoITG9naW5SZXEQw4Q9Eg4KCExvZ2lu",
-          "UmVzEMSEPUIKWggvbWVzc2FnZWIGcHJvdG8z"));
+          "UmVzEMSEPRITCg1Mb2FkUGxheWVyUmVxEJmAQBITCg1Mb2FkUGxheWVyUmVz",
+          "EJqAQEIKWggvbWVzc2FnZWIGcHJvdG8z"));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
         new pbr::FileDescriptor[] { },
         new pbr::GeneratedClrTypeInfo(new[] {typeof(global::MID), }, null, null));
@@ -59,6 +60,14 @@ public enum MID {
   ///登录
   /// </summary>
   [pbr::OriginalName("LoginRes")] LoginRes = 1000004,
+  /// <summary>
+  /// 登录模块 1048601-1048700
+  /// </summary>
+  [pbr::OriginalName("LoadPlayerReq")] LoadPlayerReq = 1048601,
+  /// <summary>
+  ///加载玩家数据
+  /// </summary>
+  [pbr::OriginalName("LoadPlayerRes")] LoadPlayerRes = 1048602,
 }
 
 #endregion

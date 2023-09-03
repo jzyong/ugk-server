@@ -20,7 +20,7 @@ func login(user *manager.User, data []byte, seq uint32, timeStamp int64) {
 	request := &message.LoginRequest{}
 	proto.Unmarshal(data, request)
 
-	//TODO 消息转发到login，创建网关和用户的连接关系，通过zookeeper获取login服务
+	//TODO 通过zookeeper获取login服务
 	log.Info("%d 登录 序号=%d %+v", user.Id, seq, request)
 	conn := manager.GetLoginClientManager().ClientConn
 	client := message.NewLoginServiceClient(conn)
@@ -30,7 +30,10 @@ func login(user *manager.User, data []byte, seq uint32, timeStamp int64) {
 			Status: 500,
 			Msg:    err.Error(),
 		}}, seq)
+		return
 	}
+	user.Id = response.PlayerId
+
 	user.SendToClient(message.MID_LoginRes, response, seq)
 
 }
