@@ -15,7 +15,7 @@ import (
 	"time"
 )
 
-// UserManager 客户端-用户
+// UserManager 客户端-用户 TODO 获取用户
 type UserManager struct {
 	util.DefaultModule
 	IpUsers map[string]*User //IP用户

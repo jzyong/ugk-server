@@ -1,7 +1,7 @@
 {
   "id": 1,
   "rpcUrl": "192.168.110.2:3021",
-  "gateUrl": "192.168.110.2:5001",
+  "gateUrl": "127.0.0.1:5001",
   "profile": "develop",
   "logLevel": "DEBUG"
 }

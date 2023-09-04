@@ -35,6 +35,7 @@ type ModuleManager struct {
 	*util.DefaultModuleManager
 	GateManager        *manager.GateManager
 	ClientManager      *manager.ClientManager
+	ServerManager      *manager.ServerManager
 	UserManager        *manager.UserManager
 	LoginClientManager *manager.LoginClientManager
 }
@@ -43,6 +44,7 @@ type ModuleManager struct {
 func (m *ModuleManager) Init() error {
 	m.GateManager = m.AppendModule(manager.GetGateManager()).(*manager.GateManager)
 	m.ClientManager = m.AppendModule(manager.GetClientManager()).(*manager.ClientManager)
+	m.ServerManager = m.AppendModule(manager.GetServerManager()).(*manager.ServerManager)
 	m.UserManager = m.AppendModule(manager.GetUserManager()).(*manager.UserManager)
 	m.LoginClientManager = m.AppendModule(manager.GetLoginClientManager()).(*manager.LoginClientManager)
 	return m.DefaultModuleManager.Init()

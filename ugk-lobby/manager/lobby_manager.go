@@ -3,8 +3,17 @@ package manager
 import (
 	"github.com/jzyong/golib/log"
 	"github.com/jzyong/golib/util"
+	"github.com/jzyong/ugk/common/manager"
+	"github.com/jzyong/ugk/lobby/config"
+	"github.com/jzyong/ugk/lobby/mode"
 	"sync"
 )
+
+// 消息执行函数
+type handFunc func(player *mode.Player, data []byte, seq uint32)
+
+// GateHandlers 客户端消息处理器
+var GateHandlers = make(map[uint32]handFunc)
 
 // LobbyManager  入口
 type LobbyManager struct {
@@ -23,6 +32,8 @@ func GetLobbyManager() *LobbyManager {
 
 func (m *LobbyManager) Init() error {
 	log.Info("LobbyManager 初始化......")
+
+	manager.GetGateKcpClientManager().ConnectKcpServer(config.AppConfigManager.GateUrl)
 	return nil
 }
 

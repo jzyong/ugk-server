@@ -12,6 +12,6 @@ import (
 // RegisterClientHandler 注册客户端处理消息
 func RegisterClientHandler() {
 	//登录模块
-	manager.NetHandlers[uint32(message.MID_LoadPlayerReq)] = loadPlayer
+	manager.GateHandlers[uint32(message.MID_LoadPlayerReq)] = loadPlayer
 
 }
