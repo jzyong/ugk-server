@@ -21,6 +21,7 @@ type GateKcpClientManager struct {
 	IpClients          map[string]*GateKcpClient   //网络连接客户端 key=ip
 	MessageHandFunc    messageHandFunc             //消息分发处理函数
 	ServerHeartRequest *message.ServerHeartRequest //服务器心跳消息
+	mutex              sync.RWMutex
 }
 
 var gateKcpClientManager *GateKcpClientManager
@@ -39,7 +40,6 @@ func (m *GateKcpClientManager) Init() error {
 }
 
 // TODO 连接网关，需要服务发现
-// TODO 定时发送服务器信息，充当心跳
 
 // ConnectKcpServer 连接kcp服务器
 func (m *GateKcpClientManager) ConnectKcpServer(url string) {
@@ -65,26 +65,18 @@ func (m *GateKcpClientManager) ConnectKcpServer(url string) {
 		udpSession.SetNoDelay(1, 10, 2, 1)
 		client := channelActive(udpSession, 1, url) //TODO 或者id
 		go channelRead(client)
-
-		//for {
-		//	data := time.Now().String()
-		//	buf := make([]byte, len(data))
-		//	log.Println("sent:", data)
-		//	if _, err := udpSession.Write([]byte(data)); err == nil {
-		//		// read back the data
-		//		if _, err := io.ReadFull(udpSession, buf); err == nil {
-		//			log.Println("recv:", string(buf))
-		//		} else {
-		//			log.Fatal(err)
-		//		}
-		//	} else {
-		//		log.Fatal(err)
-		//	}
-		//	time.Sleep(time.Second)
-		//
-		//}
 	} else {
 		log.Error("连接kcp服务器失败：%v", err)
+	}
+}
+
+// 移除网关客户端
+func (m *GateKcpClientManager) removeGateKcpClient(client *GateKcpClient) {
+	defer m.mutex.Unlock()
+	m.mutex.Lock()
+	if client, ok := m.IpClients[client.Url]; ok {
+		delete(m.IpClients, client.Url)
+		log.Info("网关：%d-%s 连接移除", client.Id, client.Url)
 	}
 }
 
@@ -97,6 +89,8 @@ func channelActive(session *kcp.UDPSession, serverId uint32, url string) *GateKc
 // 连接关闭
 func channelInactive(client *GateKcpClient, err error) {
 	log.Info("%d - %s 连接关闭:%s", client.Id, client.UdpSession.RemoteAddr(), err)
+	// 移除网关连接
+	GetGateKcpClientManager().removeGateKcpClient(client)
 	close(client.CloseChan)
 }
 
@@ -195,7 +189,10 @@ func NewGateKcpClient(udpSession *kcp.UDPSession, serverId uint32, url string) *
 		HeartTime:        time.Now(),
 	}
 	//只在此处添加
-	GetGateKcpClientManager().IpClients[udpSession.RemoteAddr().String()] = client
+	defer GetGateKcpClientManager().mutex.Unlock()
+	GetGateKcpClientManager().mutex.Lock()
+	GetGateKcpClientManager().IpClients[url] = client
+	log.Info("网关：%d-%s 连接注册", client.Id, client.Url)
 	go client.run()
 	return client
 }
@@ -223,6 +220,7 @@ func (client *GateKcpClient) secondUpdate() {
 	if time.Now().Sub(client.HeartTime) > constant.ClientHeartInterval {
 		channelInactive(client, errors.New(fmt.Sprintf("心跳超时%f", time.Now().Sub(client.HeartTime).Seconds())))
 	}
+	//定时发送服务器信息，充当心跳
 	if GetGateKcpClientManager().ServerHeartRequest != nil {
 		client.SendToGate(0, message.MID_ServerHeartReq, GetGateKcpClientManager().ServerHeartRequest, 0)
 	}
