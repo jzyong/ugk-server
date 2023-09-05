@@ -23,6 +23,7 @@ func main() {
 	}
 
 	handler.RegisterClientHandler() // 没引用handler不执行init，手动执行一下
+	handler.RegisterGameHandler()
 
 	m.Run()
 	util.WaitForTerminate()

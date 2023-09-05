@@ -6,6 +6,7 @@ import (
 	"github.com/jzyong/ugk/common/manager"
 	"github.com/jzyong/ugk/lobby/config"
 	"github.com/jzyong/ugk/lobby/mode"
+	"github.com/jzyong/ugk/message/message"
 	"sync"
 )
 
@@ -34,6 +35,10 @@ func (m *LobbyManager) Init() error {
 	log.Info("LobbyManager 初始化......")
 
 	manager.GetGateKcpClientManager().ConnectKcpServer(config.AppConfigManager.GateUrl)
+	manager.GetGateKcpClientManager().ServerHeartRequest = &message.ServerHeartRequest{Server: &message.ServerInfo{
+		Id:   config.AppConfigManager.Id,
+		Name: "lobby",
+	}}
 	return nil
 }
 

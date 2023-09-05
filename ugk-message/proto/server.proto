@@ -1,0 +1,51 @@
+syntax = "proto3";
+import "common.proto";
+option go_package = "/message";
+
+//服务心跳消息
+message ServerHeartRequest{
+  ServerInfo server = 1; //服务器信息
+}
+//服务心跳消息
+message ServerHeartResponse{
+  MessageResult result = 1; //结果
+}
+
+//关闭服务器请求
+message CloseServerRequest {
+}
+//关闭服务器请求
+message CloseServerResponse {
+  MessageResult result = 1; //结果
+}
+
+//加载配置
+message ReloadConfigRequest{
+}
+//加载配置
+message ReloadConfigResponse{
+  MessageResult result = 1; //结果
+}
+
+
+
+
+//服务器服务
+service ServerService{
+  //关闭服务器
+  rpc closeServer(CloseServerRequest) returns (CloseServerResponse);
+  //加载配置
+  rpc reloadConfig(ReloadConfigRequest) returns (ReloadConfigResponse);
+}
+
+
+//服务器信息
+message ServerInfo{
+  uint32 id = 1; //id
+  string name = 2; //名称
+}
+
+
+
+
+

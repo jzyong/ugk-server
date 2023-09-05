@@ -5,6 +5,7 @@ go 1.19
 require (
 	github.com/jzyong/golib v0.0.21
 	github.com/xtaci/kcp-go/v5 v5.6.2
+	github.com/jzyong/ugk/message v0.0.0-00010101000000-000000000000
 )
 
 require (
@@ -19,3 +20,5 @@ require (
 	golang.org/x/net v0.14.0 // indirect
 	golang.org/x/sys v0.11.0 // indirect
 )
+
+replace github.com/jzyong/ugk/message => ../ugk-message

@@ -7,6 +7,8 @@ option go_package = "/message";
 enum MID {
   None=0;
   //网关拦截消息
+  ServerHeartReq=1; //服务器心跳
+  ServerHeartRes=2; //服务器心跳
 
 
   HeartReq=1000001; //心跳

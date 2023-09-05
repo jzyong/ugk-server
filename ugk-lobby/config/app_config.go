@@ -15,7 +15,7 @@ var FilePath string
 
 // AppConfig 配置
 type AppConfig struct {
-	Id       uint16 `json:"id"`       //服务器ID
+	Id       uint32 `json:"id"`       //服务器ID
 	RpcUrl   string `json:"rpcUrl"`   //rpc 地址
 	GateUrl  string `json:"gateUrl"`  //登录服地址，TODO通过zookeeper进行
 	Profile  string `json:"profile"`  //个性化配置

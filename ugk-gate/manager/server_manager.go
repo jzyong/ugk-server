@@ -225,8 +225,8 @@ func (client *GameKcpClient) messageDistribute(data []byte) {
 	//`消息长度4+玩家ID8+消息id4+序列号4+时间戳8+protobuf消息体`
 	//截取消息
 	//小端
-	messageId := uint32(data[4]) | uint32(data[5])<<8 | uint32(data[6])<<16 | uint32(data[7])<<24
-	log.Info("收到消息：%d", messageId)
+	messageId := uint32(data[12]) | uint32(data[13])<<8 | uint32(data[14])<<16 | uint32(data[15])<<24
+	//log.Info("收到消息：%d", messageId)
 	handFunc := ServerHandlers[messageId]
 	if handFunc != nil { //本地处理
 		dataReader := bytes.NewReader(data)
@@ -254,15 +254,16 @@ func (client *GameKcpClient) messageDistribute(data []byte) {
 			gameChannelInactive(client, errors.New("读取消息timeStamp错误"))
 			return
 		}
-		protoData := make([]byte, messageLength-16)
+		protoData := make([]byte, messageLength-24)
 		if err := binary.Read(dataReader, binary.LittleEndian, &protoData); err != nil {
 			gameChannelInactive(client, errors.New("读取消息proto数据错误"))
 			return
 		}
 		//TODO 用户消息转发到用户routine
-		handFunc(nil, data, seq, client)
+		handFunc(nil, protoData, seq, client)
 	} else { //转发给用户
 		//TODO
 	}
-
 }
+
+//TODO 发送返回消息

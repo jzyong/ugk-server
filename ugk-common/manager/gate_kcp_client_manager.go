@@ -8,7 +8,9 @@ import (
 	"github.com/jzyong/golib/log"
 	"github.com/jzyong/golib/util"
 	"github.com/jzyong/ugk/common/constant"
+	"github.com/jzyong/ugk/message/message"
 	"github.com/xtaci/kcp-go/v5"
+	"google.golang.org/protobuf/proto"
 	"sync"
 	"time"
 )
@@ -16,8 +18,9 @@ import (
 // GateKcpClientManager 网络，kcp连接网关
 type GateKcpClientManager struct {
 	util.DefaultModule
-	IpClients       map[string]*GateKcpClient //网络连接客户端 key=ip
-	MessageHandFunc messageHandFunc           //消息分发处理函数
+	IpClients          map[string]*GateKcpClient   //网络连接客户端 key=ip
+	MessageHandFunc    messageHandFunc             //消息分发处理函数
+	ServerHeartRequest *message.ServerHeartRequest //服务器心跳消息
 }
 
 var gateKcpClientManager *GateKcpClientManager
@@ -60,7 +63,7 @@ func (m *GateKcpClientManager) ConnectKcpServer(url string) {
 		//Turbo Mode： ikcp_nodelay(kcp, 1, 10, 2, 1);
 		//s.SetNoDelay(0, 40, 0, 0)
 		udpSession.SetNoDelay(1, 10, 2, 1)
-		client := channelActive(udpSession)
+		client := channelActive(udpSession, 1, url) //TODO 或者id
 		go channelRead(client)
 
 		//for {
@@ -86,9 +89,9 @@ func (m *GateKcpClientManager) ConnectKcpServer(url string) {
 }
 
 // 连接激活
-func channelActive(session *kcp.UDPSession) *GateKcpClient {
+func channelActive(session *kcp.UDPSession, serverId uint32, url string) *GateKcpClient {
 	log.Info("%s 连接创建", session.RemoteAddr().String())
-	return NewGateKcpClient(session)
+	return NewGateKcpClient(session, serverId, url)
 }
 
 // 连接关闭
@@ -179,8 +182,10 @@ type GateKcpClient struct {
 }
 
 // NewGateKcpClient 构建
-func NewGateKcpClient(udpSession *kcp.UDPSession) *GateKcpClient {
+func NewGateKcpClient(udpSession *kcp.UDPSession, serverId uint32, url string) *GateKcpClient {
 	client := &GateKcpClient{UdpSession: udpSession,
+		Id:               serverId,
+		Url:              url,
 		SendBuffer:       bytes.NewBuffer([]byte{}),
 		ReceiveBuffer:    bytes.NewBuffer([]byte{}),
 		ReceiveBytes:     make(chan []byte, 1024),
@@ -217,6 +222,9 @@ func (client *GateKcpClient) secondUpdate() {
 	// 心跳监测
 	if time.Now().Sub(client.HeartTime) > constant.ServerHeartInterval {
 		channelInactive(client, errors.New(fmt.Sprintf("心跳超时%f", time.Now().Sub(client.HeartTime).Seconds())))
+	}
+	if GetGateKcpClientManager().ServerHeartRequest != nil {
+		client.SendToGate(0, message.MID_ServerHeartReq, GetGateKcpClientManager().ServerHeartRequest, 0)
 	}
 
 }
@@ -257,4 +265,60 @@ func (client *GateKcpClient) messageDistribute(data []byte) {
 		return
 	}
 	GetGateKcpClientManager().MessageHandFunc(playerId, messageId, seq, timeStamp, protoData, client.UdpSession)
+}
+
+// SendToGate 发送消息到网关
+func (client *GateKcpClient) SendToGate(playerId int64, mid message.MID, msg proto.Message, seq uint32) error {
+
+	protoData, err := proto.Marshal(msg)
+	if err != nil {
+		log.Error("%d - %s 发送消息 %d 失败：%v", client.Id, client.UdpSession.RemoteAddr().String(), mid, err)
+		return err
+	}
+	protoLength := len(protoData)
+	if protoLength > constant.MessageLimit {
+		log.Error("%d - %s 发送消息 %d 失败：%v", client.Id, client.UdpSession.RemoteAddr().String(), mid, err)
+		return errors.New("消息超长")
+	}
+
+	//`消息长度4+玩家ID8+消息id4+序列号4+时间戳8+protobuf消息体`
+	buffer := bytes.NewBuffer([]byte{})
+	//写dataLen 不包含自身长度
+	if err := binary.Write(buffer, binary.LittleEndian, uint32(24+protoLength)); err != nil {
+		log.Error("%d - %s 发送消息 %d 失败：%v", client.UdpSession, client.UdpSession.RemoteAddr().String(), mid, err)
+		return err
+	}
+
+	//写玩家ID
+	if err := binary.Write(buffer, binary.LittleEndian, playerId); err != nil {
+		log.Error("%d - %s 发送消息 %d 失败：%v", playerId, client.UdpSession.RemoteAddr().String(), mid, err)
+		return err
+	}
+
+	//写msgID
+	if err := binary.Write(buffer, binary.LittleEndian, uint32(mid)); err != nil {
+		log.Error("%d - %s 发送消息 %d 失败：%v", client.Id, client.UdpSession.RemoteAddr().String(), mid, err)
+		return err
+	}
+	//写 序列号
+	if err := binary.Write(buffer, binary.LittleEndian, seq); err != nil {
+		log.Error("%d - %s 发送消息 %d 失败：%v", client.Id, client.UdpSession.RemoteAddr().String(), mid, err)
+		return err
+	}
+	//写时间戳
+	if err := binary.Write(buffer, binary.LittleEndian, util.CurrentTimeMillisecond()); err != nil {
+		log.Error("%d - %s 发送消息 %d 失败：%v", client.Id, client.UdpSession.RemoteAddr().String(), mid, err)
+		return err
+	}
+	//写data数据
+	if err := binary.Write(buffer, binary.LittleEndian, protoData); err != nil {
+		log.Error("%d - %s 发送消息 %d 失败：%v", client.Id, client.UdpSession.RemoteAddr().String(), mid, err)
+		return err
+	}
+	_, err = client.UdpSession.Write(buffer.Bytes())
+	if err != nil {
+		log.Error("%d - %s 发送消息 %d 失败：%v", client.Id, client.UdpSession.RemoteAddr().String(), mid, err)
+		return err
+	}
+	return nil
 }

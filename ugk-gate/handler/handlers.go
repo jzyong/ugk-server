@@ -16,3 +16,8 @@ func RegisterClientHandler() {
 	manager.ClientHandlers[uint32(message.MID_LoginReq)] = login
 
 }
+
+// RegisterGameHandler 注册游戏处理器
+func RegisterGameHandler() {
+	manager.ServerHandlers[uint32(message.MID_ServerHeartReq)] = serverHeart
+}
