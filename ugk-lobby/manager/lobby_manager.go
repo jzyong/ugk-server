@@ -11,7 +11,7 @@ import (
 )
 
 // 消息执行函数
-type handFunc func(player *mode.Player, data []byte, seq uint32)
+type handFunc func(player *mode.Player, data []byte, seq uint32, gateClient *manager.GateKcpClient)
 
 // GateHandlers 客户端消息处理器
 var GateHandlers = make(map[uint32]handFunc)

@@ -118,6 +118,19 @@ func (m *ServerManager) removeGameServer(client *GameKcpClient) {
 	}
 }
 
+// AssignLobby 分配大厅 TODO 一致性hash？
+func (m *ServerManager) AssignLobby(playerId int64) *GameKcpClient {
+	//TODO 暂时只有一个，随机
+	if serverList, ok := m.GameClients["lobby"]; ok {
+		if len(serverList) > 0 {
+			return serverList[1]
+		}
+		return nil
+	} else {
+		return nil
+	}
+}
+
 // 连接激活
 func gameChannelActive(session *kcp.UDPSession) *GameKcpClient {
 	log.Info("%s 连接创建", session.RemoteAddr().String())
@@ -297,10 +310,26 @@ func (client *GameKcpClient) messageDistribute(data []byte) {
 			gameChannelInactive(client, errors.New("读取消息proto数据错误"))
 			return
 		}
-		//TODO 用户消息转发到用户routine
-		handFunc(nil, protoData, seq, client)
+		// 用户消息转发到用户routine
+		if playerId > 0 {
+			user := GetUserManager().GetUser(playerId)
+			if user == nil {
+				log.Warn("玩家：%d 已离线，消息%d转发失败", playerId, messageId)
+			} else {
+				user.GameMessages <- &util.Four[[]byte, uint32, uint32, *GameKcpClient]{A: protoData, B: messageId, C: seq, D: client} //TODO 使用对象池封装消息
+			}
+		} else {
+			handFunc(nil, protoData, seq, client)
+		}
+
 	} else { //转发给用户
-		//TODO
+		playerId := int64(data[4]) | int64(data[5])<<8 | int64(data[6])<<16 | int64(data[7])<<24 | int64(data[8])<<32 | int64(data[9])<<40 | int64(data[10])<<48 | int64(data[11])<<56
+		user := GetUserManager().GetUser(playerId)
+		if user == nil {
+			log.Warn("玩家：%d 已离线，消息%d转发失败", playerId, messageId)
+		} else {
+			user.TransmitToClient(data, messageId)
+		}
 	}
 }
 

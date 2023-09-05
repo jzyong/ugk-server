@@ -54,7 +54,15 @@ func (m *PlayerManager) GetPlayer(id int64) *mode.Player {
 
 // 消息分发处理
 func (m *PlayerManager) messageHand(playerId int64, messageId uint32, seq uint32, timeStamp int64, data []byte, client *manager.GateKcpClient) {
-	//player := m.GetPlayer(playerId)
-	//TODO 转发到玩家routine
+	player := m.GetPlayer(playerId)
+
+	handFunc := GateHandlers[messageId]
+	if handFunc == nil {
+		log.Warn("消息：%d未实现，玩家%d逻辑处理失败", messageId, playerId)
+		return
+	}
+	handFunc(player, data, seq, client)
+	//TODO 转发到玩家routine,使用对象池封装消息
+
 	log.Info("%d 收到消息 mid=%d seq=%d", playerId, messageId, seq)
 }
