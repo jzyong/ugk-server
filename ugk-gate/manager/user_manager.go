@@ -127,7 +127,7 @@ func (user *User) messageDistribute(data []byte) {
 	//`消息长度4+消息id4+序列号4+时间戳8+protobuf消息体`
 	//小端
 	messageId := uint32(data[4]) | uint32(data[5])<<8 | uint32(data[6])<<16 | uint32(data[7])<<24
-	handlerServer := messageId >> 20 //0本地处理，1lobby，2游戏
+	handlerServer := messageId >> 20 //0截取本地、1lobby、2功能微服务，3游戏微服务
 	//log.Info("%v 消息Id=%v 处理服务=%v", user.Id, messageId, handlerServer)
 	switch handlerServer {
 	case 0:
@@ -176,6 +176,53 @@ func (user *User) messageDistribute(data []byte) {
 	default:
 		log.Warn("%d - %s 收到未知消息mid=%d", user.Id, user.ClientSession.RemoteAddr().String(), messageId)
 	}
+}
+
+// TransmitToLobby 转发到大厅
+func (user *User) TransmitToLobby(clientData []byte, messageId uint32) error {
+	if user.LobbySession == nil {
+		log.Warn("玩家：%d未分配大厅", user.Id)
+		return errors.New(fmt.Sprintf("玩家：%d未分配大厅", user.Id))
+	}
+	bytes, err := user.toGameBytes(clientData, messageId)
+	if err != nil {
+		return err
+	}
+	_, err = user.LobbySession.Write(bytes)
+	if err != nil {
+		log.Error("%d - %s 发送消息 %d 失败：%v", user.Id, user.ClientSession.RemoteAddr().String(), messageId, err)
+		return err
+	}
+	return nil
+}
+
+// 客户端byte转换为服务器byte流
+func (user *User) toGameBytes(clientData []byte, messageId uint32) ([]byte, error) {
+	clientLength := len(clientData)
+	if clientLength > constant.MessageLimit {
+		log.Error("%d - %s 发送消息 %d  失败：消息太长", user.Id, user.ClientSession.RemoteAddr().String(), messageId)
+		return nil, errors.New("消息超长")
+	}
+
+	//消息长度4+玩家ID+消息id4+序列号4+时间戳8+protobuf消息体
+	buffer := bytes.NewBuffer([]byte{})
+	//写dataLen 不包含自身长度,比客户端长度多8字节玩家id
+	if err := binary.Write(buffer, binary.LittleEndian, uint32(clientLength+8)); err != nil {
+		log.Error("%d - %s 发送消息 %d 失败：%v", user.Id, user.ClientSession.RemoteAddr().String(), messageId, err)
+		return nil, err
+	}
+	//写玩家ID
+	if err := binary.Write(buffer, binary.LittleEndian, user.Id); err != nil {
+		log.Error("%d - %s 发送消息 %d 失败：%v", user.Id, user.ClientSession.RemoteAddr().String(), messageId, err)
+		return nil, err
+	}
+	data := clientData[4:]
+	//写data数据
+	if err := binary.Write(buffer, binary.LittleEndian, data); err != nil {
+		log.Error("%d - %s 发送消息 %d 失败：%v", user.Id, user.ClientSession.RemoteAddr().String(), messageId, err)
+		return nil, err
+	}
+	return buffer.Bytes(), nil
 }
 
 // SendToClient 发送消息到客户端

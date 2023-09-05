@@ -25,6 +25,9 @@ func serverHeart(user *manager.User, data []byte, seq uint32, client *manager.Ga
 		return
 	}
 	serverInfo := request.GetServer()
-	log.Info("%v-%v 心跳", serverInfo.GetId(), serverInfo.GetName())
+	client.Id = serverInfo.GetId()
+	client.Name = serverInfo.GetName()
+	manager.GetServerManager().UpdateGameServer(serverInfo, client)
+	//log.Info("%v-%v 心跳", serverInfo.GetId(), serverInfo.GetName())
 	client.SendToGame(0, message.MID_ServerHeartRes, response, 0)
 }

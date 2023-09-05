@@ -34,6 +34,8 @@ func login(user *manager.User, data []byte, seq uint32, timeStamp int64) {
 	}
 	user.Id = response.PlayerId
 
+	//TODO 获取大厅，分配规则
+
 	user.SendToClient(message.MID_LoginRes, response, seq)
 
 }

@@ -19,7 +19,8 @@ import (
 // ServerManager 服务器-网络
 type ServerManager struct {
 	util.DefaultModule
-	GameClients map[string]map[uint16]*GameKcpClient //游戏客户端 key=游戏名称 ==》游戏id
+	GameClients map[string]map[uint32]*GameKcpClient //游戏客户端 key=游戏名称 ==》游戏id
+	mutex       sync.RWMutex
 }
 
 var serverManager *ServerManager
@@ -28,7 +29,7 @@ var serverSingletonOnce sync.Once
 func GetServerManager() *ServerManager {
 	serverSingletonOnce.Do(func() {
 		serverManager = &ServerManager{
-			GameClients: make(map[string]map[uint16]*GameKcpClient, 10),
+			GameClients: make(map[string]map[uint32]*GameKcpClient, 10),
 		}
 	})
 	return serverManager
@@ -81,7 +82,40 @@ func (m *ServerManager) runKcpServer() {
 	} else {
 		log.Error("kcp启动失败：%v", err)
 	}
+}
 
+// UpdateGameServer 更新游戏服务器信息
+func (m *ServerManager) UpdateGameServer(serverInfo *message.ServerInfo, client *GameKcpClient) {
+	defer m.mutex.Unlock()
+	m.mutex.Lock()
+	if serverList, ok := m.GameClients[serverInfo.GetName()]; ok {
+		if c, ok2 := serverList[serverInfo.GetId()]; ok2 {
+			c.Id = serverInfo.GetId()
+			c.Name = serverInfo.GetName()
+		} else {
+			serverList[serverInfo.GetId()] = client
+			m.GameClients[serverInfo.GetName()] = serverList
+			log.Info("后端服务：%s-%d 注册", client.Name, client.Id)
+		}
+	} else {
+		serverList = make(map[uint32]*GameKcpClient, 2)
+		serverList[serverInfo.GetId()] = client
+		m.GameClients[serverInfo.GetName()] = serverList
+		log.Info("后端服务：%s-%d 注册", client.Name, client.Id)
+	}
+}
+
+// 移除game服务器连接
+func (m *ServerManager) removeGameServer(client *GameKcpClient) {
+	defer m.mutex.Unlock()
+	m.mutex.Lock()
+	if serverList, ok := m.GameClients[client.Name]; ok {
+		if _, ok2 := serverList[client.Id]; ok2 {
+			delete(serverList, client.Id)
+			m.GameClients[client.Name] = serverList
+			log.Info("后端服务：%s-%d 移除", client.Name, client.Id)
+		}
+	}
 }
 
 // 连接激活
@@ -94,6 +128,8 @@ func gameChannelActive(session *kcp.UDPSession) *GameKcpClient {
 // 客户端强制杀进程，服务器不知道连接断开。kcp-go源码没有示例,因此使用自定义心跳（每2s请求一次心跳，超过10s断开连接）
 func gameChannelInactive(client *GameKcpClient, err error) {
 	log.Info("%d - %s 连接关闭:%s", client.Id, client.UdpSession.RemoteAddr(), err)
+	// 移除客户端对象
+	GetServerManager().removeGameServer(client)
 	close(client.CloseChan)
 }
 
@@ -216,7 +252,7 @@ func (client *GameKcpClient) run() {
 // 玩家更新逻辑
 func (client *GameKcpClient) secondUpdate() {
 	// 心跳监测
-	if time.Now().Sub(client.HeartTime) > constant.ServerHeartInterval {
+	if time.Now().Sub(client.HeartTime) > constant.ClientHeartInterval {
 		gameChannelInactive(client, errors.New(fmt.Sprintf("心跳超时%f", time.Now().Sub(client.HeartTime).Seconds())))
 	}
 
