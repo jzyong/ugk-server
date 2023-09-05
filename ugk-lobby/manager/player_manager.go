@@ -5,7 +5,6 @@ import (
 	"github.com/jzyong/golib/util"
 	"github.com/jzyong/ugk/common/manager"
 	"github.com/jzyong/ugk/lobby/mode"
-	"github.com/xtaci/kcp-go/v5"
 	"sync"
 )
 
@@ -54,7 +53,7 @@ func (m *PlayerManager) GetPlayer(id int64) *mode.Player {
 }
 
 // 消息分发处理
-func (m *PlayerManager) messageHand(playerId int64, messageId uint32, seq uint32, timeStamp int64, data []byte, udpSession *kcp.UDPSession) {
+func (m *PlayerManager) messageHand(playerId int64, messageId uint32, seq uint32, timeStamp int64, data []byte, client *manager.GateKcpClient) {
 	//player := m.GetPlayer(playerId)
 	//TODO 转发到玩家routine
 	log.Info("%d 收到消息 mid=%d seq=%d", playerId, messageId, seq)

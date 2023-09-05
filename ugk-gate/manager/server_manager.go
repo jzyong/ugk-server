@@ -9,7 +9,9 @@ import (
 	"github.com/jzyong/golib/util"
 	"github.com/jzyong/ugk/common/constant"
 	"github.com/jzyong/ugk/gate/config"
+	"github.com/jzyong/ugk/message/message"
 	"github.com/xtaci/kcp-go/v5"
+	"google.golang.org/protobuf/proto"
 	"sync"
 	"time"
 )
@@ -266,4 +268,57 @@ func (client *GameKcpClient) messageDistribute(data []byte) {
 	}
 }
 
-//TODO 发送返回消息
+// SendToGame 发送消息到游戏
+func (client *GameKcpClient) SendToGame(playerId int64, mid message.MID, msg proto.Message, seq uint32) error {
+	protoData, err := proto.Marshal(msg)
+	if err != nil {
+		log.Error("%d - %s 发送消息 %d 失败：%v", client.Id, client.UdpSession.RemoteAddr().String(), mid, err)
+		return err
+	}
+	protoLength := len(protoData)
+	if protoLength > constant.MessageLimit {
+		log.Error("%d - %s 发送消息 %d 失败：%v", client.Id, client.UdpSession.RemoteAddr().String(), mid, err)
+		return errors.New("消息超长")
+	}
+
+	//`消息长度4+玩家ID8+消息id4+序列号4+时间戳8+protobuf消息体`
+	buffer := bytes.NewBuffer([]byte{})
+	//写dataLen 不包含自身长度
+	if err := binary.Write(buffer, binary.LittleEndian, uint32(24+protoLength)); err != nil {
+		log.Error("%d - %s 发送消息 %d 失败：%v", client.UdpSession, client.UdpSession.RemoteAddr().String(), mid, err)
+		return err
+	}
+
+	//写玩家ID
+	if err := binary.Write(buffer, binary.LittleEndian, playerId); err != nil {
+		log.Error("%d - %s 发送消息 %d 失败：%v", playerId, client.UdpSession.RemoteAddr().String(), mid, err)
+		return err
+	}
+
+	//写msgID
+	if err := binary.Write(buffer, binary.LittleEndian, uint32(mid)); err != nil {
+		log.Error("%d - %s 发送消息 %d 失败：%v", client.Id, client.UdpSession.RemoteAddr().String(), mid, err)
+		return err
+	}
+	//写 序列号
+	if err := binary.Write(buffer, binary.LittleEndian, seq); err != nil {
+		log.Error("%d - %s 发送消息 %d 失败：%v", client.Id, client.UdpSession.RemoteAddr().String(), mid, err)
+		return err
+	}
+	//写时间戳
+	if err := binary.Write(buffer, binary.LittleEndian, util.CurrentTimeMillisecond()); err != nil {
+		log.Error("%d - %s 发送消息 %d 失败：%v", client.Id, client.UdpSession.RemoteAddr().String(), mid, err)
+		return err
+	}
+	//写data数据
+	if err := binary.Write(buffer, binary.LittleEndian, protoData); err != nil {
+		log.Error("%d - %s 发送消息 %d 失败：%v", client.Id, client.UdpSession.RemoteAddr().String(), mid, err)
+		return err
+	}
+	_, err = client.UdpSession.Write(buffer.Bytes())
+	if err != nil {
+		log.Error("%d - %s 发送消息 %d 失败：%v", client.Id, client.UdpSession.RemoteAddr().String(), mid, err)
+		return err
+	}
+	return nil
+}

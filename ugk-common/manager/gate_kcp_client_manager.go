@@ -156,7 +156,7 @@ func (m *GateKcpClientManager) Stop() {
 }
 
 // 消息处理函数
-type messageHandFunc func(playerId int64, messageId uint32, seq uint32, timeStamp int64, data []byte, udpSession *kcp.UDPSession)
+type messageHandFunc func(playerId int64, messageId uint32, seq uint32, timeStamp int64, data []byte, client *GateKcpClient)
 
 // NetState 用户状态
 type NetState int
@@ -220,7 +220,7 @@ func (client *GateKcpClient) run() {
 // 玩家更新逻辑
 func (client *GateKcpClient) secondUpdate() {
 	// 心跳监测
-	if time.Now().Sub(client.HeartTime) > constant.ServerHeartInterval {
+	if time.Now().Sub(client.HeartTime) > constant.ClientHeartInterval {
 		channelInactive(client, errors.New(fmt.Sprintf("心跳超时%f", time.Now().Sub(client.HeartTime).Seconds())))
 	}
 	if GetGateKcpClientManager().ServerHeartRequest != nil {
@@ -259,12 +259,21 @@ func (client *GateKcpClient) messageDistribute(data []byte) {
 		channelInactive(client, errors.New("读取消息timeStamp错误"))
 		return
 	}
-	protoData := make([]byte, messageLength-16)
+	protoData := make([]byte, messageLength-24)
 	if err := binary.Read(dataReader, binary.LittleEndian, &protoData); err != nil {
 		channelInactive(client, errors.New("读取消息proto数据错误"))
 		return
 	}
-	GetGateKcpClientManager().MessageHandFunc(playerId, messageId, seq, timeStamp, protoData, client.UdpSession)
+	if messageId == uint32(message.MID_ServerHeartRes) {
+		client.heartRes()
+	} else {
+		GetGateKcpClientManager().MessageHandFunc(playerId, messageId, seq, timeStamp, protoData, client)
+	}
+}
+
+func (client *GateKcpClient) heartRes() {
+	client.HeartTime = time.Now()
+	log.Info("收到心跳返回消息包")
 }
 
 // SendToGate 发送消息到网关
