@@ -16,7 +16,7 @@ func init() {
 		return &UgkMessage{}
 	}
 	bytePool.New = func() any {
-		return make([]byte, constant.MessageLimit)
+		return make([]byte, 0, constant.MessageLimit)
 	}
 }
 

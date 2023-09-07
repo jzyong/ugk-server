@@ -3,15 +3,16 @@ package handler
 import (
 	"github.com/jzyong/golib/log"
 	"github.com/jzyong/ugk/common/manager"
+	mode2 "github.com/jzyong/ugk/common/mode"
 	"github.com/jzyong/ugk/lobby/mode"
 	"github.com/jzyong/ugk/message/message"
 	"google.golang.org/protobuf/proto"
 )
 
 // 加载玩家数据
-func loadPlayer(player *mode.Player, data []byte, seq uint32, gateClient *manager.GateKcpClient) {
+func loadPlayer(player *mode.Player, gateClient *manager.GateKcpClient, msg *mode2.UgkMessage) {
 	request := &message.LoadPlayerRequest{}
-	err := proto.Unmarshal(data, request)
+	err := proto.Unmarshal(msg.Bytes, request)
 	response := &message.LoadPlayerResponse{}
 	if err != nil {
 		log.Error("解析消息错误：%v", err)
@@ -19,7 +20,7 @@ func loadPlayer(player *mode.Player, data []byte, seq uint32, gateClient *manage
 			Status: 500,
 			Msg:    err.Error(),
 		}
-		gateClient.SendToGate(player.Id, message.MID_LoadPlayerRes, response, seq)
+		gateClient.SendToGate(player.Id, message.MID_LoadPlayerRes, response, msg.Seq)
 		return
 	}
 	log.Info("%d 加载玩家数据", request.GetPlayerId())
@@ -32,6 +33,6 @@ func loadPlayer(player *mode.Player, data []byte, seq uint32, gateClient *manage
 		Gold:     10000000,
 	}
 
-	gateClient.SendToGate(player.Id, message.MID_LoadPlayerRes, response, seq)
+	gateClient.SendToGate(player.Id, message.MID_LoadPlayerRes, response, msg.Seq)
 
 }

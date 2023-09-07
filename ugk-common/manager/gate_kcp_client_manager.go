@@ -8,6 +8,7 @@ import (
 	"github.com/jzyong/golib/log"
 	"github.com/jzyong/golib/util"
 	"github.com/jzyong/ugk/common/constant"
+	"github.com/jzyong/ugk/common/mode"
 	"github.com/jzyong/ugk/message/message"
 	"github.com/xtaci/kcp-go/v5"
 	"google.golang.org/protobuf/proto"
@@ -133,7 +134,8 @@ func channelRead(client *GateKcpClient) {
 				break
 			}
 
-			packetData := make([]byte, length)
+			//packetData := make([]byte, length)
+			packetData := mode.GetBytes()[:length]
 			copy(packetData, receiveBytes[index:index+length])
 			client.ReceiveBytes <- packetData
 			remainBytes = remainBytes - length
@@ -150,7 +152,7 @@ func (m *GateKcpClientManager) Stop() {
 }
 
 // 消息处理函数
-type messageHandFunc func(playerId int64, messageId uint32, seq uint32, timeStamp int64, data []byte, client *GateKcpClient)
+type messageHandFunc func(playerId int64, msg *mode.UgkMessage)
 
 // NetState 用户状态
 type NetState int
@@ -228,6 +230,7 @@ func (client *GateKcpClient) secondUpdate() {
 }
 
 func (client *GateKcpClient) messageDistribute(data []byte) {
+	defer mode.ReturnBytes(data)
 	client.HeartTime = time.Now()
 	//`消息长度4+玩家ID8+消息id4+序列号4+时间戳8+protobuf消息体`
 	//截取消息
@@ -257,21 +260,30 @@ func (client *GateKcpClient) messageDistribute(data []byte) {
 		channelInactive(client, errors.New("读取消息timeStamp错误"))
 		return
 	}
-	protoData := make([]byte, messageLength-24)
+	//protoData := make([]byte, messageLength-24)
+	protoData := mode.GetBytes()[:messageLength-24]
 	if err := binary.Read(dataReader, binary.LittleEndian, &protoData); err != nil {
 		channelInactive(client, errors.New("读取消息proto数据错误"))
 		return
 	}
+	ugkMessage := mode.GetUgkMessage()
+	ugkMessage.MessageId = messageId
+	ugkMessage.Seq = seq
+	ugkMessage.TimeStamp = timeStamp
+	ugkMessage.Bytes = protoData
+	ugkMessage.Client = client
+
 	if messageId == uint32(message.MID_ServerHeartRes) {
-		client.heartRes()
+		client.heartRes(ugkMessage)
 	} else {
-		GetGateKcpClientManager().MessageHandFunc(playerId, messageId, seq, timeStamp, protoData, client)
+		GetGateKcpClientManager().MessageHandFunc(playerId, ugkMessage)
 	}
 }
 
-func (client *GateKcpClient) heartRes() {
+func (client *GateKcpClient) heartRes(msg *mode.UgkMessage) {
 	client.HeartTime = time.Now()
-	log.Info("收到心跳返回消息包")
+	//log.Info("收到心跳返回消息包")
+	mode.ReturnUgkMessage(msg)
 }
 
 // SendToGate 发送消息到网关
