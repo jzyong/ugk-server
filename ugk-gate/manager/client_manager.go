@@ -6,6 +6,7 @@ import (
 	"github.com/jzyong/golib/log"
 	"github.com/jzyong/golib/util"
 	"github.com/jzyong/ugk/common/constant"
+	"github.com/jzyong/ugk/common/mode"
 	"github.com/jzyong/ugk/gate/config"
 	"github.com/xtaci/kcp-go/v5"
 	"sync"
@@ -27,7 +28,7 @@ func GetClientManager() *ClientManager {
 }
 
 // 消息执行函数
-type handFunc func(user *User, data []byte, seq uint32, timeStamp int64)
+type handFunc func(user *User, msg *mode.UgkMessage)
 
 // ClientHandlers 客户端消息处理器
 var ClientHandlers = make(map[uint32]handFunc)
@@ -128,7 +129,8 @@ func channelRead(user *User) {
 				break
 			}
 
-			packetData := make([]byte, length)
+			//packetData := make([]byte, length)
+			packetData := mode.GetBytes()[:length] //用缓存池，减少垃圾回收，能有性能提升？
 			copy(packetData, receiveBytes[index:index+length])
 			user.ReceiveBytes <- packetData
 			remainBytes = remainBytes - length

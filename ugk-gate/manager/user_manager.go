@@ -8,6 +8,7 @@ import (
 	"github.com/jzyong/golib/log"
 	"github.com/jzyong/golib/util"
 	"github.com/jzyong/ugk/common/constant"
+	"github.com/jzyong/ugk/common/mode"
 	"github.com/jzyong/ugk/message/message"
 	"github.com/xtaci/kcp-go/v5"
 	"google.golang.org/protobuf/proto"
@@ -142,6 +143,7 @@ func (user *User) sendMergeMessage() {
 }
 
 func (user *User) messageDistribute(data []byte) {
+	defer mode.ReturnBytes(data)
 	user.HeartTime = time.Now()
 	//`消息长度4+消息id4+序列号4+时间戳8+protobuf消息体`
 	//小端
@@ -178,13 +180,20 @@ func (user *User) messageDistribute(data []byte) {
 			channelInactive(user, errors.New("读取消息timeStamp错误"))
 			return
 		}
-		protoData := make([]byte, messageLength-16)
+		//protoData := make([]byte, messageLength-16) //使用对象池,减少内存分配回收
+		protoData := mode.GetBytes()[:messageLength-16]
 		if err := binary.Read(dataReader, binary.LittleEndian, &protoData); err != nil {
 			channelInactive(user, errors.New("读取消息proto数据错误"))
 			return
 		}
-		handFunc(user, protoData, seq, timeStamp)
-
+		ugkMessage := mode.GetUgkMessage()
+		ugkMessage.MessageId = messageId
+		ugkMessage.Seq = seq
+		ugkMessage.Bytes = protoData
+		ugkMessage.TimeStamp = timeStamp
+		defer mode.ReturnUgkMessage(ugkMessage)
+		handFunc(user, ugkMessage)
+		break
 	case 1: // 大厅
 		user.TransmitToLobby(data, messageId)
 	case 2:
