@@ -258,8 +258,8 @@ func (user *User) TransmitToClient(gameData []byte, messageId uint32) error {
 
 	//消息长度4+玩家ID+消息id4+序列号4+时间戳8+protobuf消息体 ==》消息长度4+消息id4+序列号4+时间戳8+protobuf消息体
 	buffer := bytes.NewBuffer([]byte{})
-	//写dataLen 不包含自身长度,比客户端长度多8字节玩家id gameLength-8+4
-	if err := binary.Write(buffer, binary.LittleEndian, uint32(gameLength-4)); err != nil {
+	//写dataLen 不包含自身长度,比客户端长度多8字节玩家id gameLength-8-4
+	if err := binary.Write(buffer, binary.LittleEndian, uint32(gameLength-12)); err != nil {
 		log.Error("%d - %s 发送消息 %d 失败：%v", user.Id, user.ClientSession.RemoteAddr().String(), messageId, err)
 		return err
 	}
