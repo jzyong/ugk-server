@@ -8,6 +8,7 @@ import (
 	"github.com/jzyong/golib/log"
 	"github.com/jzyong/golib/util"
 	"github.com/jzyong/ugk/common/constant"
+	"github.com/jzyong/ugk/common/mode"
 	"github.com/jzyong/ugk/gate/config"
 	"github.com/jzyong/ugk/message/message"
 	"github.com/xtaci/kcp-go/v5"
@@ -36,7 +37,7 @@ func GetServerManager() *ServerManager {
 }
 
 // 消息执行函数
-type serverHandFunc func(user *User, data []byte, seq uint32, client *GameKcpClient)
+type serverHandFunc func(user *User, client *GameKcpClient, msg *mode.UgkMessage)
 
 // ServerHandlers 客户端消息处理器
 var ServerHandlers = make(map[uint32]serverHandFunc)
@@ -185,7 +186,8 @@ func gameChannelRead(client *GameKcpClient) {
 				break
 			}
 
-			packetData := make([]byte, length)
+			//packetData := make([]byte, length)
+			packetData := mode.GetBytes()[:length]
 			copy(packetData, receiveBytes[index:index+length])
 			client.ReceiveBytes <- packetData
 			remainBytes = remainBytes - length
@@ -272,6 +274,7 @@ func (client *GameKcpClient) secondUpdate() {
 }
 
 func (client *GameKcpClient) messageDistribute(data []byte) {
+	defer mode.ReturnBytes(data)
 	client.HeartTime = time.Now()
 	//`消息长度4+玩家ID8+消息id4+序列号4+时间戳8+protobuf消息体`
 	//截取消息
@@ -305,21 +308,31 @@ func (client *GameKcpClient) messageDistribute(data []byte) {
 			gameChannelInactive(client, errors.New("读取消息timeStamp错误"))
 			return
 		}
-		protoData := make([]byte, messageLength-24)
+		//protoData := make([]byte, messageLength-24)
+		protoData := mode.GetBytes()[:messageLength-24]
 		if err := binary.Read(dataReader, binary.LittleEndian, &protoData); err != nil {
 			gameChannelInactive(client, errors.New("读取消息proto数据错误"))
 			return
 		}
+
+		ugkMessage := mode.GetUgkMessage()
+		ugkMessage.MessageId = messageId
+		ugkMessage.Seq = seq
+		ugkMessage.TimeStamp = timeStamp
+		ugkMessage.Bytes = protoData
+		ugkMessage.Client = client
+
 		// 用户消息转发到用户routine
 		if playerId > 0 {
 			user := GetUserManager().GetUser(playerId)
 			if user == nil {
 				log.Warn("玩家：%d 已离线，消息%d转发失败", playerId, messageId)
 			} else {
-				user.GameMessages <- &util.Four[[]byte, uint32, uint32, *GameKcpClient]{A: protoData, B: messageId, C: seq, D: client} //TODO 使用对象池封装消息
+				user.GameMessages <- ugkMessage
 			}
 		} else {
-			handFunc(nil, protoData, seq, client)
+			handFunc(nil, client, ugkMessage)
+			mode.ReturnUgkMessage(ugkMessage)
 		}
 
 	} else { //转发给用户

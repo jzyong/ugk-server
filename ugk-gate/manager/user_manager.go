@@ -73,18 +73,18 @@ const (
 
 // User 网关用户，每个用户一个routine接收消息，一个routine处理逻辑和发送消息，会不会创建太多routine？
 type User struct {
-	Id               int64                                                   //唯一id
-	ClientSession    *kcp.UDPSession                                         //客户端连接会话
-	LobbyClient      *GameKcpClient                                          //大厅连接会话
-	GameClient       *GameKcpClient                                          //游戏连接会话
-	SendBuffer       *bytes.Buffer                                           //发送缓冲区，单线程调用
-	ReceiveBuffer    *bytes.Buffer                                           //接收缓冲区
-	ReceiveBytes     chan []byte                                             //接收到的消息
-	GameMessages     chan *util.Four[[]byte, uint32, uint32, *GameKcpClient] //游戏服返回的消息 proto字节流、消息id、序列号、客户端
-	ReceiveReadCache []byte                                                  // 接收端读取Byte缓存
-	CloseChan        chan struct{}                                           //离线等关闭Chan
-	State            UserState                                               //用户状态
-	HeartTime        time.Time                                               //心跳时间
+	Id               int64                 //唯一id
+	ClientSession    *kcp.UDPSession       //客户端连接会话
+	LobbyClient      *GameKcpClient        //大厅连接会话
+	GameClient       *GameKcpClient        //游戏连接会话
+	SendBuffer       *bytes.Buffer         //发送缓冲区，单线程调用
+	ReceiveBuffer    *bytes.Buffer         //接收缓冲区
+	ReceiveBytes     chan []byte           //接收到的消息
+	GameMessages     chan *mode.UgkMessage //游戏服返回的消息 proto字节流、消息id、序列号、客户端
+	ReceiveReadCache []byte                // 接收端读取Byte缓存
+	CloseChan        chan struct{}         //离线等关闭Chan
+	State            UserState             //用户状态
+	HeartTime        time.Time             //心跳时间
 }
 
 // NewUser 构建用户
@@ -93,8 +93,8 @@ func NewUser(clientSession *kcp.UDPSession) *User {
 		SendBuffer:       bytes.NewBuffer([]byte{}),
 		ReceiveBuffer:    bytes.NewBuffer([]byte{}),
 		ReceiveBytes:     make(chan []byte, 1024),
-		GameMessages:     make(chan *util.Four[[]byte, uint32, uint32, *GameKcpClient], 1024), //proto字节流、消息id、序列号、客户端
-		ReceiveReadCache: make([]byte, 1500),                                                  //每次最多读取1500-消息头字节
+		GameMessages:     make(chan *mode.UgkMessage, 1024), //proto字节流、消息id、序列号、客户端
+		ReceiveReadCache: make([]byte, 1500),                //每次最多读取1500-消息头字节
 		CloseChan:        make(chan struct{}),
 		State:            NetWorkActive,
 		HeartTime:        time.Now(),
@@ -111,11 +111,13 @@ func (user *User) run() {
 	secondTicker := time.Tick(time.Second)
 	for {
 		select {
-		case receiveByte := <-user.ReceiveBytes:
+		case receiveByte := <-user.ReceiveBytes: //用户消息分发
 			user.messageDistribute(receiveByte)
-		case gameMessage := <-user.GameMessages:
-			ServerHandlers[gameMessage.B](user, gameMessage.A, gameMessage.C, gameMessage.D)
-		case <-user.CloseChan:
+		case gameMessage := <-user.GameMessages: //处理服务器返回消息
+			handFunc := ServerHandlers[gameMessage.MessageId]
+			handFunc(user, gameMessage.Client.(*GameKcpClient), gameMessage)
+			mode.ReturnUgkMessage(gameMessage)
+		case <-user.CloseChan: //关闭用户chan
 			log.Info("%v %v chan关闭", user.Id, user.ClientSession.RemoteAddr().String())
 			user.State = Offline
 			return

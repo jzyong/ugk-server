@@ -26,6 +26,7 @@ type UgkMessage struct {
 	Seq       uint32 //序列号
 	Bytes     []byte //Byte数据
 	TimeStamp int64  //时间戳
+	Client    any    //客户端
 }
 
 // Reset 重置
@@ -35,6 +36,7 @@ func (msg *UgkMessage) Reset() {
 	msg.Seq = 0
 	msg.Bytes = nil
 	msg.TimeStamp = 0
+	msg.Client = nil
 }
 
 // ReturnUgkMessage 归还消息

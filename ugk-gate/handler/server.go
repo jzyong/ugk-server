@@ -2,6 +2,7 @@ package handler
 
 import (
 	"github.com/jzyong/golib/log"
+	"github.com/jzyong/ugk/common/mode"
 	"github.com/jzyong/ugk/gate/manager"
 	"github.com/jzyong/ugk/message/message"
 	"google.golang.org/protobuf/proto"
@@ -9,11 +10,11 @@ import (
 )
 
 // 服务器心跳
-func serverHeart(user *manager.User, data []byte, seq uint32, client *manager.GameKcpClient) {
+func serverHeart(user *manager.User, client *manager.GameKcpClient, msg *mode.UgkMessage) {
 	client.HeartTime = time.Now()
 	request := &message.ServerHeartRequest{}
 	response := &message.ServerHeartResponse{}
-	err := proto.Unmarshal(data, request)
+	err := proto.Unmarshal(msg.Bytes, request)
 	if err != nil {
 		response.Result = &message.MessageResult{
 			Status: 500,
