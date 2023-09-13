@@ -1,6 +1,9 @@
 package constant
 
-import "time"
+import (
+	"fmt"
+	"time"
+)
 
 //网络相关常量
 
@@ -11,3 +14,21 @@ const (
 	ClientHeartInterval = time.Second * 10 //客户端心跳时间
 	ServerHeartInterval = time.Minute * 10 //客户端心跳时间
 )
+
+// zookeeper服务注册地址
+
+const (
+	ZKServicePath          = "/ugk/%s/service/%s"  //服务地址
+	ZKMongoExcelConfigPath = "/ugk/%s/mongo/excel" //MongoDB Excel 配置数据地址
+	ZKInfluxPath           = "/ugk/%s/influx"      //InfluxDB地址
+	ZKRedisPath            = "/ugk/%s/redis"       //redis地址
+)
+
+// GetZKServicePath 获取服务地址
+func GetZKServicePath(profile string, name ServiceName, serverId uint32) string {
+	path := fmt.Sprintf(ZKServicePath, profile, name)
+	if serverId > 0 {
+		path = fmt.Sprintf("%s/%d", path, serverId)
+	}
+	return path
+}

@@ -66,13 +66,12 @@
 * 网关和大厅通信联调(完成登录流程，显示大厅游戏列表)
 * api、gate、lobby 通用grpc封裝
 * 服务器之间通信没有重连(网关重启，大厅没有重连)
-* ugk-client 使用自定义消息对象，并使用缓冲池(参考Mirror,byte数组也缓存？)
 
 
 
 ### 计划
 * 使用mongodb和redis存储数据  
-* 使用zookeeper或etcd做服务发现（暂时通过读本地配置）
+* 使用zookeeper做服务发现（暂时通过读本地配置）
 * Websocket网络通信
 * ugk-agent 游戏服务进程管理
 * 压力测试客户端使用ugk-web开发界面（vue3）
