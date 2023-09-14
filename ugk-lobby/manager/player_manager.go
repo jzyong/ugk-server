@@ -3,6 +3,7 @@ package manager
 import (
 	"github.com/jzyong/golib/log"
 	"github.com/jzyong/golib/util"
+	config2 "github.com/jzyong/ugk/common/config"
 	"github.com/jzyong/ugk/common/manager"
 	mode2 "github.com/jzyong/ugk/common/mode"
 	"github.com/jzyong/ugk/lobby/mode"
@@ -95,7 +96,7 @@ func handRequest(player *mode.Player, msg *mode2.UgkMessage) {
 
 // 玩家每秒监测
 func playerSecondUpdate(player *mode.Player) {
-	if util.Now().Sub(player.GetHeartTime()) > config.ServerHeartInterval {
+	if util.Now().Sub(player.GetHeartTime()) > config2.ServerHeartInterval {
 		log.Info("玩家：%d 心跳超时离线：%v", player.Id, util.Now().Sub(player.GetHeartTime()).Minutes())
 		close(player.GetCloseChan())
 	}

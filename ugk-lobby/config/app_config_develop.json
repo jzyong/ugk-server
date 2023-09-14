@@ -1,7 +1,10 @@
 {
   "id": 1,
-  "rpcUrl": "192.168.110.2:3021",
-  "gateUrl": "127.0.0.1:5001",
+  "name": "lobby",
   "profile": "develop",
-  "logLevel": "DEBUG"
+  "logLevel": "DEBUG",
+  "rpcUrl": "192.168.110.2:3021",
+  "zookeeperUrls": [
+    "192.168.110.2:2181"
+  ]
 }

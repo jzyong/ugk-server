@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"flag"
 	"github.com/jzyong/golib/log"
+	config2 "github.com/jzyong/ugk/common/config"
 	"os"
 )
 
@@ -15,22 +16,14 @@ var FilePath string
 
 // AppConfig 配置
 type AppConfig struct {
-	Id       uint32 `json:"id"`       //服务器ID
-	RpcUrl   string `json:"rpcUrl"`   //rpc 地址
-	GateUrl  string `json:"gateUrl"`  //登录服地址，TODO通过zookeeper进行
-	Profile  string `json:"profile"`  //个性化配置
-	LogLevel string `json:"logLevel"` //日志级别
+	config2.ServiceConfigImpl
 }
 
 func init() {
-	BaseConfig = &AppConfig{
-		Id:       1,
-		LogLevel: "DEBUG",
-		Profile:  "develop",
-	}
+	BaseConfig = &AppConfig{}
 }
 
-// 初始化项目配置和日志
+// InitConfigAndLog 初始化项目配置和日志
 func InitConfigAndLog() {
 	//1.配置文件路径
 	configPath := flag.String("config", "D:\\Go\\ugk-server\\ugk-lobby\\config\\app_config_develop.json", "配置文件加载路径")

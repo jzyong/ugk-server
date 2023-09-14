@@ -3,6 +3,7 @@ package manager
 import (
 	"bytes"
 	"encoding/binary"
+	"encoding/json"
 	"errors"
 	"fmt"
 	"github.com/jzyong/golib/log"
@@ -12,6 +13,7 @@ import (
 	"github.com/jzyong/ugk/message/message"
 	"github.com/xtaci/kcp-go/v5"
 	"google.golang.org/protobuf/proto"
+	"strconv"
 	"sync"
 	"time"
 )
@@ -19,9 +21,11 @@ import (
 // GateKcpClientManager 网络，kcp连接网关
 type GateKcpClientManager struct {
 	util.DefaultModule
-	IpClients          map[string]*GateKcpClient   //网络连接客户端 key=ip
+	Clients            []*GateKcpClient            //客户端
 	MessageHandFunc    messageHandFunc             //消息分发处理函数
 	ServerHeartRequest *message.ServerHeartRequest //服务器心跳消息
+	watchGateService   bool                        //是否在监听网关
+	serviceConfig      config.ServiceConfig        //本服务配置
 	mutex              sync.RWMutex
 }
 
@@ -30,7 +34,7 @@ var gateKcpClientSingletonOnce sync.Once
 
 func GetGateKcpClientManager() *GateKcpClientManager {
 	gateKcpClientSingletonOnce.Do(func() {
-		gateKcpClientManager = &GateKcpClientManager{IpClients: make(map[string]*GateKcpClient, 2)}
+		gateKcpClientManager = &GateKcpClientManager{Clients: make([]*GateKcpClient, 0, 2)}
 	})
 	return gateKcpClientManager
 }
@@ -40,10 +44,8 @@ func (m *GateKcpClientManager) Init() error {
 	return nil
 }
 
-// TODO 连接网关，需要服务发现
-
 // ConnectKcpServer 连接kcp服务器
-func (m *GateKcpClientManager) ConnectKcpServer(url string) {
+func (m *GateKcpClientManager) ConnectKcpServer(url string, serverId uint32) {
 
 	log.Info("连接网关：%s", url)
 	if udpSession, err := kcp.DialWithOptions(url, nil, 0, 0); err == nil {
@@ -64,7 +66,7 @@ func (m *GateKcpClientManager) ConnectKcpServer(url string) {
 		//Turbo Mode： ikcp_nodelay(kcp, 1, 10, 2, 1);
 		//s.SetNoDelay(0, 40, 0, 0)
 		udpSession.SetNoDelay(1, 10, 2, 1)
-		client := channelActive(udpSession, 1, url) //TODO 或者id
+		client := channelActive(udpSession, serverId, url)
 		go channelRead(client)
 	} else {
 		log.Error("连接kcp服务器失败：%v", err)
@@ -72,12 +74,14 @@ func (m *GateKcpClientManager) ConnectKcpServer(url string) {
 }
 
 // 移除网关客户端
-func (m *GateKcpClientManager) removeGateKcpClient(client *GateKcpClient) {
+func (m *GateKcpClientManager) removeClient(client *GateKcpClient) {
 	defer m.mutex.Unlock()
 	m.mutex.Lock()
-	if client, ok := m.IpClients[client.Url]; ok {
-		delete(m.IpClients, client.Url)
-		log.Info("网关：%d-%s 连接移除", client.Id, client.Url)
+	for i, kcpClient := range m.Clients {
+		if client.Id == kcpClient.Id {
+			m.Clients = append(m.Clients[:i], m.Clients[i+1:]...)
+			log.Info("网关：%d-%s 连接移除", client.Id, client.Url)
+		}
 	}
 }
 
@@ -91,7 +95,7 @@ func channelActive(session *kcp.UDPSession, serverId uint32, url string) *GateKc
 func channelInactive(client *GateKcpClient, err error) {
 	log.Info("%d - %s 连接关闭:%s", client.Id, client.UdpSession.RemoteAddr(), err)
 	// 移除网关连接
-	GetGateKcpClientManager().removeGateKcpClient(client)
+	GetGateKcpClientManager().removeClient(client)
 	close(client.CloseChan)
 }
 
@@ -145,6 +149,90 @@ func channelRead(client *GateKcpClient) {
 	}
 }
 
+func (m *GateKcpClientManager) Start(serviceConfig config.ServiceConfig) {
+	m.serviceConfig = serviceConfig
+	m.watchService()
+}
+
+// 监听 网关服务
+func (m *GateKcpClientManager) watchService() {
+	path := config.GetZKServicePath(m.serviceConfig.GetProfile(), "gate", 0)
+	conn := GetZookeeperManager().GetConn()
+	children, errors := util.ZKWatchChildrenW(conn, path, true)
+	m.watchGateService = true
+	go func() {
+		for m.watchGateService {
+			select {
+			case serverIds := <-children:
+				log.Info("网关服变更为：%v", serverIds)
+				m.updateClient(serverIds)
+			case err := <-errors:
+				//如果启动服务器监听节点或大厅全部关闭出现：zk: node does not exist，则后面无法再进行监听
+				log.Warn("网关服监听报错：%v", err)
+				m.watchGateService = false
+				return
+			}
+		}
+	}()
+}
+
+func (m *GateKcpClientManager) updateClient(serverIds []string) {
+	//遍历添加新连接
+	for _, serverIdStr := range serverIds {
+		m.addClient(serverIdStr)
+	}
+}
+
+func (m *GateKcpClientManager) GetClient(id uint32) *GateKcpClient {
+	m.mutex.RLock()
+	defer m.mutex.RUnlock()
+	for _, client := range m.Clients {
+		if client.Id == id {
+			return client
+		}
+	}
+	return nil
+}
+
+func (m *GateKcpClientManager) RandomClient() *GateKcpClient {
+	len := len(m.Clients)
+	if len < 1 {
+		log.Warn("无可用网关服")
+		return nil
+	}
+	return m.Clients[int(util.RandomInt32(0, int32(len-1)))]
+}
+
+// 添加大厅 客户端
+func (m *GateKcpClientManager) addClient(serverIdStr string) {
+	serverId, err := strconv.ParseInt(serverIdStr, 10, 32)
+	if err != nil {
+		log.Warn("网关服ID错误： %v =>%v", serverIdStr, err)
+		return
+	}
+	client := m.GetClient(uint32(serverId))
+	if client != nil {
+		return
+	}
+	//连接服务器
+	conn := GetZookeeperManager().GetConn()
+	path := config.GetZKServiceConfigPath(m.serviceConfig.GetProfile(), "gate", uint32(serverId))
+	serviceConfigStr := util.ZKGet(conn, path)
+	if serviceConfigStr == "" {
+		log.Warn("%v 登录服配置未找到", serverIdStr)
+		return
+	}
+	type Result struct {
+		PrivateIp string `json:"privateIp"` //内网IP
+		GamePort  uint16 `json:"gamePort"`  //内网游戏连接端口 TCP
+	}
+
+	var result = &Result{}
+	json.Unmarshal([]byte(serviceConfigStr), result)
+	var serverUrl = fmt.Sprintf("%s:%d", result.PrivateIp, result.GamePort)
+	m.ConnectKcpServer(serverUrl, uint32(serverId))
+}
+
 func (m *GateKcpClientManager) Run() {
 }
 
@@ -193,7 +281,7 @@ func NewGateKcpClient(udpSession *kcp.UDPSession, serverId uint32, url string) *
 	//只在此处添加
 	defer GetGateKcpClientManager().mutex.Unlock()
 	GetGateKcpClientManager().mutex.Lock()
-	GetGateKcpClientManager().IpClients[url] = client
+	GetGateKcpClientManager().Clients = append(GetGateKcpClientManager().Clients, client)
 	log.Info("网关：%d-%s 连接注册", client.Id, client.Url)
 	go client.run()
 	return client
