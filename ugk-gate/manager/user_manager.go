@@ -7,7 +7,7 @@ import (
 	"fmt"
 	"github.com/jzyong/golib/log"
 	"github.com/jzyong/golib/util"
-	"github.com/jzyong/ugk/common/constant"
+	"github.com/jzyong/ugk/common/config"
 	"github.com/jzyong/ugk/common/mode"
 	"github.com/jzyong/ugk/message/message"
 	"github.com/xtaci/kcp-go/v5"
@@ -133,7 +133,7 @@ func (user *User) run() {
 // 玩家更新逻辑
 func (user *User) secondUpdate() {
 	// 心跳监测
-	if time.Now().Sub(user.HeartTime) > constant.ClientHeartInterval {
+	if time.Now().Sub(user.HeartTime) > config.ClientHeartInterval {
 		channelInactive(user, errors.New(fmt.Sprintf("心跳超时%f", time.Now().Sub(user.HeartTime).Seconds())))
 	}
 
@@ -228,7 +228,7 @@ func (user *User) TransmitToLobby(clientData []byte, messageId uint32) error {
 // 客户端byte转换为服务器byte流
 func (user *User) toGameBytes(clientData []byte, messageId uint32) ([]byte, error) {
 	clientLength := len(clientData)
-	if clientLength > constant.MessageLimit {
+	if clientLength > config.MessageLimit {
 		log.Error("%d - %s 发送消息 %d  失败：消息太长", user.Id, user.ClientSession.RemoteAddr().String(), messageId)
 		return nil, errors.New("消息超长")
 	}
@@ -262,7 +262,7 @@ func (user *User) TransmitToClient(gameData []byte, messageId uint32) error {
 		return errors.New(fmt.Sprintf("玩家：%d无客户端连接", user.Id))
 	}
 	gameLength := len(gameData)
-	if gameLength > constant.MessageLimit {
+	if gameLength > config.MessageLimit {
 		log.Error("%d - %s 发送消息 %d  失败：消息太长", user.Id, user.ClientSession.RemoteAddr().String(), messageId)
 		return errors.New("消息超长")
 	}
@@ -298,7 +298,7 @@ func (user *User) SendToClient(mid message.MID, msg proto.Message, seq uint32) e
 		return err
 	}
 	protoLength := len(protoData)
-	if protoLength > constant.MessageLimit {
+	if protoLength > config.MessageLimit {
 		log.Error("%d - %s 发送消息 %d 失败：%v", user.Id, user.ClientSession.RemoteAddr().String(), mid, err)
 		return errors.New("消息超长")
 	}

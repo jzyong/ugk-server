@@ -3,6 +3,8 @@ package manager
 import (
 	"github.com/jzyong/golib/log"
 	"github.com/jzyong/golib/util"
+	"github.com/jzyong/ugk/common/manager"
+	"github.com/jzyong/ugk/login/config"
 	"sync"
 )
 
@@ -23,6 +25,7 @@ func GetLoginManager() *LoginManager {
 
 func (m *LoginManager) Init() error {
 	log.Info("LoginManager 初始化......")
+	manager.GetZookeeperManager().Start(config.BaseConfig)
 	return nil
 }
 
@@ -30,4 +33,5 @@ func (m *LoginManager) Run() {
 }
 
 func (m *LoginManager) Stop() {
+	manager.GetZookeeperManager().Stop()
 }

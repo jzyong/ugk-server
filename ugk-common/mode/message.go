@@ -1,7 +1,7 @@
 package mode
 
 import (
-	"github.com/jzyong/ugk/common/constant"
+	"github.com/jzyong/ugk/common/config"
 	"sync"
 )
 
@@ -16,7 +16,7 @@ func init() {
 		return &UgkMessage{}
 	}
 	bytePool.New = func() any {
-		return make([]byte, 0, constant.MessageLimit)
+		return make([]byte, 0, config.MessageLimit)
 	}
 }
 

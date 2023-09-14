@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"encoding/binary"
 	"github.com/jzyong/golib/util"
-	"github.com/jzyong/ugk/common/constant"
 	"github.com/jzyong/ugk/message/message"
 	"github.com/xtaci/kcp-go/v5"
 	"google.golang.org/protobuf/proto"
@@ -18,7 +17,7 @@ func TestConnect(t *testing.T) {
 	// dial to the echo server
 
 	if sess, err := kcp.DialWithOptions("127.0.0.1:5000", nil, 0, 0); err == nil {
-		sess.SetMtu(constant.MTU)
+		sess.SetMtu(config.MTU)
 		sess.SetStreamMode(true) //true 流模式：使每个段数据填充满,避免浪费
 		sess.SetNoDelay(1, 10, 2, 1)
 		var seq uint32 = 1

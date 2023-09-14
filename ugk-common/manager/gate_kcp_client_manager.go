@@ -7,7 +7,7 @@ import (
 	"fmt"
 	"github.com/jzyong/golib/log"
 	"github.com/jzyong/golib/util"
-	"github.com/jzyong/ugk/common/constant"
+	"github.com/jzyong/ugk/common/config"
 	"github.com/jzyong/ugk/common/mode"
 	"github.com/jzyong/ugk/message/message"
 	"github.com/xtaci/kcp-go/v5"
@@ -51,8 +51,8 @@ func (m *GateKcpClientManager) ConnectKcpServer(url string) {
 		//设置参数 https://github.com/skywind3000/kcp/blob/master/README.en.md#protocol-configuration
 		//UDPSession mtu最大限制为1500，发送消息大于1500字节kcp底层默认分为几段进行消息发送（标识每段frg=0），
 		//但是接收端每次只能读取1段（因为每段frg=0）， 需要自己截取几段字节流封装
-		udpSession.SetMtu(constant.MTU)
-		udpSession.SetWindowSize(constant.WindowSize, constant.WindowSize)
+		udpSession.SetMtu(config.MTU)
+		udpSession.SetWindowSize(config.WindowSize, config.WindowSize)
 		udpSession.SetReadBuffer(8 * 1024 * 1024)
 		udpSession.SetWriteBuffer(16 * 1024 * 1024)
 		udpSession.SetStreamMode(true) //true 流模式：使每个段数据填充满,避免浪费; false 消息模式 每个消息一个数据段
@@ -124,7 +124,7 @@ func channelRead(client *GateKcpClient) {
 			//小端
 			length := int(uint32(receiveBytes[index]) | uint32(receiveBytes[index+1])<<8 | uint32(receiveBytes[index+2])<<16 | uint32(receiveBytes[index+3])<<24)
 			length += 4 //客户端请求长度不包含自身
-			if length > constant.MessageLimit {
+			if length > config.MessageLimit {
 				channelInactive(client, errors.New(fmt.Sprintf("消息太长:%d", length)))
 				return
 			}
@@ -219,7 +219,7 @@ func (client *GateKcpClient) run() {
 // 玩家更新逻辑
 func (client *GateKcpClient) secondUpdate() {
 	// 心跳监测
-	if time.Now().Sub(client.HeartTime) > constant.ClientHeartInterval {
+	if time.Now().Sub(client.HeartTime) > config.ClientHeartInterval {
 		channelInactive(client, errors.New(fmt.Sprintf("心跳超时%f", time.Now().Sub(client.HeartTime).Seconds())))
 	}
 	//定时发送服务器信息，充当心跳
@@ -295,7 +295,7 @@ func (client *GateKcpClient) SendToGate(playerId int64, mid message.MID, msg pro
 		return err
 	}
 	protoLength := len(protoData)
-	if protoLength > constant.MessageLimit {
+	if protoLength > config.MessageLimit {
 		log.Error("%d - %s 发送消息 %d 失败：%v", client.Id, client.UdpSession.RemoteAddr().String(), mid, err)
 		return errors.New("消息超长")
 	}

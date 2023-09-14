@@ -24,12 +24,12 @@ func (m *GRpcManager) Init() error {
 	loginService := new(LoginService)
 	message.RegisterLoginServiceServer(server, loginService)
 	//容器中运行 绑定ip地址不一定正确走配置
-	portStr := strings.Split(config.AppConfigManager.RpcUrl, ":")[1]
+	portStr := strings.Split(config.BaseConfig.RpcUrl, ":")[1]
 	listen, err := net.Listen("tcp", fmt.Sprintf("0.0.0.0:%v", portStr))
 	if err != nil {
 		log.Fatal("%v", err)
 	}
-	log.Info("grpc listen on:%v", config.AppConfigManager.RpcUrl)
+	log.Info("grpc listen on:%v", config.BaseConfig.RpcUrl)
 	go server.Serve(listen)
 	log.Info("GRpcManager:init end......")
 

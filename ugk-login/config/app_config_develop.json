@@ -1,6 +1,11 @@
 {
   "id": 1,
-  "rpcUrl": "192.168.110.2:3011",
+  "name": "login",
   "profile": "develop",
-  "logLevel": "DEBUG"
+  "rpcUrl": "192.168.110.2:3011",
+  "logLevel": "DEBUG",
+  "zookeeperUrls": [
+    "192.168.110.2:2181"
+  ]
 }
+

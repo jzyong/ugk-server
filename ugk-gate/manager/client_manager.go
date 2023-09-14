@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"github.com/jzyong/golib/log"
 	"github.com/jzyong/golib/util"
-	"github.com/jzyong/ugk/common/constant"
+	config2 "github.com/jzyong/ugk/common/config"
 	"github.com/jzyong/ugk/common/mode"
 	"github.com/jzyong/ugk/gate/config"
 	"github.com/xtaci/kcp-go/v5"
@@ -54,8 +54,8 @@ func (m *ClientManager) runKcpServer() {
 			//设置参数 https://github.com/skywind3000/kcp/blob/master/README.en.md#protocol-configuration
 			//UDPSession mtu最大限制为1500，发送消息大于1500字节kcp底层默认分为几段进行消息发送（标识每段frg=0），
 			//但是接收端每次只能读取1段（因为每段frg=0）， 需要自己截取几段字节流封装
-			s.SetMtu(constant.MTU)
-			s.SetWindowSize(constant.WindowSize, constant.WindowSize)
+			s.SetMtu(config2.MTU)
+			s.SetWindowSize(config2.WindowSize, config2.WindowSize)
 			s.SetReadBuffer(8 * 1024 * 1024)
 			s.SetWriteBuffer(16 * 1024 * 1024)
 			s.SetStreamMode(true) //true 流模式：使每个段数据填充满,避免浪费; false 消息模式 每个消息一个数据段
@@ -119,7 +119,7 @@ func channelRead(user *User) {
 			//小端
 			length := int(uint32(receiveBytes[index]) | uint32(receiveBytes[index+1])<<8 | uint32(receiveBytes[index+2])<<16 | uint32(receiveBytes[index+3])<<24)
 			length += 4 //客户端请求长度不包含自身
-			if length > constant.MessageLimit {
+			if length > config2.MessageLimit {
 				channelInactive(user, errors.New(fmt.Sprintf("消息太长")))
 				return
 			}
