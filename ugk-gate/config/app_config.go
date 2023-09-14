@@ -4,35 +4,27 @@ import (
 	"encoding/json"
 	"flag"
 	"github.com/jzyong/golib/log"
+	config2 "github.com/jzyong/ugk/common/config"
 	"os"
 )
 
-// AppConfigManager 配置
-var AppConfigManager *AppConfig
+// BaseConfig 配置
+var BaseConfig *AppConfig
 
 // FilePath 配置文件路径
 var FilePath string
 
 // AppConfig 配置
 type AppConfig struct {
-	Id            uint16   `json:"id"`            //服务器ID
-	RpcUrl        string   `json:"rpcUrl"`        //rpc 地址
-	LoginUrl      string   `json:"loginUrl"`      //登录服地址，TODO通过zookeeper进行
-	ZookeeperUrls []string `json:"zookeeperUrls"` //zookeeper 地址
-	Profile       string   `json:"profile"`       //个性化配置
-	LogLevel      string   `json:"logLevel"`      //日志级别
-	PublicIp      string   `json:"publicIp"`      //公网IP
-	PrivateIp     string   `json:"privateIp"`     //内网IP
-	ClientPort    uint16   `json:"clientPort"`    //客户端端口 KCP
-	GamePort      uint16   `json:"gamePort"`      //内网游戏连接端口 TCP
+	config2.ServiceConfigImpl
+	PublicIp   string `json:"publicIp"`   //公网IP
+	PrivateIp  string `json:"privateIp"`  //内网IP
+	ClientPort uint16 `json:"clientPort"` //客户端端口 KCP
+	GamePort   uint16 `json:"gamePort"`   //内网游戏连接端口 TCP
 }
 
 func init() {
-	AppConfigManager = &AppConfig{
-		Id:       1,
-		LogLevel: "DEBUG",
-		Profile:  "develop",
-	}
+	BaseConfig = &AppConfig{}
 }
 
 // 初始化项目配置和日志
@@ -41,10 +33,10 @@ func InitConfigAndLog() {
 	configPath := flag.String("config", "D:\\Go\\ugk-server\\ugk-gate\\config\\app_config_develop.json", "配置文件加载路径")
 	flag.Parse()
 	FilePath = *configPath
-	AppConfigManager.Reload()
+	BaseConfig.Reload()
 
 	//2.关闭debug
-	if "DEBUG" != AppConfigManager.LogLevel {
+	if "DEBUG" != BaseConfig.LogLevel {
 		log.CloseDebug()
 	}
 	log.SetLogFile("log", "gate")

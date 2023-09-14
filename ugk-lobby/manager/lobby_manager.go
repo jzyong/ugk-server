@@ -35,9 +35,9 @@ func GetLobbyManager() *LobbyManager {
 func (m *LobbyManager) Init() error {
 	log.Info("LobbyManager 初始化......")
 
-	manager.GetGateKcpClientManager().ConnectKcpServer(config.AppConfigManager.GateUrl)
+	manager.GetGateKcpClientManager().ConnectKcpServer(config.BaseConfig.GateUrl)
 	manager.GetGateKcpClientManager().ServerHeartRequest = &message.ServerHeartRequest{Server: &message.ServerInfo{
-		Id:   config.AppConfigManager.Id,
+		Id:   config.BaseConfig.Id,
 		Name: "lobby",
 	}}
 	return nil

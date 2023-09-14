@@ -12,7 +12,7 @@ const (
 	ZKRedisPath            = "/ugk/%s/redis"       //redis地址
 )
 
-// GetZKServicePath 获取服务地址
+// GetZKServicePath 获取服务地址 serverId >0拼接服务器id路径
 func GetZKServicePath(profile string, name string, serverId uint32) string {
 	path := fmt.Sprintf(ZKServicePath, profile, name)
 	if serverId > 0 {

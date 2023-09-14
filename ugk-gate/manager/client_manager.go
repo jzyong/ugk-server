@@ -41,7 +41,7 @@ func (m *ClientManager) Init() error {
 
 // 启动kcp服务器
 func (m *ClientManager) runKcpServer() {
-	url := fmt.Sprintf("%v:%v", config.AppConfigManager.PublicIp, config.AppConfigManager.ClientPort)
+	url := fmt.Sprintf("%v:%v", config.BaseConfig.PublicIp, config.BaseConfig.ClientPort)
 	log.Info("玩家udp监听地址：%s", url)
 	if listener, err := kcp.ListenWithOptions(url, nil, 0, 0); err == nil {
 		for {

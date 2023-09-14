@@ -1,9 +1,12 @@
 {
   "id": 1,
-  "rpcUrl": "192.168.110.2:3001",
-  "loginUrl" : "192.168.110.2:3011",
+  "name": "gate",
   "profile": "develop",
   "logLevel": "DEBUG",
+  "rpcUrl": "192.168.110.2:3001",
+  "zookeeperUrls": [
+    "192.168.110.2:2181"
+  ],
   "publicIp": "127.0.0.1",
   "privateIp": "127.0.0.1",
   "clientPort": 5000,

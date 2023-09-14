@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"github.com/jzyong/golib/log"
 	"github.com/jzyong/golib/util"
+	config2 "github.com/jzyong/ugk/common/config"
 	"github.com/jzyong/ugk/common/mode"
 	"github.com/jzyong/ugk/gate/config"
 	"github.com/jzyong/ugk/message/message"
@@ -49,7 +50,7 @@ func (m *ServerManager) Init() error {
 
 // 启动kcp服务器
 func (m *ServerManager) runKcpServer() {
-	url := fmt.Sprintf("%v:%v", config.AppConfigManager.PrivateIp, config.AppConfigManager.GamePort)
+	url := fmt.Sprintf("%v:%v", config.BaseConfig.PrivateIp, config.BaseConfig.GamePort)
 	log.Info("游戏udp监听地址：%s", url)
 	if listener, err := kcp.ListenWithOptions(url, nil, 0, 0); err == nil {
 		for {
@@ -62,8 +63,8 @@ func (m *ServerManager) runKcpServer() {
 			//设置参数 https://github.com/skywind3000/kcp/blob/master/README.en.md#protocol-configuration
 			//UDPSession mtu最大限制为1500，发送消息大于1500字节kcp底层默认分为几段进行消息发送（标识每段frg=0），
 			//但是接收端每次只能读取1段（因为每段frg=0）， 需要自己截取几段字节流封装
-			s.SetMtu(config.MTU)
-			s.SetWindowSize(config.WindowSize, config.WindowSize)
+			s.SetMtu(config2.MTU)
+			s.SetWindowSize(config2.WindowSize, config2.WindowSize)
 			s.SetReadBuffer(8 * 1024 * 1024)
 			s.SetWriteBuffer(16 * 1024 * 1024)
 			s.SetStreamMode(true) //true 流模式：使每个段数据填充满,避免浪费; false 消息模式 每个消息一个数据段
@@ -175,7 +176,7 @@ func gameChannelRead(client *GameKcpClient) {
 			//小端
 			length := int(uint32(receiveBytes[index]) | uint32(receiveBytes[index+1])<<8 | uint32(receiveBytes[index+2])<<16 | uint32(receiveBytes[index+3])<<24)
 			length += 4 //客户端请求长度不包含自身
-			if length > config.MessageLimit {
+			if length > config2.MessageLimit {
 				gameChannelInactive(client, errors.New(fmt.Sprintf("消息太长")))
 				return
 			}
@@ -266,7 +267,7 @@ func (client *GameKcpClient) run() {
 // 玩家更新逻辑
 func (client *GameKcpClient) secondUpdate() {
 	// 心跳监测
-	if time.Now().Sub(client.HeartTime) > config.ClientHeartInterval {
+	if time.Now().Sub(client.HeartTime) > config2.ClientHeartInterval {
 		gameChannelInactive(client, errors.New(fmt.Sprintf("心跳超时%f", time.Now().Sub(client.HeartTime).Seconds())))
 	}
 
@@ -353,7 +354,7 @@ func (client *GameKcpClient) SendToGame(playerId int64, mid message.MID, msg pro
 		return err
 	}
 	protoLength := len(protoData)
-	if protoLength > config.MessageLimit {
+	if protoLength > config2.MessageLimit {
 		log.Error("%d - %s 发送消息 %d 失败：%v", client.Id, client.UdpSession.RemoteAddr().String(), mid, err)
 		return errors.New("消息超长")
 	}

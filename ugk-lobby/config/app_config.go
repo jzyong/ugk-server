@@ -7,8 +7,8 @@ import (
 	"os"
 )
 
-// AppConfigManager 配置
-var AppConfigManager *AppConfig
+// BaseConfig 配置
+var BaseConfig *AppConfig
 
 // FilePath 配置文件路径
 var FilePath string
@@ -23,7 +23,7 @@ type AppConfig struct {
 }
 
 func init() {
-	AppConfigManager = &AppConfig{
+	BaseConfig = &AppConfig{
 		Id:       1,
 		LogLevel: "DEBUG",
 		Profile:  "develop",
@@ -36,10 +36,10 @@ func InitConfigAndLog() {
 	configPath := flag.String("config", "D:\\Go\\ugk-server\\ugk-lobby\\config\\app_config_develop.json", "配置文件加载路径")
 	flag.Parse()
 	FilePath = *configPath
-	AppConfigManager.Reload()
+	BaseConfig.Reload()
 
 	//2.关闭debug
-	if "DEBUG" != AppConfigManager.LogLevel {
+	if "DEBUG" != BaseConfig.LogLevel {
 		log.CloseDebug()
 	}
 	log.SetLogFile("log", "lobby")

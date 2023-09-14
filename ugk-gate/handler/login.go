@@ -21,10 +21,17 @@ func login(user *manager.User, msg *mode.UgkMessage) {
 	request := &message.LoginRequest{}
 	proto.Unmarshal(msg.Bytes, request)
 
-	//TODO 通过zookeeper获取login服务
 	log.Info("%d 登录 序号=%d %+v", user.Id, msg.Seq, request)
-	conn := manager.GetLoginClientManager().ClientConn
-	client := message.NewLoginServiceClient(conn)
+	loginClient := manager.GetLoginClientManager().RandomClient()
+	if loginClient == nil {
+		user.SendToClient(message.MID_LoginRes, &message.LoginResponse{Result: &message.MessageResult{
+			Status: 500,
+			Msg:    "login service close",
+		}}, msg.Seq)
+		return
+	}
+
+	client := message.NewLoginServiceClient(loginClient.ClientConn)
 	response, err := client.Login(context.Background(), request)
 	if err != nil {
 		user.SendToClient(message.MID_LoginRes, &message.LoginResponse{Result: &message.MessageResult{
