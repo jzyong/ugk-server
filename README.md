@@ -68,7 +68,6 @@
 
 
 ### 计划
-* 使用mongodb和redis存储数据
 * Websocket网络通信
 * ugk-agent 游戏服务进程管理
 * 压力测试客户端使用ugk-web开发界面（vue3）

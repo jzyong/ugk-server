@@ -17,6 +17,7 @@ import (
 type DataManager struct {
 	util.DefaultModule
 	DataProcessChan chan func() //数据处理
+	snowflake       *util.Snowflake
 }
 
 var dataManager = &DataManager{}
@@ -26,6 +27,7 @@ func GetDataManager() *DataManager {
 	dataSingletonOnce.Do(func() {
 		dataManager = &DataManager{
 			DataProcessChan: make(chan func(), 1024),
+			snowflake:       util.NewSnowflake(int16(config.BaseConfig.Id)),
 		}
 	})
 	return dataManager
@@ -90,7 +92,7 @@ func (dataManager *DataManager) ReloadConfig(ctx context.Context) string {
 }
 
 // 获取聊天室
-func (dataManager *DataManager) findChatRoom(id string) *mode.Account {
+func (dataManager *DataManager) FindAccount(id string) *mode.Account {
 
 	collection := manager.GetMongoManager().GetProductionDB().Database(config.BaseConfig.MongoDbName).Collection("account")
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
@@ -100,14 +102,16 @@ func (dataManager *DataManager) findChatRoom(id string) *mode.Account {
 	if result.Err() != nil {
 		//插入新的实例对象
 		if result.Err() == mongo.ErrNoDocuments {
-			chatRoom := &mode.Account{
-				Id: id,
+			playerId, _ := dataManager.snowflake.GetId()
+			account := &mode.Account{
+				Id:       id,
+				PlayerId: playerId,
 			}
-			_, err := collection.InsertOne(ctx, chatRoom)
+			_, err := collection.InsertOne(ctx, account)
 			if err != nil {
 				log.Error("创建账号错误：%v", err)
 			}
-			return chatRoom
+			return account
 		}
 		log.Error("查询账号错误：%v", result.Err())
 		return nil

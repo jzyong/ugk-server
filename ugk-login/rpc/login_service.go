@@ -2,6 +2,7 @@ package rpc
 
 import (
 	"context"
+	"github.com/jzyong/ugk/login/manager"
 	"github.com/jzyong/ugk/message/message"
 )
 
@@ -12,19 +13,12 @@ type LoginService struct {
 
 var accounts = make(map[string]int64)
 
-func init() {
-	accounts["test1"] = 1
-	accounts["test2"] = 2
-	accounts["test3"] = 3
-	accounts["test4"] = 4
-
-}
-
 func (service *LoginService) Login(ctx context.Context, request *message.LoginRequest) (*message.LoginResponse, error) {
-	//TODO 暂时写死4个账号
 	response := &message.LoginResponse{}
 
-	if id, ok := accounts[request.Account]; !ok {
+	account := manager.GetDataManager().FindAccount(request.GetAccount())
+
+	if account == nil {
 		response.Result = &message.MessageResult{
 			Status: 404,
 			Msg:    "Account password error",
@@ -34,7 +28,7 @@ func (service *LoginService) Login(ctx context.Context, request *message.LoginRe
 			Status: 200,
 			Msg:    "Login Success",
 		}
-		response.PlayerId = id
+		response.PlayerId = account.PlayerId
 	}
 
 	return response, nil
