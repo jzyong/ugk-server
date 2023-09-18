@@ -26,6 +26,7 @@ func GetLoginManager() *LoginManager {
 func (m *LoginManager) Init() error {
 	log.Info("LoginManager 初始化......")
 	manager.GetZookeeperManager().Start(config.BaseConfig)
+	manager.GetMongoManager().StartProductionDB(config.BaseConfig.MongoUrl)
 	return nil
 }
 
@@ -34,4 +35,5 @@ func (m *LoginManager) Run() {
 
 func (m *LoginManager) Stop() {
 	manager.GetZookeeperManager().Stop()
+	manager.GetMongoManager().Stop()
 }

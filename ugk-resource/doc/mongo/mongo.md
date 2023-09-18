@@ -15,6 +15,6 @@ db.createUser({ user:'admin',pwd:'123456',roles:[ { role:'userAdminAnyDatabase',
 db.auth('admin', '123456')
 
 # 3. 连接地址
-mongodb://admin:123456@192.168.110.2:27017/?authSource=admin&readPreference=primary&appname=MongoDB%20Compass&ssl=false
+mongodb://admin:123456@192.168.110.2:27017/?authSource=admin&readPreference=primary&ssl=false
 
 ```

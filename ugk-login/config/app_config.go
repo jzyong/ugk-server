@@ -17,10 +17,14 @@ var FilePath string
 // AppConfig 配置
 type AppConfig struct {
 	config2.ServiceConfigImpl
+	MongoUrl    string `json:"mongoUrl"`
+	MongoDbName string `json:"mongoDbName"`
 }
 
 func init() {
-	BaseConfig = &AppConfig{}
+	BaseConfig = &AppConfig{
+		MongoDbName: "ugk-login",
+	}
 }
 
 // InitConfigAndLog 初始化项目配置和日志
