@@ -7,6 +7,7 @@ import (
 	"github.com/jzyong/ugk/lobby/config"
 	"github.com/jzyong/ugk/lobby/handler"
 	"github.com/jzyong/ugk/lobby/manager"
+	"github.com/jzyong/ugk/lobby/rpc"
 	"runtime"
 )
 
@@ -37,6 +38,7 @@ type ModuleManager struct {
 	LobbyManager         *manager.LobbyManager
 	GateKcpClientManager *manager2.GateKcpClientManager
 	PlayerManager        *manager.PlayerManager
+	GrpcManager          *rpc.GRpcManager
 }
 
 // Init 初始化模块
@@ -44,6 +46,7 @@ func (m *ModuleManager) Init() error {
 	m.LobbyManager = m.AppendModule(manager.GetLobbyManager()).(*manager.LobbyManager)
 	m.GateKcpClientManager = m.AppendModule(manager2.GetGateKcpClientManager()).(*manager2.GateKcpClientManager)
 	m.PlayerManager = m.AppendModule(manager.GetPlayerManager()).(*manager.PlayerManager)
+	m.GrpcManager = m.AppendModule(&rpc.GRpcManager{}).(*rpc.GRpcManager)
 	return m.DefaultModuleManager.Init()
 }
 

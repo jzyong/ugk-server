@@ -6,6 +6,7 @@ import (
 	"github.com/jzyong/ugk/gate/config"
 	"github.com/jzyong/ugk/gate/handler"
 	"github.com/jzyong/ugk/gate/manager"
+	"github.com/jzyong/ugk/gate/rpc"
 	"runtime"
 )
 
@@ -39,6 +40,7 @@ type ModuleManager struct {
 	ServerManager      *manager.ServerManager
 	UserManager        *manager.UserManager
 	LoginClientManager *manager.LoginClientManager
+	GrpcManager        *rpc.GRpcManager
 }
 
 // Init 初始化模块
@@ -48,6 +50,7 @@ func (m *ModuleManager) Init() error {
 	m.ServerManager = m.AppendModule(manager.GetServerManager()).(*manager.ServerManager)
 	m.UserManager = m.AppendModule(manager.GetUserManager()).(*manager.UserManager)
 	m.LoginClientManager = m.AppendModule(manager.GetLoginClientManager()).(*manager.LoginClientManager)
+	m.GrpcManager = m.AppendModule(&rpc.GRpcManager{}).(*rpc.GRpcManager)
 	return m.DefaultModuleManager.Init()
 }
 
