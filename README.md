@@ -64,6 +64,7 @@
 * unity 专用服务器中实现和网关kcp相互连接
 * 网关服务器连接分为三个大类：lobby、功能微服务、游戏微服务
 * 网关和大厅通信联调(完成登录流程，显示大厅游戏列表)
+* 时间同步使用Mirror的（NetworkConnectionToClient（服务器）、Mathd、SnapshotInterpolation、NetworkTime(客户端)，NetworkClient_TimeInterpolation）时间同步计算只是在服务器？客户端通过心跳同步服务器时间NetworkPingMessage？
 
 
 
@@ -71,7 +72,7 @@
 * Websocket网络通信
 * ugk-agent 游戏服务进程管理
 * 压力测试客户端使用ugk-web开发界面（vue3）
-* 添加聊天、排行、匹配服务
+* 添加聊天、排行、匹配、房间（Mirror）服务
 * 广告、充值接取
 * 断线重连
 * 使用c#开发导表等图形化工具
