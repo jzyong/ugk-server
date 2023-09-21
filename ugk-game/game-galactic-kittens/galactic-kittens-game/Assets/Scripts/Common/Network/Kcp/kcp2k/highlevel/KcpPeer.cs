@@ -18,7 +18,7 @@ namespace kcp2k
 
     /// <summary>
     /// <para>连接会话</para>
-    /// <para>协议格式：消息长度4+消息id4+序列号4+时间戳8+protobuf消息体</para>
+    /// <para>协议格式：消息长度4+玩家ID8+消息id4+序列号4+时间戳8+protobuf消息体</para>
     /// Mirror 有可靠、不可靠消息，验证、心跳等逻辑，这里自定义简化
     /// </summary>
     public class KcpPeer
@@ -233,7 +233,7 @@ namespace kcp2k
             }
         }
 
-        // send a ping occasionally in order to not time out on the other end. @
+        // send a ping occasionally in order to not time out on the other end. 
         void HandlePing(uint time)
         {
             
@@ -445,8 +445,8 @@ namespace kcp2k
         // feed the rest to kcp. 
         public void RawInput(ArraySegment<byte> segment)
         {
-            // ensure valid size 消息长度4+消息id4+序列号4+时间戳8+protobuf消息体
-            if (segment.Count <= 20) return;
+            // ensure valid size 消息长度4+玩家ID8+消息id4+序列号4+时间戳8+protobuf消息体
+            if (segment.Count < 28) return;
             
             // parse message
             ArraySegment<byte> message =

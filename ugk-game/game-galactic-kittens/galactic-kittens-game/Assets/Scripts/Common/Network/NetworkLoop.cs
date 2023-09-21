@@ -29,7 +29,7 @@ using UnityEngine;
 using UnityEngine.LowLevel;
 using UnityEngine.PlayerLoop;
 
-namespace Network
+namespace Common.Network
 {
     /// <summary>
     /// 注册自定义网络循环

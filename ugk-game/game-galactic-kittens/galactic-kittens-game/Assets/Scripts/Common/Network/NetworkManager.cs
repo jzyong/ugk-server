@@ -1,24 +1,23 @@
-using UnityEngine;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
+using Common.Tools;
 using Google.Protobuf;
 using kcp2k;
-using System.Linq;
-using Tools;
-using UnityEngine.SceneManagement;
+using UnityEngine;
 
-namespace Network
+namespace Common.Network
 {
     /// <summary>
     /// <para>网络管理</para>
-    /// KcpClient，KcpPeer，NetworkClient应该自己封装，在Mirror上的基础开发层层回调，头都绕晕了
-    /// 
+    ///  <para>KcpClient，KcpPeer，NetworkClient应该自己封装，在Mirror上的基础开发层层回调，头都绕晕了</para>
+    /// 管理多个玩家,需要修改 TODO
     /// </summary>
     [DisallowMultipleComponent]
-    public class NetworkManager : MonoBehaviour
+    public class NetworkManager<T> : MonoBehaviour where T : Person
     {
-        // transport layer 
+        // transport layer  TODO 通过参数传入，且是多个网关
         [Header("Network Info")]
         [Tooltip("Transport component attached to this object that server and client will use to connect")]
         public Transport transport;
@@ -36,16 +35,17 @@ namespace Network
         /// <summary>
         /// 消息处理
         /// </summary>
-        public delegate void MessageHandler(UgkMessage ugkMessage);
-
+        public delegate void MessageHandler<T>(T player, UgkMessage ugkMessage) where T :Person;
+        
         /// <summary>
         /// 消息处理器
         /// </summary>
-        private Dictionary<MID, MessageHandler> messageHandlers;
+        private Dictionary<MID, MessageHandler<T>> messageHandlers;
+        
 
 
         /// <summary>The one and only NetworkManager </summary>
-        public static NetworkManager Singleton { get; internal set; }
+        public static NetworkManager<T> Singleton { get; internal set; }
 
 
         /// <summary>True if the server is running or client is connected/connecting.</summary>
@@ -63,18 +63,10 @@ namespace Network
 
         public void Start()
         {
-            //TODO 临时测试
+            //TODO 临时测试,需要连接多个网关，网关地址从外部传入（怎么传）？
             StartClient();
         }
-
-        public void Update()
-        {
-        }
-
-        // virtual so that inheriting classes' LateUpdate() can call base.LateUpdate() too
-        public void LateUpdate()
-        {
-        }
+        
 
 
         //
@@ -148,7 +140,7 @@ namespace Network
         }
 
 
-        // @
+        // 
         bool InitializeSingleton()
         {
             if (Singleton != null && Singleton == this)
@@ -211,7 +203,7 @@ namespace Network
         }
 
         /// <summary>
-        /// 发送消息
+        /// 发送消息 TODO 需要争对每个连接
         /// </summary>
         /// <param name="mid"></param>
         /// <param name="message"></param>
@@ -220,6 +212,11 @@ namespace Network
             Send(mid, message.ToByteArray());
         }
 
+        /// <summary>
+        ///  TODO  需要争对每个连接
+        /// </summary>
+        /// <param name="mid"></param>
+        /// <param name="data"></param>
         public void Send(MID mid, byte[] data)
         {
             // Send((int) mid, data);
@@ -247,13 +244,12 @@ namespace Network
         ///
         /// 参考：
         /// </summary>
-        /// <param name="messageHandlerGroupId"></param>
         /// <exception cref="NonStaticHandlerException"></exception>
         protected void CreateMessageHandlersDictionary()
         {
             MethodInfo[] methods = FindMessageHandlers();
 
-            messageHandlers = new Dictionary<MID, MessageHandler>(methods.Length);
+            messageHandlers = new Dictionary<MID, MessageHandler<T>>(methods.Length);
             foreach (MethodInfo method in methods)
             {
                 MessageMapAttribute attribute = method.GetCustomAttribute<MessageMapAttribute>();
@@ -261,7 +257,7 @@ namespace Network
                 if (!method.IsStatic)
                     throw new NonStaticHandlerException(method.DeclaringType, method.Name);
 
-                Delegate clientMessageHandler = Delegate.CreateDelegate(typeof(MessageHandler), method, false);
+                Delegate clientMessageHandler = Delegate.CreateDelegate(typeof(MessageHandler<T>), method, false);
                 if (clientMessageHandler != null)
                 {
                     // It's a message handler for Client instances
@@ -272,7 +268,7 @@ namespace Network
                     }
                     else
                     {
-                        messageHandlers.Add(attribute.mid, (MessageHandler)clientMessageHandler);
+                        messageHandlers.Add(attribute.mid, (MessageHandler<T>)clientMessageHandler);
                         Debug.Log($"消息:${attribute.mid}  添加处理器成功 ：${clientMessageHandler.Method.Name}");
                     }
                 }
@@ -284,8 +280,8 @@ namespace Network
         protected MethodInfo[] FindMessageHandlers()
         {
             // string thisAssemblyName = Assembly.GetExecutingAssembly().GetName().FullName;
-            
-             return Assembly.GetExecutingAssembly().GetTypes().SelectMany(t =>
+
+            return Assembly.GetExecutingAssembly().GetTypes().SelectMany(t =>
                     t.GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static |
                                  BindingFlags
                                      .Instance)) // Include instance methods in the search so we can show the developer an error instead of silently not adding instance methods to the dictionary
@@ -298,7 +294,7 @@ namespace Network
         /// </summary>
         /// <param name="messageId"></param>
         /// <returns></returns>
-        public MessageHandler GetMessageHandler(UInt32 messageId)
+        public MessageHandler<T> GetMessageHandler(UInt32 messageId)
         {
             MID mid = (MID)messageId;
             return messageHandlers[mid];

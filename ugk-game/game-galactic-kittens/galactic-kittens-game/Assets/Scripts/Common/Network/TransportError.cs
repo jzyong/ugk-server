@@ -1,4 +1,4 @@
-namespace Network
+namespace Common.Network
 {
     /// <summary>
     /// 传输层错误

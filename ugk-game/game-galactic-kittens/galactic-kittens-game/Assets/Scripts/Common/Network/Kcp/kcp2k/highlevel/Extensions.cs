@@ -121,7 +121,7 @@ namespace kcp2k
         // allows for reuse when overwriting KcpServer/Client (i.e. for relays).
         // => wrapped with Poll to avoid WouldBlock allocating new SocketException.
         // => wrapped with try-catch to ignore WouldBlock exception.
-        // make sure to set socket.Blocking = false before using this! @
+        // make sure to set socket.Blocking = false before using this! 
         public static bool ReceiveNonBlocking(this Socket socket, byte[] recvBuffer, out ArraySegment<byte> data)
         {
             data = default;

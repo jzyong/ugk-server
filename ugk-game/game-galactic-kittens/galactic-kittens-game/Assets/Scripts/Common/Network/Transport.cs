@@ -25,7 +25,7 @@
 using System;
 using UnityEngine;
 
-namespace Network
+namespace Common.Network
 {
     /// <summary>
     /// <para>Abstract transport layer component </para>
@@ -33,7 +33,7 @@ namespace Network
     /// </summary>
     public abstract class Transport : MonoBehaviour
     {
-        /// <summary>The current transport used </summary>
+        /// <summary>The current transport used 遗弃，因为有多个连接</summary>
         public static Transport active;
 
         /// <summary>Is this transport available in the current platform? </summary>

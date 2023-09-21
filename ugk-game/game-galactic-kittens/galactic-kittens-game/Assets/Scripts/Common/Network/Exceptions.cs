@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Reflection;
 
-namespace Tools
+namespace Common.Network
 {
     /// <summary>
     /// handler异常

@@ -67,12 +67,15 @@
      <Compile Include="Assets\Scripts\Game\Messages\Constant.cs" />
      <Compile Include="Assets\Scripts\Common\Network\Exceptions.cs" />
      <Compile Include="Assets\Scripts\Common\Network\Kcp\kcp2k\kcp\AckItem.cs" />
+     <Compile Include="Assets\Scripts\Game\Manager\PlayerManager.cs" />
      <Compile Include="Assets\Scripts\Common\Network\MessageMapAttribute.cs" />
      <Compile Include="Assets\Scripts\Common\Network\Kcp\KcpTransport.cs" />
      <Compile Include="Assets\Scripts\Common\Network\NetworkClient.cs" />
+     <Compile Include="Assets\Scripts\Game\Manager\GalacticKittensNetworkManager.cs" />
      <Compile Include="Assets\Scripts\Common\Network\Kcp\kcp2k\kcp\Utils.cs" />
      <Compile Include="Assets\Scripts\Game\Messages\Common.cs" />
      <Compile Include="Assets\Scripts\Common\Network\Transport.cs" />
+     <Compile Include="Assets\Scripts\Common\Tools\Person.cs" />
      <Compile Include="Assets\Scripts\Common\Network\Kcp\kcp2k\highlevel\Common.cs" />
      <Compile Include="Assets\Scripts\Common\Network\Kcp\kcp2k\kcp\Kcp.cs" />
      <Compile Include="Assets\Scripts\Common\Network\Kcp\kcp2k\highlevel\KcpClient.cs" />

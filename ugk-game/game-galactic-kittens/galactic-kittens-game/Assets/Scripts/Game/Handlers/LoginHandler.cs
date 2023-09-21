@@ -1,7 +1,7 @@
 ﻿using System;
 using Game.Manager;
 using Google.Protobuf;
-using Network;
+using Common.Network;
 using UnityEngine;
 
 
@@ -21,7 +21,7 @@ namespace Game.Handlers
         /// <param name="timeStamp"></param>
         /// <param name="data"></param>
         [MessageMap(MID.HeartRes)]
-        private static void Heart(UgkMessage ugkMessage)
+        private static void Heart(Player player,UgkMessage ugkMessage)
         {
            // Debug.Log($" 收到心跳返回：{timeStamp}");
            
@@ -32,7 +32,7 @@ namespace Game.Handlers
         /// 登录
         /// </summary>
         [MessageMap(MID.LoginRes)]
-        private static void Login(UgkMessage ugkMessage)
+        private static void Login(Player player,UgkMessage ugkMessage)
         {
             var response = new LoginResponse();
             response.MergeFrom(ugkMessage.Bytes);
@@ -44,7 +44,7 @@ namespace Game.Handlers
         /// 加载玩家数据
         /// </summary>
         [MessageMap(MID.LoadPlayerRes)]
-        private static void LoadPlayer(UgkMessage ugkMessage)
+        private static void LoadPlayer(Player player,UgkMessage ugkMessage)
         {
             // var response = new LoadPlayerResponse();
             // response.MergeFrom(ugkMessage.Bytes);

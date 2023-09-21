@@ -25,7 +25,7 @@ namespace kcp2k
         }
 
         // if connections drop under heavy load, increase to OS limit.
-        // if still not enough, increase the OS limit. @
+        // if still not enough, increase the OS limit. 
         public static void ConfigureSocketBuffers(Socket socket, int recvBufferSize, int sendBufferSize)
         {
             // log initial size for comparison.

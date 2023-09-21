@@ -2,7 +2,7 @@
 using System.Runtime.CompilerServices;
 using kcp2k;
 
-namespace Network
+namespace Common.Network
 {
     /// <summary>
     /// 自定义消息
@@ -13,6 +13,12 @@ namespace Network
         /// 消息id
         /// </summary>
         public UInt32 MessageId { get; set; }
+        
+        /// <summary>
+        /// 玩家ID
+        /// </summary>
+        public Int64 PlayerId { get; set; }
+        
         /// <summary>
         /// 序列号
         /// </summary>
@@ -33,6 +39,7 @@ namespace Network
             MessageId = 0;
             Seq = 0;
             TimeStamp = 0;
+            PlayerId = 0;
             Bytes = null;
         }
     }

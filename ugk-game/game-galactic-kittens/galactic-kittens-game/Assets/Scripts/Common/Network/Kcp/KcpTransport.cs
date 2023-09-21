@@ -4,7 +4,7 @@ using System.Net;
 using UnityEngine;
 using Unity.Collections;
 using UnityEngine.Serialization;
-using Network;
+using Common.Network;
 
 namespace kcp2k
 {

@@ -65,7 +65,7 @@ namespace kcp2k
         }
 
         /// <summary>
-        /// 连接 @
+        /// 连接 
         /// </summary>
         /// <param name="address"></param>
         /// <param name="port"></param>
@@ -159,7 +159,7 @@ namespace kcp2k
         }
 
         // io - output.
-        // virtual so it may be modified for relays, etc. @
+        // virtual so it may be modified for relays, etc. 
         protected virtual void RawSend(ArraySegment<byte> data)
         {
             try

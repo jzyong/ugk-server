@@ -4,10 +4,10 @@ using System.Linq;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-namespace Network
+namespace Common.Network
 {
     /// <summary>
-    /// 网络连接状态  TODO
+    /// 网络连接状态  
     /// </summary>
     public enum ConnectState
     {
@@ -22,11 +22,9 @@ namespace Network
         Disconnected
     }
 
-    //消息处理委托 TODO 传入proto Message
-    public delegate void MessageHandDelegate(int seq, long timeStamp);
 
     /// <summary>NetworkClient with connection to server.</summary>
-    public static partial class NetworkClient
+    public   class NetworkClient
     {
         // time & value snapshot interpolation are separate.
         // -> time is interpolated globally on NetworkClient / NetworkConnection
@@ -41,9 +39,6 @@ namespace Network
         public static float sendInterval => sendRate < int.MaxValue ? 1f / sendRate : 0; // for 30 Hz, that's 33ms
         static double lastSendTime;
 
-        // message handlers by messageId 
-        internal static readonly Dictionary<int, MessageHandDelegate> handlers =
-            new Dictionary<int, MessageHandDelegate>();
 
 
         /// <summary>Client's NetworkConnection to server.  TODO </summary>
@@ -86,7 +81,7 @@ namespace Network
 
             // += so that other systems can also hook into it (i.e. statistics)
             Transport.active.OnClientConnected += OnTransportConnected;
-            Transport.active.OnClientDataReceived += OnTransportData;
+            //Transport.active.OnClientDataReceived += OnTransportData; //Game自定义实现
             Transport.active.OnClientDisconnected += OnTransportDisconnected;
             Transport.active.OnClientError += OnTransportError;
             Transport.active.SendHeart += SendHeart;
@@ -97,18 +92,16 @@ namespace Network
         {
             // -= so that other systems can also hook into it (i.e. statistics)
             Transport.active.OnClientConnected -= OnTransportConnected;
-            Transport.active.OnClientDataReceived -= OnTransportData;
+           // Transport.active.OnClientDataReceived -= OnTransportData; //Game自定义实现
             Transport.active.OnClientDisconnected -= OnTransportDisconnected;
             Transport.active.OnClientError -= OnTransportError;
             Transport.active.SendHeart -= SendHeart;
         }
 
         // connect /////////////////////////////////////////////////////////////
-        // initialize is called before every connect @
+        // initialize is called before every connect 
         static void Initialize()
         {
-            //TODO 消息注册通过类扫描，反射自动注册
-            RegisterMessageHandlers();
             Transport.active.enabled = true;
         }
 
@@ -147,10 +140,9 @@ namespace Network
         }
 
         // transport events ////////////////////////////////////////////////////
-        // called by Transport @
+        // called by Transport 
         static void OnTransportConnected()
         {
-                //TZODO
                 // reset network time stats
                 // NetworkTime.ResetStatics();
 
@@ -159,37 +151,6 @@ namespace Network
                 connectState = ConnectState.Connected;
                 // NetworkTime.UpdateClient();
                 OnConnectedEvent?.Invoke();
-        }
-
-
-        // called by Transport 获取消息并处理 
-        internal static void OnTransportData(ArraySegment<byte> data)
-        {
-            using (UgkMessage ugkMessage =UgkMessagePool.Get())
-            {
-                //  `消息长度4+消息id4+序列号4+时间戳8+protobuf消息体`
-                var bytes = data.Array;
-                Int32 messageLength = BitConverter.ToInt32(bytes, 0);
-                ugkMessage.MessageId = BitConverter.ToUInt32(bytes, 4);
-                ugkMessage.Seq = BitConverter.ToUInt32(bytes, 8);
-                ugkMessage.TimeStamp =  BitConverter.ToInt64(bytes, 12);
-            
-            
-                // Debug.Log($"收到消息 ID={messageId} Seq={seq} timeStamp={timeStamp}");
-                var handler = NetworkManager.Singleton.GetMessageHandler(ugkMessage.MessageId);
-                if (handler==null)
-                {
-                    Debug.LogWarning($"消息{(MID)ugkMessage.MessageId}处理方法未实现");
-                }
-                else
-                {
-                    var protoData = new byte[messageLength-16];
-                    Array.Copy(bytes, 20, protoData, 0, protoData.Length);
-                    ugkMessage.Bytes = protoData;
-                    handler(ugkMessage);
-                }
-            }
-   
         }
 
         // called by Transport
@@ -217,7 +178,6 @@ namespace Network
 
             connectState = ConnectState.Disconnected;
             
-            //TODO
 
             // transport handlers are only added when connecting.
             // so only remove when actually disconnecting.
@@ -238,30 +198,10 @@ namespace Network
         /// </summary>
         public static void SendHeart()
         {
-            HeartRequest request = new HeartRequest();
-            NetworkManager.Singleton.Send(MID.HeartReq,request);
+            // HeartRequest request = new HeartRequest(); //TODO 发送服务器内部心跳消息 ，需要每个客户端单独发送
+            // NetworkManager.Singleton.Send(MID.HeartReq,request);
         }
 
-        // send ////////////////////////////////////////////////////////////////
-        /// <summary>Send a NetworkMessage to the server over the given channel.</summary>
-        public static void Send<T>(T message)
-            where T :  Object
-        {
-            //TODO 继承protobuf
-           //TODO
-        }
-
-        // message handlers //////////////////////////////////////////////////// @
-        internal static void RegisterMessageHandlers()
-        {
-            //TODO 消息注册通过类扫描，反射自动注册
-        }
-
-     
-
-        
-
-      
 
        
 
@@ -295,8 +235,6 @@ namespace Network
         public static void Shutdown()
         {
            
-            handlers.Clear();
-
             // reset statics
             connectState = ConnectState.None;
             lastSendTime = 0;

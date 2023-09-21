@@ -4,7 +4,7 @@ using System;
 namespace kcp2k
 {
     // [Serializable] to show it in Unity inspector.
-    // 'class' so we can set defaults easily. @
+    // 'class' so we can set defaults easily. 
     [Serializable]
     public class KcpConfig
     {

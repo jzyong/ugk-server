@@ -2,7 +2,7 @@
 // translation to Mirror errors, etc.
 namespace kcp2k
 {
-    //@
+    //
     public enum ErrorCode : byte
     {
         DnsResolve,       // failed to resolve a host name
