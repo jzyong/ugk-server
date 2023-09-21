@@ -66,6 +66,7 @@
 * 网关和大厅通信联调(完成登录流程，显示大厅游戏列表)
 * 时间同步使用Mirror的（NetworkConnectionToClient（服务器）、Mathd、SnapshotInterpolation、NetworkTime(客户端)，NetworkClient_TimeInterpolation，ClientCube）时间同步计算只是在服务器？客户端通过心跳同步服务器时间NetworkPingMessage？
 * unity double时间网络传输转换为毫秒使用int64传输
+* ugk-client 弹窗增加tween动画
 
 
 ### 计划
