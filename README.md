@@ -25,7 +25,7 @@
 | ugk-stress-testing | 压力测试客户端集群                 |
 
 ### 游戏
-| 服务	                                                               | 描述         |
+| 游戏	                                                               | 描述         |
 |-------------------------------------------------------------------|------------|
 | [game-galactic-kittens](ugk-game/game-galactic-kittens/README.md) | 2D多人飞船射击游戏 |
 
@@ -38,6 +38,7 @@
 * Protobuf+Grpc 内部网络通信
 * Zookeeper 服务发现注册
 * Mongodb,Redis 数据存储
+* Docker、Jenkins 进行CI/CD
 
 
 
