@@ -5,11 +5,11 @@
 
 1. 玩家在大厅选择GalacticKittens进入匹配服`galactic-kittens-match`
 2. 准备完成请求`agent-manager`分配服务器，调用对应服务器的`agent`创建unity游戏docker进程`galactic-kittens-game`
-3. `galactic-kittens-game`主动创建`lobby`,`galactic-kittens-match`,`gate`的网络连接
+3. `galactic-kittens-game`主动创建与`lobby`,`galactic-kittens-match`,`gate`的网络连接
 4. 玩家进入`galactic-kittens-game`unity游戏场景，向`lobby`请求玩家基础数据，然后进行游戏
 5. 游戏结束请求`galactic-kittens-match`进行结算
 6. `galactic-kittens-match`请求`lobby`进行数据存储更新
-7. `galactic-kittens-match`请求`agent-manager`执行游戏进程`galactic-kittens-game`结束销毁
+7. `galactic-kittens-match`请求`agent-manager`执行游戏进程`galactic-kittens-game`的结束销毁
 8. 玩家返回游戏大厅
 
 

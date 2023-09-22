@@ -1,35 +1,46 @@
 # UGK-Server
 
-&emsp;&emsp;快节奏多人联网游戏demo，UGK-Server：unity、go、kcp server 。
-服务器使用微服务架构，服务器游戏逻辑、物理碰撞使用Unity、C#开发。
-对应客户端[ugk-client](https://github.com/jzyong/ugk-client)。 研究开发中......
+&emsp;&emsp;快节奏多人联网游戏Demo，UGK-Server：unity、go、kcp server 。
+服务器使用微服务架构，服务器游戏逻辑需要物理碰撞、寻路的使用Unity、C#开发，其他使用Go开发。
+对应客户端[ugk-client](https://github.com/jzyong/ugk-client)。 开发中......
 ![ugk-architecture](ugk-resource/img/ugk_architecture.png)
 
 
 ## 服务
+### 通用
+| 服务	                | 描述                        |
+|--------------------|---------------------------|
+| ugk-agent          | 执行unity服务器docker进程的创建销毁   |
+| ugk-agent-manager  | 管理ugk-agent服务，为玩家房间分配游戏进程 |
+| ugk-api            | HTTP Restful请求接口          |
+| ugk-charge         | 充值                        |
+| ugk-chat           | 聊天                        |
+| ugk-common         | 公共逻辑封装                    |
+| ugk-game           | 游戏微服务                     |
+| ugk-gate           | 网关，消息转换                   |
+| ugk-lobby          | 大厅，一般逻辑                   |
+| ugk-login          | 登录、账号                     |
+| ugk-message        | 协议消息                      |
+| ugk-resource       | 文档、脚本                     |
+| ugk-stress-testing | 压力测试客户端集群                 |
 
-| 服务	                | 描述                     |
-|--------------------|------------------------|
-| ugk-agent          | 管理unity专用服务器docker游戏进程 |
-| ugk-api            | HTTP Restful请求接口       |
-| ugk-charge         | 充值                     |
-| ugk-chat           | 聊天                     |
-| ugk-common         | 公共逻辑封装                 |
-| ugk-game           | 游戏微服务                  |
-| ugk-gate           | 网关，消息转换                |
-| ugk-lobby          | 大厅，一般逻辑                |
-| ugk-login          | 登录、账号                  |
-| ugk-message        | 协议消息                   |
-| ugk-resource       | 文档、脚本                  |
-| ugk-stress-testing | 压力测试客户端集群              |
+### 游戏
+| 服务	                                                               | 描述         |
+|-------------------------------------------------------------------|------------|
+| [game-galactic-kittens](ugk-game/game-galactic-kittens/README.md) | 2D多人飞船射击游戏 |
 
 
 
 ## 技术选择
-* Unity 客户端和服务器
-* go 服务器
-* kcp 网络通信
-* protobuf+grpc
+* Unity、C# 客户端和服务器
+* Go 服务器
+* Kcp 网络通信 忘记和网关，网关和后端服务通信
+* Protobuf+Grpc 内部网络通信
+* Zookeeper 服务发现注册
+* Mongodb,Redis 数据存储
+
+
+
 
 ### 参考资料
 #### 网络
