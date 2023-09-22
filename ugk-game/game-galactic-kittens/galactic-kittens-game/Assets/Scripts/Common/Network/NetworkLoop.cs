@@ -190,8 +190,6 @@ namespace Common.Network
             // however, we only want to call NetworkServer/Client in play mode.
             if (!Application.isPlaying) return;
 
-            //Debug.Log($"NetworkEarlyUpdate {Time.time}");
-            NetworkClient.NetworkEarlyUpdate();
             // invoke event after mirror has done it's early updating.
             OnEarlyUpdate?.Invoke();
         }
@@ -205,7 +203,6 @@ namespace Common.Network
             //Debug.Log($"NetworkLateUpdate {Time.time}");
             // invoke event before mirror does its final late updating.
             OnLateUpdate?.Invoke();
-            NetworkClient.NetworkLateUpdate();
         }
     }
 }

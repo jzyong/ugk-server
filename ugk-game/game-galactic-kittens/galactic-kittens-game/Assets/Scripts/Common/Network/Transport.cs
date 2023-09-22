@@ -33,9 +33,13 @@ namespace Common.Network
     /// </summary>
     public abstract class Transport : MonoBehaviour
     {
-        /// <summary>The current transport used 遗弃，因为有多个连接</summary>
-        public static Transport active;
+        
+        [Tooltip(
+            "服务器地址")]
+        public string networkAddress = "192.168.110.2";
 
+        [Tooltip("服务器端口")] public ushort port = 5000;
+        
         /// <summary>Is this transport available in the current platform? </summary>
         public abstract bool Available();
 

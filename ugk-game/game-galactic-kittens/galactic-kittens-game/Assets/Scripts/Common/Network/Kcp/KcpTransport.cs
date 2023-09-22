@@ -49,6 +49,8 @@ namespace kcp2k
         [Header("Allowed Max Message Sizes\nBased on Receive Window Size")]
         [Tooltip("KCP reliable max message size shown for convenience. Can be changed via ReceiveWindowSize.")]
         [ReadOnly] public int ReliableMaxMessageSize = 0; // readonly, displayed from OnValidate
+        
+      
 
         // config is created from the serialized properties above.
         // we can expose the config directly in the future.

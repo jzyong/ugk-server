@@ -6,55 +6,54 @@ using Common.Tools;
 using Google.Protobuf;
 using kcp2k;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Common.Network
 {
     /// <summary>
     /// <para>网络管理</para>
     ///  <para>KcpClient，KcpPeer，NetworkClient应该自己封装，在Mirror上的基础开发层层回调，头都绕晕了</para>
-    /// 管理多个玩家,需要修改 TODO
+    /// 管理多个玩家,需要修改 
     /// </summary>
     [DisallowMultipleComponent]
     public class NetworkManager<T> : MonoBehaviour where T : Person
     {
-        // transport layer  TODO 通过参数传入，且是多个网关
-        [Header("Network Info")]
-        [Tooltip("Transport component attached to this object that server and client will use to connect")]
-        public Transport transport;
-
-        /// <summary>Server's address for clients to connect to. </summary>
-        [Tooltip(
-            "Network Address where the client should connect to the server. Server does not use this for anything.")]
-        public string networkAddress = "192.168.110.2";
-
-        [Tooltip("服务器端口")] public ushort port = 5000;
-
-        // 消息序列号
-        private UInt32 _seq;
+        // 传输层   需要通过参数传入，且是多个网关
+        [FormerlySerializedAs("transport")] [Header("网络信息")] [Tooltip("连接多个网关的传输层配置")]
+        public Transport[] transports;
 
         /// <summary>
         /// 消息处理
         /// </summary>
-        public delegate void MessageHandler<T>(T player, UgkMessage ugkMessage) where T :Person;
-        
+        public delegate void MessageHandler<T>(T player, UgkMessage ugkMessage) where T : Person;
+
         /// <summary>
         /// 消息处理器
         /// </summary>
         private Dictionary<MID, MessageHandler<T>> messageHandlers;
+
+        /// <summary>
+        /// 网关客户端
+        /// </summary>
+        static Dictionary<String, NetworkClient> gateClients = new Dictionary<string, NetworkClient>(2);
+
+        // time & value snapshot interpolation are separate.
+        // -> time is interpolated globally on NetworkClient / NetworkConnection
+        // -> value is interpolated per-component, i.e. NetworkTransform.
+        // however, both need to be on the same send interval.
+        //
+        // additionally, server & client need to use the same send interval.
+        // otherwise it's too easy to accidentally cause interpolation issues if
+        // a component sends with client.interval but interpolates with
+        // server.interval, etc.
+        public static int sendRate => 30;
+        public static float sendInterval => sendRate < int.MaxValue ? 1f / sendRate : 0; // for 30 Hz, that's 33ms
         
-
-
-        /// <summary>The one and only NetworkManager </summary>
+        
         public static NetworkManager<T> Singleton { get; internal set; }
-
-
-        /// <summary>True if the server is running or client is connected/connecting.</summary>
-        public bool isNetworkActive => NetworkClient.active;
-
 
         public void Awake()
         {
-            // Don't allow collision-destroyed second instance to continue.
             Log.Info = Debug.Log;
             Log.Error = Debug.LogError;
             Log.Warning = Debug.LogWarning;
@@ -66,81 +65,52 @@ namespace Common.Network
             //TODO 临时测试,需要连接多个网关，网关地址从外部传入（怎么传）？
             StartClient();
         }
-        
 
 
-        //
-        void SetupClient()
-        {
-            InitializeSingleton();
-            CreateMessageHandlersDictionary();
-        }
-
-        /// <summary>Starts the client, connects it to the server with networkAddress. </summary>
+        /// <summary>
+        /// 连接网关
+        /// </summary>
         public void StartClient()
         {
-            if (NetworkClient.active)
+            if (transports == null)
             {
-                Debug.LogWarning("Client already started.");
+                Debug.LogError("没有可连接的网关配置");
                 return;
             }
 
-
-            SetupClient();
-
-
-            if (string.IsNullOrWhiteSpace(networkAddress))
+            //TODO 断线重连这些？
+            foreach (var transport in transports)
             {
-                Debug.LogError("Must set the Network Address field in the manager");
-                return;
+                NetworkClient networkClient = new NetworkClient();
+                networkClient.Transport = transport;
+                networkClient.SendHeart = SendHeart;
+                networkClient.Connect(transport.networkAddress,transport.port);
+                String url = $"{transport.networkAddress}:{transport.port}";
+                gateClients[url] = networkClient;
             }
-            // Debug.Log($"NetworkManager StartClient address:{networkAddress}");
-
-            NetworkClient.Connect(networkAddress, port);
         }
 
 
         /// <summary>Stops and disconnects the client. </summary>
-        public void StopClient()
+        private void StopClient()
         {
-            // ask client -> transport to disconnect.
-            // handle voluntary and involuntary disconnects in OnClientDisconnect.
-            //
-            //   StopClient
-            //     NetworkClient.Disconnect
-            //       Transport.Disconnect
-            //         ...
-            //       Transport.OnClientDisconnect
-            //     NetworkClient.OnTransportDisconnect
-            //   NetworkManager.OnClientDisconnect
-            NetworkClient.Disconnect();
-
-            // UNET invoked OnDisconnected cleanup immediately.
-            // let's keep it for now, in case any projects depend on it.
-            // TODO simply remove this in the future.
+            foreach (var gateClient in gateClients)
+            {
+                //TODO  NetworkClient.Disconnect();
+            }
         }
 
-        // called when quitting the application by closing the window / pressing
-        // stop in the editor. virtual so that inheriting classes'
-        // OnApplicationQuit() can call base.OnApplicationQuit() too
         public virtual void OnApplicationQuit()
         {
-            // stop client first
-            // (we want to send the quit packet to the server instead of waiting
-            //  for a timeout)
-            if (NetworkClient.isConnected)
-            {
-                StopClient();
-                //Debug.Log("OnApplicationQuit: stopped client");
-            }
-
-
-            // Call ResetStatics to reset statics and singleton
+            StopClient();
             ResetStatics();
         }
 
 
-        // 
+        /// <summary>
+        /// 初始化
+        /// </summary>
+        /// <returns></returns>
         bool InitializeSingleton()
         {
             if (Singleton != null && Singleton == this)
@@ -156,7 +126,6 @@ namespace Common.Network
                 return false;
             }
 
-            //Debug.Log("NetworkManager created singleton (DontDestroyOnLoad)");
             Singleton = this;
             if (Application.isPlaying)
             {
@@ -166,24 +135,9 @@ namespace Common.Network
                 DontDestroyOnLoad(gameObject);
             }
 
-            // set active transport AFTER setting singleton.
-            // so only if we didn't destroy ourselves.
-
-            // This tries to avoid missing transport errors and more clearly tells user what to fix.
-            if (transport == null)
-                if (TryGetComponent(out Transport newTransport))
-                {
-                    Debug.LogWarning(
-                        $"No Transport assigned to Network Manager - Using {newTransport} found on same object.");
-                    transport = newTransport;
-                }
-                else
-                {
-                    Debug.LogError("No Transport on Network Manager...add a transport and assign it.");
-                    return false;
-                }
-
-            Transport.active = transport;
+            CreateMessageHandlersDictionary();
+            NetworkLoop.OnEarlyUpdate = NetworkEarlyUpdate;
+            NetworkLoop.OnLateUpdate = NetworkLateUpdate;
             return true;
         }
 
@@ -197,10 +151,6 @@ namespace Common.Network
             Singleton = null;
         }
 
-        public void OnDestroy()
-        {
-            //Debug.Log("NetworkManager destroyed");
-        }
 
         /// <summary>
         /// 发送消息 TODO 需要争对每个连接
@@ -219,24 +169,24 @@ namespace Common.Network
         /// <param name="data"></param>
         public void Send(MID mid, byte[] data)
         {
-            // Send((int) mid, data);
-
-            // 消息长度4+消息id4+序列号4+时间戳8+protobuf消息体
-            byte[] msgLength = BitConverter.GetBytes(data.Length + 16);
-            byte[] msgId = BitConverter.GetBytes((int)mid);
-            ++_seq;
-            byte[] seq = BitConverter.GetBytes(_seq);
-            long time = 0; //TODO 时间戳生成
-            byte[] timeStamp = BitConverter.GetBytes(time);
-            byte[] datas = new byte[20 + data.Length];
-
-            Array.Copy(msgLength, 0, datas, 0, msgLength.Length);
-            Array.Copy(msgId, 0, datas, 4, msgId.Length);
-            Array.Copy(seq, 0, datas, 8, seq.Length);
-            Array.Copy(timeStamp, 0, datas, 12, seq.Length);
-            Array.Copy(data, 0, datas, 20, data.Length);
-            ArraySegment<byte> segment = new ArraySegment<byte>(datas);
-            Transport.active.ClientSend(segment);
+            // // Send((int) mid, data);
+            // // TODO 移到client中
+            //
+            // // 消息长度4+消息id4+序列号4+时间戳8+protobuf消息体
+            // byte[] msgLength = BitConverter.GetBytes(data.Length + 16);
+            // byte[] msgId = BitConverter.GetBytes((int)mid);
+            // byte[] seq = BitConverter.GetBytes(0);
+            // long time = 0; //TODO 时间戳生成
+            // byte[] timeStamp = BitConverter.GetBytes(time);
+            // byte[] datas = new byte[20 + data.Length];
+            //
+            // Array.Copy(msgLength, 0, datas, 0, msgLength.Length);
+            // Array.Copy(msgId, 0, datas, 4, msgId.Length);
+            // Array.Copy(seq, 0, datas, 8, seq.Length);
+            // Array.Copy(timeStamp, 0, datas, 12, seq.Length);
+            // Array.Copy(data, 0, datas, 20, data.Length);
+            // ArraySegment<byte> segment = new ArraySegment<byte>(datas);
+            // Transport.active.ClientSend(segment);
         }
 
         /// <summary>
@@ -245,7 +195,7 @@ namespace Common.Network
         /// 参考：
         /// </summary>
         /// <exception cref="NonStaticHandlerException"></exception>
-        protected void CreateMessageHandlersDictionary()
+        private void CreateMessageHandlersDictionary()
         {
             MethodInfo[] methods = FindMessageHandlers();
 
@@ -277,7 +227,7 @@ namespace Common.Network
 
         /// <summary>查找消息处理方法</summary>
         /// <returns>An array containing message handler methods.</returns>
-        protected MethodInfo[] FindMessageHandlers()
+        private MethodInfo[] FindMessageHandlers()
         {
             // string thisAssemblyName = Assembly.GetExecutingAssembly().GetName().FullName;
 
@@ -299,5 +249,37 @@ namespace Common.Network
             MID mid = (MID)messageId;
             return messageHandlers[mid];
         }
+        
+        /// <summary>
+        /// 发送心跳消息
+        /// </summary>
+        public  void SendHeart()
+        {
+            // HeartRequest request = new HeartRequest(); //TODO 发送服务器内部心跳消息 ，需要每个客户端单独发送
+            // NetworkManager.Singleton.Send(MID.HeartReq,request);
+        }
+        
+        /// <summary>
+        /// 使用unity 主循环更新
+        /// </summary>
+        public static   void NetworkEarlyUpdate()
+        {
+            foreach (var pair in gateClients)
+            {
+                pair.Value.Transport.ClientEarlyUpdate();
+            }
+        }
+        
+        /// <summary>
+        /// 使用unity 主循环更新
+        /// </summary>
+        public static   void NetworkLateUpdate()
+        {
+            foreach (var pair in gateClients)
+            {
+                pair.Value.Transport.ClientEarlyUpdate();
+            }
+        }
+        
     }
 }
