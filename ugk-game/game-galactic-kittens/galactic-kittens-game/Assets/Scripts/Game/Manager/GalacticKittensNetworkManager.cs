@@ -10,7 +10,7 @@ namespace Game.Manager
     public class GalacticKittensNetworkManager : NetworkManager<Player>
     {
         //获取消息并处理  TODO 每个连接创建进行消息回调注册
-        private static void OnTransportData(ArraySegment<byte> data)
+        protected override void OnTransportData(ArraySegment<byte> data)
         {
             using (UgkMessage ugkMessage = UgkMessagePool.Get())
             {
@@ -23,7 +23,8 @@ namespace Game.Manager
                 ugkMessage.TimeStamp = BitConverter.ToInt64(bytes, 20);
 
 
-                // Debug.Log($"收到消息 ID={messageId} Seq={seq} timeStamp={timeStamp}");
+                Debug.Log(
+                    $"{ugkMessage.PlayerId}收到消息 ID={ugkMessage.MessageId} Seq={ugkMessage.Seq} timeStamp={ugkMessage.TimeStamp}");
                 var handler = Singleton.GetMessageHandler(ugkMessage.MessageId);
                 if (handler == null)
                 {
@@ -36,9 +37,28 @@ namespace Game.Manager
                     Array.Copy(bytes, 28, protoData, 0, protoData.Length);
                     ugkMessage.Bytes = protoData;
                     var player = PlayerManager.Singleton.GetPlayer(ugkMessage.PlayerId);
-                    handler(player,ugkMessage);
+                    handler(player, ugkMessage);
                 }
             }
+        }
+
+        protected override ServerHeartRequest GetServerHeartRequest()
+        {
+            if (heartRequest == null)
+            {
+                ServerHeartRequest request = new ServerHeartRequest()
+                {
+                    //TODO 完整信息
+                    Server = new ServerInfo()
+                    {
+                        Id = 1,
+                        Name = "test",
+                    }
+                };
+                heartRequest = request;
+            }
+
+            return heartRequest;
         }
     }
 }

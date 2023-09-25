@@ -29,6 +29,6 @@ func serverHeart(user *manager.User, client *manager.GameKcpClient, msg *mode.Ug
 	client.Id = serverInfo.GetId()
 	client.Name = serverInfo.GetName()
 	manager.GetServerManager().UpdateGameServer(serverInfo, client)
-	//log.Info("%v-%v 心跳", serverInfo.GetId(), serverInfo.GetName())
+	log.Info("%v-%v 心跳", serverInfo.GetId(), serverInfo.GetName())
 	client.SendToGame(0, message.MID_ServerHeartRes, response, 0)
 }

@@ -155,10 +155,8 @@ namespace kcp2k
         // process incoming in early update
         public override void ClientEarlyUpdate()
         {
-            // only process messages while transport is enabled.
-            // scene change messsages disable it to stop processing.
-            // (see also: https://github.com/vis2k/Mirror/pull/379)
-            if (enabled) client.TickIncoming();
+           
+             client.TickIncoming();
         }
         // process outgoing in late update
         public override void ClientLateUpdate() => client.TickOutgoing();

@@ -48,8 +48,10 @@ namespace Common.Network
         // server.interval, etc.
         public static int sendRate => 30;
         public static float sendInterval => sendRate < int.MaxValue ? 1f / sendRate : 0; // for 30 Hz, that's 33ms
-        
-        
+
+        protected ServerHeartRequest heartRequest;
+
+
         public static NetworkManager<T> Singleton { get; internal set; }
 
         public void Awake()
@@ -78,14 +80,15 @@ namespace Common.Network
                 return;
             }
 
-            //TODO 断线重连这些？
+            //TODO 断线重连这些？从agent-manager 获取网关地址，服务器id等
             foreach (var transport in transports)
             {
                 NetworkClient networkClient = new NetworkClient();
                 networkClient.Transport = transport;
-                networkClient.SendHeart = SendHeart;
-                networkClient.Connect(transport.networkAddress,transport.port);
+                networkClient.HeartRequest = GetServerHeartRequest();
+                networkClient.Transport.OnClientDataReceived = OnTransportData;
                 String url = $"{transport.networkAddress}:{transport.port}";
+                networkClient.Connect(transport.networkAddress, transport.port);
                 gateClients[url] = networkClient;
             }
         }
@@ -96,7 +99,7 @@ namespace Common.Network
         {
             foreach (var gateClient in gateClients)
             {
-                //TODO  NetworkClient.Disconnect();
+                gateClient.Value.Disconnect();
             }
         }
 
@@ -153,40 +156,11 @@ namespace Common.Network
 
 
         /// <summary>
-        /// 发送消息 TODO 需要争对每个连接
+        ///  发送消息
         /// </summary>
-        /// <param name="mid"></param>
-        /// <param name="message"></param>
-        public void Send(MID mid, IMessage message)
+        public bool Send(NetworkClient networkClient, long playerId, MID mid, IMessage message)
         {
-            Send(mid, message.ToByteArray());
-        }
-
-        /// <summary>
-        ///  TODO  需要争对每个连接
-        /// </summary>
-        /// <param name="mid"></param>
-        /// <param name="data"></param>
-        public void Send(MID mid, byte[] data)
-        {
-            // // Send((int) mid, data);
-            // // TODO 移到client中
-            //
-            // // 消息长度4+消息id4+序列号4+时间戳8+protobuf消息体
-            // byte[] msgLength = BitConverter.GetBytes(data.Length + 16);
-            // byte[] msgId = BitConverter.GetBytes((int)mid);
-            // byte[] seq = BitConverter.GetBytes(0);
-            // long time = 0; //TODO 时间戳生成
-            // byte[] timeStamp = BitConverter.GetBytes(time);
-            // byte[] datas = new byte[20 + data.Length];
-            //
-            // Array.Copy(msgLength, 0, datas, 0, msgLength.Length);
-            // Array.Copy(msgId, 0, datas, 4, msgId.Length);
-            // Array.Copy(seq, 0, datas, 8, seq.Length);
-            // Array.Copy(timeStamp, 0, datas, 12, seq.Length);
-            // Array.Copy(data, 0, datas, 20, data.Length);
-            // ArraySegment<byte> segment = new ArraySegment<byte>(datas);
-            // Transport.active.ClientSend(segment);
+            return networkClient.SendMsg(playerId, mid, message);
         }
 
         /// <summary>
@@ -247,39 +221,53 @@ namespace Common.Network
         public MessageHandler<T> GetMessageHandler(UInt32 messageId)
         {
             MID mid = (MID)messageId;
-            return messageHandlers[mid];
+            MessageHandler<T> handler;
+            if (messageHandlers.TryGetValue(mid, out  handler))
+            {
+                return handler;
+            }
+
+            return null;
         }
-        
+
+        /// <summary>
+        /// 收到返回消息
+        /// </summary>
+        /// <param name="data"></param>
+        protected virtual void OnTransportData(ArraySegment<byte> data)
+        {
+        }
+
         /// <summary>
         /// 发送心跳消息
         /// </summary>
-        public  void SendHeart()
+        protected virtual ServerHeartRequest GetServerHeartRequest()
         {
-            // HeartRequest request = new HeartRequest(); //TODO 发送服务器内部心跳消息 ，需要每个客户端单独发送
-            // NetworkManager.Singleton.Send(MID.HeartReq,request);
+            return null;
         }
-        
+
+
         /// <summary>
         /// 使用unity 主循环更新
         /// </summary>
-        public static   void NetworkEarlyUpdate()
+        public static void NetworkEarlyUpdate()
         {
             foreach (var pair in gateClients)
             {
+                // Debug.Log("NetworkEarlyUpdate");
                 pair.Value.Transport.ClientEarlyUpdate();
             }
         }
-        
+
         /// <summary>
         /// 使用unity 主循环更新
         /// </summary>
-        public static   void NetworkLateUpdate()
+        public static void NetworkLateUpdate()
         {
             foreach (var pair in gateClients)
             {
-                pair.Value.Transport.ClientEarlyUpdate();
+                pair.Value.Transport.ClientLateUpdate();
             }
         }
-        
     }
 }

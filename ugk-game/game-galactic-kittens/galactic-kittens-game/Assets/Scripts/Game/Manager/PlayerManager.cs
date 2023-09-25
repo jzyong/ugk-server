@@ -17,7 +17,6 @@ namespace Game.Manager
     /// </summary>
     public class PlayerManager : SingletonInstance<PlayerManager>
     {
-        public static PlayerManager Singleton { get; internal set; }
 
 
         public Player GetPlayer(Int64 playerId)

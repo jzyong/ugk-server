@@ -22,10 +22,11 @@ public static partial class ConstantReflection {
   static ConstantReflection() {
     byte[] descriptorData = global::System.Convert.FromBase64String(
         string.Concat(
-          "Cg5jb25zdGFudC5wcm90byp5CgNNSUQSCAoETm9uZRAAEg4KCEhlYXJ0UmVx",
-          "EMGEPRIOCghIZWFydFJlcxDChD0SDgoITG9naW5SZXEQw4Q9Eg4KCExvZ2lu",
-          "UmVzEMSEPRITCg1Mb2FkUGxheWVyUmVxEJmAQBITCg1Mb2FkUGxheWVyUmVz",
-          "EJqAQEIKWggvbWVzc2FnZWIGcHJvdG8z"));
+          "Cg5jb25zdGFudC5wcm90byqhAQoDTUlEEggKBE5vbmUQABISCg5TZXJ2ZXJI",
+          "ZWFydFJlcRABEhIKDlNlcnZlckhlYXJ0UmVzEAISDgoISGVhcnRSZXEQwYQ9",
+          "Eg4KCEhlYXJ0UmVzEMKEPRIOCghMb2dpblJlcRDDhD0SDgoITG9naW5SZXMQ",
+          "xIQ9EhMKDUxvYWRQbGF5ZXJSZXEQmYBAEhMKDUxvYWRQbGF5ZXJSZXMQmoBA",
+          "QgpaCC9tZXNzYWdlYgZwcm90bzM="));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
         new pbr::FileDescriptor[] { },
         new pbr::GeneratedClrTypeInfo(new[] {typeof(global::MID), }, null, null));
@@ -40,10 +41,15 @@ public static partial class ConstantReflection {
 /// 功能模块100个消息，游戏模块1000个消息
 /// </summary>
 public enum MID {
+  [pbr::OriginalName("None")] None = 0,
   /// <summary>
   ///网关拦截消息
   /// </summary>
-  [pbr::OriginalName("None")] None = 0,
+  [pbr::OriginalName("ServerHeartReq")] ServerHeartReq = 1,
+  /// <summary>
+  ///服务器心跳
+  /// </summary>
+  [pbr::OriginalName("ServerHeartRes")] ServerHeartRes = 2,
   /// <summary>
   ///心跳
   /// </summary>

@@ -1,4 +1,5 @@
 using System;
+using Google.Protobuf;
 using UnityEngine;
 
 namespace Common.Network
@@ -38,7 +39,8 @@ namespace Common.Network
         public Action OnConnectedEvent;
         public Action OnDisconnectedEvent;
         public Action<TransportError, string> OnErrorEvent;
-        public Action SendHeart;
+        // public Action SendHeart;
+        public ServerHeartRequest HeartRequest { get; set; }
 
 
         void AddTransportHandlers()
@@ -110,6 +112,41 @@ namespace Common.Network
         {
             Debug.LogWarning($"Client Transport Error: {error}: {reason}. This is fine.");
             OnErrorEvent?.Invoke(error, reason);
+        }
+
+        /// <summary>
+        /// 发送心跳
+        /// </summary>
+        private void SendHeart()
+        {
+            if (HeartRequest!=null)
+            {
+                SendMsg(0, MID.ServerHeartReq, HeartRequest);
+                Debug.Log("请求心跳");
+            }
+        }
+
+        public bool SendMsg(long playerId, MID mid, IMessage message)
+        {
+            var data = message.ToByteArray();
+            // 消息长度4+玩家ID8+消息id4+序列号4+时间戳8+protobuf消息体
+            byte[] msgLength = BitConverter.GetBytes(data.Length + 24);
+            byte[] playerIds = BitConverter.GetBytes(playerId);
+            byte[] msgId = BitConverter.GetBytes((int)mid);
+            byte[] seq = BitConverter.GetBytes(0);
+            long time = 0; //TODO 时间戳生成
+            byte[] timeStamp = BitConverter.GetBytes(time);
+            byte[] datas = new byte[28 + data.Length];
+
+            Array.Copy(msgLength, 0, datas, 0, msgLength.Length);
+            Array.Copy(playerIds, 0, datas, 4, msgLength.Length);
+            Array.Copy(msgId, 0, datas, 12, msgId.Length);
+            Array.Copy(seq, 0, datas, 16, seq.Length);
+            Array.Copy(timeStamp, 0, datas, 20, seq.Length);
+            Array.Copy(data, 0, datas, 28, data.Length);
+            ArraySegment<byte> segment = new ArraySegment<byte>(datas);
+            Transport.ClientSend(segment);
+            return true;
         }
 
 

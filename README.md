@@ -79,7 +79,7 @@
 * 时间同步使用Mirror的（NetworkConnectionToClient（服务器）、Mathd、SnapshotInterpolation、NetworkTime(客户端)，NetworkClient_TimeInterpolation，ClientCube）时间同步计算只是在服务器？客户端通过心跳同步服务器时间NetworkPingMessage？
 * unity double时间网络传输转换为毫秒使用int64传输
 * ugk-client 弹窗增加tween动画
-* 
+* 后端unity服务器心跳定时器存在中断卡死？
 
 
 ### 计划

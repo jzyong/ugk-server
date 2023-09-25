@@ -70,6 +70,7 @@
      <Compile Include="Assets\Scripts\Game\Manager\PlayerManager.cs" />
      <Compile Include="Assets\Scripts\Common\Network\MessageMapAttribute.cs" />
      <Compile Include="Assets\Scripts\Common\Network\Kcp\KcpTransport.cs" />
+     <Compile Include="Assets\Scripts\Game\Handlers\ServerHandler.cs" />
      <Compile Include="Assets\Scripts\Common\Network\NetworkClient.cs" />
      <Compile Include="Assets\Scripts\Game\Manager\GalacticKittensNetworkManager.cs" />
      <Compile Include="Assets\Scripts\Common\Network\Kcp\kcp2k\kcp\Utils.cs" />
