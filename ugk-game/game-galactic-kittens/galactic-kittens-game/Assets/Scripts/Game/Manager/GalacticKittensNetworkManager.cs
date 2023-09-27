@@ -9,7 +9,17 @@ namespace Game.Manager
     /// </summary>
     public class GalacticKittensNetworkManager : NetworkManager<Player>
     {
-        //获取消息并处理  TODO 每个连接创建进行消息回调注册
+        public static  GalacticKittensNetworkManager singleton { get; private set; }
+
+
+        public override void Awake()
+        {
+            base.Awake();
+            Application.targetFrameRate = 30;
+            singleton = this;
+        }
+        
+        //获取消息并处理 
         protected override void OnTransportData(ArraySegment<byte> data)
         {
             using (UgkMessage ugkMessage = UgkMessagePool.Get())
@@ -22,9 +32,8 @@ namespace Game.Manager
                 ugkMessage.Seq = BitConverter.ToUInt32(bytes, 16);
                 ugkMessage.TimeStamp = BitConverter.ToInt64(bytes, 20);
 
-
-                Debug.Log(
-                    $"{ugkMessage.PlayerId}收到消息 ID={ugkMessage.MessageId} Seq={ugkMessage.Seq} timeStamp={ugkMessage.TimeStamp}");
+                // Debug.Log(
+                //     $"{ugkMessage.PlayerId}收到消息 ID={ugkMessage.MessageId} Seq={ugkMessage.Seq} timeStamp={ugkMessage.TimeStamp}");
                 var handler = Singleton.GetMessageHandler(ugkMessage.MessageId);
                 if (handler == null)
                 {

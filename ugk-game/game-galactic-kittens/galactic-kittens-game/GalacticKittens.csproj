@@ -48,7 +48,6 @@
      <Compile Include="Assets\Scripts\Common\Tools\SingletonInstance.cs" />
      <Compile Include="Assets\Scripts\Common\Network\Kcp\kcp2k\highlevel\KcpServerConnection.cs" />
      <Compile Include="Assets\Scripts\Common\Network\NetworkManager.cs" />
-     <Compile Include="Assets\Scripts\Game\Handlers\LoginHandler.cs" />
      <Compile Include="Assets\Scripts\Game\Manager\MessageEventManager.cs" />
      <Compile Include="Assets\Scripts\Common\Network\Kcp\kcp2k\highlevel\Log.cs" />
      <Compile Include="Assets\Scripts\Common\Network\Kcp\kcp2k\kcp\Pool.cs" />

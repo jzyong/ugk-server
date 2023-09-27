@@ -13,9 +13,10 @@ namespace Common.Network
     /// <summary>
     /// <para>网络管理</para>
     ///  <para>KcpClient，KcpPeer，NetworkClient应该自己封装，在Mirror上的基础开发层层回调，头都绕晕了</para>
-    /// 管理多个玩家,需要修改 
+    /// <para>子类继承写错了，会导致unity主线程Update卡一段时间，没有任何报错，然后网络超时，服务器断开连接？</para>
     /// </summary>
     [DisallowMultipleComponent]
+    [AddComponentMenu("网络/Network Manager")]
     public class NetworkManager<T> : MonoBehaviour where T : Person
     {
         // 传输层   需要通过参数传入，且是多个网关
@@ -54,15 +55,17 @@ namespace Common.Network
 
         public static NetworkManager<T> Singleton { get; internal set; }
 
-        public void Awake()
+        public virtual void Awake()
         {
             Log.Info = Debug.Log;
             Log.Error = Debug.LogError;
             Log.Warning = Debug.LogWarning;
+            Application.targetFrameRate = 30;
+            Application.runInBackground = true;
             if (!InitializeSingleton()) return;
         }
 
-        public void Start()
+        public virtual void Start()
         {
             //TODO 临时测试,需要连接多个网关，网关地址从外部传入（怎么传）？
             StartClient();
@@ -222,7 +225,7 @@ namespace Common.Network
         {
             MID mid = (MID)messageId;
             MessageHandler<T> handler;
-            if (messageHandlers.TryGetValue(mid, out  handler))
+            if (messageHandlers.TryGetValue(mid, out handler))
             {
                 return handler;
             }
@@ -252,10 +255,16 @@ namespace Common.Network
         /// </summary>
         public static void NetworkEarlyUpdate()
         {
+            var time = Time.time;
             foreach (var pair in gateClients)
             {
-                // Debug.Log("NetworkEarlyUpdate");
+                // Debug.Log($"NetworkEarlyUpdate：{Time.time}");
                 pair.Value.Transport.ClientEarlyUpdate();
+            }
+
+            if (Time.time-time>0.01)
+            {
+                Debug.LogWarning($"NetworkEarlyUpdate耗时：{Time.time-time}");
             }
         }
 
@@ -264,9 +273,14 @@ namespace Common.Network
         /// </summary>
         public static void NetworkLateUpdate()
         {
+            var time = Time.time;
             foreach (var pair in gateClients)
             {
                 pair.Value.Transport.ClientLateUpdate();
+            }
+            if (Time.time-time>0.01)
+            {
+                Debug.LogWarning($"NetworkLateUpdate耗时：{Time.time-time}");
             }
         }
     }
