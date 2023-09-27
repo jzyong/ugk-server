@@ -2,6 +2,7 @@
 using Game.Manager;
 using Google.Protobuf;
 using Common.Network;
+using kcp2k;
 using UnityEngine;
 
 
@@ -15,7 +16,7 @@ namespace Game.Handlers
         /// <summary>
         /// 心跳
         /// </summary>
-        [MessageMap(MID.ServerHeartRes)]
+        [MessageMap((int)MID.ServerHeartRes)]
         private static void Heart(Player player, UgkMessage ugkMessage)
         {
             var response = new ServerHeartResponse();

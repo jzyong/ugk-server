@@ -39,8 +39,7 @@ namespace Common.Network
         public Action OnConnectedEvent;
         public Action OnDisconnectedEvent;
         public Action<TransportError, string> OnErrorEvent;
-        // public Action SendHeart;
-        public ServerHeartRequest HeartRequest { get; set; }
+        public UgkMessage HeartRequest { get; set; }
 
 
         void AddTransportHandlers()
@@ -121,25 +120,62 @@ namespace Common.Network
         {
             if (HeartRequest!=null)
             {
-                SendMsg(0, MID.ServerHeartReq, HeartRequest);
-                Debug.Log("请求心跳");
+                SendMsg(HeartRequest);
+                // Debug.Log("请求心跳");
             }
         }
 
-        public bool SendMsg(long playerId, MID mid, IMessage message)
+        /// <summary>
+        /// 发送消息
+        /// </summary>
+        /// <param name="playerId"></param>
+        /// <param name="mid"></param>
+        /// <param name="seq"></param>
+        /// <param name="message"></param>
+        /// <returns></returns>
+        public bool SendMsg(long playerId, int mid, IMessage message,int seq=0)
         {
             var data = message.ToByteArray();
             // 消息长度4+玩家ID8+消息id4+序列号4+时间戳8+protobuf消息体
             byte[] msgLength = BitConverter.GetBytes(data.Length + 24);
-            byte[] playerIds = BitConverter.GetBytes(playerId);
-            byte[] msgId = BitConverter.GetBytes((int)mid);
-            byte[] seq = BitConverter.GetBytes(0);
-            long time = 0; //TODO 时间戳生成
+            byte[] playerIdBytes = BitConverter.GetBytes(playerId);
+            byte[] msgId = BitConverter.GetBytes(mid);
+            byte[] seqBytes = BitConverter.GetBytes(seq);
+            long time = (long)(Time.time*1000); 
             byte[] timeStamp = BitConverter.GetBytes(time);
             byte[] datas = new byte[28 + data.Length];
 
             Array.Copy(msgLength, 0, datas, 0, msgLength.Length);
-            Array.Copy(playerIds, 0, datas, 4, msgLength.Length);
+            Array.Copy(playerIdBytes, 0, datas, 4, playerIdBytes.Length);
+            Array.Copy(msgId, 0, datas, 12, msgId.Length);
+            Array.Copy(seqBytes, 0, datas, 16, seqBytes.Length);
+            Array.Copy(timeStamp, 0, datas, 20, timeStamp.Length);
+            Array.Copy(data, 0, datas, 28, data.Length);
+            ArraySegment<byte> segment = new ArraySegment<byte>(datas);
+            Transport.ClientSend(segment);
+            return true;
+        }
+        
+        /// <summary>
+        /// 发送消息
+        /// </summary>
+        /// <param name="ugkMessage"></param>
+        /// <returns></returns>
+        public bool SendMsg(UgkMessage ugkMessage)
+        {
+            
+            var data = ugkMessage.Bytes;
+            // 消息长度4+玩家ID8+消息id4+序列号4+时间戳8+protobuf消息体
+            byte[] msgLength = BitConverter.GetBytes(data.Length + 24);
+            byte[] playerIdBytes = BitConverter.GetBytes(ugkMessage.PlayerId);
+            byte[] msgId = BitConverter.GetBytes(ugkMessage.MessageId);
+            byte[] seq = BitConverter.GetBytes(ugkMessage.Seq); 
+            long time = (long)(Time.time*1000); 
+            byte[] timeStamp = BitConverter.GetBytes(time);
+            byte[] datas = new byte[28 + data.Length];
+
+            Array.Copy(msgLength, 0, datas, 0, msgLength.Length);
+            Array.Copy(playerIdBytes, 0, datas, 4, playerIdBytes.Length);
             Array.Copy(msgId, 0, datas, 12, msgId.Length);
             Array.Copy(seq, 0, datas, 16, seq.Length);
             Array.Copy(timeStamp, 0, datas, 20, seq.Length);

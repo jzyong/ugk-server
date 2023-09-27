@@ -78,8 +78,8 @@
 * 网关和大厅通信联调(完成登录流程，显示大厅游戏列表)
 * 时间同步使用Mirror的（NetworkConnectionToClient（服务器）、Mathd、SnapshotInterpolation、NetworkTime(客户端)，NetworkClient_TimeInterpolation，ClientCube）时间同步计算只是在服务器？客户端通过心跳同步服务器时间NetworkPingMessage？
 * unity double时间网络传输转换为毫秒使用int64传输
-* ugk-client 弹窗增加tween动画
-* 后端unity服务器心跳定时器存在中断卡死？
+* GalacticKittensGame 与 Match、lobby、Gate的grpc连接创建管理
+
 
 
 ### 计划
@@ -88,6 +88,7 @@
 * 压力测试客户端使用ugk-web开发界面（vue3）
 * 添加聊天、排行、匹配、房间（Mirror）服务
 * 广告、充值接取
-* 断线重连
+* 断线重连(ugk-client,unity后端服务器与网关等)
 * 使用c#开发导表等图形化工具
 * 服务器unity提取公共包，unity的package
+* ugk-client 弹窗增加tween动画

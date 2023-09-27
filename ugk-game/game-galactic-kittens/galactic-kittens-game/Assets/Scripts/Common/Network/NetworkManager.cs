@@ -6,7 +6,6 @@ using Common.Tools;
 using Google.Protobuf;
 using kcp2k;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Common.Network
 {
@@ -20,7 +19,7 @@ namespace Common.Network
     public class NetworkManager<T> : MonoBehaviour where T : Person
     {
         // 传输层   需要通过参数传入，且是多个网关
-        [FormerlySerializedAs("transport")] [Header("网络信息")] [Tooltip("连接多个网关的传输层配置")]
+        [Header("网络信息")] [Tooltip("连接多个网关的传输层配置")]
         public Transport[] transports;
 
         /// <summary>
@@ -31,12 +30,12 @@ namespace Common.Network
         /// <summary>
         /// 消息处理器
         /// </summary>
-        private Dictionary<MID, MessageHandler<T>> messageHandlers;
+        private Dictionary<int, MessageHandler<T>> messageHandlers;
 
         /// <summary>
         /// 网关客户端
         /// </summary>
-        static Dictionary<String, NetworkClient> gateClients = new Dictionary<string, NetworkClient>(2);
+        Dictionary<String, NetworkClient> gateClients = new Dictionary<string, NetworkClient>(2);
 
         // time & value snapshot interpolation are separate.
         // -> time is interpolated globally on NetworkClient / NetworkConnection
@@ -50,7 +49,7 @@ namespace Common.Network
         public static int sendRate => 30;
         public static float sendInterval => sendRate < int.MaxValue ? 1f / sendRate : 0; // for 30 Hz, that's 33ms
 
-        protected ServerHeartRequest heartRequest;
+        protected UgkMessage heartRequest;
 
 
         public static NetworkManager<T> Singleton { get; internal set; }
@@ -67,8 +66,6 @@ namespace Common.Network
 
         public virtual void Start()
         {
-            //TODO 临时测试,需要连接多个网关，网关地址从外部传入（怎么传）？
-            StartClient();
         }
 
 
@@ -161,9 +158,9 @@ namespace Common.Network
         /// <summary>
         ///  发送消息
         /// </summary>
-        public bool Send(NetworkClient networkClient, long playerId, MID mid, IMessage message)
+        public bool Send(NetworkClient networkClient, long playerId, int mid, IMessage message, int seq = 0)
         {
-            return networkClient.SendMsg(playerId, mid, message);
+            return networkClient.SendMsg(playerId, mid, message, seq);
         }
 
         /// <summary>
@@ -176,7 +173,7 @@ namespace Common.Network
         {
             MethodInfo[] methods = FindMessageHandlers();
 
-            messageHandlers = new Dictionary<MID, MessageHandler<T>>(methods.Length);
+            messageHandlers = new Dictionary<int, MessageHandler<T>>(methods.Length);
             foreach (MethodInfo method in methods)
             {
                 MessageMapAttribute attribute = method.GetCustomAttribute<MessageMapAttribute>();
@@ -221,11 +218,10 @@ namespace Common.Network
         /// </summary>
         /// <param name="messageId"></param>
         /// <returns></returns>
-        public MessageHandler<T> GetMessageHandler(UInt32 messageId)
+        public MessageHandler<T> GetMessageHandler(int messageId)
         {
-            MID mid = (MID)messageId;
             MessageHandler<T> handler;
-            if (messageHandlers.TryGetValue(mid, out handler))
+            if (messageHandlers.TryGetValue(messageId, out handler))
             {
                 return handler;
             }
@@ -244,7 +240,7 @@ namespace Common.Network
         /// <summary>
         /// 发送心跳消息
         /// </summary>
-        protected virtual ServerHeartRequest GetServerHeartRequest()
+        protected virtual UgkMessage GetServerHeartRequest()
         {
             return null;
         }
@@ -253,7 +249,7 @@ namespace Common.Network
         /// <summary>
         /// 使用unity 主循环更新
         /// </summary>
-        public static void NetworkEarlyUpdate()
+        public void NetworkEarlyUpdate()
         {
             var time = Time.time;
             foreach (var pair in gateClients)
@@ -262,25 +258,26 @@ namespace Common.Network
                 pair.Value.Transport.ClientEarlyUpdate();
             }
 
-            if (Time.time-time>0.01)
+            if (Time.time - time > 0.01)
             {
-                Debug.LogWarning($"NetworkEarlyUpdate耗时：{Time.time-time}");
+                Debug.LogWarning($"NetworkEarlyUpdate耗时：{Time.time - time}");
             }
         }
 
         /// <summary>
         /// 使用unity 主循环更新
         /// </summary>
-        public static void NetworkLateUpdate()
+        public  void NetworkLateUpdate()
         {
             var time = Time.time;
             foreach (var pair in gateClients)
             {
                 pair.Value.Transport.ClientLateUpdate();
             }
-            if (Time.time-time>0.01)
+
+            if (Time.time - time > 0.01)
             {
-                Debug.LogWarning($"NetworkLateUpdate耗时：{Time.time-time}");
+                Debug.LogWarning($"NetworkLateUpdate耗时：{Time.time - time}");
             }
         }
     }

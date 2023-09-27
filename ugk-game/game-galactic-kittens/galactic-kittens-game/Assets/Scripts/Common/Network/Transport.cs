@@ -22,6 +22,7 @@
 //     (Transports can use other threads in the background if they manage them)
 //   * Transports should only process messages while the component is enabled.
 //
+
 using System;
 using UnityEngine;
 
@@ -33,13 +34,10 @@ namespace Common.Network
     /// </summary>
     public abstract class Transport : MonoBehaviour
     {
-        
-        [Tooltip(
-            "服务器地址")]
-        public string networkAddress = "192.168.110.2";
+        [Tooltip("服务器地址")] public string networkAddress = "192.168.110.2";
 
-        [Tooltip("服务器端口")] public ushort port = 5000;
-        
+        [Tooltip("服务器端口")] public ushort port = 5001;
+
         /// <summary>Is this transport available in the current platform? </summary>
         public abstract bool Available();
 
@@ -66,20 +64,20 @@ namespace Common.Network
         /// 发送心跳
         /// </summary>
         public Action SendHeart;
-        
+
 
         /// <summary>True if the client is currently connected to the server. </summary>
         public abstract bool ClientConnected();
 
         /// <summary>Connects the client to the server at the address. </summary>
-        public abstract void ClientConnect(string address,ushort port);
+        public abstract void ClientConnect(string address, ushort port);
 
         /// <summary>Connects the client to the server at the Uri. @</summary>
-        public virtual void ClientConnect(Uri uri,ushort port)
+        public virtual void ClientConnect(Uri uri, ushort port)
         {
             // By default, to keep backwards compatibility, just connect to the host
             // in the uri
-            ClientConnect(uri.Host,port);
+            ClientConnect(uri.Host, port);
         }
 
         /// <summary>Sends a message to the server over the given channel. @</summary>
@@ -89,7 +87,6 @@ namespace Common.Network
         /// <summary>Disconnects the client from the server </summary>
         public abstract void ClientDisconnect();
 
-       
 
         /// <summary>Maximum message size for the given channel.</summary>
         // Different channels often have different sizes, ranging from MTU to
@@ -122,8 +119,13 @@ namespace Common.Network
         //
         // => see NetworkLoop.cs for detailed explanations!
 #pragma warning disable UNT0001 // Empty Unity message
-        public void Update() {}
-        public void LateUpdate() {}
+        public void Update()
+        {
+        }
+
+        public void LateUpdate()
+        {
+        }
 #pragma warning restore UNT0001 // Empty Unity message
 
         /// <summary>
@@ -138,8 +140,13 @@ namespace Common.Network
         //    them from NetworkClient/Server
         // => VIRTUAL for now so we can take our time to convert transports
         //    without breaking anything.
-        public virtual void ClientEarlyUpdate() {}
-        public virtual void ClientLateUpdate() {}
+        public virtual void ClientEarlyUpdate()
+        {
+        }
+
+        public virtual void ClientLateUpdate()
+        {
+        }
 
         /// <summary>Shut down the transport</summary>
         public abstract void Shutdown();

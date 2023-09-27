@@ -280,7 +280,7 @@ func (client *GameKcpClient) messageDistribute(data []byte) {
 	//截取消息
 	//小端
 	messageId := uint32(data[12]) | uint32(data[13])<<8 | uint32(data[14])<<16 | uint32(data[15])<<24
-	log.Info("收到消息：%d", messageId)
+	//log.Debug("收到消息：%d", messageId)
 	handFunc := ServerHandlers[messageId]
 	if handFunc != nil { //本地处理
 		dataReader := bytes.NewReader(data)

@@ -1,5 +1,6 @@
 ﻿using System;
 using Common.Network;
+using Google.Protobuf;
 using UnityEngine;
 
 namespace Game.Manager
@@ -9,7 +10,7 @@ namespace Game.Manager
     /// </summary>
     public class GalacticKittensNetworkManager : NetworkManager<Player>
     {
-        public static  GalacticKittensNetworkManager singleton { get; private set; }
+        public static GalacticKittensNetworkManager singleton { get; private set; }
 
 
         public override void Awake()
@@ -18,7 +19,17 @@ namespace Game.Manager
             Application.targetFrameRate = 30;
             singleton = this;
         }
-        
+
+        public override void Start()
+        {
+            base.Start();
+            // 开发环境读取静态配置， 需要连接多个网关，网关地址从外部传入
+            if (Application.platform == RuntimePlatform.WindowsEditor)
+            {
+                StartClient();
+            }
+        }
+
         //获取消息并处理 
         protected override void OnTransportData(ArraySegment<byte> data)
         {
@@ -34,7 +45,7 @@ namespace Game.Manager
 
                 // Debug.Log(
                 //     $"{ugkMessage.PlayerId}收到消息 ID={ugkMessage.MessageId} Seq={ugkMessage.Seq} timeStamp={ugkMessage.TimeStamp}");
-                var handler = Singleton.GetMessageHandler(ugkMessage.MessageId);
+                var handler = Singleton.GetMessageHandler((int)ugkMessage.MessageId);
                 if (handler == null)
                 {
                     Debug.LogWarning($"消息{(MID)ugkMessage.MessageId}处理方法未实现");
@@ -51,20 +62,24 @@ namespace Game.Manager
             }
         }
 
-        protected override ServerHeartRequest GetServerHeartRequest()
+        protected override UgkMessage GetServerHeartRequest()
         {
             if (heartRequest == null)
             {
+                var ugkMessage = UgkMessagePool.Get();
+
                 ServerHeartRequest request = new ServerHeartRequest()
                 {
-                    //TODO 完整信息
+                    //TODO 完整信息，ID通过agent-manager 生成
                     Server = new ServerInfo()
                     {
                         Id = 1,
-                        Name = "test",
+                        Name = "GalacticKittensGame",
                     }
                 };
-                heartRequest = request;
+                ugkMessage.Bytes = request.ToByteArray();
+                ugkMessage.MessageId = (int)MID.ServerHeartReq;
+                heartRequest = ugkMessage;
             }
 
             return heartRequest;

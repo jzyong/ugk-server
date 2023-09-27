@@ -12,9 +12,9 @@ namespace Common.Network
         /// <summary>
         /// 消息ID
         /// </summary>
-        public readonly MID mid;
+        public readonly int mid;
 
-        public MessageMapAttribute(MID mid)
+        public MessageMapAttribute(int mid)
         {
             this.mid = mid;
         }
