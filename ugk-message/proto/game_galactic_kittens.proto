@@ -1,0 +1,88 @@
+syntax = "proto3";
+import "common.proto";
+option go_package = "/message";
+
+// 进入房间
+message GalacticKittensEnterRoomRequest{
+  int64 playerId = 1; //玩家id
+}
+//进入房间
+message GalacticKittensEnterRoomResponse{
+  MessageResult result = 1; //错误信息
+}
+
+//推送房间信息
+message GalacticKittensRoomInfoResponse{
+  GalacticKittensRoomInfo room =1; //房间信息
+}
+
+//房间信息
+message GalacticKittensRoomInfo{
+  int64 id =1; //房间ID
+  repeated GalacticKittensPlayerInfo player= 2;
+  int32 state=3; //房间状态 0匹配；1准备完成；2游戏中；3结算；4游戏结束
+}
+
+//玩家信息
+message GalacticKittensPlayerInfo{
+  int64 playerId = 1; //玩家id
+  string nick=2; //昵称
+  bool prepare=3; //是否准备
+  int32 score= 4; //分数
+  int32 powerUpCount =5; //充能数
+  int32 hp=6; //血量
+  string icon = 7; //头像
+}
+
+
+
+//准备
+message GalacticKittensPrepareRequest {
+}
+//准备
+message GalacticKittensPrepareResponse {
+  MessageResult result = 2; //错误信息
+}
+
+//进入游戏 内部
+message GalacticKittensEnterGameRequest {
+  int64 playerId=1; //玩家id
+}
+//进入游戏 内部
+message GalacticKittensEnterGameResponse {
+  MessageResult result = 1; //错误信息
+  GalacticKittensPlayerInfo player =2; //玩家
+}
+
+//游戏完成 内部
+message GalacticKittensGameFinishRequest {
+  int64 playerId=1; //玩家id
+}
+//游戏完成 内部
+message GalacticKittensGameFinishResponse {
+  MessageResult result = 1; //错误信息
+  GalacticKittensRoomInfo room =2; //房间信息
+}
+
+
+//TODO 其他游戏中的同步消息，如敌人，boss出生，位置同步，命中碰撞监测等 （直接网关转发到子游戏）
+
+
+//GalacticKittens Game服务
+service GalacticKittensGameService{
+  // 进入游戏
+  rpc enterGame(GalacticKittensEnterGameRequest) returns (GalacticKittensEnterGameResponse);
+}
+
+
+
+//GalacticKittens Match 服务
+service GalacticKittensMatchService{
+  // 进入游戏
+  rpc gameFinish(GalacticKittensGameFinishRequest) returns (GalacticKittensGameFinishResponse);
+}
+
+
+
+
+

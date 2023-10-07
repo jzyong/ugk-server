@@ -1,5 +1,6 @@
 syntax = "proto3";
 import "common.proto";
+import "player.proto";
 option go_package = "/message";
 
 //心跳消息
@@ -38,16 +39,6 @@ message LoadPlayerResponse{
 //登录服务
 service LoginService{
   rpc login(LoginRequest) returns (LoginResponse);
-}
-
-
-//玩家信息
-message PlayerInfo{
-  int64 playerId=1; //玩家id
-  string nick =2; //昵称
-  uint32 level=3; //等级
-  uint32 exp=4; //经验
-  uint64 gold=5; //金币
 }
 
 // 小游戏信息

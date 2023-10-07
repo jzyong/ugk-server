@@ -26,6 +26,8 @@ type ServerServiceClient interface {
 	CloseServer(ctx context.Context, in *CloseServerRequest, opts ...grpc.CallOption) (*CloseServerResponse, error)
 	// 加载配置
 	ReloadConfig(ctx context.Context, in *ReloadConfigRequest, opts ...grpc.CallOption) (*ReloadConfigResponse, error)
+	// 获取服务信息
+	GetServerInfo(ctx context.Context, in *GetServerInfoRequest, opts ...grpc.CallOption) (*GetServerInfoResponse, error)
 }
 
 type serverServiceClient struct {
@@ -54,6 +56,15 @@ func (c *serverServiceClient) ReloadConfig(ctx context.Context, in *ReloadConfig
 	return out, nil
 }
 
+func (c *serverServiceClient) GetServerInfo(ctx context.Context, in *GetServerInfoRequest, opts ...grpc.CallOption) (*GetServerInfoResponse, error) {
+	out := new(GetServerInfoResponse)
+	err := c.cc.Invoke(ctx, "/ServerService/getServerInfo", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ServerServiceServer is the server API for ServerService service.
 // All implementations must embed UnimplementedServerServiceServer
 // for forward compatibility
@@ -62,6 +73,8 @@ type ServerServiceServer interface {
 	CloseServer(context.Context, *CloseServerRequest) (*CloseServerResponse, error)
 	// 加载配置
 	ReloadConfig(context.Context, *ReloadConfigRequest) (*ReloadConfigResponse, error)
+	// 获取服务信息
+	GetServerInfo(context.Context, *GetServerInfoRequest) (*GetServerInfoResponse, error)
 	mustEmbedUnimplementedServerServiceServer()
 }
 
@@ -74,6 +87,9 @@ func (UnimplementedServerServiceServer) CloseServer(context.Context, *CloseServe
 }
 func (UnimplementedServerServiceServer) ReloadConfig(context.Context, *ReloadConfigRequest) (*ReloadConfigResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ReloadConfig not implemented")
+}
+func (UnimplementedServerServiceServer) GetServerInfo(context.Context, *GetServerInfoRequest) (*GetServerInfoResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetServerInfo not implemented")
 }
 func (UnimplementedServerServiceServer) mustEmbedUnimplementedServerServiceServer() {}
 
@@ -124,6 +140,24 @@ func _ServerService_ReloadConfig_Handler(srv interface{}, ctx context.Context, d
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ServerService_GetServerInfo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetServerInfoRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ServerServiceServer).GetServerInfo(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/ServerService/getServerInfo",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ServerServiceServer).GetServerInfo(ctx, req.(*GetServerInfoRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // ServerService_ServiceDesc is the grpc.ServiceDesc for ServerService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -138,6 +172,10 @@ var ServerService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "reloadConfig",
 			Handler:    _ServerService_ReloadConfig_Handler,
+		},
+		{
+			MethodName: "getServerInfo",
+			Handler:    _ServerService_GetServerInfo_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

@@ -8,7 +8,7 @@ import (
 	"google.golang.org/grpc/status"
 )
 
-// ServerService 聊天rpc请求
+// ServerService 服务器rpc请求
 type ServerService struct {
 	message.UnimplementedServerServiceServer
 }

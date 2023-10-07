@@ -1,0 +1,41 @@
+syntax = "proto3";
+import "common.proto";
+option go_package = "/message";
+
+//创建游戏服务
+message CreateGameServiceRequest{
+  int64 gameId =1; //游戏ID
+  string gameName=2; //游戏名称
+  string controlGrpcUrl= 3; //控制管理grpc url
+}
+//创建游戏服务
+message CreateGameServiceResponse{
+  MessageResult result= 1; //错误信息
+}
+
+//关闭游戏服务
+message CloseGameServiceRequest{
+  int64 gameId =1; //游戏ID
+  string gameName=2; //游戏名称
+}
+//关闭游戏服务
+message CloseGameServiceResponse{
+  MessageResult result= 1; //错误信息
+}
+
+
+
+
+//agent服务
+service AgentService{
+  //创建游戏服务
+  rpc createGameService(CreateGameServiceRequest) returns (CreateGameServiceResponse);
+  //关闭游戏服务
+  rpc closeGameService(CloseGameServiceRequest) returns (CloseGameServiceResponse);
+}
+
+
+
+
+
+

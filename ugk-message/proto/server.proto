@@ -27,6 +27,15 @@ message ReloadConfigResponse{
   MessageResult result = 1; //结果
 }
 
+//获取服务信息
+message GetServerInfoRequest{
+  ServerInfo selfServerInfo= 1; //自己服务器信息
+}
+//获取服务信息
+message GetServerInfoResponse{
+  MessageResult result = 1; //结果
+  repeated ServerInfo serverInfo= 2; //服务器信息
+}
 
 
 
@@ -36,6 +45,8 @@ service ServerService{
   rpc closeServer(CloseServerRequest) returns (CloseServerResponse);
   //加载配置
   rpc reloadConfig(ReloadConfigRequest) returns (ReloadConfigResponse);
+  //获取服务信息
+  rpc getServerInfo(GetServerInfoRequest) returns (GetServerInfoResponse);
 }
 
 
@@ -43,6 +54,7 @@ service ServerService{
 message ServerInfo{
   uint32 id = 1; //id
   string name = 2; //名称
+  string grpcUrl =3; //grpc地址
 }
 
 

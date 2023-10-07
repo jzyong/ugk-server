@@ -1,0 +1,36 @@
+syntax = "proto3";
+import "common.proto";
+option go_package = "/message";
+
+//玩家信息请求
+message PlayerInfoRequest{
+  int64 playerId=1; //玩家id
+}
+//玩家信息请求
+message PlayerInfoResponse{
+  MessageResult result= 1; //错误信息
+  PlayerInfo player= 2; //玩家信息
+}
+
+
+
+//玩家服务
+service PlayerService{
+  //获取玩家信息
+  rpc GetPlayerInfo(PlayerInfoRequest) returns (PlayerInfoResponse);
+}
+
+
+//玩家信息
+message PlayerInfo{
+  int64 playerId=1; //玩家id
+  string nick =2; //昵称
+  uint32 level=3; //等级
+  uint32 exp=4; //经验
+  uint64 gold=5; //金币
+}
+
+
+
+
+
