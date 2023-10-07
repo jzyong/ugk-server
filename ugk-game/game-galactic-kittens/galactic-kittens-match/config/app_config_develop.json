@@ -1,0 +1,10 @@
+{
+  "id": 1,
+  "name": "game_galactic_kittens_match",
+  "profile": "develop",
+  "logLevel": "DEBUG",
+  "rpcUrl": "192.168.110.2:4001",
+  "zookeeperUrls": [
+    "192.168.110.2:2181"
+  ]
+}
