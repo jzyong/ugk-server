@@ -3,6 +3,7 @@ package main
 import (
 	"github.com/jzyong/golib/log"
 	"github.com/jzyong/golib/util"
+	manager2 "github.com/jzyong/ugk/common/manager"
 	"github.com/jzyong/ugk/galactic-kittens-match/config"
 	"github.com/jzyong/ugk/galactic-kittens-match/handler"
 	"github.com/jzyong/ugk/galactic-kittens-match/manager"
@@ -33,13 +34,15 @@ func main() {
 
 type ModuleManager struct {
 	*util.DefaultModuleManager
-	GateManager *manager.MatchManager
-	GrpcManager *rpc.GRpcManager
+	GateManager          *manager.MatchManager
+	ServiceClientManager *manager2.ServiceClientManager
+	GrpcManager          *rpc.GRpcManager
 }
 
 // Init 初始化模块
 func (m *ModuleManager) Init() error {
 	m.GateManager = m.AppendModule(manager.GetMatchManager()).(*manager.MatchManager)
+	m.ServiceClientManager = m.AppendModule(manager2.GetServiceClientManager()).(*manager2.ServiceClientManager)
 	m.GrpcManager = m.AppendModule(&rpc.GRpcManager{}).(*rpc.GRpcManager)
 	return m.DefaultModuleManager.Init()
 }

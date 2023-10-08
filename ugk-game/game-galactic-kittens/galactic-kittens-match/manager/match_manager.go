@@ -3,6 +3,7 @@ package manager
 import (
 	"github.com/jzyong/golib/log"
 	"github.com/jzyong/golib/util"
+	config2 "github.com/jzyong/ugk/common/config"
 	"github.com/jzyong/ugk/common/manager"
 	mode2 "github.com/jzyong/ugk/common/mode"
 	"github.com/jzyong/ugk/galactic-kittens-match/config"
@@ -44,6 +45,8 @@ func (m *MatchManager) Init() error {
 }
 
 func (m *MatchManager) Run() {
+	//监听并连接大厅服务
+	manager.GetServiceClientManager().WatchGrpcService(config2.GetZKServicePath(config.BaseConfig.Profile, "lobby", 0))
 }
 
 func (m *MatchManager) Stop() {
