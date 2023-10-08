@@ -39,7 +39,7 @@ func (m *LobbyManager) Init() error {
 	manager.GetGateKcpClientManager().Start(config.BaseConfig)
 	manager.GetGateKcpClientManager().ServerHeartRequest = &message.ServerHeartRequest{Server: &message.ServerInfo{
 		Id:   config.BaseConfig.Id,
-		Name: "lobby",
+		Name: config.BaseConfig.Name,
 	}}
 	return nil
 }

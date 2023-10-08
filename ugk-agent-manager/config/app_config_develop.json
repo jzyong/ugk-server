@@ -1,9 +1,9 @@
 {
   "id": 1,
-  "name": "game_galactic_kittens_match",
+  "name": "agent_manager",
   "profile": "develop",
   "logLevel": "DEBUG",
-  "rpcUrl": "192.168.110.2:4000",
+  "rpcUrl": "192.168.110.2:3030",
   "zookeeperUrls": [
     "192.168.110.2:2181"
   ]
