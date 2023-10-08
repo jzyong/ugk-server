@@ -15,7 +15,7 @@ import (
 func main() {
 	runtime.GOMAXPROCS(runtime.NumCPU())
 	config.InitConfigAndLog()
-	log.Info("启动 gate ......")
+	log.Info("启动 galactic kittens match ......")
 
 	var err error
 	err = m.Init()

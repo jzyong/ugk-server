@@ -17,8 +17,8 @@ import (
 
 // ServiceClient 微服务客户端
 type ServiceClient struct {
-	Id         int32            //服务器id
-	url        string           //连接地址
+	Id         uint32           //服务器id
+	Url        string           //连接地址
 	path       string           //路径或类型
 	ClientConn *grpc.ClientConn //客户端连接
 }
@@ -26,9 +26,9 @@ type ServiceClient struct {
 // ServiceClientManager 处理微服务客户端逻辑，管理连接
 type ServiceClientManager struct {
 	util.DefaultModule
-	clients      map[string]map[int32]*ServiceClient //grpc客户端  类型（路径）：id：客户端
-	watchService map[string]bool                     //服务是否在监听 key：路径
-	clientsLock  sync.RWMutex                        //读写锁
+	clients      map[string]map[uint32]*ServiceClient //grpc客户端  类型（路径）：id：客户端
+	watchService map[string]bool                      //服务是否在监听 key：路径
+	clientsLock  sync.RWMutex                         //读写锁
 }
 
 var serviceClientManager *ServiceClientManager
@@ -37,7 +37,7 @@ var serviceClientManagerOnce sync.Once
 func GetServiceClientManager() *ServiceClientManager {
 	serviceClientManagerOnce.Do(func() {
 		serviceClientManager = &ServiceClientManager{
-			clients:      make(map[string]map[int32]*ServiceClient),
+			clients:      make(map[string]map[uint32]*ServiceClient),
 			watchService: make(map[string]bool),
 		}
 	})
@@ -110,11 +110,11 @@ func (m *ServiceClientManager) addClient(serverIdStr string, zkConnect *zk.Conn,
 	m.clientsLock.Lock()
 	clients := m.clients[path]
 	if clients == nil {
-		clients = make(map[int32]*ServiceClient)
+		clients = make(map[uint32]*ServiceClient)
 		m.clients[path] = clients
 	}
 
-	if client, ok := clients[int32(serverId)]; ok {
+	if client, ok := clients[uint32(serverId)]; ok {
 		if client.ClientConn.GetState() == connectivity.Shutdown { //移除老连接
 			log.Info("server MessageId:%d already close,open new connection")
 			m.removeClient(client)
@@ -145,14 +145,21 @@ func (m *ServiceClientManager) addClient(serverIdStr string, zkConnect *zk.Conn,
 		return
 	}
 	client := &ServiceClient{
-		Id:         int32(serverId),
-		url:        serverUrl,
+		Id:         uint32(serverId),
+		Url:        serverUrl,
 		path:       path,
 		ClientConn: clientConn,
 	}
 	defer m.clientsLock.Unlock()
 	clients[client.Id] = client
-	log.Info("add Client：%v-%v url=%v ", path, serverIdStr, serverUrl)
+	log.Info("add Client：%v-%v Url=%v ", path, serverIdStr, serverUrl)
+}
+
+// GetClients 获取客户端，参数为路径
+func (m *ServiceClientManager) GetClients(path string) map[uint32]*ServiceClient {
+	defer m.clientsLock.RUnlock()
+	m.clientsLock.RLock()
+	return m.clients[path]
 }
 
 // 移除客户端
@@ -161,7 +168,7 @@ func (m *ServiceClientManager) removeClient(client *ServiceClient) {
 	defer m.clientsLock.Unlock()
 	if clients, ok := m.clients[client.path]; ok {
 		delete(clients, client.Id)
-		log.Info("服务 %d-%s 连接移除", client.Id, client.url)
+		log.Info("服务 %d-%s 连接移除", client.Id, client.Url)
 	}
 }
 
@@ -190,7 +197,7 @@ func (m *ServiceClientManager) ReloadService(conn *zk.Conn, profile, path string
 }
 
 // GetGrpcConn  id 小于0，直接返回第一个
-func (m *ServiceClientManager) GetGrpcConn(path string, id int32) (*grpc.ClientConn, error) {
+func (m *ServiceClientManager) GetGrpcConn(path string, id uint32) (*grpc.ClientConn, error) {
 	if clients, ok := m.clients[path]; ok {
 		if len(clients) < 1 {
 			return nil, errors.New(fmt.Sprintf("路径：%s 无可用服务", path))

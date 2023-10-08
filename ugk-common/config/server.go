@@ -74,3 +74,11 @@ func (s *ServiceConfigImpl) GetZookeeperUrls() []string {
 func (s *ServiceConfigImpl) GetLogLevel() string {
 	return s.LogLevel
 }
+
+// 服务名称
+const (
+	LobbyName    = "lobby"
+	GateName     = "gate"
+	Agent        = "agent"
+	AgentManager = "agent_manager"
+)
