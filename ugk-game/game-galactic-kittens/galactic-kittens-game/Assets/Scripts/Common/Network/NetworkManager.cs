@@ -18,9 +18,9 @@ namespace Common.Network
     [AddComponentMenu("网络/Network Manager")]
     public class NetworkManager<T> : MonoBehaviour where T : Person
     {
-        // 传输层   需要通过参数传入，且是多个网关
-        [Header("网络信息")] [Tooltip("连接多个网关的传输层配置")]
-        public Transport[] transports;
+        // // 传输层   需要通过参数传入，且是多个网关
+        // [Header("网络信息")] [Tooltip("连接多个网关的传输层配置")]
+        // public Transport[] transports;
 
         /// <summary>
         /// 消息处理
@@ -72,15 +72,16 @@ namespace Common.Network
         /// <summary>
         /// 连接网关
         /// </summary>
-        public void StartClient()
+        protected void StartClient()
         {
+            //连接地址是通过rpc请求动态添加的
+            var transports = gameObject.GetComponents<KcpTransport>();
             if (transports == null)
             {
                 Debug.LogError("没有可连接的网关配置");
                 return;
             }
-
-            //TODO 断线重连这些？从agent-manager 获取网关地址，服务器id等
+            //TODO 断线重连这些？
             foreach (var transport in transports)
             {
                 NetworkClient networkClient = new NetworkClient();
@@ -267,7 +268,7 @@ namespace Common.Network
         /// <summary>
         /// 使用unity 主循环更新
         /// </summary>
-        public  void NetworkLateUpdate()
+        public void NetworkLateUpdate()
         {
             var time = Time.time;
             foreach (var pair in gateClients)

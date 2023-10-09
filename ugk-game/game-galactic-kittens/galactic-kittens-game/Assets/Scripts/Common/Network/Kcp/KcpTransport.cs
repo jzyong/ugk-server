@@ -11,7 +11,6 @@ namespace kcp2k
     /// <summary>
     /// kcp 传输层逻辑
     /// </summary>
-    [DisallowMultipleComponent]
     public class KcpTransport : Transport
     {
         // scheme used by this transport

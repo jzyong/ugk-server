@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Common.Network;
 using Google.Protobuf;
 using Grpc.Core;
+using kcp2k;
 using UnityEngine;
 
 namespace Game.Manager
@@ -23,7 +24,7 @@ namespace Game.Manager
         private Channel matchChannel;
 
         //大厅服channel
-        private Dictionary<Int32, Channel> lobbyChannels = new Dictionary<int, Channel>(2);
+        private Dictionary<uint, Channel> lobbyChannels = new Dictionary<uint, Channel>(2);
 
 
         public override void Awake()
@@ -32,18 +33,19 @@ namespace Game.Manager
             Application.targetFrameRate = 30;
             singleton = this;
 
-            //TODO 初始化Grpc
-            ServerInfoRequest();
+           
         }
 
         public override void Start()
         {
             base.Start();
-            // 开发环境读取静态配置， 需要连接多个网关，网关地址从外部传入
-            if (Application.platform == RuntimePlatform.WindowsEditor)
-            {
-                StartClient();
-            }
+            // 初始化Grpc
+            ServerInfoRequest();
+            // // 开发环境读取静态配置， 需要连接多个网关，网关地址从外部传入
+            // if (Application.platform == RuntimePlatform.WindowsEditor)
+            // {
+            //     StartClient();
+            // }
         }
 
         //获取消息并处理 
@@ -124,7 +126,7 @@ namespace Game.Manager
         /// <summary>
         /// 匹配服grpc连接
         /// </summary>
-        public Channel GetLobbyChannel(Int32 id)
+        public Channel GetLobbyChannel(uint id)
         {
             Channel channel;
             lobbyChannels.TryGetValue(id, out channel);
@@ -132,13 +134,32 @@ namespace Game.Manager
         }
 
         /// <summary>
-        /// 请求服务器信息
+        /// 请求服务器信息,并创建相应的grpc和kcp连接
         /// </summary>
-        public void ServerInfoRequest()
+        private void ServerInfoRequest()
         {
             var client = new ServerService.ServerServiceClient(MatchChannel);
             var response = client.getServerInfoAsync(new GetServerInfoRequest()).ResponseAsync.Result;
             Debug.Log($"服务器信息：{response}");
+            foreach (var serverInfo in response.ServerInfo)
+            {
+                if (serverInfo.Name.Equals("lobby"))
+                {
+                    var urlPort = serverInfo.GrpcUrl.Split(":");
+                    var lobbyChannel = new Channel(urlPort[0], Int32.Parse(urlPort[1]), ChannelCredentials.Insecure);
+                    lobbyChannels.Add(serverInfo.Id, lobbyChannel);
+                    Debug.Log($"创建{serverInfo.Name}连接：{serverInfo.GrpcUrl}");
+                }
+                else if (serverInfo.Name.Equals("gate"))
+                {
+                    var kcpTransport = gameObject.AddComponent<KcpTransport>();
+                    var urlPort = serverInfo.GrpcUrl.Split(":");
+                    kcpTransport.networkAddress = urlPort[0];
+                    kcpTransport.port = UInt16.Parse(urlPort[1]);
+                    Debug.Log($"创建{serverInfo.Name}连接：{serverInfo.GrpcUrl}");
+                }
+            }
+            StartClient();
         }
     }
 }
