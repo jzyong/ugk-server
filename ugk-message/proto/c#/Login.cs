@@ -22,21 +22,19 @@ public static partial class LoginReflection {
   static LoginReflection() {
     byte[] descriptorData = global::System.Convert.FromBase64String(
         string.Concat(
-          "Cgtsb2dpbi5wcm90bxoMY29tbW9uLnByb3RvIg4KDEhlYXJ0UmVxdWVzdCIP",
-          "Cg1IZWFydFJlc3BvbnNlIjEKDExvZ2luUmVxdWVzdBIPCgdhY2NvdW50GAEg",
-          "ASgJEhAKCHBhc3N3b3JkGAIgASgJIkEKDUxvZ2luUmVzcG9uc2USEAoIcGxh",
-          "eWVySWQYASABKAMSHgoGcmVzdWx0GAIgASgLMg4uTWVzc2FnZVJlc3VsdCIl",
-          "ChFMb2FkUGxheWVyUmVxdWVzdBIQCghwbGF5ZXJJZBgBIAEoAyJyChJMb2Fk",
-          "UGxheWVyUmVzcG9uc2USHgoGcmVzdWx0GAEgASgLMg4uTWVzc2FnZVJlc3Vs",
-          "dBIfCgpwbGF5ZXJJbmZvGAIgASgLMgsuUGxheWVySW5mbxIbCghnYW1lSW5m",
-          "bxgDIAMoCzIJLkdhbWVJbmZvIlYKClBsYXllckluZm8SEAoIcGxheWVySWQY",
-          "ASABKAMSDAoEbmljaxgCIAEoCRINCgVsZXZlbBgDIAEoDRILCgNleHAYBCAB",
-          "KA0SDAoEZ29sZBgFIAEoBCJGCghHYW1lSW5mbxIOCgZnYW1lSWQYASABKA0S",
-          "DAoEbmFtZRgCIAEoCRIOCgZzdGF0dXMYAyABKAQSDAoEaWNvbhgEIAEoCTI2",
-          "CgxMb2dpblNlcnZpY2USJgoFbG9naW4SDS5Mb2dpblJlcXVlc3QaDi5Mb2dp",
-          "blJlc3BvbnNlQgpaCC9tZXNzYWdlYgZwcm90bzM="));
+          "Cgtsb2dpbi5wcm90bxoMY29tbW9uLnByb3RvGgxwbGF5ZXIucHJvdG8iDgoM",
+          "SGVhcnRSZXF1ZXN0Ig8KDUhlYXJ0UmVzcG9uc2UiMQoMTG9naW5SZXF1ZXN0",
+          "Eg8KB2FjY291bnQYASABKAkSEAoIcGFzc3dvcmQYAiABKAkiQQoNTG9naW5S",
+          "ZXNwb25zZRIQCghwbGF5ZXJJZBgBIAEoAxIeCgZyZXN1bHQYAiABKAsyDi5N",
+          "ZXNzYWdlUmVzdWx0IiUKEUxvYWRQbGF5ZXJSZXF1ZXN0EhAKCHBsYXllcklk",
+          "GAEgASgDInIKEkxvYWRQbGF5ZXJSZXNwb25zZRIeCgZyZXN1bHQYASABKAsy",
+          "Di5NZXNzYWdlUmVzdWx0Eh8KCnBsYXllckluZm8YAiABKAsyCy5QbGF5ZXJJ",
+          "bmZvEhsKCGdhbWVJbmZvGAMgAygLMgkuR2FtZUluZm8iRgoIR2FtZUluZm8S",
+          "DgoGZ2FtZUlkGAEgASgNEgwKBG5hbWUYAiABKAkSDgoGc3RhdHVzGAMgASgE",
+          "EgwKBGljb24YBCABKAkyNgoMTG9naW5TZXJ2aWNlEiYKBWxvZ2luEg0uTG9n",
+          "aW5SZXF1ZXN0Gg4uTG9naW5SZXNwb25zZUIKWggvbWVzc2FnZWIGcHJvdG8z"));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
-        new pbr::FileDescriptor[] { global::CommonReflection.Descriptor, },
+        new pbr::FileDescriptor[] { global::CommonReflection.Descriptor, global::PlayerReflection.Descriptor, },
         new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
           new pbr::GeneratedClrTypeInfo(typeof(global::HeartRequest), global::HeartRequest.Parser, null, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::HeartResponse), global::HeartResponse.Parser, null, null, null, null, null),
@@ -44,7 +42,6 @@ public static partial class LoginReflection {
           new pbr::GeneratedClrTypeInfo(typeof(global::LoginResponse), global::LoginResponse.Parser, new[]{ "PlayerId", "Result" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::LoadPlayerRequest), global::LoadPlayerRequest.Parser, new[]{ "PlayerId" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::LoadPlayerResponse), global::LoadPlayerResponse.Parser, new[]{ "Result", "PlayerInfo", "GameInfo" }, null, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::PlayerInfo), global::PlayerInfo.Parser, new[]{ "PlayerId", "Nick", "Level", "Exp", "Gold" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::GameInfo), global::GameInfo.Parser, new[]{ "GameId", "Name", "Status", "Icon" }, null, null, null, null)
         }));
   }
@@ -1319,361 +1316,6 @@ public sealed partial class LoadPlayerResponse : pb::IMessage<LoadPlayerResponse
 }
 
 /// <summary>
-///玩家信息
-/// </summary>
-public sealed partial class PlayerInfo : pb::IMessage<PlayerInfo>
-#if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
-    , pb::IBufferMessage
-#endif
-{
-  private static readonly pb::MessageParser<PlayerInfo> _parser = new pb::MessageParser<PlayerInfo>(() => new PlayerInfo());
-  private pb::UnknownFieldSet _unknownFields;
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  public static pb::MessageParser<PlayerInfo> Parser { get { return _parser; } }
-
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  public static pbr::MessageDescriptor Descriptor {
-    get { return global::LoginReflection.Descriptor.MessageTypes[6]; }
-  }
-
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  pbr::MessageDescriptor pb::IMessage.Descriptor {
-    get { return Descriptor; }
-  }
-
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  public PlayerInfo() {
-    OnConstruction();
-  }
-
-  partial void OnConstruction();
-
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  public PlayerInfo(PlayerInfo other) : this() {
-    playerId_ = other.playerId_;
-    nick_ = other.nick_;
-    level_ = other.level_;
-    exp_ = other.exp_;
-    gold_ = other.gold_;
-    _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
-  }
-
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  public PlayerInfo Clone() {
-    return new PlayerInfo(this);
-  }
-
-  /// <summary>Field number for the "playerId" field.</summary>
-  public const int PlayerIdFieldNumber = 1;
-  private long playerId_;
-  /// <summary>
-  ///玩家id
-  /// </summary>
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  public long PlayerId {
-    get { return playerId_; }
-    set {
-      playerId_ = value;
-    }
-  }
-
-  /// <summary>Field number for the "nick" field.</summary>
-  public const int NickFieldNumber = 2;
-  private string nick_ = "";
-  /// <summary>
-  ///昵称
-  /// </summary>
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  public string Nick {
-    get { return nick_; }
-    set {
-      nick_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-    }
-  }
-
-  /// <summary>Field number for the "level" field.</summary>
-  public const int LevelFieldNumber = 3;
-  private uint level_;
-  /// <summary>
-  ///等级
-  /// </summary>
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  public uint Level {
-    get { return level_; }
-    set {
-      level_ = value;
-    }
-  }
-
-  /// <summary>Field number for the "exp" field.</summary>
-  public const int ExpFieldNumber = 4;
-  private uint exp_;
-  /// <summary>
-  ///经验
-  /// </summary>
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  public uint Exp {
-    get { return exp_; }
-    set {
-      exp_ = value;
-    }
-  }
-
-  /// <summary>Field number for the "gold" field.</summary>
-  public const int GoldFieldNumber = 5;
-  private ulong gold_;
-  /// <summary>
-  ///金币
-  /// </summary>
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  public ulong Gold {
-    get { return gold_; }
-    set {
-      gold_ = value;
-    }
-  }
-
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  public override bool Equals(object other) {
-    return Equals(other as PlayerInfo);
-  }
-
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  public bool Equals(PlayerInfo other) {
-    if (ReferenceEquals(other, null)) {
-      return false;
-    }
-    if (ReferenceEquals(other, this)) {
-      return true;
-    }
-    if (PlayerId != other.PlayerId) return false;
-    if (Nick != other.Nick) return false;
-    if (Level != other.Level) return false;
-    if (Exp != other.Exp) return false;
-    if (Gold != other.Gold) return false;
-    return Equals(_unknownFields, other._unknownFields);
-  }
-
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  public override int GetHashCode() {
-    int hash = 1;
-    if (PlayerId != 0L) hash ^= PlayerId.GetHashCode();
-    if (Nick.Length != 0) hash ^= Nick.GetHashCode();
-    if (Level != 0) hash ^= Level.GetHashCode();
-    if (Exp != 0) hash ^= Exp.GetHashCode();
-    if (Gold != 0UL) hash ^= Gold.GetHashCode();
-    if (_unknownFields != null) {
-      hash ^= _unknownFields.GetHashCode();
-    }
-    return hash;
-  }
-
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  public override string ToString() {
-    return pb::JsonFormatter.ToDiagnosticString(this);
-  }
-
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  public void WriteTo(pb::CodedOutputStream output) {
-  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
-    output.WriteRawMessage(this);
-  #else
-    if (PlayerId != 0L) {
-      output.WriteRawTag(8);
-      output.WriteInt64(PlayerId);
-    }
-    if (Nick.Length != 0) {
-      output.WriteRawTag(18);
-      output.WriteString(Nick);
-    }
-    if (Level != 0) {
-      output.WriteRawTag(24);
-      output.WriteUInt32(Level);
-    }
-    if (Exp != 0) {
-      output.WriteRawTag(32);
-      output.WriteUInt32(Exp);
-    }
-    if (Gold != 0UL) {
-      output.WriteRawTag(40);
-      output.WriteUInt64(Gold);
-    }
-    if (_unknownFields != null) {
-      _unknownFields.WriteTo(output);
-    }
-  #endif
-  }
-
-  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
-    if (PlayerId != 0L) {
-      output.WriteRawTag(8);
-      output.WriteInt64(PlayerId);
-    }
-    if (Nick.Length != 0) {
-      output.WriteRawTag(18);
-      output.WriteString(Nick);
-    }
-    if (Level != 0) {
-      output.WriteRawTag(24);
-      output.WriteUInt32(Level);
-    }
-    if (Exp != 0) {
-      output.WriteRawTag(32);
-      output.WriteUInt32(Exp);
-    }
-    if (Gold != 0UL) {
-      output.WriteRawTag(40);
-      output.WriteUInt64(Gold);
-    }
-    if (_unknownFields != null) {
-      _unknownFields.WriteTo(ref output);
-    }
-  }
-  #endif
-
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  public int CalculateSize() {
-    int size = 0;
-    if (PlayerId != 0L) {
-      size += 1 + pb::CodedOutputStream.ComputeInt64Size(PlayerId);
-    }
-    if (Nick.Length != 0) {
-      size += 1 + pb::CodedOutputStream.ComputeStringSize(Nick);
-    }
-    if (Level != 0) {
-      size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Level);
-    }
-    if (Exp != 0) {
-      size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Exp);
-    }
-    if (Gold != 0UL) {
-      size += 1 + pb::CodedOutputStream.ComputeUInt64Size(Gold);
-    }
-    if (_unknownFields != null) {
-      size += _unknownFields.CalculateSize();
-    }
-    return size;
-  }
-
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  public void MergeFrom(PlayerInfo other) {
-    if (other == null) {
-      return;
-    }
-    if (other.PlayerId != 0L) {
-      PlayerId = other.PlayerId;
-    }
-    if (other.Nick.Length != 0) {
-      Nick = other.Nick;
-    }
-    if (other.Level != 0) {
-      Level = other.Level;
-    }
-    if (other.Exp != 0) {
-      Exp = other.Exp;
-    }
-    if (other.Gold != 0UL) {
-      Gold = other.Gold;
-    }
-    _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
-  }
-
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  public void MergeFrom(pb::CodedInputStream input) {
-  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
-    input.ReadRawMessage(this);
-  #else
-    uint tag;
-    while ((tag = input.ReadTag()) != 0) {
-      switch(tag) {
-        default:
-          _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
-          break;
-        case 8: {
-          PlayerId = input.ReadInt64();
-          break;
-        }
-        case 18: {
-          Nick = input.ReadString();
-          break;
-        }
-        case 24: {
-          Level = input.ReadUInt32();
-          break;
-        }
-        case 32: {
-          Exp = input.ReadUInt32();
-          break;
-        }
-        case 40: {
-          Gold = input.ReadUInt64();
-          break;
-        }
-      }
-    }
-  #endif
-  }
-
-  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
-    uint tag;
-    while ((tag = input.ReadTag()) != 0) {
-      switch(tag) {
-        default:
-          _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
-          break;
-        case 8: {
-          PlayerId = input.ReadInt64();
-          break;
-        }
-        case 18: {
-          Nick = input.ReadString();
-          break;
-        }
-        case 24: {
-          Level = input.ReadUInt32();
-          break;
-        }
-        case 32: {
-          Exp = input.ReadUInt32();
-          break;
-        }
-        case 40: {
-          Gold = input.ReadUInt64();
-          break;
-        }
-      }
-    }
-  }
-  #endif
-
-}
-
-/// <summary>
 /// 小游戏信息
 /// </summary>
 public sealed partial class GameInfo : pb::IMessage<GameInfo>
@@ -1690,7 +1332,7 @@ public sealed partial class GameInfo : pb::IMessage<GameInfo>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public static pbr::MessageDescriptor Descriptor {
-    get { return global::LoginReflection.Descriptor.MessageTypes[7]; }
+    get { return global::LoginReflection.Descriptor.MessageTypes[6]; }
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]

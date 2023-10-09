@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using Common.Network;
 using Google.Protobuf;
+using Grpc.Core;
 using UnityEngine;
 
 namespace Game.Manager
@@ -12,12 +14,26 @@ namespace Game.Manager
     {
         public static GalacticKittensNetworkManager singleton { get; private set; }
 
+        // 后面从agent通过参数传输过来？
+        [SerializeField] [Tooltip("匹配服Grpc地址")]
+        private String matchGrpcUrl = "127.0.0.1:4000";
+
+
+        //匹配服channel
+        private Channel matchChannel;
+
+        //大厅服channel
+        private Dictionary<Int32, Channel> lobbyChannels = new Dictionary<int, Channel>(2);
+
 
         public override void Awake()
         {
             base.Awake();
             Application.targetFrameRate = 30;
             singleton = this;
+
+            //TODO 初始化Grpc
+            ServerInfoRequest();
         }
 
         public override void Start()
@@ -83,6 +99,46 @@ namespace Game.Manager
             }
 
             return heartRequest;
+        }
+
+
+        /// <summary>
+        /// 匹配服grpc连接
+        /// </summary>
+        public Channel MatchChannel
+        {
+            get
+            {
+                if (matchChannel == null || matchChannel.State == ChannelState.Shutdown ||
+                    matchChannel.State == ChannelState.TransientFailure)
+                {
+                    var urlPort = matchGrpcUrl.Split(":");
+                    matchChannel = new Channel(urlPort[0], Int32.Parse(urlPort[1]), ChannelCredentials.Insecure);
+                    Debug.Log($"创建Match连接：{matchGrpcUrl}");
+                }
+
+                return matchChannel;
+            }
+        }
+
+        /// <summary>
+        /// 匹配服grpc连接
+        /// </summary>
+        public Channel GetLobbyChannel(Int32 id)
+        {
+            Channel channel;
+            lobbyChannels.TryGetValue(id, out channel);
+            return channel;
+        }
+
+        /// <summary>
+        /// 请求服务器信息
+        /// </summary>
+        public void ServerInfoRequest()
+        {
+            var client = new ServerService.ServerServiceClient(MatchChannel);
+            var response = client.getServerInfoAsync(new GetServerInfoRequest()).ResponseAsync.Result;
+            Debug.Log($"服务器信息：{response}");
         }
     }
 }

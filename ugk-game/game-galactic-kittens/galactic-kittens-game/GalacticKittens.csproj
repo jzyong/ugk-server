@@ -50,6 +50,7 @@
      <Compile Include="Assets\Scripts\Common\Network\NetworkManager.cs" />
      <Compile Include="Assets\Scripts\Game\Manager\MessageEventManager.cs" />
      <Compile Include="Assets\Scripts\Common\Network\Kcp\kcp2k\highlevel\Log.cs" />
+     <Compile Include="Assets\Scripts\Game\Messages\Player.cs" />
      <Compile Include="Assets\Scripts\Common\Network\Kcp\kcp2k\kcp\Pool.cs" />
      <Compile Include="Assets\Scripts\Common\Network\Kcp\kcp2k\kcp\Segment.cs" />
      <Compile Include="Assets\Scripts\Common\Network\TransportError.cs" />
@@ -57,13 +58,18 @@
      <Compile Include="Assets\Scripts\Common\Tools\ExponentialMovingAverage.cs" />
      <Compile Include="Assets\Scripts\Common\Network\Kcp\kcp2k\kcp\AssemblyInfo.cs" />
      <Compile Include="Assets\Scripts\Common\Network\Kcp\kcp2k\highlevel\KcpPeer.cs" />
+     <Compile Include="Assets\Scripts\Game\Messages\PlayerGrpc.cs" />
      <Compile Include="Assets\Scripts\Common\Network\Kcp\kcp2k\highlevel\ErrorCode.cs" />
      <Compile Include="Assets\Scripts\Common\Network\NetworkLoop.cs" />
      <Compile Include="Assets\Scripts\Game\Messages\Server.cs" />
+     <Compile Include="Assets\Scripts\Game\Messages\ServerGrpc.cs" />
+     <Compile Include="Assets\Scripts\Game\Messages\GameGalacticKittens.cs" />
      <Compile Include="Assets\Scripts\Common\Network\Kcp\kcp2k\highlevel\KcpConfig.cs" />
      <Compile Include="Assets\Scripts\Common\Network\Kcp\kcp2k\highlevel\Extensions.cs" />
      <Compile Include="Assets\Scripts\Game\Manager\DataManager.cs" />
+     <Compile Include="Assets\Scripts\Game\Messages\GameGalacticKittensGrpc.cs" />
      <Compile Include="Assets\Scripts\Game\Messages\Constant.cs" />
+     <Compile Include="Assets\Scripts\Game\Messages\Agent.cs" />
      <Compile Include="Assets\Scripts\Common\Network\Exceptions.cs" />
      <Compile Include="Assets\Scripts\Common\Network\Kcp\kcp2k\kcp\AckItem.cs" />
      <Compile Include="Assets\Scripts\Game\Manager\PlayerManager.cs" />
@@ -80,7 +86,6 @@
      <Compile Include="Assets\Scripts\Common\Network\Kcp\kcp2k\kcp\Kcp.cs" />
      <Compile Include="Assets\Scripts\Common\Network\Kcp\kcp2k\highlevel\KcpClient.cs" />
      <Compile Include="Assets\Scripts\Common\Network\NetworkTime.cs" />
-     <Compile Include="Assets\Scripts\Game\Messages\Login.cs" />
      <Compile Include="Assets\Scripts\Common\Tools\BaseEventManager.cs" />
      <Folder Include="Assets\Scripts\Common\Network\Kcp" />
      <Folder Include="Assets\Scripts\Common\Tools" />
@@ -406,6 +411,12 @@
      </Reference>
      <Reference Include="unityplastic">
      <HintPath>D:\Go\ugk-server\ugk-game\game-galactic-kittens\galactic-kittens-game\Library\PackageCache\com.unity.collab-proxy@2.0.5\Lib\Editor\PlasticSCM\unityplastic.dll</HintPath>
+     </Reference>
+     <Reference Include="Grpc.Core">
+     <HintPath>D:\Go\ugk-server\ugk-game\game-galactic-kittens\galactic-kittens-game\Assets\Plugins\Grpc.Core\lib\net45\Grpc.Core.dll</HintPath>
+     </Reference>
+     <Reference Include="Grpc.Core.Api">
+     <HintPath>D:\Go\ugk-server\ugk-game\game-galactic-kittens\galactic-kittens-game\Assets\Plugins\Grpc.Core.Api\lib\net45\Grpc.Core.Api.dll</HintPath>
      </Reference>
      <Reference Include="netstandard">
      <HintPath>G:\Program Files\Unity\2023.1.3f1c1\Editor\Data\NetStandard\ref\2.1.0\netstandard.dll</HintPath>
