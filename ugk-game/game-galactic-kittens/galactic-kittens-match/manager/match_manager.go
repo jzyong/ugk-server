@@ -46,7 +46,7 @@ func (m *MatchManager) Init() error {
 
 func (m *MatchManager) Run() {
 	//监听并连接大厅服务
-	manager.GetServiceClientManager().WatchGrpcService(config2.GetZKServicePath(config.BaseConfig.Profile, "lobby", 0))
+	manager.GetServiceClientManager().WatchGrpcService(config2.GetZKServicePath(config.BaseConfig.Profile, config2.LobbyName, 0))
 }
 
 func (m *MatchManager) Stop() {

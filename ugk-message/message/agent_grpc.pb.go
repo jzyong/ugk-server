@@ -143,3 +143,91 @@ var AgentService_ServiceDesc = grpc.ServiceDesc{
 	Streams:  []grpc.StreamDesc{},
 	Metadata: "agent.proto",
 }
+
+// AgentControlServiceClient is the client API for AgentControlService service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
+type AgentControlServiceClient interface {
+	// 上传主机信息
+	HostMachineInfoUpload(ctx context.Context, in *HostMachineInfoUploadRequest, opts ...grpc.CallOption) (*HostMachineInfoUploadResponse, error)
+}
+
+type agentControlServiceClient struct {
+	cc grpc.ClientConnInterface
+}
+
+func NewAgentControlServiceClient(cc grpc.ClientConnInterface) AgentControlServiceClient {
+	return &agentControlServiceClient{cc}
+}
+
+func (c *agentControlServiceClient) HostMachineInfoUpload(ctx context.Context, in *HostMachineInfoUploadRequest, opts ...grpc.CallOption) (*HostMachineInfoUploadResponse, error) {
+	out := new(HostMachineInfoUploadResponse)
+	err := c.cc.Invoke(ctx, "/AgentControlService/hostMachineInfoUpload", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// AgentControlServiceServer is the server API for AgentControlService service.
+// All implementations must embed UnimplementedAgentControlServiceServer
+// for forward compatibility
+type AgentControlServiceServer interface {
+	// 上传主机信息
+	HostMachineInfoUpload(context.Context, *HostMachineInfoUploadRequest) (*HostMachineInfoUploadResponse, error)
+	mustEmbedUnimplementedAgentControlServiceServer()
+}
+
+// UnimplementedAgentControlServiceServer must be embedded to have forward compatible implementations.
+type UnimplementedAgentControlServiceServer struct {
+}
+
+func (UnimplementedAgentControlServiceServer) HostMachineInfoUpload(context.Context, *HostMachineInfoUploadRequest) (*HostMachineInfoUploadResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method HostMachineInfoUpload not implemented")
+}
+func (UnimplementedAgentControlServiceServer) mustEmbedUnimplementedAgentControlServiceServer() {}
+
+// UnsafeAgentControlServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to AgentControlServiceServer will
+// result in compilation errors.
+type UnsafeAgentControlServiceServer interface {
+	mustEmbedUnimplementedAgentControlServiceServer()
+}
+
+func RegisterAgentControlServiceServer(s grpc.ServiceRegistrar, srv AgentControlServiceServer) {
+	s.RegisterService(&AgentControlService_ServiceDesc, srv)
+}
+
+func _AgentControlService_HostMachineInfoUpload_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(HostMachineInfoUploadRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AgentControlServiceServer).HostMachineInfoUpload(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/AgentControlService/hostMachineInfoUpload",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AgentControlServiceServer).HostMachineInfoUpload(ctx, req.(*HostMachineInfoUploadRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+// AgentControlService_ServiceDesc is the grpc.ServiceDesc for AgentControlService service.
+// It's only intended for direct use with grpc.RegisterService,
+// and not to be introspected or modified (even as a copy)
+var AgentControlService_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "AgentControlService",
+	HandlerType: (*AgentControlServiceServer)(nil),
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "hostMachineInfoUpload",
+			Handler:    _AgentControlService_HostMachineInfoUpload_Handler,
+		},
+	},
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "agent.proto",
+}

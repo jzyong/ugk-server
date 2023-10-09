@@ -4,6 +4,7 @@ import (
 	"github.com/jzyong/golib/log"
 	"github.com/jzyong/golib/util"
 	"github.com/jzyong/ugk/agent/config"
+	config2 "github.com/jzyong/ugk/common/config"
 	"github.com/jzyong/ugk/common/manager"
 	"sync"
 )
@@ -31,6 +32,9 @@ func (m *AgentManager) Init() error {
 }
 
 func (m *AgentManager) Run() {
+
+	//监听并连接agentManager服务
+	manager.GetServiceClientManager().WatchGrpcService(config2.GetZKServicePath(config.BaseConfig.Profile, config2.AgentManagerName, 0))
 }
 
 func (m *AgentManager) Stop() {

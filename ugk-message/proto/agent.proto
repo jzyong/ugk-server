@@ -2,25 +2,27 @@ syntax = "proto3";
 import "common.proto";
 option go_package = "/message";
 
+//==================================agent-manager请求agent================================
+
 //创建游戏服务
 message CreateGameServiceRequest{
-  int64 gameId =1; //游戏ID
-  string gameName=2; //游戏名称
-  string controlGrpcUrl= 3; //控制管理grpc url
+  int64 gameId = 1; //游戏ID
+  string gameName = 2; //游戏名称
+  string controlGrpcUrl = 3; //控制管理grpc url
 }
 //创建游戏服务
 message CreateGameServiceResponse{
-  MessageResult result= 1; //错误信息
+  MessageResult result = 1; //错误信息
 }
 
 //关闭游戏服务
 message CloseGameServiceRequest{
-  int64 gameId =1; //游戏ID
-  string gameName=2; //游戏名称
+  int64 gameId = 1; //游戏ID
+  string gameName = 2; //游戏名称
 }
 //关闭游戏服务
 message CloseGameServiceResponse{
-  MessageResult result= 1; //错误信息
+  MessageResult result = 1; //错误信息
 }
 
 
@@ -34,6 +36,32 @@ service AgentService{
   rpc closeGameService(CloseGameServiceRequest) returns (CloseGameServiceResponse);
 }
 
+//==================================agent请求agent-manager================================
+
+//上传主机信息
+message HostMachineInfoUploadRequest{
+  HostMachineInfo hostMachineInfo=1; //主机信息
+}
+//上传主机信息
+message HostMachineInfoUploadResponse{
+  MessageResult result = 1; //错误信息
+}
+
+//主机信息
+message HostMachineInfo{
+  float cpuPercent = 1; //cpu百分比
+  float memoryPercent = 2; //内存百分比
+  float diskPercent = 3; //磁盘百分比
+  float memorySize = 4; //内存大小 M
+  float diskSize = 5; //磁盘大小 M
+  uint32 serverId=6; //服务器信息
+}
+
+//agent manager 控制服务
+service AgentControlService{
+  //上传主机信息
+  rpc hostMachineInfoUpload(HostMachineInfoUploadRequest) returns (HostMachineInfoUploadResponse);
+}
 
 
 

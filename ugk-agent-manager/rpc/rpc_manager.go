@@ -23,6 +23,7 @@ func (m *GRpcManager) Init() error {
 	m.GrpcServer = server
 	// 添加grpc服务
 	message.RegisterServerServiceServer(server, new(rpc.ServerService))
+	message.RegisterAgentControlServiceServer(server, new(AgentControlService))
 	//容器中运行 绑定ip地址不一定正确走配置
 	portStr := strings.Split(config.BaseConfig.RpcUrl, ":")[1]
 	listen, err := net.Listen("tcp", fmt.Sprintf("0.0.0.0:%v", portStr))
