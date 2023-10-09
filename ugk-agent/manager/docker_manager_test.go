@@ -60,8 +60,8 @@ func TestStartDocker(t *testing.T) {
 
 	//3.运行
 	//set javaParam="-server -Xmx256M -Xms256M"
-	//docker -H tcp://127.0.0.1:2375 run -dit -p 7060:7060 --name slots-api-jzy1 --restart=always -e JAVA_OPTS=%javaParam% 47.108.220.52:5000/jzy1/slots-api:releases
-	cmd = exec.Command("docker", "-H", "tcp://127.0.0.1:2375", "run", "-dit", "-p", "7060:7060", "--name", "slots-api-jzy1", "--restart=always", "-e", "JAVA_OPTS=-server -Xmx256M -Xms256M", "47.108.220.52:5000/jzy1/slots-api:releases")
+	//docker -H tcp://127.0.0.1:2375 run -dit -p 7060:7060 --name slots-api-jzy1 --restart=always -e JAVA_OPTS=%javaParam% 127.0.0.1:5000/jzy1/slots-api:releases
+	cmd = exec.Command("docker", "-H", "tcp://127.0.0.1:2375", "run", "-dit", "-p", "7060:7060", "--name", "slots-api-jzy1", "--restart=always", "-e", "JAVA_OPTS=-server -Xmx256M -Xms256M", "slots-api:releases")
 	output, err = cmd.CombinedOutput()
 	if err != nil {
 		log.Error("执行错误：%v", err)
