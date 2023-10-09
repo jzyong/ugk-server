@@ -31,13 +31,17 @@ func main() {
 
 type ModuleManager struct {
 	*util.DefaultModuleManager
-	AgentManager *manager.AgentManager
-	GrpcManager  *rpc.GRpcManager
+	AgentManager   *manager.AgentManager
+	DockerManager  *manager.DockerManager
+	MachineManager *manager.MachineManager
+	GrpcManager    *rpc.GRpcManager
 }
 
 // Init 初始化模块
 func (m *ModuleManager) Init() error {
 	m.AgentManager = m.AppendModule(manager.GetAgentManager()).(*manager.AgentManager)
+	m.DockerManager = m.AppendModule(manager.GetDockerManager()).(*manager.DockerManager)
+	m.MachineManager = m.AppendModule(manager.GetMachineManager()).(*manager.MachineManager)
 	m.GrpcManager = m.AppendModule(&rpc.GRpcManager{}).(*rpc.GRpcManager)
 	return m.DefaultModuleManager.Init()
 }

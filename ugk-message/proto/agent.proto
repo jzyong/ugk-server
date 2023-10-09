@@ -51,10 +51,9 @@ message HostMachineInfoUploadResponse{
 message HostMachineInfo{
   float cpuPercent = 1; //cpu百分比
   float memoryPercent = 2; //内存百分比
-  float diskPercent = 3; //磁盘百分比
-  float memorySize = 4; //内存大小 M
-  float diskSize = 5; //磁盘大小 M
-  uint32 serverId=6; //服务器信息
+  float availableMemorySize = 3; //可用内存大小 M
+  float availableDiskSize = 4; //可用磁盘大小 M
+  uint32 serverId=5; //服务器信息
 }
 
 //agent manager 控制服务
