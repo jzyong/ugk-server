@@ -16,5 +16,8 @@ func (a *AgentControlService) HostMachineInfoUpload(ctx context.Context, request
 	//TODO 需要同步，放在一个routine中执行
 	log.Info("请求主机信息：%v", request)
 
-	return nil, nil
+	return &message.HostMachineInfoUploadResponse{Result: &message.MessageResult{
+		Status: 200,
+		Msg:    "成功",
+	}}, nil
 }

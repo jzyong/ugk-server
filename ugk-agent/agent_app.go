@@ -6,6 +6,7 @@ import (
 	"github.com/jzyong/ugk/agent/config"
 	"github.com/jzyong/ugk/agent/manager"
 	"github.com/jzyong/ugk/agent/rpc"
+	manager2 "github.com/jzyong/ugk/common/manager"
 	"runtime"
 )
 
@@ -31,10 +32,11 @@ func main() {
 
 type ModuleManager struct {
 	*util.DefaultModuleManager
-	AgentManager   *manager.AgentManager
-	DockerManager  *manager.DockerManager
-	MachineManager *manager.MachineManager
-	GrpcManager    *rpc.GRpcManager
+	AgentManager         *manager.AgentManager
+	DockerManager        *manager.DockerManager
+	MachineManager       *manager.MachineManager
+	ServiceClientManager *manager2.ServiceClientManager
+	GrpcManager          *rpc.GRpcManager
 }
 
 // Init 初始化模块
@@ -42,6 +44,7 @@ func (m *ModuleManager) Init() error {
 	m.AgentManager = m.AppendModule(manager.GetAgentManager()).(*manager.AgentManager)
 	m.DockerManager = m.AppendModule(manager.GetDockerManager()).(*manager.DockerManager)
 	m.MachineManager = m.AppendModule(manager.GetMachineManager()).(*manager.MachineManager)
+	m.ServiceClientManager = m.AppendModule(manager2.GetServiceClientManager()).(*manager2.ServiceClientManager)
 	m.GrpcManager = m.AppendModule(&rpc.GRpcManager{}).(*rpc.GRpcManager)
 	return m.DefaultModuleManager.Init()
 }
