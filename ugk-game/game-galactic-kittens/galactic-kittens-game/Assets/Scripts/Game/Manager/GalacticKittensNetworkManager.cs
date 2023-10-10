@@ -116,7 +116,7 @@ namespace Game.Manager
                 {
                     var urlPort = matchGrpcUrl.Split(":");
                     matchChannel = new Channel(urlPort[0], Int32.Parse(urlPort[1]), ChannelCredentials.Insecure);
-                    Debug.Log($"create Match content {matchGrpcUrl}");
+                    Common.Tools.Log.Info($"create match connect {matchGrpcUrl}");
                 }
 
                 return matchChannel;
@@ -140,7 +140,7 @@ namespace Game.Manager
         {
             var client = new ServerService.ServerServiceClient(MatchChannel);
             var response = client.getServerInfoAsync(new GetServerInfoRequest()).ResponseAsync.Result;
-            Common.Tools.Log.Info($"server info：{response}");
+            Common.Tools.Log.Info($"server info :{response}");
             foreach (var serverInfo in response.ServerInfo)
             {
                 if (serverInfo.Name.Equals("lobby"))

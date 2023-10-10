@@ -195,7 +195,7 @@ namespace Common.Network
                     else
                     {
                         messageHandlers.Add(attribute.mid, (MessageHandler<T>)clientMessageHandler);
-                        Debug.Log($"message {attribute.mid} add handler :{clientMessageHandler.Method.Name}");
+                        Tools.Log.Debug($"message {attribute.mid} add handler :{clientMessageHandler.Method.Name}");
                     }
                 }
             }
