@@ -2,8 +2,7 @@
 using Game.Manager;
 using Google.Protobuf;
 using Common.Network;
-using kcp2k;
-using UnityEngine;
+using Common.Tools;
 
 
 namespace Game.Handlers
@@ -21,7 +20,7 @@ namespace Game.Handlers
         {
             var response = new ServerHeartResponse();
             response.MergeFrom(ugkMessage.Bytes);
-            Debug.Log($" 收到心跳返回：{ugkMessage.TimeStamp} {response}");
+            Log.Debug($" receive heart: {ugkMessage.TimeStamp} {response}");
         }
     }
 }

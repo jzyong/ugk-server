@@ -80,6 +80,10 @@
 * unity double时间网络传输转换为毫秒使用int64传输
 * GalacticKittensGame 与 Match、lobby、Gate的grpc连接创建管理,使用状态机管理房间状态
 * agent获取系统CPU、内存、磁盘定时上报(3s), 用于agent-manager分配服务器启动游戏容器
+* unity容器执行，ugk容器执行
+* protobuf和grpc能否通过包管理引入
+* unity 日志封装（写文件使用单独线程从队列中获取，可设置输出级别，debug，info，warn，error）
+* 测试打包成Linux平台，docker镜像制作
 
 
 

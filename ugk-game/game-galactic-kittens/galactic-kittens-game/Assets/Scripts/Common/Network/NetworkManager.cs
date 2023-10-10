@@ -56,9 +56,9 @@ namespace Common.Network
 
         public virtual void Awake()
         {
-            Log.Info = Debug.Log;
-            Log.Error = Debug.LogError;
-            Log.Warning = Debug.LogWarning;
+            kcp2k.Log.Info = Tools.Log.Info;
+            kcp2k.Log.Error = Tools.Log.Error;
+            kcp2k.Log.Warning = Tools.Log.Warn;
             Application.targetFrameRate = 30;
             Application.runInBackground = true;
             if (!InitializeSingleton()) return;
@@ -81,6 +81,7 @@ namespace Common.Network
                 Debug.LogError("没有可连接的网关配置");
                 return;
             }
+
             //TODO 断线重连这些？
             foreach (var transport in transports)
             {
@@ -194,7 +195,7 @@ namespace Common.Network
                     else
                     {
                         messageHandlers.Add(attribute.mid, (MessageHandler<T>)clientMessageHandler);
-                        Debug.Log($"消息:${attribute.mid}  添加处理器成功 ：${clientMessageHandler.Method.Name}");
+                        Debug.Log($"message {attribute.mid} add handler :{clientMessageHandler.Method.Name}");
                     }
                 }
             }

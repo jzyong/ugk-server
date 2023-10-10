@@ -5,6 +5,7 @@ using Google.Protobuf;
 using Grpc.Core;
 using kcp2k;
 using UnityEngine;
+using Log = Common.Tools.Log;
 
 namespace Game.Manager
 {
@@ -29,11 +30,10 @@ namespace Game.Manager
 
         public override void Awake()
         {
+            Log.WriteLevel = Log.LogLevel.Info;
             base.Awake();
             Application.targetFrameRate = 30;
             singleton = this;
-
-           
         }
 
         public override void Start()
@@ -116,7 +116,7 @@ namespace Game.Manager
                 {
                     var urlPort = matchGrpcUrl.Split(":");
                     matchChannel = new Channel(urlPort[0], Int32.Parse(urlPort[1]), ChannelCredentials.Insecure);
-                    Debug.Log($"创建Match连接：{matchGrpcUrl}");
+                    Debug.Log($"create Match content {matchGrpcUrl}");
                 }
 
                 return matchChannel;
@@ -140,7 +140,7 @@ namespace Game.Manager
         {
             var client = new ServerService.ServerServiceClient(MatchChannel);
             var response = client.getServerInfoAsync(new GetServerInfoRequest()).ResponseAsync.Result;
-            Debug.Log($"服务器信息：{response}");
+            Common.Tools.Log.Info($"server info：{response}");
             foreach (var serverInfo in response.ServerInfo)
             {
                 if (serverInfo.Name.Equals("lobby"))
@@ -148,7 +148,7 @@ namespace Game.Manager
                     var urlPort = serverInfo.GrpcUrl.Split(":");
                     var lobbyChannel = new Channel(urlPort[0], Int32.Parse(urlPort[1]), ChannelCredentials.Insecure);
                     lobbyChannels.Add(serverInfo.Id, lobbyChannel);
-                    Debug.Log($"创建{serverInfo.Name}连接：{serverInfo.GrpcUrl}");
+                    Common.Tools.Log.Info($"create {serverInfo.Name} connect {serverInfo.GrpcUrl}");
                 }
                 else if (serverInfo.Name.Equals("gate"))
                 {
@@ -156,9 +156,10 @@ namespace Game.Manager
                     var urlPort = serverInfo.GrpcUrl.Split(":");
                     kcpTransport.networkAddress = urlPort[0];
                     kcpTransport.port = UInt16.Parse(urlPort[1]);
-                    Debug.Log($"创建{serverInfo.Name}连接：{serverInfo.GrpcUrl}");
+                    Common.Tools.Log.Info($"create {serverInfo.Name} connect {serverInfo.GrpcUrl}");
                 }
             }
+
             StartClient();
         }
     }
