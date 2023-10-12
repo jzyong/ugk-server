@@ -3,6 +3,7 @@ package manager
 import (
 	"github.com/jzyong/golib/log"
 	"github.com/jzyong/golib/util"
+	"os/exec"
 	"sync"
 )
 
@@ -26,6 +27,19 @@ func (m *DockerManager) Init() error {
 	return nil
 }
 func (m *DockerManager) Run() {
+	//TODO 临时测试
+	go m.testRunCommand()
+}
+
+func (m *DockerManager) testRunCommand() {
+	//执行docker ps
+	cmd := exec.Command("docker", "ps")
+	output, err := cmd.CombinedOutput()
+	if err != nil {
+		log.Error("执行错误：%v", err)
+		return
+	}
+	log.Info("执行结果：%v", string(output))
 }
 
 func (m *DockerManager) Stop() {

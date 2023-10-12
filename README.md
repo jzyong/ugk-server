@@ -85,7 +85,7 @@
 * unity 日志封装（写文件使用单独线程从队列中获取，可设置输出级别，debug，info，warn，error）
 * 测试打包成Linux平台，docker镜像制作
 * Unity 后台脚本构建项目，容器传参数到unity进程？
-* 能否在docker容器中执行系统命令作用与宿主系统？
+* go程序能否在docker容器中执行系统命令作用与宿主系统？
 * GalacticKittensGame 断线重连网关，网关重启后，连接断开了
 
 

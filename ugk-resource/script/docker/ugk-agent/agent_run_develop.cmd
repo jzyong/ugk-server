@@ -12,4 +12,6 @@ rem run docker
 set goRunParams="-config /go/src/ugk-agent/config/app_config_develop.json"
 docker stop ugk-agent-develop
 docker rm ugk-agent-develop
-docker run -dit -p 3031:3031 --name ugk-agent-develop -m 100M -e GO_OPTS=%goRunParams% ugk-agent:develop
+
+rem execute host command use volume,-v /var/run/docker.sock:/var/run/docker.sock
+docker run -dit -p 3031:3031 --name ugk-agent-develop -m 100M --privileged -v /var/run/docker.sock:/var/run/docker.sock -e GO_OPTS=%goRunParams% ugk-agent:develop

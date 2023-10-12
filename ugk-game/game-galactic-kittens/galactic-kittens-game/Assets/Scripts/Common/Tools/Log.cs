@@ -45,6 +45,7 @@ namespace Common.Tools
             // 注意：StackTrace的参数1非常重要，表示获得父一级函数调用的相关信息。
             // 如果修改为0，则返回本身的行列信息，即TraceMethodInfo()函数的信息。
             // 开发环境可以获取文件名和行号，运行环境不行？网上说需要pdb文件一起发布，但是在unity构建中勾选了复制pdb仍然不行
+            //ChatGPT解释：unity为了减少包大小和性能需求，对此进行了剥离优化，要显示构建时选择Development Build并在Player Settings中启用Script Debugging
             StackFrame st = new StackTrace(2, true).GetFrame(0);
             var fileName=st.GetFileName();
             if (fileName!=null)
