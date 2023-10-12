@@ -50,7 +50,7 @@ func (m *ServerManager) Init() error {
 
 // 启动kcp服务器
 func (m *ServerManager) runKcpServer() {
-	url := fmt.Sprintf("%v:%v", config.BaseConfig.PrivateIp, config.BaseConfig.GamePort)
+	url := fmt.Sprintf("%v:%v", "0.0.0.0", config.BaseConfig.GamePort)
 	log.Info("游戏udp监听地址：%s", url)
 	if listener, err := kcp.ListenWithOptions(url, nil, 0, 0); err == nil {
 		for {

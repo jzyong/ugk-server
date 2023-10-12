@@ -2,6 +2,15 @@
 .idea/
 log/
 
+
+#构建文件
+ugk-agent/ugk-agent
+ugk-agent-manager/ugk-agent-manager
+ugk-game/game-galactic-kittens/galactic-kittens-match/galactic-kittens-match
+ugk-gate/ugk-gate
+ugk-lobby/ugk-lobby
+ugk-login/ugk-login
+
 # unity
 ugk-game/game-galactic-kittens/galactic-kittens-game/Logs/
 ugk-game/game-galactic-kittens/galactic-kittens-game/Library/
