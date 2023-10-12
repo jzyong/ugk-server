@@ -84,7 +84,6 @@
 * protobuf和grpc能否通过包管理引入
 * unity 日志封装（写文件使用单独线程从队列中获取，可设置输出级别，debug，info，warn，error）
 * 测试打包成Linux平台，docker镜像制作
-* 网关重启，GalacticKittensMatch 获取不到新网关对象？
 
 
 

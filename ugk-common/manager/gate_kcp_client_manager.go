@@ -80,14 +80,14 @@ func (m *GateKcpClientManager) removeClient(client *GateKcpClient) {
 	for i, kcpClient := range m.Clients {
 		if client.Id == kcpClient.Id {
 			m.Clients = append(m.Clients[:i], m.Clients[i+1:]...)
-			log.Info("网关：%d-%s 连接移除", client.Id, client.Url)
+			log.Info("网关%d：%s ==> %s  连接移除", client.Id, client.UdpSession.LocalAddr().String(), client.Url)
 		}
 	}
 }
 
 // 连接激活
 func channelActive(session *kcp.UDPSession, serverId uint32, url string) *GateKcpClient {
-	log.Info("%s 连接创建", session.RemoteAddr().String())
+	log.Info("%s ==> %s 连接创建", session.LocalAddr().String(), session.RemoteAddr().String())
 	return NewGateKcpClient(session, serverId, url)
 }
 
@@ -211,8 +211,10 @@ func (m *GateKcpClientManager) addClient(serverIdStr string) {
 		return
 	}
 	client := m.GetClient(uint32(serverId))
+	//关闭之前的客户端，开发环境立刻重启需要先关闭之前的连接，再创建新的
 	if client != nil {
-		return
+		GetGateKcpClientManager().removeClient(client)
+		close(client.CloseChan)
 	}
 	//连接服务器
 	conn := GetZookeeperManager().GetConn()
