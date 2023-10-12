@@ -87,6 +87,7 @@
 * Unity 后台脚本构建项目，容器传参数到unity进程？
 * go程序能否在docker容器中执行系统命令作用与宿主系统？
 * GalacticKittensGame 断线重连网关，网关重启后，连接断开了
+* docker 中程序获取宿主CPU，内存，磁盘等信息
 
 
 
