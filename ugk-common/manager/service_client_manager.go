@@ -202,8 +202,8 @@ func (m *ServiceClientManager) GetGrpcConn(path string, id uint32) (*grpc.Client
 		if len(clients) < 1 {
 			return nil, errors.New(fmt.Sprintf("路径：%s 无可用服务", path))
 		}
-		//id 小于0，直接返回第一个
-		if id < 0 {
+		//id 小于1，直接返回第一个
+		if id < 1 {
 			for _, client := range clients {
 				return client.ClientConn, nil
 			}

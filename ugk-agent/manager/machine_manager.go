@@ -84,7 +84,6 @@ func (m *MachineManager) uploadMachineInfo() {
 	freeDiskSize = freeDiskSize / util.MB
 	log.Debug("剩余磁盘：%vM", freeDiskSize)
 
-	//TODO 没有正确获取的grpc连接？
 	client, err := manager.GetServiceClientManager().GetGrpcConn(config2.GetZKServicePath(config.BaseConfig.Profile, config2.AgentManagerName, 0), 0)
 	if err != nil {
 		log.Error("获取agent-manager失败：%v", err)
