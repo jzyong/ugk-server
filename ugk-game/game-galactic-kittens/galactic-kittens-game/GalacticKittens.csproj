@@ -387,11 +387,11 @@
      <Reference Include="Grpc.Core">
      <HintPath>D:\Go\ugk-server\ugk-game\game-galactic-kittens\galactic-kittens-game\Assets\Plugins\Grpc.Core\lib\net45\Grpc.Core.dll</HintPath>
      </Reference>
-     <Reference Include="Unity.Plastic.Antlr3.Runtime">
-     <HintPath>D:\Go\ugk-server\ugk-game\game-galactic-kittens\galactic-kittens-game\Library\PackageCache\com.unity.collab-proxy@2.0.5\Lib\Editor\PlasticSCM\Unity.Plastic.Antlr3.Runtime.dll</HintPath>
-     </Reference>
      <Reference Include="System.Runtime.CompilerServices.Unsafe">
      <HintPath>D:\Go\ugk-server\ugk-game\game-galactic-kittens\galactic-kittens-game\Assets\Plugins\System.Runtime.CompilerServices.Unsafe\lib\net45\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.Plastic.Antlr3.Runtime">
+     <HintPath>D:\Go\ugk-server\ugk-game\game-galactic-kittens\galactic-kittens-game\Library\PackageCache\com.unity.collab-proxy@2.0.5\Lib\Editor\PlasticSCM\Unity.Plastic.Antlr3.Runtime.dll</HintPath>
      </Reference>
      <Reference Include="Unity.Plastic.Newtonsoft.Json">
      <HintPath>D:\Go\ugk-server\ugk-game\game-galactic-kittens\galactic-kittens-game\Library\PackageCache\com.unity.collab-proxy@2.0.5\Lib\Editor\PlasticSCM\Unity.Plastic.Newtonsoft.Json.dll</HintPath>
@@ -402,17 +402,17 @@
      <Reference Include="Unity.VisualScripting.IonicZip">
      <HintPath>D:\Go\ugk-server\ugk-game\game-galactic-kittens\galactic-kittens-game\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll</HintPath>
      </Reference>
-     <Reference Include="Unity.VisualScripting.Antlr3.Runtime">
-     <HintPath>D:\Go\ugk-server\ugk-game\game-galactic-kittens\galactic-kittens-game\Library\PackageCache\com.unity.visualscripting@1.8.0\Runtime\VisualScripting.Flow\Dependencies\NCalc\Unity.VisualScripting.Antlr3.Runtime.dll</HintPath>
-     </Reference>
      <Reference Include="Google.Protobuf">
      <HintPath>D:\Go\ugk-server\ugk-game\game-galactic-kittens\galactic-kittens-game\Assets\Plugins\Google.Protobuf\lib\net45\Google.Protobuf.dll</HintPath>
      </Reference>
-     <Reference Include="Unity.VisualScripting.TextureAssets">
-     <HintPath>D:\Go\ugk-server\ugk-game\game-galactic-kittens\galactic-kittens-game\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\EditorAssetResources\Unity.VisualScripting.TextureAssets.dll</HintPath>
-     </Reference>
      <Reference Include="Grpc.Core.Api">
      <HintPath>D:\Go\ugk-server\ugk-game\game-galactic-kittens\galactic-kittens-game\Assets\Plugins\Grpc.Core.Api\lib\net45\Grpc.Core.Api.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.VisualScripting.Antlr3.Runtime">
+     <HintPath>D:\Go\ugk-server\ugk-game\game-galactic-kittens\galactic-kittens-game\Library\PackageCache\com.unity.visualscripting@1.8.0\Runtime\VisualScripting.Flow\Dependencies\NCalc\Unity.VisualScripting.Antlr3.Runtime.dll</HintPath>
+     </Reference>
+     <Reference Include="Unity.VisualScripting.TextureAssets">
+     <HintPath>D:\Go\ugk-server\ugk-game\game-galactic-kittens\galactic-kittens-game\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\EditorAssetResources\Unity.VisualScripting.TextureAssets.dll</HintPath>
      </Reference>
      <Reference Include="unityplastic">
      <HintPath>D:\Go\ugk-server\ugk-game\game-galactic-kittens\galactic-kittens-game\Library\PackageCache\com.unity.collab-proxy@2.0.5\Lib\Editor\PlasticSCM\unityplastic.dll</HintPath>

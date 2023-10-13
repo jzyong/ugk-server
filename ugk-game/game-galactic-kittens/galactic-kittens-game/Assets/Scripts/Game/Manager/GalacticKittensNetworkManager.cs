@@ -114,6 +114,17 @@ namespace Game.Manager
                 if (matchChannel == null || matchChannel.State == ChannelState.Shutdown ||
                     matchChannel.State == ChannelState.TransientFailure)
                 {
+                    //从命令行获取服务器grpc地址
+                    var args = Environment.GetCommandLineArgs();
+                    foreach (var arg in args)
+                    {
+                        if (arg.StartsWith("grpcUrl"))
+                        {
+                            matchGrpcUrl = arg.Split("=")[1];
+                            Log.Info($"Command Match Url:{matchGrpcUrl}");
+                        }
+                    }
+
                     var urlPort = matchGrpcUrl.Split(":");
                     matchChannel = new Channel(urlPort[0], Int32.Parse(urlPort[1]), ChannelCredentials.Insecure);
                     Common.Tools.Log.Info($"create match connect {matchGrpcUrl}");

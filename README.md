@@ -81,14 +81,7 @@
 * GalacticKittensGame 与 Match、lobby、Gate的grpc连接创建管理,使用状态机管理房间状态
 * agent获取系统CPU、内存、磁盘定时上报(3s), 用于agent-manager分配服务器启动游戏容器
 * 使用agent创建GalacticKittensGame容器
-* protobuf和grpc能否通过包管理引入
-* unity 日志封装（写文件使用单独线程从队列中获取，可设置输出级别，debug，info，warn，error）
-* 测试打包成Linux平台，docker镜像制作
-* Unity 后台脚本构建项目，容器传参数到unity进程？
-* go程序能否在docker容器中执行系统命令作用与宿主系统？
 * GalacticKittensGame 断线重连网关，网关重启后，连接断开了
-* docker 中程序获取宿主CPU，内存，磁盘等信息
-* ugk-agent使用docker复制可执行程序，挂载到宿主系统，然后调用脚本让程序在宿主系统中运行？
 
 
 

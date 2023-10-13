@@ -6,4 +6,4 @@ COPY Build/Linux /usr/src/game
 
 WORKDIR /usr/src/game
 
-CMD ./game.x86_64
+CMD ./game.x86_64 ${UnityParam}
