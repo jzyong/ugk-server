@@ -1,4 +1,5 @@
 using System;
+using Common.Tools;
 using Google.Protobuf;
 using UnityEngine;
 
@@ -28,8 +29,6 @@ namespace Common.Network
         /// 对应的传输层
         /// </summary>
         public Transport Transport { get; set; }
-
-        double lastSendTime;
 
         ConnectState connectState = ConnectState.None;
         public bool active => connectState == ConnectState.Connecting || connectState == ConnectState.Connected;
@@ -109,7 +108,7 @@ namespace Common.Network
 
         void OnTransportError(TransportError error, string reason)
         {
-            Debug.LogWarning($"Client Transport Error: {error}: {reason}. This is fine.");
+            Log.Warn("Client Transport Error: {error}: {reason}. This is fine.");
             OnErrorEvent?.Invoke(error, reason);
         }
 
@@ -194,7 +193,6 @@ namespace Common.Network
         {
             // reset statics
             connectState = ConnectState.None;
-            lastSendTime = 0;
 
             // clear events. someone might have hooked into them before, but
             // we don't want to use those hooks after Shutdown anymore.

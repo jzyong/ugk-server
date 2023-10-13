@@ -81,7 +81,7 @@ namespace Common.Tools
         public static void Warn(string msg)
         {
             msg = FormatMessage(msg, LogLevel.Warn);
-            UnityEngine.Debug.Log(msg);
+            UnityEngine.Debug.LogWarning(msg);
             if (WriteLevel <= LogLevel.Warn)
             {
                 WriteLog(msg);
@@ -91,7 +91,7 @@ namespace Common.Tools
         public static void Error(string msg)
         {
             msg = FormatMessage(msg, LogLevel.Error);
-            UnityEngine.Debug.Log(msg);
+            UnityEngine.Debug.LogError(msg);
             if (WriteLevel <= LogLevel.Error)
             {
                 WriteLog(msg);

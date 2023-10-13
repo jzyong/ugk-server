@@ -27,6 +27,8 @@ namespace Game.Manager
         //大厅服channel
         private Dictionary<uint, Channel> lobbyChannels = new Dictionary<uint, Channel>(2);
 
+        public uint ServerId { get; set; }
+
 
         public override void Awake()
         {
@@ -88,10 +90,9 @@ namespace Game.Manager
 
                 ServerHeartRequest request = new ServerHeartRequest()
                 {
-                    //TODO 完整信息，ID通过agent-manager 生成
                     Server = new ServerInfo()
                     {
-                        Id = 1,
+                        Id = ServerId,
                         Name = "GalacticKittensGame",
                     }
                 };
@@ -122,6 +123,10 @@ namespace Game.Manager
                         {
                             matchGrpcUrl = arg.Split("=")[1];
                             Log.Info($"Command Match Url:{matchGrpcUrl}");
+                        }
+                        else if (arg.StartsWith("serverId"))
+                        {
+                            ServerId = UInt32.Parse(arg.Split("=")[1]);
                         }
                     }
 
