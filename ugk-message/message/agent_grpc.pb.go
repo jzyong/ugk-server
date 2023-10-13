@@ -150,6 +150,10 @@ var AgentService_ServiceDesc = grpc.ServiceDesc{
 type AgentControlServiceClient interface {
 	// 上传主机信息
 	HostMachineInfoUpload(ctx context.Context, in *HostMachineInfoUploadRequest, opts ...grpc.CallOption) (*HostMachineInfoUploadResponse, error)
+	// 创建游戏服务
+	CreateGameService(ctx context.Context, in *CreateGameServiceRequest, opts ...grpc.CallOption) (*CreateGameServiceResponse, error)
+	// 关闭游戏服务
+	CloseGameService(ctx context.Context, in *CloseGameServiceRequest, opts ...grpc.CallOption) (*CloseGameServiceResponse, error)
 }
 
 type agentControlServiceClient struct {
@@ -169,12 +173,34 @@ func (c *agentControlServiceClient) HostMachineInfoUpload(ctx context.Context, i
 	return out, nil
 }
 
+func (c *agentControlServiceClient) CreateGameService(ctx context.Context, in *CreateGameServiceRequest, opts ...grpc.CallOption) (*CreateGameServiceResponse, error) {
+	out := new(CreateGameServiceResponse)
+	err := c.cc.Invoke(ctx, "/AgentControlService/createGameService", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *agentControlServiceClient) CloseGameService(ctx context.Context, in *CloseGameServiceRequest, opts ...grpc.CallOption) (*CloseGameServiceResponse, error) {
+	out := new(CloseGameServiceResponse)
+	err := c.cc.Invoke(ctx, "/AgentControlService/closeGameService", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // AgentControlServiceServer is the server API for AgentControlService service.
 // All implementations must embed UnimplementedAgentControlServiceServer
 // for forward compatibility
 type AgentControlServiceServer interface {
 	// 上传主机信息
 	HostMachineInfoUpload(context.Context, *HostMachineInfoUploadRequest) (*HostMachineInfoUploadResponse, error)
+	// 创建游戏服务
+	CreateGameService(context.Context, *CreateGameServiceRequest) (*CreateGameServiceResponse, error)
+	// 关闭游戏服务
+	CloseGameService(context.Context, *CloseGameServiceRequest) (*CloseGameServiceResponse, error)
 	mustEmbedUnimplementedAgentControlServiceServer()
 }
 
@@ -184,6 +210,12 @@ type UnimplementedAgentControlServiceServer struct {
 
 func (UnimplementedAgentControlServiceServer) HostMachineInfoUpload(context.Context, *HostMachineInfoUploadRequest) (*HostMachineInfoUploadResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method HostMachineInfoUpload not implemented")
+}
+func (UnimplementedAgentControlServiceServer) CreateGameService(context.Context, *CreateGameServiceRequest) (*CreateGameServiceResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateGameService not implemented")
+}
+func (UnimplementedAgentControlServiceServer) CloseGameService(context.Context, *CloseGameServiceRequest) (*CloseGameServiceResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CloseGameService not implemented")
 }
 func (UnimplementedAgentControlServiceServer) mustEmbedUnimplementedAgentControlServiceServer() {}
 
@@ -216,6 +248,42 @@ func _AgentControlService_HostMachineInfoUpload_Handler(srv interface{}, ctx con
 	return interceptor(ctx, in, info, handler)
 }
 
+func _AgentControlService_CreateGameService_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateGameServiceRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AgentControlServiceServer).CreateGameService(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/AgentControlService/createGameService",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AgentControlServiceServer).CreateGameService(ctx, req.(*CreateGameServiceRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AgentControlService_CloseGameService_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CloseGameServiceRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AgentControlServiceServer).CloseGameService(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/AgentControlService/closeGameService",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AgentControlServiceServer).CloseGameService(ctx, req.(*CloseGameServiceRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // AgentControlService_ServiceDesc is the grpc.ServiceDesc for AgentControlService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -226,6 +294,14 @@ var AgentControlService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "hostMachineInfoUpload",
 			Handler:    _AgentControlService_HostMachineInfoUpload_Handler,
+		},
+		{
+			MethodName: "createGameService",
+			Handler:    _AgentControlService_CreateGameService_Handler,
+		},
+		{
+			MethodName: "closeGameService",
+			Handler:    _AgentControlService_CloseGameService_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

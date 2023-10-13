@@ -1,6 +1,7 @@
 package manager
 
 import (
+	"context"
 	"github.com/jzyong/golib/log"
 	"github.com/jzyong/golib/util"
 	"github.com/jzyong/ugk/agent-manager/config"
@@ -17,6 +18,7 @@ import (
 type DockerManager struct {
 	util.DefaultModule
 	MachineInfos  []*message.HostMachineInfo    //主机信息
+	RequestChan   chan func()                   //请求处理
 	MachiInfoChan chan *message.HostMachineInfo //上传主机信息chan
 }
 
@@ -51,6 +53,8 @@ func (m *DockerManager) run() {
 		select {
 		case machineInfo := <-m.MachiInfoChan:
 			m.updateMachineInfo(machineInfo)
+		case requestHand := <-m.RequestChan:
+			requestHand()
 		case <-minuteTicker:
 			m.minuteUpdate()
 		}
@@ -105,4 +109,32 @@ func (m *DockerManager) GetBestAgentClient() *grpc.ClientConn {
 		log.Error("获取agent客户端错误：%v", err)
 	}
 	return client
+}
+
+// CreateGameService 创建游戏服务,转发到合适的agent进行执行
+func (m *DockerManager) CreateGameService(ctx context.Context, wg sync.WaitGroup, request *message.CreateGameServiceRequest, response *message.CreateGameServiceResponse) {
+	wg.Done()
+	grpcClient := m.GetBestAgentClient()
+	if grpcClient == nil {
+		response.Result = &message.MessageResult{
+			Status: 500,
+			Msg:    "无可用主机",
+		}
+		wg.Done()
+		return
+	}
+	go func(ctx context.Context, c *grpc.ClientConn) {
+		client := message.NewAgentServiceClient(c)
+		r, err := client.CreateGameService(ctx, request)
+		if err != nil {
+			response.Result = &message.MessageResult{
+				Status: 500,
+				Msg:    err.Error(),
+			}
+		} else {
+			response.Result = r.Result
+		}
+		wg.Done()
+	}(ctx, grpcClient)
+
 }

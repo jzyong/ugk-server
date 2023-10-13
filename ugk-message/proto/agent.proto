@@ -60,6 +60,10 @@ message HostMachineInfo{
 service AgentControlService{
   //上传主机信息
   rpc hostMachineInfoUpload(HostMachineInfoUploadRequest) returns (HostMachineInfoUploadResponse);
+  //创建游戏服务
+  rpc createGameService(CreateGameServiceRequest) returns (CreateGameServiceResponse);
+  //关闭游戏服务
+  rpc closeGameService(CloseGameServiceRequest) returns (CloseGameServiceResponse);
 }
 
 
