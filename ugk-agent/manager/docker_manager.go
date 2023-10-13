@@ -102,7 +102,7 @@ func (m *DockerManager) showContainers() {
 		log.Error("执行错误：%v", err)
 		return
 	}
-	log.Info("执行结果：%v", string(output))
+	log.Info("本机Docker容器：\n%v", string(output))
 }
 
 func (m *DockerManager) Stop() {

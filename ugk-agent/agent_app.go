@@ -10,7 +10,7 @@ import (
 	"runtime"
 )
 
-// gate 入口 TODO grpc服务添加,连接agent-manager
+// agent 入口
 func main() {
 	runtime.GOMAXPROCS(runtime.NumCPU())
 	config.InitConfigAndLog()
@@ -27,7 +27,6 @@ func main() {
 	util.WaitForTerminate()
 	m.Stop()
 
-	util.WaitForTerminate()
 }
 
 type ModuleManager struct {
