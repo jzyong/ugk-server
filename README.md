@@ -81,7 +81,6 @@
 * GalacticKittensGame 与 Match、lobby、Gate的grpc连接创建管理,使用状态机管理房间状态
 * agent获取系统CPU、内存、磁盘定时上报(3s), 用于agent-manager分配服务器启动游戏容器
 * 使用agent创建GalacticKittensGame容器
-* GalacticKittensGame 断线重连网关，网关重启后，连接断开了
 
 
 

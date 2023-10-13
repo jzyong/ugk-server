@@ -6,7 +6,7 @@ option go_package = "/message";
 
 //创建游戏服务
 message CreateGameServiceRequest{
-  int64 gameId = 1; //游戏ID
+  uint32 gameId = 1; //游戏ID
   string gameName = 2; //游戏名称
   string controlGrpcUrl = 3; //控制管理grpc url
 }
@@ -17,7 +17,7 @@ message CreateGameServiceResponse{
 
 //关闭游戏服务
 message CloseGameServiceRequest{
-  int64 gameId = 1; //游戏ID
+  uint32 gameId = 1; //游戏ID
   string gameName = 2; //游戏名称
 }
 //关闭游戏服务

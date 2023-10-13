@@ -5,7 +5,7 @@ go 1.19
 require (
 	github.com/go-redis/redis/v8 v8.11.5
 	github.com/go-zookeeper/zk v1.0.2
-	github.com/jzyong/golib v0.0.27
+	github.com/jzyong/golib v0.0.28
 	github.com/jzyong/ugk/message v0.0.0-00010101000000-000000000000
 	github.com/xtaci/kcp-go/v5 v5.6.2
 	go.mongodb.org/mongo-driver v1.12.1

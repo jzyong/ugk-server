@@ -62,13 +62,13 @@ func (m *MachineManager) uploadMachineInfo() {
 		cpuPercent += percent
 	}
 	cpuPercent = cpuPercent / float64(len(perCpuPercents))
-	log.Debug("CPU百分比：%.2f", cpuPercent)
+	log.Trace("CPU百分比：%.2f", cpuPercent)
 
 	//内存
 	virtualMemory, _ := mem.VirtualMemory()
-	avaliableMemorySize := virtualMemory.Available / util.MB
-	log.Debug("剩余内存：%vM", avaliableMemorySize)
-	log.Debug("内存百分比：%.2f", virtualMemory.UsedPercent)
+	availableMemorySize := virtualMemory.Available / util.MB
+	log.Trace("剩余内存：%vM", availableMemorySize)
+	log.Trace("内存百分比：%.2f", virtualMemory.UsedPercent)
 
 	//磁盘
 	parts, err := disk.Partitions(true)
@@ -82,7 +82,7 @@ func (m *MachineManager) uploadMachineInfo() {
 		freeDiskSize += diskInfo.Free
 	}
 	freeDiskSize = freeDiskSize / util.MB
-	log.Debug("剩余磁盘：%vM", freeDiskSize)
+	log.Trace("剩余磁盘：%vM", freeDiskSize)
 
 	client, err := manager.GetServiceClientManager().GetGrpcConn(config2.GetZKServicePath(config.BaseConfig.Profile, config2.AgentManagerName, 0), 0)
 	if err != nil {
@@ -95,7 +95,7 @@ func (m *MachineManager) uploadMachineInfo() {
 	machineInfo := &message.HostMachineInfo{
 		CpuPercent:          float32(cpuPercent),
 		MemoryPercent:       float32(virtualMemory.UsedPercent),
-		AvailableMemorySize: float32(avaliableMemorySize),
+		AvailableMemorySize: float32(availableMemorySize),
 		AvailableDiskSize:   float32(freeDiskSize),
 		ServerId:            config.BaseConfig.Id,
 	}
@@ -104,6 +104,6 @@ func (m *MachineManager) uploadMachineInfo() {
 	if err != nil {
 		log.Error("上传主机信息失败：%v", err)
 	}
-	log.Debug("上传结果：%v", response)
+	log.Trace("上传结果：%v", response)
 
 }
