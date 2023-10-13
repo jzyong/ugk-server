@@ -3,6 +3,7 @@ package rpc
 import (
 	"context"
 	"github.com/jzyong/golib/log"
+	"github.com/jzyong/ugk/agent-manager/manager"
 	"github.com/jzyong/ugk/message/message"
 )
 
@@ -12,9 +13,8 @@ type AgentControlService struct {
 }
 
 func (a *AgentControlService) HostMachineInfoUpload(ctx context.Context, request *message.HostMachineInfoUploadRequest) (*message.HostMachineInfoUploadResponse, error) {
-
-	//TODO 需要同步，放在一个routine中执行
-	log.Info("请求主机信息：%v", request)
+	log.Trace("请求主机信息：%v", request)
+	manager.GetDockerManager().MachiInfoChan <- request.GetHostMachineInfo()
 
 	return &message.HostMachineInfoUploadResponse{Result: &message.MessageResult{
 		Status: 200,

@@ -3,7 +3,7 @@ module github.com/jzyong/ugk/agent-manager
 go 1.19
 
 require (
-	github.com/jzyong/golib v0.0.27
+	github.com/jzyong/golib v0.0.28
 	github.com/jzyong/ugk/common v0.0.0-00010101000000-000000000000
 	github.com/jzyong/ugk/message v0.0.0-00010101000000-000000000000
 	google.golang.org/grpc v1.57.0
