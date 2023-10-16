@@ -43,12 +43,8 @@ namespace Game.Manager
             base.Start();
             // 初始化Grpc
             ServerInfoRequest();
-            // // 开发环境读取静态配置， 需要连接多个网关，网关地址从外部传入
-            // if (Application.platform == RuntimePlatform.WindowsEditor)
-            // {
-            //     StartClient();
-            // }
         }
+
 
         //获取消息并处理 
         protected override void OnTransportData(ArraySegment<byte> data)

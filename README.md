@@ -67,26 +67,19 @@
 ## TODO
 * 网络同步、延迟、插值、回退（延迟补偿），物理同步，动画同步，位置方向同步
 * 场景同步消息，transform同步消息，aoi管理
-* 场景对象同步分为消除和隐藏？
 * 请求返回消息需要添加时间戳（延迟补偿需要？），客户端需要维护同步服务器时间戳？（Mirror怎样实现的？）[延迟补偿](https://www.gabrielgambetta.com/lag-compensation.html)
 * 客户端封装NetworkBehavior？（参考Mirror）
 * ugk-client 网络时间封装 NetworkTime
-* 添加断开连接消息包处理逻辑
 * 优先使用GalacticKittens 进行改造，服务器帧率30
-* unity 专用服务器中实现和网关kcp相互连接（心跳），在Linux测试环境部署
-* 网关服务器连接分为三个大类：lobby、功能微服务、游戏微服务
-* 网关和大厅通信联调(完成登录流程，显示大厅游戏列表)
+* 网关服务器连接分为三个大类：lobby、功能微服务、游戏微服务（需要绑定到User，因为每个人单独一个游戏房间unity进程）
+* 大厅游戏列表服务器返回，客户端动态显示
 * 时间同步使用Mirror的（NetworkConnectionToClient（服务器）、Mathd、SnapshotInterpolation、NetworkTime(客户端)，NetworkClient_TimeInterpolation，ClientCube）时间同步计算只是在服务器？客户端通过心跳同步服务器时间NetworkPingMessage？
 * unity double时间网络传输转换为毫秒使用int64传输
-* GalacticKittensGame 与 Match、lobby、Gate的grpc连接创建管理,使用状态机管理房间状态
-* agent获取系统CPU、内存、磁盘定时上报(3s), 用于agent-manager分配服务器启动游戏容器
-* 使用agent创建GalacticKittensGame容器
-
+* GalacticKittensMatch使用agent创建GalacticKittensGame容器
 
 
 ### 计划
 * Websocket网络通信
-* ugk-agent 游戏服务进程管理
 * 压力测试客户端使用ugk-web开发界面（vue3）
 * 添加聊天、排行、匹配、房间（Mirror）服务
 * 广告、充值接取
