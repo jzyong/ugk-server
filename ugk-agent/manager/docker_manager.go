@@ -8,6 +8,7 @@ import (
 	"github.com/jzyong/ugk/message/message"
 	"os/exec"
 	"sync"
+	"time"
 )
 
 // DockerManager 执行系统命令在docker中运行unity服务器
@@ -31,6 +32,18 @@ func (m *DockerManager) Init() error {
 }
 func (m *DockerManager) Run() {
 	go m.showContainers()
+	go m.pruneContainer()
+	go m.run()
+}
+
+func (m *DockerManager) run() {
+	hourTicker := time.Tick(time.Hour)
+	for {
+		select {
+		case <-hourTicker:
+			go m.pruneContainer()
+		}
+	}
 }
 
 // CreateGameServiceContainer 创建游戏服务容器
@@ -94,15 +107,28 @@ func (m *DockerManager) CloseGameServiceContainer(request *message.CloseGameServ
 	return response
 }
 
+// 展示容器
 func (m *DockerManager) showContainers() {
-	//执行docker ps
+	//执行 docker ps
 	cmd := exec.Command("docker", "ps")
 	output, err := cmd.CombinedOutput()
 	if err != nil {
 		log.Error("执行错误：%v", err)
 		return
 	}
-	log.Info("本机Docker容器：\n%v", string(output))
+	log.Info("执行：docker ps\n%v", string(output))
+}
+
+// 清理关闭的容器和镜像 定时清理掉
+func (m *DockerManager) pruneContainer() {
+	//执行docker system prune -f
+	cmd := exec.Command("docker", "system", "prune", "-f")
+	output, err := cmd.CombinedOutput()
+	if err != nil {
+		log.Error("执行错误：%v", err)
+		return
+	}
+	log.Info("执行：docker system prune -f\n%v", string(output))
 }
 
 func (m *DockerManager) Stop() {
