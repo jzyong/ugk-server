@@ -37,6 +37,13 @@ func (a *AgentControlService) CreateGameService(ctx context.Context, request *me
 }
 
 func (a *AgentControlService) CloseGameService(ctx context.Context, request *message.CloseGameServiceRequest) (*message.CloseGameServiceResponse, error) {
-	//TODO
-	return nil, nil
+	var wg sync.WaitGroup
+	wg.Add(2)
+	var response = &message.CloseGameServiceResponse{}
+	manager.GetDockerManager().RequestChan <- func() {
+		manager.GetDockerManager().CloseGameService(ctx, &wg, request, response)
+	}
+	wg.Wait()
+	log.Info("%v-%v:结束游戏服务：%v", request.GetGameName(), request.GetGameId(), response)
+	return response, nil
 }

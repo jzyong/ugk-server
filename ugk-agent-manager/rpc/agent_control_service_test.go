@@ -51,7 +51,7 @@ func TestCloseGameContainer(t *testing.T) {
 
 	client := message.NewAgentControlServiceClient(conn)
 
-	ctx, cancel := context.WithTimeout(context.Background(), time.Second*30)
+	ctx, cancel := context.WithTimeout(context.Background(), time.Second*60)
 	defer cancel()
 	request := &message.CloseGameServiceRequest{
 		GameId:   1,
@@ -64,4 +64,5 @@ func TestCloseGameContainer(t *testing.T) {
 		log.Fatalf("%v", err)
 	}
 	log.Printf("resonse:%v", response)
+	time.Sleep(time.Second)
 }

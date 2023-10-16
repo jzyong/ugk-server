@@ -2,6 +2,7 @@ package manager
 
 import (
 	"context"
+	"fmt"
 	"github.com/jzyong/golib/log"
 	"github.com/jzyong/golib/util"
 	"github.com/jzyong/ugk/agent-manager/config"
@@ -17,9 +18,10 @@ import (
 // DockerManager 管理agent创建docker容器服务,需要多台主机测试
 type DockerManager struct {
 	util.DefaultModule
-	MachineInfos  []*message.HostMachineInfo    //主机信息
-	RequestChan   chan func()                   //请求处理
-	MachiInfoChan chan *message.HostMachineInfo //上传主机信息chan
+	MachineInfos         []*message.HostMachineInfo    //主机信息
+	RequestChan          chan func()                   //请求处理
+	MachiInfoChan        chan *message.HostMachineInfo //上传主机信息chan
+	gameAgentGrpcClients map[string]*grpc.ClientConn   //游戏服务器所在的agent key：游戏名称-游戏id,需要存储数据库，服务重启丢失了
 }
 
 var dockerManager *DockerManager
@@ -28,9 +30,10 @@ var dockerSingletonOnce sync.Once
 func GetDockerManager() *DockerManager {
 	dockerSingletonOnce.Do(func() {
 		dockerManager = &DockerManager{
-			MachineInfos:  make([]*message.HostMachineInfo, 0, 5),
-			MachiInfoChan: make(chan *message.HostMachineInfo, 1024),
-			RequestChan:   make(chan func(), 1024),
+			MachineInfos:         make([]*message.HostMachineInfo, 0, 5),
+			MachiInfoChan:        make(chan *message.HostMachineInfo, 1024),
+			RequestChan:          make(chan func(), 1024),
+			gameAgentGrpcClients: make(map[string]*grpc.ClientConn, 100),
 		}
 	})
 	return dockerManager
@@ -121,6 +124,7 @@ func (m *DockerManager) CreateGameService(ctx context.Context, wg *sync.WaitGrou
 			Status: 500,
 			Msg:    "无可用主机",
 		}
+		wg.Done()
 		return
 	}
 	go func(ctx2 context.Context, wg2 *sync.WaitGroup, c *grpc.ClientConn) {
@@ -135,8 +139,38 @@ func (m *DockerManager) CreateGameService(ctx context.Context, wg *sync.WaitGrou
 			log.Error("%v:请求Agent创建服务错误：%v", request, err)
 		} else {
 			response.Result = r.Result
+			m.gameAgentGrpcClients[fmt.Sprintf("%v-%v", request.GetGameName(), request.GetGameId())] = c
 		}
 		log.Info("%v-%v:创建游戏服务：%v", request.GetGameName(), request.GetGameId(), response)
 	}(ctx, wg, grpcClient)
+}
 
+// CloseGameService 创建游戏服务,转发到合适的agent进行执行
+func (m *DockerManager) CloseGameService(ctx context.Context, wg *sync.WaitGroup, request *message.CloseGameServiceRequest, response *message.CloseGameServiceResponse) {
+	defer wg.Done()
+	grpcClient := m.gameAgentGrpcClients[fmt.Sprintf("%v-%v", request.GetGameName(), request.GetGameId())]
+
+	if grpcClient == nil {
+		response.Result = &message.MessageResult{
+			Status: 500,
+			Msg:    "未找到创建服务的agent",
+		}
+		wg.Done()
+		return
+	}
+	go func(ctx2 context.Context, wg2 *sync.WaitGroup, c *grpc.ClientConn) {
+		defer wg2.Done()
+		client := message.NewAgentServiceClient(c)
+		r, err := client.CloseGameService(ctx2, request)
+		if err != nil {
+			response.Result = &message.MessageResult{
+				Status: 500,
+				Msg:    err.Error(),
+			}
+			log.Error("%v:请求Agent关闭服务错误：%v", request, err)
+		} else {
+			response.Result = r.Result
+		}
+		log.Info("%v-%v:关闭游戏服务：%v", request.GetGameName(), request.GetGameId(), response)
+	}(ctx, wg, grpcClient)
 }
