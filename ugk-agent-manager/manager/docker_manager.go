@@ -30,6 +30,7 @@ func GetDockerManager() *DockerManager {
 		dockerManager = &DockerManager{
 			MachineInfos:  make([]*message.HostMachineInfo, 0, 5),
 			MachiInfoChan: make(chan *message.HostMachineInfo, 1024),
+			RequestChan:   make(chan func(), 1024),
 		}
 	})
 	return dockerManager
@@ -95,7 +96,7 @@ func (m *DockerManager) GetMachineInfo(id uint32) *message.HostMachineInfo {
 func (m *DockerManager) GetBestAgentClient() *grpc.ClientConn {
 	var machineInfo *message.HostMachineInfo
 	for _, info := range m.MachineInfos {
-		if info.GetAvailableMemorySize() > 500 && info.GetCpuPercent() < 0.8 && info.GetAvailableDiskSize() > 1000 {
+		if info.GetAvailableMemorySize() > 500 && info.GetCpuPercent() < 80 && info.GetAvailableDiskSize() > 1000 {
 			machineInfo = info
 		}
 	}
@@ -112,29 +113,30 @@ func (m *DockerManager) GetBestAgentClient() *grpc.ClientConn {
 }
 
 // CreateGameService 创建游戏服务,转发到合适的agent进行执行
-func (m *DockerManager) CreateGameService(ctx context.Context, wg sync.WaitGroup, request *message.CreateGameServiceRequest, response *message.CreateGameServiceResponse) {
-	wg.Done()
+func (m *DockerManager) CreateGameService(ctx context.Context, wg *sync.WaitGroup, request *message.CreateGameServiceRequest, response *message.CreateGameServiceResponse) {
+	defer wg.Done()
 	grpcClient := m.GetBestAgentClient()
 	if grpcClient == nil {
 		response.Result = &message.MessageResult{
 			Status: 500,
 			Msg:    "无可用主机",
 		}
-		wg.Done()
 		return
 	}
-	go func(ctx context.Context, c *grpc.ClientConn) {
+	go func(ctx2 context.Context, wg2 *sync.WaitGroup, c *grpc.ClientConn) {
+		defer wg2.Done()
 		client := message.NewAgentServiceClient(c)
-		r, err := client.CreateGameService(ctx, request)
+		r, err := client.CreateGameService(ctx2, request)
 		if err != nil {
 			response.Result = &message.MessageResult{
 				Status: 500,
 				Msg:    err.Error(),
 			}
+			log.Error("%v:请求Agent创建服务错误：%v", request, err)
 		} else {
 			response.Result = r.Result
 		}
-		wg.Done()
-	}(ctx, grpcClient)
+		log.Info("%v-%v:创建游戏服务：%v", request.GetGameName(), request.GetGameId(), response)
+	}(ctx, wg, grpcClient)
 
 }

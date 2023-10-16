@@ -29,8 +29,10 @@ func (a *AgentControlService) CreateGameService(ctx context.Context, request *me
 	wg.Add(2)
 	var response = &message.CreateGameServiceResponse{}
 	manager.GetDockerManager().RequestChan <- func() {
-		manager.GetDockerManager().CreateGameService(ctx, wg, request, response)
+		manager.GetDockerManager().CreateGameService(ctx, &wg, request, response)
 	}
+	wg.Wait()
+	log.Info("%v-%v:创建游戏服务：%v", request.GetGameName(), request.GetGameId(), response)
 	return response, nil
 }
 
