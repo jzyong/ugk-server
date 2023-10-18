@@ -27,9 +27,9 @@ enum MID {
   //Galactic-kittens match 3145728(3<<20)+ 524288(1<19)= 3670016
   GalacticKittensEnterRoomReq = 3670017;
   GalacticKittensEnterRoomRes = 3670018;
-  GalacticKittensRoomInfoRes=3670020;
-  GalacticKittensPrepareReq=3670021;
-  GalacticKittensPrepareRes=3670022;
+  GalacticKittensRoomInfoRes = 3670020;
+  GalacticKittensPrepareReq = 3670021;
+  GalacticKittensPrepareRes = 3670022;
 
 }
 

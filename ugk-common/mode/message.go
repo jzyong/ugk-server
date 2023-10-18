@@ -23,6 +23,7 @@ func init() {
 // UgkMessage 内部自定义消息
 type UgkMessage struct {
 	MessageId uint32 //消息id
+	PlayerId  int64  //玩家ID
 	Seq       uint32 //序列号
 	Bytes     []byte //Byte数据
 	TimeStamp int64  //时间戳
@@ -33,6 +34,7 @@ type UgkMessage struct {
 func (msg *UgkMessage) Reset() {
 	ReturnBytes(msg.Bytes)
 	msg.MessageId = 0
+	msg.PlayerId = 0
 	msg.Seq = 0
 	msg.Bytes = nil
 	msg.TimeStamp = 0

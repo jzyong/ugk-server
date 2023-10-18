@@ -358,6 +358,7 @@ func (client *GateKcpClient) messageDistribute(data []byte) {
 	}
 	ugkMessage := mode.GetUgkMessage()
 	ugkMessage.MessageId = messageId
+	ugkMessage.PlayerId = playerId
 	ugkMessage.Seq = seq
 	ugkMessage.TimeStamp = timeStamp
 	ugkMessage.Bytes = protoData
