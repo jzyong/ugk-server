@@ -76,6 +76,7 @@
 * 时间同步使用Mirror的（NetworkConnectionToClient（服务器）、Mathd、SnapshotInterpolation、NetworkTime(客户端)，NetworkClient_TimeInterpolation，ClientCube）时间同步计算只是在服务器？客户端通过心跳同步服务器时间NetworkPingMessage？
 * unity double时间网络传输转换为毫秒使用int64传输
 * GalacticKittensMatch使用agent创建GalacticKittensGame容器
+* 完整的GalacticKittensMatch流程
 
 
 ### 计划

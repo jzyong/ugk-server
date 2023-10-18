@@ -33,6 +33,31 @@ func loadPlayer(player *mode.Player, gateClient *manager.GateKcpClient, msg *mod
 		Gold:     10000000,
 	}
 
+	games := make([]*message.GameInfo, 0, 3)
+	//TODO 走配置
+	game1 := &message.GameInfo{
+		GameId: 1,
+		Name:   "GalacticKittens",
+		Status: 0,
+		Icon:   "",
+	}
+	games = append(games, game1)
+	game2 := &message.GameInfo{
+		GameId: 2,
+		Name:   "Coon",
+		Status: 0,
+		Icon:   "",
+	}
+	games = append(games, game2)
+	game3 := &message.GameInfo{
+		GameId: 3,
+		Name:   "Racing",
+		Status: 0,
+		Icon:   "",
+	}
+	games = append(games, game3)
+	response.GameInfo = games
+
 	gateClient.SendToGate(player.Id, message.MID_LoadPlayerRes, response, msg.Seq)
 
 }

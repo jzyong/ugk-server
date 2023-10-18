@@ -5,20 +5,32 @@ option go_package = "/message";
 // 消息ID奇数客户端请求，偶数服务器返回
 // 功能模块100个消息，游戏模块1000个消息
 enum MID {
-  None=0;
+  None = 0;
   //网关拦截消息
-  ServerHeartReq=1; //服务器心跳
-  ServerHeartRes=2; //服务器心跳
+  ServerHeartReq = 1; //服务器心跳
+  ServerHeartRes = 2; //服务器心跳
 
 
-  HeartReq=1000001; //心跳
-  HeartRes=1000002; //心跳
-  LoginReq =1000003; //登录
-  LoginRes =1000004; //登录
+  HeartReq = 1000001; //心跳
+  HeartRes = 1000002; //心跳
+  LoginReq = 1000003; //登录
+  LoginRes = 1000004; //登录
 
   // 登录模块 1048601-1048700
-  LoadPlayerReq=1048601; //加载玩家数据
-  LoadPlayerRes=1048602; //加载玩家数据
+  LoadPlayerReq = 1048601; //加载玩家数据
+  LoadPlayerRes = 1048602; //加载玩家数据
+
+
+
+
+  //游戏
+  //Galactic-kittens match 3145728(3<<20)+ 524288(1<19)= 3670016
+  GalacticKittensEnterRoomReq = 3670017;
+  GalacticKittensEnterRoomRes = 3670018;
+  GalacticKittensRoomInfoRes=3670020;
+  GalacticKittensPrepareReq=3670021;
+  GalacticKittensPrepareRes=3670022;
+
 }
 
 
