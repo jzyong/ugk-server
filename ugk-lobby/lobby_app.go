@@ -11,7 +11,7 @@ import (
 	"runtime"
 )
 
-// gate 入口 TODO grpc服务添加
+// lobby 入口
 func main() {
 	runtime.GOMAXPROCS(runtime.NumCPU())
 	config.InitConfigAndLog()
@@ -29,8 +29,6 @@ func main() {
 	m.Run()
 	util.WaitForTerminate()
 	m.Stop()
-
-	util.WaitForTerminate()
 }
 
 type ModuleManager struct {
@@ -38,6 +36,7 @@ type ModuleManager struct {
 	LobbyManager         *manager.LobbyManager
 	GateKcpClientManager *manager2.GateKcpClientManager
 	PlayerManager        *manager.PlayerManager
+	DataManager          *manager.DataManager
 	GrpcManager          *rpc.GRpcManager
 }
 
@@ -46,6 +45,7 @@ func (m *ModuleManager) Init() error {
 	m.LobbyManager = m.AppendModule(manager.GetLobbyManager()).(*manager.LobbyManager)
 	m.GateKcpClientManager = m.AppendModule(manager2.GetGateKcpClientManager()).(*manager2.GateKcpClientManager)
 	m.PlayerManager = m.AppendModule(manager.GetPlayerManager()).(*manager.PlayerManager)
+	m.DataManager = m.AppendModule(manager.GetDataManager()).(*manager.DataManager)
 	m.GrpcManager = m.AppendModule(&rpc.GRpcManager{}).(*rpc.GRpcManager)
 	return m.DefaultModuleManager.Init()
 }

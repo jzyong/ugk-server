@@ -3,10 +3,11 @@ module github.com/jzyong/ugk/lobby
 go 1.19
 
 require (
-	github.com/jzyong/golib v0.0.27
+	github.com/jzyong/golib v0.0.28
 	github.com/jzyong/ugk/common v0.0.0-00010101000000-000000000000
 	github.com/jzyong/ugk/message v0.0.0-00010101000000-000000000000
 	github.com/xtaci/kcp-go/v5 v5.6.2
+	go.mongodb.org/mongo-driver v1.12.1
 	google.golang.org/grpc v1.57.0
 	google.golang.org/protobuf v1.30.0
 )
@@ -30,7 +31,6 @@ require (
 	github.com/xdg-go/scram v1.1.2 // indirect
 	github.com/xdg-go/stringprep v1.0.4 // indirect
 	github.com/youmark/pkcs8 v0.0.0-20181117223130-1be2e3e5546d // indirect
-	go.mongodb.org/mongo-driver v1.12.1 // indirect
 	golang.org/x/crypto v0.12.0 // indirect
 	golang.org/x/net v0.14.0 // indirect
 	golang.org/x/sync v0.0.0-20220722155255-886fb9371eb4 // indirect

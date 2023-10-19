@@ -24,6 +24,8 @@ func enterRoom(player *mode.Player, room *mode.Room, gateClient *manager.GateKcp
 		return
 	}
 
+	//TODO 需要向大厅获取玩家基础信息
+
 	//TODO
 
 	gateClient.SendToGate(player.Id, message.MID_GalacticKittensEnterRoomRes, response, msg.Seq)
@@ -45,7 +47,7 @@ func prepare(player *mode.Player, room *mode.Room, gateClient *manager.GateKcpCl
 		return
 	}
 
-	//TODO 
+	//TODO 准备完成需要进入加载状态，请求agent-manager创建docker游戏服务
 
 	gateClient.SendToGate(player.Id, message.MID_GalacticKittensPrepareRes, response, msg.Seq)
 

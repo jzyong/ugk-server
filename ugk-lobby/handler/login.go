@@ -24,7 +24,6 @@ func loadPlayer(player *mode.Player, gateClient *manager.GateKcpClient, msg *mod
 		return
 	}
 	log.Info("%d 加载玩家数据", request.GetPlayerId())
-	//TODO 其他数据
 	response.PlayerInfo = &message.PlayerInfo{
 		PlayerId: player.Id,
 		Nick:     player.Nick,
