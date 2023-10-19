@@ -17,8 +17,9 @@ var FilePath string
 // AppConfig 配置
 type AppConfig struct {
 	config2.ServiceConfigImpl
-	MongoUrl    string `json:"mongoUrl"`
-	MongoDbName string `json:"mongoDbName"`
+	MongoUrl    string               `json:"mongoUrl"`
+	MongoDbName string               `json:"mongoDbName"`
+	Redis       *config2.RedisConfig "redis"
 }
 
 func init() {

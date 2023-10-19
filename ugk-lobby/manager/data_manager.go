@@ -115,6 +115,7 @@ func (dataManager *DataManager) InsertPlayer(player *mode.Player) {
 	res, err := collection.InsertOne(ctx, player)
 	if err != nil {
 		log.Error("创建玩家错误：%v", err)
+		return
 	}
 	log.Debug("创建玩家 --> %v ", res.InsertedID)
 }
