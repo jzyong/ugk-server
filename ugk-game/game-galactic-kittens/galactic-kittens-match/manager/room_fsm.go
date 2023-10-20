@@ -1,8 +1,16 @@
 package manager
 
 import (
+	"context"
+	"github.com/jzyong/golib/log"
+	"github.com/jzyong/golib/util"
 	"github.com/jzyong/golib/util/fsm"
+	config2 "github.com/jzyong/ugk/common/config"
+	"github.com/jzyong/ugk/common/manager"
+	"github.com/jzyong/ugk/galactic-kittens-match/config"
 	"github.com/jzyong/ugk/galactic-kittens-match/mode"
+	"github.com/jzyong/ugk/message/message"
+	"time"
 )
 
 //房间 状态机
@@ -25,17 +33,39 @@ type RoomPrepareState struct {
 	fsm.EmptyState[*mode.Room]
 }
 
-func (r *RoomPrepareState) Update(room *mode.Room) {
-
-}
-
 // RoomLoadState 加载
 type RoomLoadState struct {
 	fsm.EmptyState[*mode.Room]
 }
 
 func (state *RoomLoadState) Enter(room *mode.Room) {
-	//TODO 请求agent-manager创建游戏服务
+	// 请求agent-manager创建游戏服务
+	grpcClient, err := manager.GetServiceClientManager().GetGrpcConn(config2.GetZKServicePath(config.BaseConfig.Profile, config2.AgentManagerName, 0), 0)
+	if err != nil {
+		//TODO 需要做异常处理
+		log.Error("%v创建房间游戏服失败：%v", room.Id, err)
+		return
+	}
+	client := message.NewAgentControlServiceClient(grpcClient)
+	ctx, cancel := context.WithTimeout(context.Background(), time.Minute*3)
+	defer cancel()
+	request := &message.CreateGameServiceRequest{
+		GameId:         room.Id,
+		GameName:       "game-galactic-kittens",
+		ControlGrpcUrl: config.BaseConfig.GetRpcUrl(),
+	}
+	response, err := client.CreateGameService(ctx, request)
+	if err != nil {
+		//TODO 需要做异常处理
+		log.Error("%v创建房间游戏服失败：%v", room.Id, err)
+		return
+	}
+	if response.GetResult().GetStatus() == 200 {
+		room.StateMachine.ChangeState(GamingStateRoom)
+	} else {
+		//TODO 需要做异常处理
+		log.Error("%v创建房间游戏服失败：%v", room.Id, response.GetResult().GetMsg())
+	}
 
 }
 
@@ -44,12 +74,85 @@ type RoomGamingState struct {
 	fsm.EmptyState[*mode.Room]
 }
 
+func (state *RoomLoadState) RoomGamingState(room *mode.Room) {
+	GetRoomManager().BroadcastRoomInfo(room)
+}
+
 // RoomFinishState 完成
 type RoomFinishState struct {
 	fsm.EmptyState[*mode.Room]
 }
 
+func (state *RoomFinishState) Enter(room *mode.Room) {
+	GetRoomManager().BroadcastRoomInfo(room)
+	room.CloseTime = util.Now().Add(time.Minute)
+	//TODO 向大厅同步更新玩家游戏结果
+}
+
+func (state *RoomFinishState) Update(room *mode.Room) {
+	// 倒计时（60s）变更为关闭状态，TODO 或者所有玩家退出房间
+	if util.Now().After(room.CloseTime) {
+		room.StateMachine.ChangeState(CloseStateRoom)
+	}
+}
+
 // RoomCloseState 关闭
 type RoomCloseState struct {
 	fsm.EmptyState[*mode.Room]
+}
+
+func (state *RoomCloseState) Enter(room *mode.Room) {
+	//客户端收到该消息，将所有玩家踢回大厅
+	GetRoomManager().BroadcastRoomInfo(room)
+	// 请求agent-manager创建游戏服务
+	grpcClient, err := manager.GetServiceClientManager().GetGrpcConn(config2.GetZKServicePath(config.BaseConfig.Profile, config2.AgentManagerName, 0), 0)
+	if err != nil {
+		//TODO 需要做异常处理
+		log.Error("%v关闭房间游戏服失败：%v", room.Id, err)
+		return
+	}
+	client := message.NewAgentControlServiceClient(grpcClient)
+	ctx, cancel := context.WithTimeout(context.Background(), time.Minute*3)
+	defer cancel()
+	request := &message.CloseGameServiceRequest{
+		GameId:   room.Id,
+		GameName: "game-galactic-kittens",
+	}
+	response, err := client.CloseGameService(ctx, request)
+	if err != nil {
+		//TODO 需要做异常处理
+		log.Error("%v关闭房间游戏服失败：%v", room.Id, err)
+		return
+	}
+	if response.GetResult().GetStatus() == 200 {
+		log.Info("%v关闭房间游戏服成功", room.Id)
+	} else {
+		//TODO 需要做异常处理
+		log.Error("%v关闭房间游戏服失败：%v", room.Id, response.GetResult().GetMsg())
+	}
+
+	// 关闭房间
+	close(room.GetCloseChan())
+
+}
+
+// RoomState 房间状态
+func RoomState(stateMachine any) uint32 {
+	switch stateMachine.(type) {
+	case RoomInitState:
+		return 0
+	case RoomPrepareState:
+		return 1
+	case RoomLoadState:
+		return 2
+	case RoomGamingState:
+		return 3
+	case RoomFinishState:
+		return 4
+	case RoomCloseState:
+		return 5
+	default:
+		return 0
+	}
+
 }

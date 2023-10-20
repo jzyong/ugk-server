@@ -55,7 +55,7 @@ func enterRoom(player *mode.Player, room *mode.Room, gateClient *manager.GateKcp
 	}
 
 	player = mode.NewPlayer(request.GetPlayerId())
-	player.SetGateSession(gateClient.UdpSession)
+	player.GateClient = gateClient
 	player.SetHeartTime(time.Now())
 	playerInfo := playerInfoResponse.GetPlayer()
 	player.Level = playerInfo.GetLevel()
@@ -68,8 +68,7 @@ func enterRoom(player *mode.Player, room *mode.Room, gateClient *manager.GateKcp
 	}
 
 	gateClient.SendToGate(player.Id, message.MID_GalacticKittensEnterRoomRes, response, msg.Seq)
-
-	//TODO 推送房间消息
+	manager2.GetRoomManager().BroadcastRoomInfo(room)
 }
 
 // 准备 TODO 待测试
@@ -116,6 +115,6 @@ func prepare(player *mode.Player, room *mode.Room, gateClient *manager.GateKcpCl
 	}
 
 	gateClient.SendToGate(player.Id, message.MID_GalacticKittensPrepareRes, response, msg.Seq)
-	//TODO 推送房间消息
-
+	// 推送房间消息
+	manager2.GetRoomManager().BroadcastRoomInfo(room)
 }

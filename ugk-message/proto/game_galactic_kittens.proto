@@ -18,9 +18,9 @@ message GalacticKittensRoomInfoResponse{
 
 //房间信息
 message GalacticKittensRoomInfo{
-  int64 id =1; //房间ID
+  uint32 id =1; //房间ID
   repeated GalacticKittensPlayerInfo player= 2;
-  int32 state=3; //房间状态 0匹配；1准备完成；2游戏中；3结算；4游戏结束
+  uint32 state=3; //房间状态 0匹配；1准备；2加载；3游戏中；4完成；5结束
 }
 
 //玩家信息

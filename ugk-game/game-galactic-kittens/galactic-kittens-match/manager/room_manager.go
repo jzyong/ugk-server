@@ -8,6 +8,7 @@ import (
 	"github.com/jzyong/ugk/common/manager"
 	mode2 "github.com/jzyong/ugk/common/mode"
 	"github.com/jzyong/ugk/galactic-kittens-match/mode"
+	"github.com/jzyong/ugk/message/message"
 	"sync"
 	"time"
 )
@@ -18,6 +19,7 @@ type RoomManager struct {
 	IdRooms     map[uint32]*mode.Room  //房间 key：房间id
 	PlayerRooms map[int64]uint32       //房间 key：玩家ID
 	messages    chan *mode2.UgkMessage //收到的所有消息
+	ProcessFun  chan func()            //处理函数
 }
 
 var roomManager *RoomManager
@@ -29,6 +31,7 @@ func GetRoomManager() *RoomManager {
 			IdRooms:     make(map[uint32]*mode.Room, 64),
 			PlayerRooms: make(map[int64]uint32, 1024),
 			messages:    make(chan *mode2.UgkMessage, 1024),
+			ProcessFun:  make(chan func(), 1024),
 		}
 	})
 	return roomManager
@@ -53,6 +56,8 @@ func (m *RoomManager) run() {
 		case message := <-m.messages: //转发消息到房间
 			room := m.GetRoomByPlayerId(message.PlayerId)
 			room.GetMessages() <- message
+		case processFun := <-m.ProcessFun:
+			processFun()
 		}
 	}
 }
@@ -95,7 +100,33 @@ func (m *RoomManager) GetRoom(id uint32) *mode.Room {
 func (m *RoomManager) messageDistribute(playerId int64, msg *mode2.UgkMessage) {
 	// 转发到房间管理器routine执行
 	m.messages <- msg
+}
 
+// BroadcastRoomInfo 广播房间信息
+func (m *RoomManager) BroadcastRoomInfo(room *mode.Room) {
+	roomInfo := &message.GalacticKittensRoomInfo{
+		Id:    room.Id,
+		State: RoomState(room),
+	}
+	playerInfos := make([]*message.GalacticKittensPlayerInfo, 0, len(room.Players))
+	for _, player := range room.Players {
+		playerInfo := &message.GalacticKittensPlayerInfo{
+			PlayerId:     player.Id,
+			Nick:         player.Nick,
+			Prepare:      player.Prepare,
+			Score:        0,
+			PowerUpCount: 0,
+			Hp:           100,
+			Icon:         "icon", //信息待完善 TODO
+		}
+		playerInfos = append(playerInfos, playerInfo)
+	}
+	roomInfo.Player = playerInfos
+
+	msg := &message.GalacticKittensRoomInfoResponse{Room: roomInfo}
+	for _, player := range room.Players {
+		player.SendMsg(message.MID_GalacticKittensRoomInfoRes, msg)
+	}
 }
 
 // 运行玩家routine
@@ -108,7 +139,13 @@ func roomRun(room *mode.Room) {
 		case <-secondTicker:
 			roomSecondUpdate(room)
 		case <-room.GetCloseChan():
-			log.Info("房间：%d 关闭", room.Id)
+			GetRoomManager().ProcessFun <- func() {
+				for _, player := range room.Players {
+					delete(GetRoomManager().PlayerRooms, player.Id)
+				}
+				delete(GetRoomManager().IdRooms, room.Id)
+				log.Info("房间：%d 关闭", room.Id)
+			}
 			return
 		}
 
