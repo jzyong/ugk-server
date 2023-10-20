@@ -69,7 +69,7 @@ func (m *RoomManager) GetRoomByPlayerId(playerId int64) *mode.Room {
 // 自动分配房间
 func (m *RoomManager) autoAssignRoom(playerId int64) *mode.Room {
 	for _, room := range m.IdRooms {
-		if len(room.Players) < 4 && room.StateMachine.IsInState(roomInitState) {
+		if len(room.Players) < 4 && room.StateMachine.IsInState(InitStateRoom) {
 			return room
 		}
 	}
@@ -84,7 +84,7 @@ func (m *RoomManager) GetRoom(id uint32) *mode.Room {
 	} else {
 		room = mode.NewRoom(id)
 		room.StateMachine = &fsm.DefaultStateMachine[*mode.Room]{Owner: room}
-		room.StateMachine.SetInitialState(roomInitState)
+		room.StateMachine.SetInitialState(InitStateRoom)
 		m.IdRooms[id] = room
 		go roomRun(room)
 		return room
@@ -127,6 +127,9 @@ func handRequest(room *mode.Room, msg *mode2.UgkMessage) {
 		if p.Id == msg.PlayerId {
 			player = p
 		}
+	}
+	if player != nil {
+		player.SetHeartTime(time.Now())
 	}
 
 	handFunc(player, room, msg.Client.(*manager.GateKcpClient), msg)

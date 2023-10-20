@@ -38,6 +38,7 @@ message GalacticKittensPlayerInfo{
 
 //准备
 message GalacticKittensPrepareRequest {
+  bool prepare = 1; //ture准备，false取消
 }
 //准备
 message GalacticKittensPrepareResponse {

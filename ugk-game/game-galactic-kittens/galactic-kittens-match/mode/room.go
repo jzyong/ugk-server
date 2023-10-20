@@ -10,7 +10,7 @@ import (
 type Room struct {
 	Id           uint32                  //房间ID
 	Players      []*Player               //玩家
-	StateMachine fsm.StateMachine[*Room] // 状态机
+	StateMachine fsm.StateMachine[*Room] //状态机
 	messages     chan *mode.UgkMessage   //接收到的玩家消息
 	closeChan    chan struct{}           //离线等关闭Chan
 	heartTime    time.Time               //心跳时间

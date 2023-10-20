@@ -13,6 +13,7 @@ type Player struct {
 	Nick        string                `nick`  //昵称
 	Level       uint32                `level` //等级
 	Exp         uint32                `exp`   //经验
+	Prepare     bool                  //是否准备
 	gateSession *kcp.UDPSession       //网关连接会话
 	messages    chan *mode.UgkMessage //接收到的玩家消息
 	closeChan   chan struct{}         //离线等关闭Chan

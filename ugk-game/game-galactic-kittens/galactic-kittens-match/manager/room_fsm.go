@@ -8,12 +8,12 @@ import (
 //房间 状态机
 //初始化，准备，加载，游戏中，完成，结束
 
-var roomInitState = &RoomInitState{}
-var roomPrepareState = &RoomPrepareState{}
-var roomLoadState = &RoomLoadState{}
-var roomGamingState = &RoomGamingState{}
-var roomFinishState = &RoomFinishState{}
-var roomCloseState = &RoomCloseState{}
+var InitStateRoom = &RoomInitState{}
+var PrepareStateRoom = &RoomPrepareState{}
+var LoadStateRoom = &RoomLoadState{}
+var GamingStateRoom = &RoomGamingState{}
+var FinishStateRoom = &RoomFinishState{}
+var CloseStateRoom = &RoomCloseState{}
 
 // RoomInitState 初始化
 type RoomInitState struct {
@@ -32,6 +32,11 @@ func (r *RoomPrepareState) Update(room *mode.Room) {
 // RoomLoadState 加载
 type RoomLoadState struct {
 	fsm.EmptyState[*mode.Room]
+}
+
+func (state *RoomLoadState) Enter(room *mode.Room) {
+	//TODO 请求agent-manager创建游戏服务
+
 }
 
 // RoomGamingState 游戏中
