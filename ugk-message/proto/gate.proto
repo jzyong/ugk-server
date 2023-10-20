@@ -1,0 +1,20 @@
+syntax = "proto3";
+import "common.proto";
+import "server.proto";
+option go_package = "/message";
+
+//子游戏通知网关绑定玩家网络连接
+message BindGameConnectRequest{
+  ServerInfo server = 1; //服务器信息
+  int64 playerId = 2; //玩家id
+}
+//子游戏通知网关绑定玩家网络连接
+message BindGameConnectResponse{
+  MessageResult result = 1; //结果
+}
+
+
+
+
+
+

@@ -15,7 +15,7 @@ type ServerService struct {
 	rpc.ServerService
 }
 
-// GetServerInfo 获取网关（kcp）和大厅服务信息，子游戏需要
+// GetServerInfo 获取网关（kcp）和大厅服务信息，子游戏需要 deprecated
 func (service *ServerService) GetServerInfo(ctx context.Context, request *message.GetServerInfoRequest) (*message.GetServerInfoResponse, error) {
 	response := &message.GetServerInfoResponse{}
 	serverInfos := make([]*message.ServerInfo, 0, 4)

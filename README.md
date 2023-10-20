@@ -77,6 +77,7 @@
 * unity double时间网络传输转换为毫秒使用int64传输
 * 完整的GalacticKittensMatch流程
 * 玩家大厅一致性hash+redis分配，获取大厅客户端封装
+* GalacticKittensGame获取玩家服务信息，向大厅拉取玩家信息，绑定网关连接
 
 
 ### 计划

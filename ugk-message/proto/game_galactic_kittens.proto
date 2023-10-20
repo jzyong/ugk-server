@@ -1,5 +1,6 @@
 syntax = "proto3";
 import "common.proto";
+import "server.proto";
 option go_package = "/message";
 
 // 进入房间
@@ -45,14 +46,13 @@ message GalacticKittensPrepareResponse {
   MessageResult result = 2; //错误信息
 }
 
-//进入游戏 内部
-message GalacticKittensEnterGameRequest {
-  int64 playerId=1; //玩家id
+// 玩家服务器信息列表 内部
+message GalacticKittensPlayerServerListRequest {
 }
-//进入游戏 内部
-message GalacticKittensEnterGameResponse {
+//玩家服务器信息列表 内部
+message GalacticKittensPlayerServerListResponse {
   MessageResult result = 1; //错误信息
-  GalacticKittensPlayerInfo player =2; //玩家
+  map<int64,ServerInfo> playerServers =2; //玩家服务器信息
 }
 
 //游戏完成 内部
@@ -69,17 +69,14 @@ message GalacticKittensGameFinishResponse {
 //TODO 其他游戏中的同步消息，如敌人，boss出生，位置同步，命中碰撞监测等 （直接网关转发到子游戏）
 
 
-//GalacticKittens Game服务
-service GalacticKittensGameService{
-  // 进入游戏
-  rpc enterGame(GalacticKittensEnterGameRequest) returns (GalacticKittensEnterGameResponse);
-}
 
 
 
 //GalacticKittens Match 服务
 service GalacticKittensMatchService{
-  // 进入游戏
+  //玩家服务器列表
+   rpc playerServerList(GalacticKittensPlayerServerListRequest) returns (GalacticKittensPlayerServerListResponse);
+  // 游戏完成
   rpc gameFinish(GalacticKittensGameFinishRequest) returns (GalacticKittensGameFinishResponse);
 }
 
