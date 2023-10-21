@@ -199,10 +199,13 @@ func (user *User) messageDistribute(data []byte) {
 	case 1: // 大厅
 		user.TransmitToLobby(data, messageId)
 	case 2:
-	//TODO messageId >> 19 公共微服务类型 21
+		//TODO messageId >> 21 公共微服务类型 1 TODO除了大厅（1<<20+编号）和unity服务器（4<<20+编号），其他服务的消息需要zookeeper进行注册转发[(2<<20)<消息id<(4<<20)]
+		log.Info("收到消息：%v", messageId)
 	case 3:
-		//TODO messageId >> 19 子游戏服务器类型 31
+		//TODO messageId >> 21 子游戏服务器类型 1  怎样获取客户端？
+		log.Info("收到消息：%v", messageId)
 	default:
+		//TODO 转发到玩家绑定的游戏服
 		log.Warn("%d - %s 收到未知消息mid=%d", user.Id, user.ClientSession.RemoteAddr().String(), messageId)
 	}
 }

@@ -22,11 +22,15 @@ public static partial class ConstantReflection {
   static ConstantReflection() {
     byte[] descriptorData = global::System.Convert.FromBase64String(
         string.Concat(
-          "Cg5jb25zdGFudC5wcm90byqhAQoDTUlEEggKBE5vbmUQABISCg5TZXJ2ZXJI",
+          "Cg5jb25zdGFudC5wcm90byrQAgoDTUlEEggKBE5vbmUQABISCg5TZXJ2ZXJI",
           "ZWFydFJlcRABEhIKDlNlcnZlckhlYXJ0UmVzEAISDgoISGVhcnRSZXEQwYQ9",
           "Eg4KCEhlYXJ0UmVzEMKEPRIOCghMb2dpblJlcRDDhD0SDgoITG9naW5SZXMQ",
           "xIQ9EhMKDUxvYWRQbGF5ZXJSZXEQmYBAEhMKDUxvYWRQbGF5ZXJSZXMQmoBA",
-          "QgpaCC9tZXNzYWdlYgZwcm90bzM="));
+          "EiIKG0dhbGFjdGljS2l0dGVuc0VudGVyUm9vbVJlcRCBgOABEiIKG0dhbGFj",
+          "dGljS2l0dGVuc0VudGVyUm9vbVJlcxCCgOABEiEKGkdhbGFjdGljS2l0dGVu",
+          "c1Jvb21JbmZvUmVzEISA4AESIAoZR2FsYWN0aWNLaXR0ZW5zUHJlcGFyZVJl",
+          "cRCFgOABEiAKGUdhbGFjdGljS2l0dGVuc1ByZXBhcmVSZXMQhoDgAUIKWggv",
+          "bWVzc2FnZWIGcHJvdG8z"));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
         new pbr::FileDescriptor[] { },
         new pbr::GeneratedClrTypeInfo(new[] {typeof(global::MID), }, null, null));
@@ -74,6 +78,15 @@ public enum MID {
   ///加载玩家数据
   /// </summary>
   [pbr::OriginalName("LoadPlayerRes")] LoadPlayerRes = 1048602,
+  /// <summary>
+  ///游戏
+  ///Galactic-kittens match 3145728(3&lt;&lt;20)+ 524288(1&lt;19)= 3670016
+  /// </summary>
+  [pbr::OriginalName("GalacticKittensEnterRoomReq")] GalacticKittensEnterRoomReq = 3670017,
+  [pbr::OriginalName("GalacticKittensEnterRoomRes")] GalacticKittensEnterRoomRes = 3670018,
+  [pbr::OriginalName("GalacticKittensRoomInfoRes")] GalacticKittensRoomInfoRes = 3670020,
+  [pbr::OriginalName("GalacticKittensPrepareReq")] GalacticKittensPrepareReq = 3670021,
+  [pbr::OriginalName("GalacticKittensPrepareRes")] GalacticKittensPrepareRes = 3670022,
 }
 
 #endregion
