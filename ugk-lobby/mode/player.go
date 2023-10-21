@@ -45,8 +45,16 @@ func (player *Player) GetMessages() chan *mode.UgkMessage {
 	return player.messages
 }
 
+func (player *Player) SetMessages(messages chan *mode.UgkMessage) {
+	player.messages = messages
+}
+
 func (player *Player) GetCloseChan() chan struct{} {
 	return player.closeChan
+}
+
+func (player *Player) SetCloseChan(closeChan chan struct{}) {
+	player.closeChan = closeChan
 }
 
 func (player *Player) GetHeartTime() time.Time {

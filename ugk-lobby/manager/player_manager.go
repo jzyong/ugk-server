@@ -63,6 +63,10 @@ func (m *PlayerManager) initPlayer(id int64) *mode.Player {
 		GetDataManager().DataProcessChan <- func() {
 			GetDataManager().InsertPlayer(player)
 		}
+	} else {
+		player.SetCloseChan(make(chan struct{}))
+		player.SetHeartTime(util.Now())
+		player.SetMessages(make(chan *mode2.UgkMessage, 1024))
 	}
 	m.IdPlayers[id] = player
 	go playerRun(player)
@@ -77,6 +81,7 @@ func (m *PlayerManager) removePlayer(player *mode.Player) {
 
 // 消息分发处理
 func (m *PlayerManager) messageDistribute(playerId int64, msg *mode2.UgkMessage) {
+	//此处使用了GateKcpClient的routine，从数据库拉取玩家数据可能阻塞，影响其他玩家
 	player := m.GetPlayer(playerId)
 	player.GetMessages() <- msg
 }
