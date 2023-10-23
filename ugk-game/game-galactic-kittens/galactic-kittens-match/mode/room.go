@@ -13,15 +13,17 @@ type Room struct {
 	StateMachine fsm.StateMachine[*Room] //状态机
 	CloseTime    time.Time               //房间关闭时间
 	messages     chan *mode.UgkMessage   //接收到的玩家消息
+	ProcessFun   chan func()             //处理函数
 	closeChan    chan struct{}           //离线等关闭Chan
 	heartTime    time.Time               //心跳时间
 }
 
 func NewRoom(id uint32) *Room {
 	room := &Room{
-		Id:        id,
-		messages:  make(chan *mode.UgkMessage, 1024),
-		closeChan: make(chan struct{}),
+		Id:         id,
+		messages:   make(chan *mode.UgkMessage, 1024),
+		ProcessFun: make(chan func(), 1024),
+		closeChan:  make(chan struct{}),
 	}
 	return room
 }

@@ -136,6 +136,8 @@ func roomRun(room *mode.Room) {
 		select {
 		case msg := <-room.GetMessages(): //消息处理
 			handRequest(room, msg)
+		case processFun := <-room.ProcessFun:
+			processFun()
 		case <-secondTicker:
 			roomSecondUpdate(room)
 		case <-room.GetCloseChan():

@@ -48,16 +48,18 @@ message GalacticKittensPrepareResponse {
 
 // 玩家服务器信息列表 内部
 message GalacticKittensPlayerServerListRequest {
+  uint32 roomId= 1; //房间id
 }
 //玩家服务器信息列表 内部
 message GalacticKittensPlayerServerListResponse {
   MessageResult result = 1; //错误信息
-  map<int64,ServerInfo> playerServers =2; //玩家服务器信息
+  map<int64,ServerInfo> playerGateServers =2; //玩家网关服务器信息
+  map<int64,ServerInfo> playerLobbyServers =3; //玩家大厅服务器信息
 }
 
 //游戏完成 内部
 message GalacticKittensGameFinishRequest {
-  int64 playerId=1; //玩家id
+  uint32 roomId=1; //房间id
 }
 //游戏完成 内部
 message GalacticKittensGameFinishResponse {
