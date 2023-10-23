@@ -10,6 +10,7 @@ const (
 	ZKMongoExcelConfigPath = "/ugk/%s/mongo/excel"   //MongoDB Excel 配置数据地址
 	ZKInfluxPath           = "/ugk/%s/influx"        //InfluxDB地址
 	ZKRedisPath            = "/ugk/%s/redis"         //redis地址
+	ZKMessageIdWatchPath   = "/ugk/%s/message/id"    //消息id监控地址
 	ZKMessageIdPath        = "/ugk/%s/message/id/%s" //消息id
 )
 

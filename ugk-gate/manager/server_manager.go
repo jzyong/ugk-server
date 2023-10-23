@@ -3,11 +3,13 @@ package manager
 import (
 	"bytes"
 	"encoding/binary"
+	"encoding/json"
 	"errors"
 	"fmt"
 	"github.com/jzyong/golib/log"
 	"github.com/jzyong/golib/util"
 	config2 "github.com/jzyong/ugk/common/config"
+	"github.com/jzyong/ugk/common/manager"
 	"github.com/jzyong/ugk/common/mode"
 	"github.com/jzyong/ugk/gate/config"
 	"github.com/jzyong/ugk/message/message"
@@ -20,8 +22,9 @@ import (
 // ServerManager 服务器-网络
 type ServerManager struct {
 	util.DefaultModule
-	GameClients map[string]map[uint32]*GameKcpClient //游戏客户端 key=游戏名称 ==》游戏id
-	mutex       sync.RWMutex
+	gameClients      map[string]map[uint32]*GameKcpClient //游戏客户端 key=游戏名称 ==》游戏id
+	MessageIdService map[uint32]string                    //消息对应的服务，没加锁，更新变动new一个新的
+	mutex            sync.RWMutex
 }
 
 var serverManager *ServerManager
@@ -30,7 +33,8 @@ var serverSingletonOnce sync.Once
 func GetServerManager() *ServerManager {
 	serverSingletonOnce.Do(func() {
 		serverManager = &ServerManager{
-			GameClients: make(map[string]map[uint32]*GameKcpClient, 10),
+			gameClients:      make(map[string]map[uint32]*GameKcpClient, 10),
+			MessageIdService: make(map[uint32]string, 200),
 		}
 	})
 	return serverManager
@@ -44,6 +48,7 @@ var ServerHandlers = make(map[uint32]serverHandFunc)
 
 func (m *ServerManager) Init() error {
 	log.Info("ServerManager 初始化......")
+	m.watchMessageService()
 	go m.runKcpServer()
 	return nil
 }
@@ -89,19 +94,19 @@ func (m *ServerManager) runKcpServer() {
 func (m *ServerManager) UpdateGameServer(serverInfo *message.ServerInfo, client *GameKcpClient) {
 	defer m.mutex.Unlock()
 	m.mutex.Lock()
-	if serverList, ok := m.GameClients[serverInfo.GetName()]; ok {
+	if serverList, ok := m.gameClients[serverInfo.GetName()]; ok {
 		if c, ok2 := serverList[serverInfo.GetId()]; ok2 {
 			c.Id = serverInfo.GetId()
 			c.Name = serverInfo.GetName()
 		} else {
 			serverList[serverInfo.GetId()] = client
-			m.GameClients[serverInfo.GetName()] = serverList
+			m.gameClients[serverInfo.GetName()] = serverList
 			log.Info("后端服务：%s-%d 注册", client.Name, client.Id)
 		}
 	} else {
 		serverList = make(map[uint32]*GameKcpClient, 2)
 		serverList[serverInfo.GetId()] = client
-		m.GameClients[serverInfo.GetName()] = serverList
+		m.gameClients[serverInfo.GetName()] = serverList
 		log.Info("后端服务：%s-%d 注册", client.Name, client.Id)
 	}
 }
@@ -110,19 +115,38 @@ func (m *ServerManager) UpdateGameServer(serverInfo *message.ServerInfo, client 
 func (m *ServerManager) removeGameServer(client *GameKcpClient) {
 	defer m.mutex.Unlock()
 	m.mutex.Lock()
-	if serverList, ok := m.GameClients[client.Name]; ok {
+	if serverList, ok := m.gameClients[client.Name]; ok {
 		if _, ok2 := serverList[client.Id]; ok2 {
 			delete(serverList, client.Id)
-			m.GameClients[client.Name] = serverList
+			m.gameClients[client.Name] = serverList
 			log.Info("后端服务：%s-%d 移除", client.Name, client.Id)
 		}
 	}
 }
 
+// GetGameClient 获取客户端，id 小于0，直接返回第一个
+func (m *ServerManager) GetGameClient(serviceName string, id uint32) *GameKcpClient {
+	defer m.mutex.RUnlock()
+	m.mutex.RLock()
+	if clients, ok := m.gameClients[serviceName]; ok {
+		if id > 0 {
+			return clients[id]
+		} else {
+			for _, client := range clients {
+				return client
+			}
+		}
+
+	}
+	return nil
+}
+
 // AssignLobby 分配大厅 TODO 一致性hash？
 func (m *ServerManager) AssignLobby(playerId int64) *GameKcpClient {
 	//TODO 暂时只有一个，随机
-	if serverList, ok := m.GameClients["lobby"]; ok {
+	m.mutex.RLock()
+	defer m.mutex.RUnlock()
+	if serverList, ok := m.gameClients[config2.LobbyName]; ok {
 		if len(serverList) > 0 {
 			return serverList[1]
 		}
@@ -399,4 +423,42 @@ func (client *GameKcpClient) SendToGame(playerId int64, mid message.MID, msg pro
 		return err
 	}
 	return nil
+}
+
+// 监听消息ID
+func (m *ServerManager) watchMessageService() {
+	children, errors := util.ZKWatchChildrenW(manager.GetZookeeperManager().GetConn(), fmt.Sprintf(config2.ZKMessageIdWatchPath, config.BaseConfig.Profile), false)
+	go func() {
+		for {
+			select {
+			case serviceNames := <-children:
+				messageIdService := make(map[uint32]string, 200)
+				for _, name := range serviceNames {
+					path := fmt.Sprintf(config2.ZKMessageIdPath, config.BaseConfig.Profile, name)
+					messageStr := util.ZKGet(manager.GetZookeeperManager().GetConn(), path)
+					var messageIds []uint32
+					err := json.Unmarshal([]byte(messageStr), &messageIds)
+					if err != nil {
+						log.Error("服务%v 消息id：%s 序列化错误：%v", name, messageStr, err)
+						continue
+					}
+					for _, messageId := range messageIds {
+						messageIdService[messageId] = name
+					}
+					log.Info("%v 消息ID：%v", path, messageStr)
+					//同样的服务监听一个就好
+					break
+				}
+				//替换
+				for id, serviceName := range m.MessageIdService {
+					messageIdService[id] = serviceName
+				}
+				m.MessageIdService = messageIdService
+			case err := <-errors:
+				//config2.ZKMessageIdWatchPath 必须有一个有数据，否则会失败，因为监听的是永久节点，因此没有做相应的处理
+				log.Warn("messageId listen error：%v", err)
+				return
+			}
+		}
+	}()
 }

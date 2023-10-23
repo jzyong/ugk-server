@@ -152,6 +152,7 @@ func (user *User) messageDistribute(data []byte) {
 	messageId := uint32(data[4]) | uint32(data[5])<<8 | uint32(data[6])<<16 | uint32(data[7])<<24
 	handlerServer := messageId >> 20 //0截取本地、1lobby、2功能微服务，3游戏微服务
 	//log.Info("%v 消息Id=%v 处理服务=%v", user.Id, messageId, handlerServer)
+	//除了大厅（1<<20+编号）和unity服务器（4<<20+编号），其他服务的消息需要zookeeper进行注册转发[(2<<20)<消息id<(4<<20)]
 	switch handlerServer {
 	case 0:
 		// 本地逻辑处理
@@ -198,12 +199,12 @@ func (user *User) messageDistribute(data []byte) {
 		break
 	case 1: // 大厅
 		user.TransmitToLobby(data, messageId)
-	case 2:
-		//TODO messageId >> 21 公共微服务类型 1 TODO除了大厅（1<<20+编号）和unity服务器（4<<20+编号），其他服务的消息需要zookeeper进行注册转发[(2<<20)<消息id<(4<<20)]
-		log.Info("收到消息：%v", messageId)
-	case 3:
-		//TODO messageId >> 21 子游戏服务器类型 1  怎样获取客户端？
-		log.Info("收到消息：%v", messageId)
+	case 2: //公共服务
+		user.TransmitToBackend(data, messageId)
+		log.Trace("收到消息：%v", messageId)
+	case 3: //子游戏go服务
+		user.TransmitToBackend(data, messageId)
+		log.Trace("收到消息：%v", messageId)
 	default:
 		//TODO 转发到玩家绑定的游戏服
 		log.Warn("%d - %s 收到未知消息mid=%d", user.Id, user.ClientSession.RemoteAddr().String(), messageId)
@@ -221,6 +222,33 @@ func (user *User) TransmitToLobby(clientData []byte, messageId uint32) error {
 		return err
 	}
 	_, err = user.LobbyClient.UdpSession.Write(bytes)
+	if err != nil {
+		log.Error("%d - %s 发送消息 %d 失败：%v", user.Id, user.ClientSession.RemoteAddr().String(), messageId, err)
+		return err
+	}
+	return nil
+}
+
+// TransmitToBackend 转发后端服务 TODO 待测试
+func (user *User) TransmitToBackend(clientData []byte, messageId uint32) error {
+	serviceName := GetServerManager().MessageIdService[messageId]
+	if serviceName == "" {
+		msg := fmt.Sprintf("玩家%d 消息：%v注册服务未找到", user.Id, messageId)
+		log.Warn(msg)
+		return errors.New(msg)
+	}
+	// 后期需要跟进id获取，否则user缓存客户端，减少加锁获取
+	client := GetServerManager().GetGameClient(serviceName, 0)
+	if client == nil {
+		msg := fmt.Sprintf("玩家：%d 消息%v 获取服务%v失败", user.Id, messageId, serviceName)
+		log.Warn(msg)
+		return errors.New(msg)
+	}
+	bytes, err := user.toGameBytes(clientData, messageId)
+	if err != nil {
+		return err
+	}
+	_, err = client.UdpSession.Write(bytes)
 	if err != nil {
 		log.Error("%d - %s 发送消息 %d 失败：%v", user.Id, user.ClientSession.RemoteAddr().String(), messageId, err)
 		return err
