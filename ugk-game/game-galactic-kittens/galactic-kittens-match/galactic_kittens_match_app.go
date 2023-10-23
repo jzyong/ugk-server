@@ -17,13 +17,13 @@ func main() {
 	config.InitConfigAndLog()
 	log.Info("启动 galactic kittens match ......")
 
+	handler.RegisterClientHandler() // 没引用handler不执行init，手动执行一下
 	var err error
 	err = m.Init()
 	if err != nil {
 		log.Error("gate 启动错误: %s", err.Error())
 		return
 	}
-	handler.RegisterClientHandler() // 没引用handler不执行init，手动执行一下
 
 	m.Run()
 	util.WaitForTerminate()

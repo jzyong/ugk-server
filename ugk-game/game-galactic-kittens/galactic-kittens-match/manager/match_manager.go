@@ -1,6 +1,7 @@
 package manager
 
 import (
+	"fmt"
 	"github.com/jzyong/golib/log"
 	"github.com/jzyong/golib/util"
 	config2 "github.com/jzyong/ugk/common/config"
@@ -41,6 +42,13 @@ func (m *MatchManager) Init() error {
 		Id:   config.BaseConfig.Id,
 		Name: config.BaseConfig.Name,
 	}}
+	//写消息ID
+	messageIds := make([]uint32, 0, len(GateHandlers))
+	for messageId, _ := range GateHandlers {
+		messageIds = append(messageIds, messageId)
+	}
+	messageIdPath := fmt.Sprintf(config2.ZKMessageIdPath, config.BaseConfig.Profile, config2.GameGalacticKittensMatch)
+	util.ZKUpdate(manager.GetZookeeperManager().GetConn(), messageIdPath, util.ToString(messageIds))
 	return nil
 }
 

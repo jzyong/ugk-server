@@ -5,11 +5,12 @@ import "fmt"
 // zookeeper服务注册地址
 
 const (
-	ZKServicePath          = "/ugk/%s/service/%s"  //服务地址
-	ZKServiceConfigPath    = "/ugk/%s/config/%s"   //服务配置地址
-	ZKMongoExcelConfigPath = "/ugk/%s/mongo/excel" //MongoDB Excel 配置数据地址
-	ZKInfluxPath           = "/ugk/%s/influx"      //InfluxDB地址
-	ZKRedisPath            = "/ugk/%s/redis"       //redis地址
+	ZKServicePath          = "/ugk/%s/service/%s"    //服务地址
+	ZKServiceConfigPath    = "/ugk/%s/config/%s"     //服务配置地址
+	ZKMongoExcelConfigPath = "/ugk/%s/mongo/excel"   //MongoDB Excel 配置数据地址
+	ZKInfluxPath           = "/ugk/%s/influx"        //InfluxDB地址
+	ZKRedisPath            = "/ugk/%s/redis"         //redis地址
+	ZKMessageIdPath        = "/ugk/%s/message/id/%s" //消息id
 )
 
 // GetZKServicePath 获取服务地址 serverId >0拼接服务器id路径
@@ -81,4 +82,6 @@ const (
 	GateName         = "gate"
 	AgentName        = "agent"
 	AgentManagerName = "agent_manager"
+
+	GameGalacticKittensMatch = "game_galactic_kittens_match"
 )
