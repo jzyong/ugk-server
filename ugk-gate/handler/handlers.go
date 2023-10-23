@@ -16,4 +16,5 @@ func RegisterClientHandler() {
 // RegisterGameHandler 注册游戏处理器
 func RegisterGameHandler() {
 	manager.ServerHandlers[uint32(message.MID_ServerHeartReq)] = serverHeart
+	manager.ServerHandlers[uint32(message.MID_BindGameConnectReq)] = bindGameConnect
 }

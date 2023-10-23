@@ -15,6 +15,8 @@ enum MID {
   HeartRes = 1000002; //心跳
   LoginReq = 1000003; //登录
   LoginRes = 1000004; //登录
+  BindGameConnectReq = 1000005; //游戏通知网关绑定玩家网络连接
+  BindGameConnectRes = 1000006; //游戏通知网关绑定玩家网络连接
 
   // 登录模块 1048601-1048700
   LoadPlayerReq = 1048601; //加载玩家数据

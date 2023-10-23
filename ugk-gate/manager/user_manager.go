@@ -206,8 +206,9 @@ func (user *User) messageDistribute(data []byte) {
 		user.TransmitToBackend(data, messageId)
 		log.Trace("收到消息：%v", messageId)
 	default:
-		//TODO 转发到玩家绑定的游戏服
-		log.Warn("%d - %s 收到未知消息mid=%d", user.Id, user.ClientSession.RemoteAddr().String(), messageId)
+		// 转发到玩家绑定的游戏服
+		user.TransmitToGame(data, messageId)
+		log.Trace("%d - %s 收到未知消息mid=%d", user.Id, user.ClientSession.RemoteAddr().String(), messageId)
 	}
 }
 
@@ -249,6 +250,25 @@ func (user *User) TransmitToBackend(clientData []byte, messageId uint32) error {
 		return err
 	}
 	_, err = client.UdpSession.Write(bytes)
+	if err != nil {
+		log.Error("%d - %s 发送消息 %d 失败：%v", user.Id, user.ClientSession.RemoteAddr().String(), messageId, err)
+		return err
+	}
+	return nil
+}
+
+// TransmitToGame 转发unity游戏服务 TODO 待测试
+func (user *User) TransmitToGame(clientData []byte, messageId uint32) error {
+	if user.GameClient == nil {
+		msg := fmt.Sprintf("玩家%d 消息：%v游戏服务未注册", user.Id, messageId)
+		log.Warn(msg)
+		return errors.New(msg)
+	}
+	bytes, err := user.toGameBytes(clientData, messageId)
+	if err != nil {
+		return err
+	}
+	_, err = user.GameClient.UdpSession.Write(bytes)
 	if err != nil {
 		log.Error("%d - %s 发送消息 %d 失败：%v", user.Id, user.ClientSession.RemoteAddr().String(), messageId, err)
 		return err
