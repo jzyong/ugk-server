@@ -230,7 +230,7 @@ func (user *User) TransmitToLobby(clientData []byte, messageId uint32) error {
 	return nil
 }
 
-// TransmitToBackend 转发后端服务 TODO 待测试
+// TransmitToBackend 转发后端服务
 func (user *User) TransmitToBackend(clientData []byte, messageId uint32) error {
 	serviceName := GetServerManager().MessageIdService[messageId]
 	if serviceName == "" {

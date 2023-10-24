@@ -13,7 +13,7 @@ import (
 	"time"
 )
 
-// RoomManager 房间  每个房间一个routine //TODO  待测试
+// RoomManager 房间  每个房间一个routine
 type RoomManager struct {
 	util.DefaultModule
 	IdRooms     map[uint32]*mode.Room  //房间 key：房间id

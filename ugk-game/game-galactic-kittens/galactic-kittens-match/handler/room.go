@@ -14,7 +14,7 @@ import (
 	"time"
 )
 
-// 进入房间 TODO 待测试
+// 进入房间
 func enterRoom(player *mode.Player, room *mode.Room, gateClient *manager.GateKcpClient, msg *mode2.UgkMessage) {
 	request := &message.GalacticKittensEnterRoomRequest{}
 	err := proto.Unmarshal(msg.Bytes, request)
@@ -29,6 +29,18 @@ func enterRoom(player *mode.Player, room *mode.Room, gateClient *manager.GateKcp
 		return
 	}
 
+	for _, p := range room.Players {
+		if p.Id == msg.PlayerId {
+			log.Error("玩家：%v已进入房间", msg.PlayerId)
+			response.Result = &message.MessageResult{
+				Status: 500,
+				Msg:    "Already enter room",
+			}
+			gateClient.SendToGate(request.GetPlayerId(), message.MID_GalacticKittensEnterRoomRes, response, msg.Seq)
+			return
+		}
+	}
+
 	// 需要向大厅获取玩家基础信息 ,暂时只考虑只有一个lobby，后面修改
 	hallGrpc, err := manager.GetServiceClientManager().GetGrpcConn(config2.GetZKServicePath(config.BaseConfig.Profile, config2.LobbyName, 0), 0)
 	if err != nil {
@@ -37,24 +49,24 @@ func enterRoom(player *mode.Player, room *mode.Room, gateClient *manager.GateKcp
 			Status: 500,
 			Msg:    err.Error(),
 		}
-		gateClient.SendToGate(request.GetPlayerId(), message.MID_GalacticKittensEnterRoomRes, response, msg.Seq)
+		gateClient.SendToGate(msg.PlayerId, message.MID_GalacticKittensEnterRoomRes, response, msg.Seq)
 		return
 	}
 	client := message.NewPlayerServiceClient(hallGrpc)
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second*5)
 	defer cancel()
-	playerInfoResponse, err := client.GetPlayerInfo(ctx, &message.PlayerInfoRequest{PlayerId: request.GetPlayerId()})
+	playerInfoResponse, err := client.GetPlayerInfo(ctx, &message.PlayerInfoRequest{PlayerId: msg.PlayerId})
 	if err != nil {
 		log.Error("请求玩家信息：%v", err)
 		response.Result = &message.MessageResult{
 			Status: 500,
 			Msg:    err.Error(),
 		}
-		gateClient.SendToGate(request.GetPlayerId(), message.MID_GalacticKittensEnterRoomRes, response, msg.Seq)
+		gateClient.SendToGate(msg.PlayerId, message.MID_GalacticKittensEnterRoomRes, response, msg.Seq)
 		return
 	}
 
-	player = mode.NewPlayer(request.GetPlayerId())
+	player = mode.NewPlayer(msg.PlayerId)
 	player.GateClient = gateClient
 	player.SetHeartTime(time.Now())
 	playerInfo := playerInfoResponse.GetPlayer()
@@ -69,6 +81,7 @@ func enterRoom(player *mode.Player, room *mode.Room, gateClient *manager.GateKcp
 
 	gateClient.SendToGate(player.Id, message.MID_GalacticKittensEnterRoomRes, response, msg.Seq)
 	manager2.GetRoomManager().BroadcastRoomInfo(room)
+	log.Debug("%v进入房间%v", player.Id, room.Id)
 }
 
 // 准备 TODO 待测试

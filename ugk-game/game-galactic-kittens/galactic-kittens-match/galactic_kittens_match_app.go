@@ -34,14 +34,18 @@ func main() {
 
 type ModuleManager struct {
 	*util.DefaultModuleManager
-	GateManager          *manager.MatchManager
+	MatchManager         *manager.MatchManager
+	RoomManager          *manager.RoomManager
+	DataManager          *manager.DataManager
 	ServiceClientManager *manager2.ServiceClientManager
 	GrpcManager          *rpc.GRpcManager
 }
 
 // Init 初始化模块
 func (m *ModuleManager) Init() error {
-	m.GateManager = m.AppendModule(manager.GetMatchManager()).(*manager.MatchManager)
+	m.MatchManager = m.AppendModule(manager.GetMatchManager()).(*manager.MatchManager)
+	m.RoomManager = m.AppendModule(manager.GetRoomManager()).(*manager.RoomManager)
+	m.DataManager = m.AppendModule(manager.GetDataManager()).(*manager.DataManager)
 	m.ServiceClientManager = m.AppendModule(manager2.GetServiceClientManager()).(*manager2.ServiceClientManager)
 	m.GrpcManager = m.AppendModule(&rpc.GRpcManager{}).(*rpc.GRpcManager)
 	return m.DefaultModuleManager.Init()

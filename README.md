@@ -71,7 +71,6 @@
 * 客户端封装NetworkBehavior？（参考Mirror）
 * ugk-client 网络时间封装 NetworkTime
 * 优先使用GalacticKittens 进行改造，服务器帧率30
-* 网关服务器连接分为三个大类：lobby、功能微服务、游戏微服务（需要绑定到User，因为每个人单独一个游戏房间unity进程）
 * 大厅游戏列表服务器返回，客户端动态显示
 * 时间同步使用Mirror的（NetworkConnectionToClient（服务器）、Mathd、SnapshotInterpolation、NetworkTime(客户端)，NetworkClient_TimeInterpolation，ClientCube）时间同步计算只是在服务器？客户端通过心跳同步服务器时间NetworkPingMessage？
 * unity double时间网络传输转换为毫秒使用int64传输

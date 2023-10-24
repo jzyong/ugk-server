@@ -71,7 +71,7 @@ func (dataManager *DataManager) run() {
 
 // 批量存储数据
 func (dataManager *DataManager) batchSave() {
-	if dataManager.server.GetDirty() {
+	if dataManager.GetServer().GetDirty() {
 		dataManager.SaveServer(manager.GetMongoManager().StructToM(dataManager.server))
 	}
 }

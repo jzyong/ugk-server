@@ -5,7 +5,7 @@ option go_package = "/message";
 
 // 进入房间
 message GalacticKittensEnterRoomRequest{
-  int64 playerId = 1; //玩家id
+  int64 playerId = 1; //玩家id 不需要
 }
 //进入房间
 message GalacticKittensEnterRoomResponse{
