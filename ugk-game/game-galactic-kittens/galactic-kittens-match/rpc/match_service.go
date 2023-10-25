@@ -75,6 +75,10 @@ func (service *ServerService) GameFinish(ctx context.Context, request *message.G
 		room.ProcessFun <- func() {
 			defer wg.Done()
 			close(room.GetCloseChan())
+			response.Result = &message.MessageResult{
+				Status: 200,
+				Msg:    "success",
+			}
 		}
 		wg.Done()
 	}

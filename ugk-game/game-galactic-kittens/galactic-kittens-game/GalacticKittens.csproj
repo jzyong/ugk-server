@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Scripts\Common\Tools\SingletonInstance.cs" />
+     <Compile Include="Assets\Scripts\Game\Bootstrap.cs" />
      <Compile Include="Assets\Scripts\Common\Network\Kcp\kcp2k\highlevel\KcpServerConnection.cs" />
      <Compile Include="Assets\Scripts\Common\Network\NetworkManager.cs" />
      <Compile Include="Assets\Scripts\Game\Manager\MessageEventManager.cs" />
@@ -58,9 +59,11 @@
      <Compile Include="Assets\Scripts\Common\Tools\ExponentialMovingAverage.cs" />
      <Compile Include="Assets\Scripts\Common\Network\Kcp\kcp2k\kcp\AssemblyInfo.cs" />
      <Compile Include="Assets\Scripts\Common\Network\Kcp\kcp2k\highlevel\KcpPeer.cs" />
+     <Compile Include="Assets\Scripts\Game\Messages\Gate.cs" />
      <Compile Include="Assets\Scripts\Game\Messages\PlayerGrpc.cs" />
      <Compile Include="Assets\Scripts\Common\Network\Kcp\kcp2k\highlevel\ErrorCode.cs" />
      <Compile Include="Assets\Scripts\Common\Network\NetworkLoop.cs" />
+     <Compile Include="Assets\Scripts\Game\Manager\RoomManager.cs" />
      <Compile Include="Assets\Scripts\Game\Messages\Server.cs" />
      <Compile Include="Assets\Scripts\Game\Messages\ServerGrpc.cs" />
      <Compile Include="Assets\Scripts\Game\Messages\GameGalacticKittens.cs" />
@@ -70,7 +73,6 @@
      <Compile Include="Assets\Scripts\Game\Messages\GameGalacticKittensGrpc.cs" />
      <Compile Include="Assets\Scripts\Common\Tools\Log.cs" />
      <Compile Include="Assets\Scripts\Game\Messages\Constant.cs" />
-     <Compile Include="Assets\Scripts\Game\Messages\Agent.cs" />
      <Compile Include="Assets\Scripts\Common\Network\Exceptions.cs" />
      <Compile Include="Assets\Scripts\Common\Network\Kcp\kcp2k\kcp\AckItem.cs" />
      <Compile Include="Assets\Scripts\Game\Manager\PlayerManager.cs" />

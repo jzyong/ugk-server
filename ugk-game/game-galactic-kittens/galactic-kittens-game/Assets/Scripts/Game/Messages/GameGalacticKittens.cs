@@ -22,45 +22,52 @@ public static partial class GameGalacticKittensReflection {
   static GameGalacticKittensReflection() {
     byte[] descriptorData = global::System.Convert.FromBase64String(
         string.Concat(
-          "ChtnYW1lX2dhbGFjdGljX2tpdHRlbnMucHJvdG8aDGNvbW1vbi5wcm90byIz",
-          "Ch9HYWxhY3RpY0tpdHRlbnNFbnRlclJvb21SZXF1ZXN0EhAKCHBsYXllcklk",
-          "GAEgASgDIkIKIEdhbGFjdGljS2l0dGVuc0VudGVyUm9vbVJlc3BvbnNlEh4K",
-          "BnJlc3VsdBgBIAEoCzIOLk1lc3NhZ2VSZXN1bHQiSQofR2FsYWN0aWNLaXR0",
-          "ZW5zUm9vbUluZm9SZXNwb25zZRImCgRyb29tGAEgASgLMhguR2FsYWN0aWNL",
-          "aXR0ZW5zUm9vbUluZm8iYAoXR2FsYWN0aWNLaXR0ZW5zUm9vbUluZm8SCgoC",
-          "aWQYASABKAMSKgoGcGxheWVyGAIgAygLMhouR2FsYWN0aWNLaXR0ZW5zUGxh",
-          "eWVySW5mbxINCgVzdGF0ZRgDIAEoBSKLAQoZR2FsYWN0aWNLaXR0ZW5zUGxh",
-          "eWVySW5mbxIQCghwbGF5ZXJJZBgBIAEoAxIMCgRuaWNrGAIgASgJEg8KB3By",
-          "ZXBhcmUYAyABKAgSDQoFc2NvcmUYBCABKAUSFAoMcG93ZXJVcENvdW50GAUg",
-          "ASgFEgoKAmhwGAYgASgFEgwKBGljb24YByABKAkiHwodR2FsYWN0aWNLaXR0",
-          "ZW5zUHJlcGFyZVJlcXVlc3QiQAoeR2FsYWN0aWNLaXR0ZW5zUHJlcGFyZVJl",
-          "c3BvbnNlEh4KBnJlc3VsdBgCIAEoCzIOLk1lc3NhZ2VSZXN1bHQiMwofR2Fs",
-          "YWN0aWNLaXR0ZW5zRW50ZXJHYW1lUmVxdWVzdBIQCghwbGF5ZXJJZBgBIAEo",
-          "AyJuCiBHYWxhY3RpY0tpdHRlbnNFbnRlckdhbWVSZXNwb25zZRIeCgZyZXN1",
-          "bHQYASABKAsyDi5NZXNzYWdlUmVzdWx0EioKBnBsYXllchgCIAEoCzIaLkdh",
-          "bGFjdGljS2l0dGVuc1BsYXllckluZm8iNAogR2FsYWN0aWNLaXR0ZW5zR2Ft",
-          "ZUZpbmlzaFJlcXVlc3QSEAoIcGxheWVySWQYASABKAMiawohR2FsYWN0aWNL",
-          "aXR0ZW5zR2FtZUZpbmlzaFJlc3BvbnNlEh4KBnJlc3VsdBgBIAEoCzIOLk1l",
-          "c3NhZ2VSZXN1bHQSJgoEcm9vbRgCIAEoCzIYLkdhbGFjdGljS2l0dGVuc1Jv",
-          "b21JbmZvMm4KGkdhbGFjdGljS2l0dGVuc0dhbWVTZXJ2aWNlElAKCWVudGVy",
-          "R2FtZRIgLkdhbGFjdGljS2l0dGVuc0VudGVyR2FtZVJlcXVlc3QaIS5HYWxh",
-          "Y3RpY0tpdHRlbnNFbnRlckdhbWVSZXNwb25zZTJyChtHYWxhY3RpY0tpdHRl",
-          "bnNNYXRjaFNlcnZpY2USUwoKZ2FtZUZpbmlzaBIhLkdhbGFjdGljS2l0dGVu",
-          "c0dhbWVGaW5pc2hSZXF1ZXN0GiIuR2FsYWN0aWNLaXR0ZW5zR2FtZUZpbmlz",
-          "aFJlc3BvbnNlQgpaCC9tZXNzYWdlYgZwcm90bzM="));
+          "ChtnYW1lX2dhbGFjdGljX2tpdHRlbnMucHJvdG8aDGNvbW1vbi5wcm90bxoM",
+          "c2VydmVyLnByb3RvIiEKH0dhbGFjdGljS2l0dGVuc0VudGVyUm9vbVJlcXVl",
+          "c3QiQgogR2FsYWN0aWNLaXR0ZW5zRW50ZXJSb29tUmVzcG9uc2USHgoGcmVz",
+          "dWx0GAEgASgLMg4uTWVzc2FnZVJlc3VsdCJJCh9HYWxhY3RpY0tpdHRlbnNS",
+          "b29tSW5mb1Jlc3BvbnNlEiYKBHJvb20YASABKAsyGC5HYWxhY3RpY0tpdHRl",
+          "bnNSb29tSW5mbyJgChdHYWxhY3RpY0tpdHRlbnNSb29tSW5mbxIKCgJpZBgB",
+          "IAEoDRIqCgZwbGF5ZXIYAiADKAsyGi5HYWxhY3RpY0tpdHRlbnNQbGF5ZXJJ",
+          "bmZvEg0KBXN0YXRlGAMgASgNIosBChlHYWxhY3RpY0tpdHRlbnNQbGF5ZXJJ",
+          "bmZvEhAKCHBsYXllcklkGAEgASgDEgwKBG5pY2sYAiABKAkSDwoHcHJlcGFy",
+          "ZRgDIAEoCBINCgVzY29yZRgEIAEoBRIUCgxwb3dlclVwQ291bnQYBSABKAUS",
+          "CgoCaHAYBiABKAUSDAoEaWNvbhgHIAEoCSIwCh1HYWxhY3RpY0tpdHRlbnNQ",
+          "cmVwYXJlUmVxdWVzdBIPCgdwcmVwYXJlGAEgASgIIkAKHkdhbGFjdGljS2l0",
+          "dGVuc1ByZXBhcmVSZXNwb25zZRIeCgZyZXN1bHQYAiABKAsyDi5NZXNzYWdl",
+          "UmVzdWx0IjgKJkdhbGFjdGljS2l0dGVuc1BsYXllclNlcnZlckxpc3RSZXF1",
+          "ZXN0Eg4KBnJvb21JZBgBIAEoDSKSAwonR2FsYWN0aWNLaXR0ZW5zUGxheWVy",
+          "U2VydmVyTGlzdFJlc3BvbnNlEh4KBnJlc3VsdBgBIAEoCzIOLk1lc3NhZ2VS",
+          "ZXN1bHQSWgoRcGxheWVyR2F0ZVNlcnZlcnMYAiADKAsyPy5HYWxhY3RpY0tp",
+          "dHRlbnNQbGF5ZXJTZXJ2ZXJMaXN0UmVzcG9uc2UuUGxheWVyR2F0ZVNlcnZl",
+          "cnNFbnRyeRJcChJwbGF5ZXJMb2JieVNlcnZlcnMYAyADKAsyQC5HYWxhY3Rp",
+          "Y0tpdHRlbnNQbGF5ZXJTZXJ2ZXJMaXN0UmVzcG9uc2UuUGxheWVyTG9iYnlT",
+          "ZXJ2ZXJzRW50cnkaRQoWUGxheWVyR2F0ZVNlcnZlcnNFbnRyeRILCgNrZXkY",
+          "ASABKAMSGgoFdmFsdWUYAiABKAsyCy5TZXJ2ZXJJbmZvOgI4ARpGChdQbGF5",
+          "ZXJMb2JieVNlcnZlcnNFbnRyeRILCgNrZXkYASABKAMSGgoFdmFsdWUYAiAB",
+          "KAsyCy5TZXJ2ZXJJbmZvOgI4ASIyCiBHYWxhY3RpY0tpdHRlbnNHYW1lRmlu",
+          "aXNoUmVxdWVzdBIOCgZyb29tSWQYASABKA0iawohR2FsYWN0aWNLaXR0ZW5z",
+          "R2FtZUZpbmlzaFJlc3BvbnNlEh4KBnJlc3VsdBgBIAEoCzIOLk1lc3NhZ2VS",
+          "ZXN1bHQSJgoEcm9vbRgCIAEoCzIYLkdhbGFjdGljS2l0dGVuc1Jvb21JbmZv",
+          "MtkBChtHYWxhY3RpY0tpdHRlbnNNYXRjaFNlcnZpY2USZQoQcGxheWVyU2Vy",
+          "dmVyTGlzdBInLkdhbGFjdGljS2l0dGVuc1BsYXllclNlcnZlckxpc3RSZXF1",
+          "ZXN0GiguR2FsYWN0aWNLaXR0ZW5zUGxheWVyU2VydmVyTGlzdFJlc3BvbnNl",
+          "ElMKCmdhbWVGaW5pc2gSIS5HYWxhY3RpY0tpdHRlbnNHYW1lRmluaXNoUmVx",
+          "dWVzdBoiLkdhbGFjdGljS2l0dGVuc0dhbWVGaW5pc2hSZXNwb25zZUIKWggv",
+          "bWVzc2FnZWIGcHJvdG8z"));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
-        new pbr::FileDescriptor[] { global::CommonReflection.Descriptor, },
+        new pbr::FileDescriptor[] { global::CommonReflection.Descriptor, global::ServerReflection.Descriptor, },
         new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
-          new pbr::GeneratedClrTypeInfo(typeof(global::GalacticKittensEnterRoomRequest), global::GalacticKittensEnterRoomRequest.Parser, new[]{ "PlayerId" }, null, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::GalacticKittensEnterRoomRequest), global::GalacticKittensEnterRoomRequest.Parser, null, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::GalacticKittensEnterRoomResponse), global::GalacticKittensEnterRoomResponse.Parser, new[]{ "Result" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::GalacticKittensRoomInfoResponse), global::GalacticKittensRoomInfoResponse.Parser, new[]{ "Room" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::GalacticKittensRoomInfo), global::GalacticKittensRoomInfo.Parser, new[]{ "Id", "Player", "State" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::GalacticKittensPlayerInfo), global::GalacticKittensPlayerInfo.Parser, new[]{ "PlayerId", "Nick", "Prepare", "Score", "PowerUpCount", "Hp", "Icon" }, null, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::GalacticKittensPrepareRequest), global::GalacticKittensPrepareRequest.Parser, null, null, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::GalacticKittensPrepareRequest), global::GalacticKittensPrepareRequest.Parser, new[]{ "Prepare" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::GalacticKittensPrepareResponse), global::GalacticKittensPrepareResponse.Parser, new[]{ "Result" }, null, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::GalacticKittensEnterGameRequest), global::GalacticKittensEnterGameRequest.Parser, new[]{ "PlayerId" }, null, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::GalacticKittensEnterGameResponse), global::GalacticKittensEnterGameResponse.Parser, new[]{ "Result", "Player" }, null, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::GalacticKittensGameFinishRequest), global::GalacticKittensGameFinishRequest.Parser, new[]{ "PlayerId" }, null, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::GalacticKittensPlayerServerListRequest), global::GalacticKittensPlayerServerListRequest.Parser, new[]{ "RoomId" }, null, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::GalacticKittensPlayerServerListResponse), global::GalacticKittensPlayerServerListResponse.Parser, new[]{ "Result", "PlayerGateServers", "PlayerLobbyServers" }, null, null, null, new pbr::GeneratedClrTypeInfo[] { null, null, }),
+          new pbr::GeneratedClrTypeInfo(typeof(global::GalacticKittensGameFinishRequest), global::GalacticKittensGameFinishRequest.Parser, new[]{ "RoomId" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::GalacticKittensGameFinishResponse), global::GalacticKittensGameFinishResponse.Parser, new[]{ "Result", "Room" }, null, null, null, null)
         }));
   }
@@ -105,7 +112,6 @@ public sealed partial class GalacticKittensEnterRoomRequest : pb::IMessage<Galac
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public GalacticKittensEnterRoomRequest(GalacticKittensEnterRoomRequest other) : this() {
-    playerId_ = other.playerId_;
     _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
   }
 
@@ -113,21 +119,6 @@ public sealed partial class GalacticKittensEnterRoomRequest : pb::IMessage<Galac
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public GalacticKittensEnterRoomRequest Clone() {
     return new GalacticKittensEnterRoomRequest(this);
-  }
-
-  /// <summary>Field number for the "playerId" field.</summary>
-  public const int PlayerIdFieldNumber = 1;
-  private long playerId_;
-  /// <summary>
-  ///玩家id
-  /// </summary>
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  public long PlayerId {
-    get { return playerId_; }
-    set {
-      playerId_ = value;
-    }
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -145,7 +136,6 @@ public sealed partial class GalacticKittensEnterRoomRequest : pb::IMessage<Galac
     if (ReferenceEquals(other, this)) {
       return true;
     }
-    if (PlayerId != other.PlayerId) return false;
     return Equals(_unknownFields, other._unknownFields);
   }
 
@@ -153,7 +143,6 @@ public sealed partial class GalacticKittensEnterRoomRequest : pb::IMessage<Galac
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public override int GetHashCode() {
     int hash = 1;
-    if (PlayerId != 0L) hash ^= PlayerId.GetHashCode();
     if (_unknownFields != null) {
       hash ^= _unknownFields.GetHashCode();
     }
@@ -172,10 +161,6 @@ public sealed partial class GalacticKittensEnterRoomRequest : pb::IMessage<Galac
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
     output.WriteRawMessage(this);
   #else
-    if (PlayerId != 0L) {
-      output.WriteRawTag(8);
-      output.WriteInt64(PlayerId);
-    }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(output);
     }
@@ -186,10 +171,6 @@ public sealed partial class GalacticKittensEnterRoomRequest : pb::IMessage<Galac
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
-    if (PlayerId != 0L) {
-      output.WriteRawTag(8);
-      output.WriteInt64(PlayerId);
-    }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(ref output);
     }
@@ -200,9 +181,6 @@ public sealed partial class GalacticKittensEnterRoomRequest : pb::IMessage<Galac
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public int CalculateSize() {
     int size = 0;
-    if (PlayerId != 0L) {
-      size += 1 + pb::CodedOutputStream.ComputeInt64Size(PlayerId);
-    }
     if (_unknownFields != null) {
       size += _unknownFields.CalculateSize();
     }
@@ -214,9 +192,6 @@ public sealed partial class GalacticKittensEnterRoomRequest : pb::IMessage<Galac
   public void MergeFrom(GalacticKittensEnterRoomRequest other) {
     if (other == null) {
       return;
-    }
-    if (other.PlayerId != 0L) {
-      PlayerId = other.PlayerId;
     }
     _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
   }
@@ -233,10 +208,6 @@ public sealed partial class GalacticKittensEnterRoomRequest : pb::IMessage<Galac
         default:
           _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
           break;
-        case 8: {
-          PlayerId = input.ReadInt64();
-          break;
-        }
       }
     }
   #endif
@@ -252,10 +223,6 @@ public sealed partial class GalacticKittensEnterRoomRequest : pb::IMessage<Galac
         default:
           _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
           break;
-        case 8: {
-          PlayerId = input.ReadInt64();
-          break;
-        }
       }
     }
   }
@@ -722,13 +689,13 @@ public sealed partial class GalacticKittensRoomInfo : pb::IMessage<GalacticKitte
 
   /// <summary>Field number for the "id" field.</summary>
   public const int IdFieldNumber = 1;
-  private long id_;
+  private uint id_;
   /// <summary>
   ///房间ID
   /// </summary>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  public long Id {
+  public uint Id {
     get { return id_; }
     set {
       id_ = value;
@@ -748,13 +715,13 @@ public sealed partial class GalacticKittensRoomInfo : pb::IMessage<GalacticKitte
 
   /// <summary>Field number for the "state" field.</summary>
   public const int StateFieldNumber = 3;
-  private int state_;
+  private uint state_;
   /// <summary>
-  ///房间状态 0匹配；1准备完成；2游戏中；3结算；4游戏结束
+  ///房间状态 0匹配；1准备；2加载；3游戏中；4完成；5结束
   /// </summary>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  public int State {
+  public uint State {
     get { return state_; }
     set {
       state_ = value;
@@ -786,7 +753,7 @@ public sealed partial class GalacticKittensRoomInfo : pb::IMessage<GalacticKitte
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public override int GetHashCode() {
     int hash = 1;
-    if (Id != 0L) hash ^= Id.GetHashCode();
+    if (Id != 0) hash ^= Id.GetHashCode();
     hash ^= player_.GetHashCode();
     if (State != 0) hash ^= State.GetHashCode();
     if (_unknownFields != null) {
@@ -807,14 +774,14 @@ public sealed partial class GalacticKittensRoomInfo : pb::IMessage<GalacticKitte
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
     output.WriteRawMessage(this);
   #else
-    if (Id != 0L) {
+    if (Id != 0) {
       output.WriteRawTag(8);
-      output.WriteInt64(Id);
+      output.WriteUInt32(Id);
     }
     player_.WriteTo(output, _repeated_player_codec);
     if (State != 0) {
       output.WriteRawTag(24);
-      output.WriteInt32(State);
+      output.WriteUInt32(State);
     }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(output);
@@ -826,14 +793,14 @@ public sealed partial class GalacticKittensRoomInfo : pb::IMessage<GalacticKitte
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
-    if (Id != 0L) {
+    if (Id != 0) {
       output.WriteRawTag(8);
-      output.WriteInt64(Id);
+      output.WriteUInt32(Id);
     }
     player_.WriteTo(ref output, _repeated_player_codec);
     if (State != 0) {
       output.WriteRawTag(24);
-      output.WriteInt32(State);
+      output.WriteUInt32(State);
     }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(ref output);
@@ -845,12 +812,12 @@ public sealed partial class GalacticKittensRoomInfo : pb::IMessage<GalacticKitte
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public int CalculateSize() {
     int size = 0;
-    if (Id != 0L) {
-      size += 1 + pb::CodedOutputStream.ComputeInt64Size(Id);
+    if (Id != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Id);
     }
     size += player_.CalculateSize(_repeated_player_codec);
     if (State != 0) {
-      size += 1 + pb::CodedOutputStream.ComputeInt32Size(State);
+      size += 1 + pb::CodedOutputStream.ComputeUInt32Size(State);
     }
     if (_unknownFields != null) {
       size += _unknownFields.CalculateSize();
@@ -864,7 +831,7 @@ public sealed partial class GalacticKittensRoomInfo : pb::IMessage<GalacticKitte
     if (other == null) {
       return;
     }
-    if (other.Id != 0L) {
+    if (other.Id != 0) {
       Id = other.Id;
     }
     player_.Add(other.player_);
@@ -887,7 +854,7 @@ public sealed partial class GalacticKittensRoomInfo : pb::IMessage<GalacticKitte
           _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
           break;
         case 8: {
-          Id = input.ReadInt64();
+          Id = input.ReadUInt32();
           break;
         }
         case 18: {
@@ -895,7 +862,7 @@ public sealed partial class GalacticKittensRoomInfo : pb::IMessage<GalacticKitte
           break;
         }
         case 24: {
-          State = input.ReadInt32();
+          State = input.ReadUInt32();
           break;
         }
       }
@@ -914,7 +881,7 @@ public sealed partial class GalacticKittensRoomInfo : pb::IMessage<GalacticKitte
           _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
           break;
         case 8: {
-          Id = input.ReadInt64();
+          Id = input.ReadUInt32();
           break;
         }
         case 18: {
@@ -922,7 +889,7 @@ public sealed partial class GalacticKittensRoomInfo : pb::IMessage<GalacticKitte
           break;
         }
         case 24: {
-          State = input.ReadInt32();
+          State = input.ReadUInt32();
           break;
         }
       }
@@ -1404,6 +1371,7 @@ public sealed partial class GalacticKittensPrepareRequest : pb::IMessage<Galacti
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public GalacticKittensPrepareRequest(GalacticKittensPrepareRequest other) : this() {
+    prepare_ = other.prepare_;
     _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
   }
 
@@ -1411,6 +1379,21 @@ public sealed partial class GalacticKittensPrepareRequest : pb::IMessage<Galacti
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public GalacticKittensPrepareRequest Clone() {
     return new GalacticKittensPrepareRequest(this);
+  }
+
+  /// <summary>Field number for the "prepare" field.</summary>
+  public const int PrepareFieldNumber = 1;
+  private bool prepare_;
+  /// <summary>
+  ///ture准备，false取消
+  /// </summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public bool Prepare {
+    get { return prepare_; }
+    set {
+      prepare_ = value;
+    }
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1428,6 +1411,7 @@ public sealed partial class GalacticKittensPrepareRequest : pb::IMessage<Galacti
     if (ReferenceEquals(other, this)) {
       return true;
     }
+    if (Prepare != other.Prepare) return false;
     return Equals(_unknownFields, other._unknownFields);
   }
 
@@ -1435,6 +1419,7 @@ public sealed partial class GalacticKittensPrepareRequest : pb::IMessage<Galacti
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public override int GetHashCode() {
     int hash = 1;
+    if (Prepare != false) hash ^= Prepare.GetHashCode();
     if (_unknownFields != null) {
       hash ^= _unknownFields.GetHashCode();
     }
@@ -1453,6 +1438,10 @@ public sealed partial class GalacticKittensPrepareRequest : pb::IMessage<Galacti
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
     output.WriteRawMessage(this);
   #else
+    if (Prepare != false) {
+      output.WriteRawTag(8);
+      output.WriteBool(Prepare);
+    }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(output);
     }
@@ -1463,6 +1452,10 @@ public sealed partial class GalacticKittensPrepareRequest : pb::IMessage<Galacti
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
+    if (Prepare != false) {
+      output.WriteRawTag(8);
+      output.WriteBool(Prepare);
+    }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(ref output);
     }
@@ -1473,6 +1466,9 @@ public sealed partial class GalacticKittensPrepareRequest : pb::IMessage<Galacti
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public int CalculateSize() {
     int size = 0;
+    if (Prepare != false) {
+      size += 1 + 1;
+    }
     if (_unknownFields != null) {
       size += _unknownFields.CalculateSize();
     }
@@ -1484,6 +1480,9 @@ public sealed partial class GalacticKittensPrepareRequest : pb::IMessage<Galacti
   public void MergeFrom(GalacticKittensPrepareRequest other) {
     if (other == null) {
       return;
+    }
+    if (other.Prepare != false) {
+      Prepare = other.Prepare;
     }
     _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
   }
@@ -1500,6 +1499,10 @@ public sealed partial class GalacticKittensPrepareRequest : pb::IMessage<Galacti
         default:
           _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
           break;
+        case 8: {
+          Prepare = input.ReadBool();
+          break;
+        }
       }
     }
   #endif
@@ -1515,6 +1518,10 @@ public sealed partial class GalacticKittensPrepareRequest : pb::IMessage<Galacti
         default:
           _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
           break;
+        case 8: {
+          Prepare = input.ReadBool();
+          break;
+        }
       }
     }
   }
@@ -1727,18 +1734,18 @@ public sealed partial class GalacticKittensPrepareResponse : pb::IMessage<Galact
 }
 
 /// <summary>
-///进入游戏 内部
+/// 玩家服务器信息列表 内部
 /// </summary>
-public sealed partial class GalacticKittensEnterGameRequest : pb::IMessage<GalacticKittensEnterGameRequest>
+public sealed partial class GalacticKittensPlayerServerListRequest : pb::IMessage<GalacticKittensPlayerServerListRequest>
 #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
     , pb::IBufferMessage
 #endif
 {
-  private static readonly pb::MessageParser<GalacticKittensEnterGameRequest> _parser = new pb::MessageParser<GalacticKittensEnterGameRequest>(() => new GalacticKittensEnterGameRequest());
+  private static readonly pb::MessageParser<GalacticKittensPlayerServerListRequest> _parser = new pb::MessageParser<GalacticKittensPlayerServerListRequest>(() => new GalacticKittensPlayerServerListRequest());
   private pb::UnknownFieldSet _unknownFields;
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  public static pb::MessageParser<GalacticKittensEnterGameRequest> Parser { get { return _parser; } }
+  public static pb::MessageParser<GalacticKittensPlayerServerListRequest> Parser { get { return _parser; } }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
@@ -1754,7 +1761,7 @@ public sealed partial class GalacticKittensEnterGameRequest : pb::IMessage<Galac
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  public GalacticKittensEnterGameRequest() {
+  public GalacticKittensPlayerServerListRequest() {
     OnConstruction();
   }
 
@@ -1762,48 +1769,48 @@ public sealed partial class GalacticKittensEnterGameRequest : pb::IMessage<Galac
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  public GalacticKittensEnterGameRequest(GalacticKittensEnterGameRequest other) : this() {
-    playerId_ = other.playerId_;
+  public GalacticKittensPlayerServerListRequest(GalacticKittensPlayerServerListRequest other) : this() {
+    roomId_ = other.roomId_;
     _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  public GalacticKittensEnterGameRequest Clone() {
-    return new GalacticKittensEnterGameRequest(this);
+  public GalacticKittensPlayerServerListRequest Clone() {
+    return new GalacticKittensPlayerServerListRequest(this);
   }
 
-  /// <summary>Field number for the "playerId" field.</summary>
-  public const int PlayerIdFieldNumber = 1;
-  private long playerId_;
+  /// <summary>Field number for the "roomId" field.</summary>
+  public const int RoomIdFieldNumber = 1;
+  private uint roomId_;
   /// <summary>
-  ///玩家id
+  ///房间id
   /// </summary>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  public long PlayerId {
-    get { return playerId_; }
+  public uint RoomId {
+    get { return roomId_; }
     set {
-      playerId_ = value;
+      roomId_ = value;
     }
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public override bool Equals(object other) {
-    return Equals(other as GalacticKittensEnterGameRequest);
+    return Equals(other as GalacticKittensPlayerServerListRequest);
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  public bool Equals(GalacticKittensEnterGameRequest other) {
+  public bool Equals(GalacticKittensPlayerServerListRequest other) {
     if (ReferenceEquals(other, null)) {
       return false;
     }
     if (ReferenceEquals(other, this)) {
       return true;
     }
-    if (PlayerId != other.PlayerId) return false;
+    if (RoomId != other.RoomId) return false;
     return Equals(_unknownFields, other._unknownFields);
   }
 
@@ -1811,7 +1818,7 @@ public sealed partial class GalacticKittensEnterGameRequest : pb::IMessage<Galac
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public override int GetHashCode() {
     int hash = 1;
-    if (PlayerId != 0L) hash ^= PlayerId.GetHashCode();
+    if (RoomId != 0) hash ^= RoomId.GetHashCode();
     if (_unknownFields != null) {
       hash ^= _unknownFields.GetHashCode();
     }
@@ -1830,9 +1837,9 @@ public sealed partial class GalacticKittensEnterGameRequest : pb::IMessage<Galac
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
     output.WriteRawMessage(this);
   #else
-    if (PlayerId != 0L) {
+    if (RoomId != 0) {
       output.WriteRawTag(8);
-      output.WriteInt64(PlayerId);
+      output.WriteUInt32(RoomId);
     }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(output);
@@ -1844,9 +1851,9 @@ public sealed partial class GalacticKittensEnterGameRequest : pb::IMessage<Galac
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
-    if (PlayerId != 0L) {
+    if (RoomId != 0) {
       output.WriteRawTag(8);
-      output.WriteInt64(PlayerId);
+      output.WriteUInt32(RoomId);
     }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(ref output);
@@ -1858,8 +1865,8 @@ public sealed partial class GalacticKittensEnterGameRequest : pb::IMessage<Galac
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public int CalculateSize() {
     int size = 0;
-    if (PlayerId != 0L) {
-      size += 1 + pb::CodedOutputStream.ComputeInt64Size(PlayerId);
+    if (RoomId != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeUInt32Size(RoomId);
     }
     if (_unknownFields != null) {
       size += _unknownFields.CalculateSize();
@@ -1869,12 +1876,12 @@ public sealed partial class GalacticKittensEnterGameRequest : pb::IMessage<Galac
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  public void MergeFrom(GalacticKittensEnterGameRequest other) {
+  public void MergeFrom(GalacticKittensPlayerServerListRequest other) {
     if (other == null) {
       return;
     }
-    if (other.PlayerId != 0L) {
-      PlayerId = other.PlayerId;
+    if (other.RoomId != 0) {
+      RoomId = other.RoomId;
     }
     _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
   }
@@ -1892,7 +1899,7 @@ public sealed partial class GalacticKittensEnterGameRequest : pb::IMessage<Galac
           _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
           break;
         case 8: {
-          PlayerId = input.ReadInt64();
+          RoomId = input.ReadUInt32();
           break;
         }
       }
@@ -1911,7 +1918,7 @@ public sealed partial class GalacticKittensEnterGameRequest : pb::IMessage<Galac
           _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
           break;
         case 8: {
-          PlayerId = input.ReadInt64();
+          RoomId = input.ReadUInt32();
           break;
         }
       }
@@ -1922,18 +1929,18 @@ public sealed partial class GalacticKittensEnterGameRequest : pb::IMessage<Galac
 }
 
 /// <summary>
-///进入游戏 内部
+///玩家服务器信息列表 内部
 /// </summary>
-public sealed partial class GalacticKittensEnterGameResponse : pb::IMessage<GalacticKittensEnterGameResponse>
+public sealed partial class GalacticKittensPlayerServerListResponse : pb::IMessage<GalacticKittensPlayerServerListResponse>
 #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
     , pb::IBufferMessage
 #endif
 {
-  private static readonly pb::MessageParser<GalacticKittensEnterGameResponse> _parser = new pb::MessageParser<GalacticKittensEnterGameResponse>(() => new GalacticKittensEnterGameResponse());
+  private static readonly pb::MessageParser<GalacticKittensPlayerServerListResponse> _parser = new pb::MessageParser<GalacticKittensPlayerServerListResponse>(() => new GalacticKittensPlayerServerListResponse());
   private pb::UnknownFieldSet _unknownFields;
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  public static pb::MessageParser<GalacticKittensEnterGameResponse> Parser { get { return _parser; } }
+  public static pb::MessageParser<GalacticKittensPlayerServerListResponse> Parser { get { return _parser; } }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
@@ -1949,7 +1956,7 @@ public sealed partial class GalacticKittensEnterGameResponse : pb::IMessage<Gala
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  public GalacticKittensEnterGameResponse() {
+  public GalacticKittensPlayerServerListResponse() {
     OnConstruction();
   }
 
@@ -1957,16 +1964,17 @@ public sealed partial class GalacticKittensEnterGameResponse : pb::IMessage<Gala
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  public GalacticKittensEnterGameResponse(GalacticKittensEnterGameResponse other) : this() {
+  public GalacticKittensPlayerServerListResponse(GalacticKittensPlayerServerListResponse other) : this() {
     result_ = other.result_ != null ? other.result_.Clone() : null;
-    player_ = other.player_ != null ? other.player_.Clone() : null;
+    playerGateServers_ = other.playerGateServers_.Clone();
+    playerLobbyServers_ = other.playerLobbyServers_.Clone();
     _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  public GalacticKittensEnterGameResponse Clone() {
-    return new GalacticKittensEnterGameResponse(this);
+  public GalacticKittensPlayerServerListResponse Clone() {
+    return new GalacticKittensPlayerServerListResponse(this);
   }
 
   /// <summary>Field number for the "result" field.</summary>
@@ -1984,30 +1992,43 @@ public sealed partial class GalacticKittensEnterGameResponse : pb::IMessage<Gala
     }
   }
 
-  /// <summary>Field number for the "player" field.</summary>
-  public const int PlayerFieldNumber = 2;
-  private global::GalacticKittensPlayerInfo player_;
+  /// <summary>Field number for the "playerGateServers" field.</summary>
+  public const int PlayerGateServersFieldNumber = 2;
+  private static readonly pbc::MapField<long, global::ServerInfo>.Codec _map_playerGateServers_codec
+      = new pbc::MapField<long, global::ServerInfo>.Codec(pb::FieldCodec.ForInt64(8, 0L), pb::FieldCodec.ForMessage(18, global::ServerInfo.Parser), 18);
+  private readonly pbc::MapField<long, global::ServerInfo> playerGateServers_ = new pbc::MapField<long, global::ServerInfo>();
   /// <summary>
-  ///玩家
+  ///玩家网关服务器信息
   /// </summary>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  public global::GalacticKittensPlayerInfo Player {
-    get { return player_; }
-    set {
-      player_ = value;
-    }
+  public pbc::MapField<long, global::ServerInfo> PlayerGateServers {
+    get { return playerGateServers_; }
+  }
+
+  /// <summary>Field number for the "playerLobbyServers" field.</summary>
+  public const int PlayerLobbyServersFieldNumber = 3;
+  private static readonly pbc::MapField<long, global::ServerInfo>.Codec _map_playerLobbyServers_codec
+      = new pbc::MapField<long, global::ServerInfo>.Codec(pb::FieldCodec.ForInt64(8, 0L), pb::FieldCodec.ForMessage(18, global::ServerInfo.Parser), 26);
+  private readonly pbc::MapField<long, global::ServerInfo> playerLobbyServers_ = new pbc::MapField<long, global::ServerInfo>();
+  /// <summary>
+  ///玩家大厅服务器信息
+  /// </summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public pbc::MapField<long, global::ServerInfo> PlayerLobbyServers {
+    get { return playerLobbyServers_; }
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public override bool Equals(object other) {
-    return Equals(other as GalacticKittensEnterGameResponse);
+    return Equals(other as GalacticKittensPlayerServerListResponse);
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  public bool Equals(GalacticKittensEnterGameResponse other) {
+  public bool Equals(GalacticKittensPlayerServerListResponse other) {
     if (ReferenceEquals(other, null)) {
       return false;
     }
@@ -2015,7 +2036,8 @@ public sealed partial class GalacticKittensEnterGameResponse : pb::IMessage<Gala
       return true;
     }
     if (!object.Equals(Result, other.Result)) return false;
-    if (!object.Equals(Player, other.Player)) return false;
+    if (!PlayerGateServers.Equals(other.PlayerGateServers)) return false;
+    if (!PlayerLobbyServers.Equals(other.PlayerLobbyServers)) return false;
     return Equals(_unknownFields, other._unknownFields);
   }
 
@@ -2024,7 +2046,8 @@ public sealed partial class GalacticKittensEnterGameResponse : pb::IMessage<Gala
   public override int GetHashCode() {
     int hash = 1;
     if (result_ != null) hash ^= Result.GetHashCode();
-    if (player_ != null) hash ^= Player.GetHashCode();
+    hash ^= PlayerGateServers.GetHashCode();
+    hash ^= PlayerLobbyServers.GetHashCode();
     if (_unknownFields != null) {
       hash ^= _unknownFields.GetHashCode();
     }
@@ -2047,10 +2070,8 @@ public sealed partial class GalacticKittensEnterGameResponse : pb::IMessage<Gala
       output.WriteRawTag(10);
       output.WriteMessage(Result);
     }
-    if (player_ != null) {
-      output.WriteRawTag(18);
-      output.WriteMessage(Player);
-    }
+    playerGateServers_.WriteTo(output, _map_playerGateServers_codec);
+    playerLobbyServers_.WriteTo(output, _map_playerLobbyServers_codec);
     if (_unknownFields != null) {
       _unknownFields.WriteTo(output);
     }
@@ -2065,10 +2086,8 @@ public sealed partial class GalacticKittensEnterGameResponse : pb::IMessage<Gala
       output.WriteRawTag(10);
       output.WriteMessage(Result);
     }
-    if (player_ != null) {
-      output.WriteRawTag(18);
-      output.WriteMessage(Player);
-    }
+    playerGateServers_.WriteTo(ref output, _map_playerGateServers_codec);
+    playerLobbyServers_.WriteTo(ref output, _map_playerLobbyServers_codec);
     if (_unknownFields != null) {
       _unknownFields.WriteTo(ref output);
     }
@@ -2082,9 +2101,8 @@ public sealed partial class GalacticKittensEnterGameResponse : pb::IMessage<Gala
     if (result_ != null) {
       size += 1 + pb::CodedOutputStream.ComputeMessageSize(Result);
     }
-    if (player_ != null) {
-      size += 1 + pb::CodedOutputStream.ComputeMessageSize(Player);
-    }
+    size += playerGateServers_.CalculateSize(_map_playerGateServers_codec);
+    size += playerLobbyServers_.CalculateSize(_map_playerLobbyServers_codec);
     if (_unknownFields != null) {
       size += _unknownFields.CalculateSize();
     }
@@ -2093,7 +2111,7 @@ public sealed partial class GalacticKittensEnterGameResponse : pb::IMessage<Gala
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  public void MergeFrom(GalacticKittensEnterGameResponse other) {
+  public void MergeFrom(GalacticKittensPlayerServerListResponse other) {
     if (other == null) {
       return;
     }
@@ -2103,12 +2121,8 @@ public sealed partial class GalacticKittensEnterGameResponse : pb::IMessage<Gala
       }
       Result.MergeFrom(other.Result);
     }
-    if (other.player_ != null) {
-      if (player_ == null) {
-        Player = new global::GalacticKittensPlayerInfo();
-      }
-      Player.MergeFrom(other.Player);
-    }
+    playerGateServers_.Add(other.playerGateServers_);
+    playerLobbyServers_.Add(other.playerLobbyServers_);
     _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
   }
 
@@ -2132,10 +2146,11 @@ public sealed partial class GalacticKittensEnterGameResponse : pb::IMessage<Gala
           break;
         }
         case 18: {
-          if (player_ == null) {
-            Player = new global::GalacticKittensPlayerInfo();
-          }
-          input.ReadMessage(Player);
+          playerGateServers_.AddEntriesFrom(input, _map_playerGateServers_codec);
+          break;
+        }
+        case 26: {
+          playerLobbyServers_.AddEntriesFrom(input, _map_playerLobbyServers_codec);
           break;
         }
       }
@@ -2161,10 +2176,11 @@ public sealed partial class GalacticKittensEnterGameResponse : pb::IMessage<Gala
           break;
         }
         case 18: {
-          if (player_ == null) {
-            Player = new global::GalacticKittensPlayerInfo();
-          }
-          input.ReadMessage(Player);
+          playerGateServers_.AddEntriesFrom(ref input, _map_playerGateServers_codec);
+          break;
+        }
+        case 26: {
+          playerLobbyServers_.AddEntriesFrom(ref input, _map_playerLobbyServers_codec);
           break;
         }
       }
@@ -2211,7 +2227,7 @@ public sealed partial class GalacticKittensGameFinishRequest : pb::IMessage<Gala
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public GalacticKittensGameFinishRequest(GalacticKittensGameFinishRequest other) : this() {
-    playerId_ = other.playerId_;
+    roomId_ = other.roomId_;
     _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
   }
 
@@ -2221,18 +2237,18 @@ public sealed partial class GalacticKittensGameFinishRequest : pb::IMessage<Gala
     return new GalacticKittensGameFinishRequest(this);
   }
 
-  /// <summary>Field number for the "playerId" field.</summary>
-  public const int PlayerIdFieldNumber = 1;
-  private long playerId_;
+  /// <summary>Field number for the "roomId" field.</summary>
+  public const int RoomIdFieldNumber = 1;
+  private uint roomId_;
   /// <summary>
-  ///玩家id
+  ///房间id
   /// </summary>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  public long PlayerId {
-    get { return playerId_; }
+  public uint RoomId {
+    get { return roomId_; }
     set {
-      playerId_ = value;
+      roomId_ = value;
     }
   }
 
@@ -2251,7 +2267,7 @@ public sealed partial class GalacticKittensGameFinishRequest : pb::IMessage<Gala
     if (ReferenceEquals(other, this)) {
       return true;
     }
-    if (PlayerId != other.PlayerId) return false;
+    if (RoomId != other.RoomId) return false;
     return Equals(_unknownFields, other._unknownFields);
   }
 
@@ -2259,7 +2275,7 @@ public sealed partial class GalacticKittensGameFinishRequest : pb::IMessage<Gala
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public override int GetHashCode() {
     int hash = 1;
-    if (PlayerId != 0L) hash ^= PlayerId.GetHashCode();
+    if (RoomId != 0) hash ^= RoomId.GetHashCode();
     if (_unknownFields != null) {
       hash ^= _unknownFields.GetHashCode();
     }
@@ -2278,9 +2294,9 @@ public sealed partial class GalacticKittensGameFinishRequest : pb::IMessage<Gala
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
     output.WriteRawMessage(this);
   #else
-    if (PlayerId != 0L) {
+    if (RoomId != 0) {
       output.WriteRawTag(8);
-      output.WriteInt64(PlayerId);
+      output.WriteUInt32(RoomId);
     }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(output);
@@ -2292,9 +2308,9 @@ public sealed partial class GalacticKittensGameFinishRequest : pb::IMessage<Gala
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
-    if (PlayerId != 0L) {
+    if (RoomId != 0) {
       output.WriteRawTag(8);
-      output.WriteInt64(PlayerId);
+      output.WriteUInt32(RoomId);
     }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(ref output);
@@ -2306,8 +2322,8 @@ public sealed partial class GalacticKittensGameFinishRequest : pb::IMessage<Gala
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public int CalculateSize() {
     int size = 0;
-    if (PlayerId != 0L) {
-      size += 1 + pb::CodedOutputStream.ComputeInt64Size(PlayerId);
+    if (RoomId != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeUInt32Size(RoomId);
     }
     if (_unknownFields != null) {
       size += _unknownFields.CalculateSize();
@@ -2321,8 +2337,8 @@ public sealed partial class GalacticKittensGameFinishRequest : pb::IMessage<Gala
     if (other == null) {
       return;
     }
-    if (other.PlayerId != 0L) {
-      PlayerId = other.PlayerId;
+    if (other.RoomId != 0) {
+      RoomId = other.RoomId;
     }
     _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
   }
@@ -2340,7 +2356,7 @@ public sealed partial class GalacticKittensGameFinishRequest : pb::IMessage<Gala
           _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
           break;
         case 8: {
-          PlayerId = input.ReadInt64();
+          RoomId = input.ReadUInt32();
           break;
         }
       }
@@ -2359,7 +2375,7 @@ public sealed partial class GalacticKittensGameFinishRequest : pb::IMessage<Gala
           _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
           break;
         case 8: {
-          PlayerId = input.ReadInt64();
+          RoomId = input.ReadUInt32();
           break;
         }
       }

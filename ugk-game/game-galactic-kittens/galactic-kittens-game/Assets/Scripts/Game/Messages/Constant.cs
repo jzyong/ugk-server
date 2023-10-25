@@ -22,11 +22,16 @@ public static partial class ConstantReflection {
   static ConstantReflection() {
     byte[] descriptorData = global::System.Convert.FromBase64String(
         string.Concat(
-          "Cg5jb25zdGFudC5wcm90byqhAQoDTUlEEggKBE5vbmUQABISCg5TZXJ2ZXJI",
+          "Cg5jb25zdGFudC5wcm90byqEAwoDTUlEEggKBE5vbmUQABISCg5TZXJ2ZXJI",
           "ZWFydFJlcRABEhIKDlNlcnZlckhlYXJ0UmVzEAISDgoISGVhcnRSZXEQwYQ9",
           "Eg4KCEhlYXJ0UmVzEMKEPRIOCghMb2dpblJlcRDDhD0SDgoITG9naW5SZXMQ",
-          "xIQ9EhMKDUxvYWRQbGF5ZXJSZXEQmYBAEhMKDUxvYWRQbGF5ZXJSZXMQmoBA",
-          "QgpaCC9tZXNzYWdlYgZwcm90bzM="));
+          "xIQ9EhgKEkJpbmRHYW1lQ29ubmVjdFJlcRDFhD0SGAoSQmluZEdhbWVDb25u",
+          "ZWN0UmVzEMaEPRITCg1Mb2FkUGxheWVyUmVxEJmAQBITCg1Mb2FkUGxheWVy",
+          "UmVzEJqAQBIiChtHYWxhY3RpY0tpdHRlbnNFbnRlclJvb21SZXEQgYDgARIi",
+          "ChtHYWxhY3RpY0tpdHRlbnNFbnRlclJvb21SZXMQgoDgARIhChpHYWxhY3Rp",
+          "Y0tpdHRlbnNSb29tSW5mb1JlcxCEgOABEiAKGUdhbGFjdGljS2l0dGVuc1By",
+          "ZXBhcmVSZXEQhYDgARIgChlHYWxhY3RpY0tpdHRlbnNQcmVwYXJlUmVzEIaA",
+          "4AFCCloIL21lc3NhZ2ViBnByb3RvMw=="));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
         new pbr::FileDescriptor[] { },
         new pbr::GeneratedClrTypeInfo(new[] {typeof(global::MID), }, null, null));
@@ -67,6 +72,14 @@ public enum MID {
   /// </summary>
   [pbr::OriginalName("LoginRes")] LoginRes = 1000004,
   /// <summary>
+  ///游戏通知网关绑定玩家网络连接
+  /// </summary>
+  [pbr::OriginalName("BindGameConnectReq")] BindGameConnectReq = 1000005,
+  /// <summary>
+  ///游戏通知网关绑定玩家网络连接
+  /// </summary>
+  [pbr::OriginalName("BindGameConnectRes")] BindGameConnectRes = 1000006,
+  /// <summary>
   /// 登录模块 1048601-1048700
   /// </summary>
   [pbr::OriginalName("LoadPlayerReq")] LoadPlayerReq = 1048601,
@@ -74,6 +87,15 @@ public enum MID {
   ///加载玩家数据
   /// </summary>
   [pbr::OriginalName("LoadPlayerRes")] LoadPlayerRes = 1048602,
+  /// <summary>
+  ///游戏
+  ///Galactic-kittens match 3145728(3&lt;&lt;20)+ 524288(1&lt;19)= 3670016
+  /// </summary>
+  [pbr::OriginalName("GalacticKittensEnterRoomReq")] GalacticKittensEnterRoomReq = 3670017,
+  [pbr::OriginalName("GalacticKittensEnterRoomRes")] GalacticKittensEnterRoomRes = 3670018,
+  [pbr::OriginalName("GalacticKittensRoomInfoRes")] GalacticKittensRoomInfoRes = 3670020,
+  [pbr::OriginalName("GalacticKittensPrepareReq")] GalacticKittensPrepareReq = 3670021,
+  [pbr::OriginalName("GalacticKittensPrepareRes")] GalacticKittensPrepareRes = 3670022,
 }
 
 #endregion

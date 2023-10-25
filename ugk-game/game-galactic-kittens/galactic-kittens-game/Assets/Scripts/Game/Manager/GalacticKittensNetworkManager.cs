@@ -41,8 +41,8 @@ namespace Game.Manager
         public override void Start()
         {
             base.Start();
-            // 初始化Grpc
-            ServerInfoRequest();
+            // 初始化Grpc ，测试用
+            // ServerInfoRequest();
         }
 
 
@@ -128,7 +128,7 @@ namespace Game.Manager
 
                     var urlPort = matchGrpcUrl.Split(":");
                     matchChannel = new Channel(urlPort[0], Int32.Parse(urlPort[1]), ChannelCredentials.Insecure);
-                    Common.Tools.Log.Info($"create match connect {matchGrpcUrl}");
+                    Log.Info($"create match connect {matchGrpcUrl}");
                 }
 
                 return matchChannel;
@@ -140,19 +140,18 @@ namespace Game.Manager
         /// </summary>
         public Channel GetLobbyChannel(uint id)
         {
-            Channel channel;
-            lobbyChannels.TryGetValue(id, out channel);
+            lobbyChannels.TryGetValue(id, out var channel);
             return channel;
         }
 
         /// <summary>
-        /// 请求服务器信息,并创建相应的grpc和kcp连接
+        /// 请求服务器信息,并创建相应的grpc和kcp连接(所有大厅和网关连接) ，测试用
         /// </summary>
         private void ServerInfoRequest()
         {
             var client = new ServerService.ServerServiceClient(MatchChannel);
             var response = client.getServerInfoAsync(new GetServerInfoRequest()).ResponseAsync.Result;
-            Common.Tools.Log.Info($"server info :{response}");
+            Log.Info($"server info :{response}");
             foreach (var serverInfo in response.ServerInfo)
             {
                 if (serverInfo.Name.Equals("lobby"))
@@ -160,7 +159,7 @@ namespace Game.Manager
                     var urlPort = serverInfo.GrpcUrl.Split(":");
                     var lobbyChannel = new Channel(urlPort[0], Int32.Parse(urlPort[1]), ChannelCredentials.Insecure);
                     lobbyChannels.Add(serverInfo.Id, lobbyChannel);
-                    Common.Tools.Log.Info($"create {serverInfo.Name} connect {serverInfo.GrpcUrl}");
+                    Log.Info($"create {serverInfo.Name} connect {serverInfo.GrpcUrl}");
                 }
                 else if (serverInfo.Name.Equals("gate"))
                 {
@@ -168,11 +167,45 @@ namespace Game.Manager
                     var urlPort = serverInfo.GrpcUrl.Split(":");
                     kcpTransport.networkAddress = urlPort[0];
                     kcpTransport.port = UInt16.Parse(urlPort[1]);
-                    Common.Tools.Log.Info($"create {serverInfo.Name} connect {serverInfo.GrpcUrl}");
+                    Log.Info($"create {serverInfo.Name} connect {serverInfo.GrpcUrl}");
                 }
             }
 
             StartClient();
+        }
+
+        /// <summary>
+        ///  连接到网关
+        /// </summary>
+        /// <param name="serverInfos"></param>
+        public void ConnectToGate(Dictionary<uint, ServerInfo> serverInfos)
+        {
+            foreach (var info in serverInfos)
+            {
+                var serverInfo = info.Value;
+                var kcpTransport = gameObject.AddComponent<KcpTransport>();
+                var urlPort = serverInfo.GrpcUrl.Split(":");
+                kcpTransport.networkAddress = urlPort[0];
+                kcpTransport.port = UInt16.Parse(urlPort[1]);
+                Log.Info($"create {serverInfo.Name} connect {serverInfo.GrpcUrl}");
+            }
+            StartClient();
+        }
+        
+        /// <summary>
+        ///  创建大厅grpc连接
+        /// </summary>
+        /// <param name="serverInfos"></param>
+        public void ConnectToLobby(Dictionary<uint, ServerInfo> serverInfos)
+        {
+            foreach (var info in serverInfos)
+            {
+                var serverInfo = info.Value;
+                var urlPort = serverInfo.GrpcUrl.Split(":");
+                var lobbyChannel = new Channel(urlPort[0], Int32.Parse(urlPort[1]), ChannelCredentials.Insecure);
+                lobbyChannels.Add(serverInfo.Id, lobbyChannel);
+                Log.Info($"create {serverInfo.Name} connect {serverInfo.GrpcUrl}");
+            }
         }
     }
 }

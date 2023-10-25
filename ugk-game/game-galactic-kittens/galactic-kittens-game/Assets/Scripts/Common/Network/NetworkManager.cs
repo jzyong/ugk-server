@@ -6,6 +6,7 @@ using Common.Tools;
 using Google.Protobuf;
 using kcp2k;
 using UnityEngine;
+using Log = kcp2k.Log;
 
 namespace Common.Network
 {
@@ -61,9 +62,9 @@ namespace Common.Network
 
         public virtual void Awake()
         {
-            kcp2k.Log.Info = Tools.Log.Info;
-            kcp2k.Log.Error = Tools.Log.Error;
-            kcp2k.Log.Warning = Tools.Log.Warn;
+            Log.Info = Tools.Log.Info;
+            Log.Error = Tools.Log.Error;
+            Log.Warning = Tools.Log.Warn;
             Application.targetFrameRate = 30;
             Application.runInBackground = true;
             if (!InitializeSingleton()) return;
@@ -295,6 +296,21 @@ namespace Common.Network
             {
                 Debug.LogWarning($"NetworkLateUpdate耗时：{Time.time - time}");
             }
+        }
+
+        /// <summary>
+        /// 获取网关客户端
+        /// </summary>
+        /// <param name="url"></param>
+        /// <returns></returns>
+        public NetworkClient GetGateClient(String url)
+        {
+            if (gateClients.TryGetValue(url,out var client))
+            {
+                return client;
+            }
+
+            return null;
         }
     }
 }
