@@ -72,7 +72,7 @@
 * ugk-client 网络时间封装 NetworkTime
 * 优先使用GalacticKittens 进行改造，服务器帧率30
 * 大厅游戏列表服务器返回，客户端动态显示
-* 时间同步使用Mirror的（NetworkConnectionToClient（服务器）、Mathd、SnapshotInterpolation、NetworkTime(客户端)，NetworkClient_TimeInterpolation，ClientCube）时间同步计算只是在服务器？客户端通过心跳同步服务器时间NetworkPingMessage？
+* 时间同步使用Mirror的（NetworkConnectionToClient（服务器）、Mathd、SnapshotInterpolation、NetworkTime(客户端)，NetworkClient_TimeInterpolation，ClientCube）时间同步计算只是在服务器？客户端通过心跳同步服务器时间NetworkPingMessage？帧率设置为30帧，相当于每秒发送30次消息同步网络时间（减少同步消息数，发送间隔改为2s）？需要测试效果
 * unity double时间网络传输转换为毫秒使用int64传输
 * 完整的GalacticKittensMatch流程
 * 玩家大厅一致性hash+redis分配，获取大厅客户端封装

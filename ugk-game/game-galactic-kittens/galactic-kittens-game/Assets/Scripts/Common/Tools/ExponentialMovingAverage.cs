@@ -3,9 +3,8 @@
 // https://en.wikipedia.org/wiki/Moving_average#Exponential_moving_average
 using System;
 
-namespace Tools
+namespace Common.Tools
 {
-    //@
     public struct ExponentialMovingAverage
     {
         readonly double alpha;
@@ -15,7 +14,6 @@ namespace Tools
         public double Variance;
         public double StandardDeviation; // absolute value, see test
 
-        //@
         public ExponentialMovingAverage(int n)
         {
             // standard N-day EMA alpha calculation

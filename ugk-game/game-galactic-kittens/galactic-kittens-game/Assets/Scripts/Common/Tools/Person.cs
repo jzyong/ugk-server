@@ -3,6 +3,9 @@ using Common.Network;
 
 namespace Common.Tools
 {
+    /// <summary>
+    /// 玩家父类  TODO 添加时间同步
+    /// </summary>
     public class Person
     {
         /// <summary>
