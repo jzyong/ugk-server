@@ -132,7 +132,7 @@ namespace Common.Network
         /// <param name="seq"></param>
         /// <param name="message"></param>
         /// <returns></returns>
-        public bool SendMsg(long playerId, int mid, IMessage message,int seq=0)
+        public bool SendMsg(long playerId, int mid, IMessage message,uint seq=0)
         {
             var data = message.ToByteArray();
             // 消息长度4+玩家ID8+消息id4+序列号4+时间戳8+protobuf消息体

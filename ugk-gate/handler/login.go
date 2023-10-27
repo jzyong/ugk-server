@@ -12,8 +12,17 @@ import (
 // 心跳
 func heart(user *manager.User, msg *mode.UgkMessage) {
 	log.Info("%d 心跳 序号=%d 时间=%d", user.Id, msg.Seq, msg.TimeStamp)
+
+	request := &message.HeartRequest{}
+	proto.Unmarshal(msg.Bytes, request)
+
+	// 如果在unity游戏中，需要转发unity服务器  TODO 待测试
+	if user.GameClient != nil {
+		user.GameClient.SendToGame(user.Id, message.MID_HeartReq, request, msg.Seq)
+		return
+	}
 	// 返回消息
-	user.SendToClient(message.MID_HeartRes, &message.HeartResponse{}, msg.Seq)
+	user.SendToClient(message.MID_HeartRes, &message.HeartResponse{ClientTime: request.GetClientTime()}, msg.Seq)
 }
 
 // 登录

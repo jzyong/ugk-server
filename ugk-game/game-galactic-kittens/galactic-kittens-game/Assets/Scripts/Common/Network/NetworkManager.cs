@@ -175,7 +175,7 @@ namespace Common.Network
         /// <summary>
         ///  发送消息
         /// </summary>
-        public bool Send(NetworkClient networkClient, long playerId, int mid, IMessage message, int seq = 0)
+        public bool Send(NetworkClient networkClient, long playerId, int mid, IMessage message, uint seq = 0)
         {
             return networkClient.SendMsg(playerId, mid, message, seq);
         }

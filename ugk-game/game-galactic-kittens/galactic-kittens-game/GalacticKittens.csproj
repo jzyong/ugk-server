@@ -90,6 +90,8 @@
      <Compile Include="Assets\Scripts\Common\Network\Kcp\kcp2k\highlevel\Common.cs" />
      <Compile Include="Assets\Scripts\Common\Network\Kcp\kcp2k\kcp\Kcp.cs" />
      <Compile Include="Assets\Scripts\Common\Network\Kcp\kcp2k\highlevel\KcpClient.cs" />
+     <Compile Include="Assets\Scripts\Game\Messages\Login.cs" />
+     <Compile Include="Assets\Scripts\Game\Handlers\PlayerHandler.cs" />
      <Compile Include="Assets\Scripts\Common\Tools\BaseEventManager.cs" />
      <Folder Include="Assets\Scripts\Common\Network\Kcp" />
      <Folder Include="Assets\Scripts\Common\Tools" />

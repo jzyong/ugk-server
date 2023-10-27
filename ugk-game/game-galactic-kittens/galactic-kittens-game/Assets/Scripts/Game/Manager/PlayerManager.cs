@@ -42,7 +42,7 @@ namespace Game.Manager
         /// <param name="msg"></param>
         /// <param name="seq"></param>
         /// <returns></returns>
-        public bool SendMsg(Player player, MID mid, IMessage msg, int seq = 0)
+        public bool SendMsg(Player player, MID mid, IMessage msg, uint seq = 0)
         {
             if (player.GateClient == null)
             {

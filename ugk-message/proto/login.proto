@@ -5,10 +5,11 @@ option go_package = "/message";
 
 //心跳消息
 message HeartRequest{
-
+  double clientTime= 1; //客户端时间 ，用于计算ping
 }
 //心跳消息
 message HeartResponse{
+  double clientTime= 1; //客户端时间
 }
 
 //用户登录
