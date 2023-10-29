@@ -25,7 +25,7 @@ func enterRoom(player *mode.Player, room *mode.Room, gateClient *manager.GateKcp
 			Status: 500,
 			Msg:    err.Error(),
 		}
-		gateClient.SendToGate(request.GetPlayerId(), message.MID_GalacticKittensEnterRoomRes, response, msg.Seq)
+		gateClient.SendToGate(msg.PlayerId, message.MID_GalacticKittensEnterRoomRes, response, msg.Seq)
 		return
 	}
 
@@ -36,7 +36,7 @@ func enterRoom(player *mode.Player, room *mode.Room, gateClient *manager.GateKcp
 				Status: 500,
 				Msg:    "Already enter room",
 			}
-			gateClient.SendToGate(request.GetPlayerId(), message.MID_GalacticKittensEnterRoomRes, response, msg.Seq)
+			gateClient.SendToGate(msg.PlayerId, message.MID_GalacticKittensEnterRoomRes, response, msg.Seq)
 			return
 		}
 	}
