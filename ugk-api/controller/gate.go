@@ -1,6 +1,9 @@
 package controller
 
-import "github.com/jzyong/golib/log"
+import (
+	"github.com/jzyong/golib/log"
+	"github.com/jzyong/ugk/api/manager"
+)
 
 // GateController 处理网关逻辑
 type GateController struct {
@@ -10,6 +13,8 @@ type GateController struct {
 // Url 获取网关地址
 // http://localhost:3046/gate/url
 func (m *GateController) Url() {
-	log.Debug("%v请求获取gate", m.Ctx.Input.IP())
-	m.replayJson("ugk-请求获取gate")
+	url := manager.GetGateClientManager().HashModGate(m.Ctx.Input.IP())
+	log.Debug("%v请求获取gate:%v", m.Ctx.Input.IP(), url)
+
+	m.replayJson(url)
 }

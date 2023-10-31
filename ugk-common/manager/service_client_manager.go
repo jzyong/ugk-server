@@ -19,16 +19,18 @@ import (
 type ServiceClient struct {
 	Id         uint32           //服务器id
 	Url        string           //连接地址
-	path       string           //路径或类型
+	Path       string           //路径或类型
 	ClientConn *grpc.ClientConn //客户端连接
 }
 
 // ServiceClientManager 处理微服务客户端逻辑，管理连接
 type ServiceClientManager struct {
 	util.DefaultModule
-	clients      map[string]map[uint32]*ServiceClient //grpc客户端  类型（路径）：id：客户端
-	watchService map[string]bool                      //服务是否在监听 key：路径
-	clientsLock  sync.RWMutex                         //读写锁
+	clients            map[string]map[uint32]*ServiceClient //grpc客户端  类型（路径）：id：客户端
+	watchService       map[string]bool                      //服务是否在监听 key：路径
+	clientsLock        sync.RWMutex                         //读写锁
+	ClientAddAction    func(client *ServiceClient)          //客户端增加回调
+	ClientRemoveAction func(client *ServiceClient)          //客户端移除回调
 }
 
 var serviceClientManager *ServiceClientManager
@@ -107,6 +109,7 @@ func (m *ServiceClientManager) addClient(serverIdStr string, zkConnect *zk.Conn,
 		log.Warn("hall error Id： %v =>%v", serverIdStr, err)
 		return
 	}
+	defer m.clientsLock.Unlock()
 	m.clientsLock.Lock()
 	clients := m.clients[path]
 	if clients == nil {
@@ -129,7 +132,7 @@ func (m *ServiceClientManager) addClient(serverIdStr string, zkConnect *zk.Conn,
 		Address string `json:"address"`
 		Port    int    `json:"port"`
 	}
-	//log.Info("%v 服务器地址：%v", fmt.Sprintf("%v/%v", path, serverIdStr), serverRpcConfigStr)
+	//log.Info("%v 服务器地址：%v", fmt.Sprintf("%v/%v", Path, serverIdStr), serverRpcConfigStr)
 	if serverRpcConfigStr == "" {
 		log.Warn("%v service config is nil", serverIdStr)
 		return
@@ -147,11 +150,13 @@ func (m *ServiceClientManager) addClient(serverIdStr string, zkConnect *zk.Conn,
 	client := &ServiceClient{
 		Id:         uint32(serverId),
 		Url:        serverUrl,
-		path:       path,
+		Path:       path,
 		ClientConn: clientConn,
 	}
-	defer m.clientsLock.Unlock()
 	clients[client.Id] = client
+	if m.ClientAddAction != nil {
+		m.ClientAddAction(client)
+	}
 	log.Info("add Client：%v-%v Url=%v ", path, serverIdStr, serverUrl)
 }
 
@@ -166,8 +171,11 @@ func (m *ServiceClientManager) GetClients(path string) map[uint32]*ServiceClient
 func (m *ServiceClientManager) removeClient(client *ServiceClient) {
 	m.clientsLock.Lock()
 	defer m.clientsLock.Unlock()
-	if clients, ok := m.clients[client.path]; ok {
+	if clients, ok := m.clients[client.Path]; ok {
 		delete(clients, client.Id)
+		if m.ClientRemoveAction != nil {
+			m.ClientRemoveAction(client)
+		}
 		log.Info("服务 %d-%s 连接移除", client.Id, client.Url)
 	}
 }
