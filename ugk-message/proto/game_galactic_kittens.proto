@@ -23,7 +23,7 @@ message GalacticKittensRoomInfo{
   uint32 state=3; //房间状态 0匹配；1准备；2加载；3游戏中；4完成；5结束
 }
 
-//玩家信息
+//玩家信息 TODO 选择的角色索引
 message GalacticKittensPlayerInfo{
   int64 playerId = 1; //玩家id
   string nick=2; //昵称
