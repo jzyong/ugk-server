@@ -67,16 +67,15 @@
 ## TODO
 * 网络同步、延迟、插值、回退（延迟补偿），物理同步，动画同步，位置方向同步
 * 场景同步消息，transform同步消息，aoi管理
-* 请求返回消息需要添加时间戳（延迟补偿需要？），客户端需要维护同步服务器时间戳？（Mirror怎样实现的？）[延迟补偿](https://www.gabrielgambetta.com/lag-compensation.html)
 * 客户端封装NetworkBehavior？（参考Mirror）
-* ugk-client 网络时间封装 NetworkTime
+* ugk-client 网络时间封装 NetworkTime（待测试）
 * 优先使用GalacticKittens 进行改造，服务器帧率30
-* 大厅游戏列表服务器返回，客户端动态显示
-* 时间同步使用Mirror的（NetworkConnectionToClient（服务器）、Mathd、SnapshotInterpolation、NetworkTime(客户端)，NetworkClient_TimeInterpolation，ClientCube）时间同步计算只是在服务器？客户端通过心跳同步服务器时间NetworkPingMessage？帧率设置为30帧，相当于每秒发送30次消息同步网络时间（减少同步消息数，发送间隔改为2s）？监测网络的pingpong消息是2秒的间隔。需要测试效果
-* unity double时间网络传输转换为毫秒使用int64传输
 * 完整的GalacticKittensMatch流程
 * 玩家大厅一致性hash+redis分配，获取大厅客户端封装
-* GalacticKittensGame获取玩家服务信息，向大厅拉取玩家信息，绑定网关连接
+* 网关、登录双开
+* 网关负载均衡，ugk-client先通过http获取网关地址
+* api http接口开发
+* GalacticKittensGame获取玩家服务信息，向大厅拉取玩家信息，绑定网关连接（待测试）
 
 
 ### 计划

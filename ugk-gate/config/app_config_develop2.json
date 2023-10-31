@@ -1,0 +1,14 @@
+{
+  "id": 2,
+  "name": "gate",
+  "profile": "develop",
+  "logLevel": "DEBUG",
+  "rpcUrl": "192.168.110.2:3002",
+  "zookeeperUrls": [
+    "192.168.110.2:2181"
+  ],
+  "publicIp": "192.168.110.2",
+  "privateIp": "192.168.110.2",
+  "clientPort": 5002,
+  "gamePort": 5003
+}

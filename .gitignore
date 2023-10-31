@@ -5,6 +5,7 @@ log/
 
 #构建文件
 ugk-agent/ugk-agent
+ugk-api/ugk-api
 ugk-agent-manager/ugk-agent-manager
 ugk-game/game-galactic-kittens/galactic-kittens-match/galactic-kittens-match
 ugk-gate/ugk-gate

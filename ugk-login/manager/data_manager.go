@@ -77,6 +77,7 @@ func (dataManager *DataManager) batchSave() {
 
 // Stop 关闭连接
 func (dataManager *DataManager) Stop() {
+	manager.GetMongoManager().Stop()
 }
 
 // ReloadConfig 加载配置 暂时不用，没有配置
