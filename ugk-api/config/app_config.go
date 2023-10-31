@@ -40,7 +40,7 @@ func InitConfigAndLog() {
 	if "DEBUG" != BaseConfig.LogLevel {
 		log.CloseDebug()
 	}
-	log.SetLogFile("log", "gate")
+	log.SetLogFile("log", "api")
 }
 
 // PathExists 判断一个文件是否存在

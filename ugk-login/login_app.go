@@ -31,12 +31,14 @@ func main() {
 type ModuleManager struct {
 	*util.DefaultModuleManager
 	LoginManager *manager.LoginManager
+	DataManager  *manager.DataManager
 	GrpcManager  *rpc.GRpcManager
 }
 
 // Init 初始化模块
 func (m *ModuleManager) Init() error {
 	m.LoginManager = m.AppendModule(manager.GetLoginManager()).(*manager.LoginManager)
+	m.DataManager = m.AppendModule(manager.GetDataManager()).(*manager.DataManager)
 	m.GrpcManager = m.AppendModule(&rpc.GRpcManager{}).(*rpc.GRpcManager)
 	return m.DefaultModuleManager.Init()
 }

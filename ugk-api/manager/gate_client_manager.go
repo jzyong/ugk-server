@@ -1,6 +1,8 @@
 package manager
 
 import (
+	"encoding/json"
+	"fmt"
 	"github.com/jzyong/golib/log"
 	"github.com/jzyong/golib/util"
 	"github.com/jzyong/ugk/api/config"
@@ -9,10 +11,15 @@ import (
 	"sync"
 )
 
+type GateClient struct {
+	*manager.ServiceClient
+	ClientUrl string //客户端地址
+}
+
 // GateClientManager gateClient
 type GateClientManager struct {
 	util.DefaultModule
-	gateClients []*manager.ServiceClient
+	gateClients []*GateClient
 }
 
 var gateClientManager *GateClientManager
@@ -21,7 +28,7 @@ var gateClientSingletonOnce sync.Once
 func GetGateClientManager() *GateClientManager {
 	gateClientSingletonOnce.Do(func() {
 		gateClientManager = &GateClientManager{
-			gateClients: make([]*manager.ServiceClient, 0, 2),
+			gateClients: make([]*GateClient, 0, 2),
 		}
 	})
 	return gateClientManager
@@ -50,22 +57,30 @@ func (m *GateClientManager) HashModGate(ip string) string {
 	}
 	hash := util.GetJavaIntHash(ip)
 	index := int(hash) % len(m.gateClients)
-	return m.gateClients[index].Url
+	return m.gateClients[index].ClientUrl
 }
-
-//// 初始化
-//func (m *GateClientManager) initGate() {
-//	path := config2.GetZKServicePath(config.BaseConfig.Profile, config2.GateName, 0)
-//	manager.GetServiceClientManager().ReloadDefaultService(path)
-//	manager.GetServiceClientManager().g
-//}
 
 // GateAdd 网关添加
 func GateAdd(client *manager.ServiceClient) {
 	path := config2.GetZKServicePath(config.BaseConfig.Profile, config2.GateName, 0)
 	if client.Path == path {
-		GetGateClientManager().gateClients = append(GetGateClientManager().gateClients, client)
-		log.Info("网关%v-%v 添加", client.Id, client.Url)
+		text := util.ZKGet(manager.GetZookeeperManager().GetConn(), config2.GetZKServiceConfigPath(config.BaseConfig.Profile, config2.GateName, client.Id))
+		type Result struct {
+			PublicIp   string `json:"publicIp"`   //公网IP
+			ClientPort uint16 `json:"clientPort"` //客户端端口 KCP
+		}
+		var result Result
+		err := json.Unmarshal([]byte(text), &result)
+		if err != nil {
+			log.Warn("%v-%v %v获取网关配置错误：%v", client.Id, client.Url, text, err)
+			return
+		}
+		gateClient := &GateClient{
+			ServiceClient: client,
+			ClientUrl:     fmt.Sprintf("%v:%v", result.PublicIp, result.ClientPort),
+		}
+		GetGateClientManager().gateClients = append(GetGateClientManager().gateClients, gateClient)
+		log.Info("网关%v-%v 添加", client.Id, gateClient.ClientUrl)
 	}
 }
 

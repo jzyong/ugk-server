@@ -122,7 +122,7 @@ func (m *ServiceClientManager) addClient(serverIdStr string, zkConnect *zk.Conn,
 			log.Info("server MessageId:%d already close,open new connection")
 			m.removeClient(client)
 		} else {
-			log.Info("hall service %v already connected", serverIdStr)
+			log.Info("%v service %v already connected", client.Path, serverIdStr)
 			return
 		}
 	}

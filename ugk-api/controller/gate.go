@@ -15,6 +15,5 @@ type GateController struct {
 func (m *GateController) Url() {
 	url := manager.GetGateClientManager().HashModGate(m.Ctx.Input.IP())
 	log.Debug("%v请求获取gate:%v", m.Ctx.Input.IP(), url)
-
-	m.replayJson(url)
+	m.Ctx.WriteString(url)
 }
