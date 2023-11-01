@@ -3,6 +3,7 @@ package main
 import (
 	"github.com/jzyong/golib/log"
 	"github.com/jzyong/golib/util"
+	manager2 "github.com/jzyong/ugk/common/manager"
 	"github.com/jzyong/ugk/gate/config"
 	"github.com/jzyong/ugk/gate/handler"
 	"github.com/jzyong/ugk/gate/manager"
@@ -35,12 +36,13 @@ func main() {
 
 type ModuleManager struct {
 	*util.DefaultModuleManager
-	GateManager        *manager.GateManager
-	ClientManager      *manager.ClientManager
-	ServerManager      *manager.ServerManager
-	UserManager        *manager.UserManager
-	LoginClientManager *manager.LoginClientManager
-	GrpcManager        *rpc.GRpcManager
+	GateManager          *manager.GateManager
+	ClientManager        *manager.ClientManager
+	ServerManager        *manager.ServerManager
+	UserManager          *manager.UserManager
+	ServiceClientManager *manager2.ServiceClientManager
+	LoginClientManager   *manager.LoginClientManager
+	GrpcManager          *rpc.GRpcManager
 }
 
 // Init 初始化模块
@@ -49,6 +51,7 @@ func (m *ModuleManager) Init() error {
 	m.ClientManager = m.AppendModule(manager.GetClientManager()).(*manager.ClientManager)
 	m.ServerManager = m.AppendModule(manager.GetServerManager()).(*manager.ServerManager)
 	m.UserManager = m.AppendModule(manager.GetUserManager()).(*manager.UserManager)
+	m.ServiceClientManager = m.AppendModule(manager2.GetServiceClientManager()).(*manager2.ServiceClientManager)
 	m.LoginClientManager = m.AppendModule(manager.GetLoginClientManager()).(*manager.LoginClientManager)
 	m.GrpcManager = m.AppendModule(&rpc.GRpcManager{}).(*rpc.GRpcManager)
 	return m.DefaultModuleManager.Init()

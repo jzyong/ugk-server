@@ -71,8 +71,7 @@
 * ugk-client 网络时间封装 NetworkTime（待测试）
 * 优先使用GalacticKittens 进行改造，服务器帧率30
 * 完整的GalacticKittensMatch流程
-* 玩家大厅一致性hash+redis分配，获取大厅客户端封装
-* 登录、大厅双开
+* 大厅双开,玩家大厅一致性hash+redis分配，获取大厅客户端封装
 * GalacticKittensGame获取玩家服务信息，向大厅拉取玩家信息，绑定网关连接（待测试）
 
 

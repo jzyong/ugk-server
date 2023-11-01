@@ -1,0 +1,12 @@
+{
+  "id": 2,
+  "name": "login",
+  "profile": "develop",
+  "rpcUrl": "192.168.110.2:3012",
+  "logLevel": "DEBUG",
+  "zookeeperUrls": [
+    "192.168.110.2:2181"
+  ],
+  "mongoUrl": "mongodb://admin:123456@192.168.110.2:27017/?authSource=admin&readPreference=primary&ssl=false"
+}
+

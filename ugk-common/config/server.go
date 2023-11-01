@@ -80,6 +80,7 @@ func (s *ServiceConfigImpl) GetLogLevel() string {
 // 服务名称
 const (
 	LobbyName        = "lobby"
+	LoginName        = "login"
 	GateName         = "gate"
 	AgentName        = "agent"
 	AgentManagerName = "agent_manager"

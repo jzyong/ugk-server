@@ -31,7 +31,8 @@ func login(user *manager.User, msg *mode.UgkMessage) {
 	proto.Unmarshal(msg.Bytes, request)
 
 	log.Info("%d 登录 序号=%d %+v", user.Id, msg.Seq, request)
-	loginClient := manager.GetLoginClientManager().RandomClient()
+	// 不能随机获取登录服，存在客户端多次请求发送创建账号，可能同一设备到两个登录服去创建账号了
+	loginClient := manager.GetLoginClientManager().HashModClient(user.ClientSession.RemoteAddr().String())
 	if loginClient == nil {
 		user.SendToClient(message.MID_LoginRes, &message.LoginResponse{Result: &message.MessageResult{
 			Status: 500,
@@ -47,6 +48,7 @@ func login(user *manager.User, msg *mode.UgkMessage) {
 			Status: 500,
 			Msg:    err.Error(),
 		}}, msg.Seq)
+		log.Error("%v 登录错误:%v", request.GetAccount(), err)
 		return
 	}
 	user.Id = response.PlayerId

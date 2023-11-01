@@ -86,6 +86,12 @@ func channelActive(session *kcp.UDPSession) *User {
 // 连接关闭
 // 客户端强制杀进程，服务器不知道连接断开。kcp-go源码没有示例,因此使用自定义心跳（每2s请求一次心跳，超过10s断开连接）
 func channelInactive(user *User, err error) {
+	//不断的创建异常的socket，出现user.CloseChane已关闭问题
+	defer func() {
+		if r := recover(); r != nil {
+			log.Error("关闭 chan异常：%v", r)
+		}
+	}()
 	log.Info("%d - %s 连接关闭:%s", user.Id, user.ClientSession.RemoteAddr(), err)
 	close(user.CloseChan)
 }
@@ -101,7 +107,7 @@ func channelRead(user *User) {
 		//但是接收端每次只能读取1段（因为每段frg=0）， 需要自己截取几段字节流封装
 		n, err := session.Read(user.ReceiveReadCache)
 		if err != nil {
-			log.Error("kcp启动失败：%v", err)
+			log.Error("kcp读取报错：%v", err)
 			channelInactive(user, err)
 			return
 		}
