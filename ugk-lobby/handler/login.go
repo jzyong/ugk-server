@@ -1,12 +1,17 @@
 package handler
 
 import (
+	"context"
+	"fmt"
 	"github.com/jzyong/golib/log"
+	config2 "github.com/jzyong/ugk/common/config"
 	"github.com/jzyong/ugk/common/manager"
 	mode2 "github.com/jzyong/ugk/common/mode"
+	"github.com/jzyong/ugk/lobby/config"
 	"github.com/jzyong/ugk/lobby/mode"
 	"github.com/jzyong/ugk/message/message"
 	"google.golang.org/protobuf/proto"
+	"time"
 )
 
 // 加载玩家数据
@@ -23,6 +28,13 @@ func loadPlayer(player *mode.Player, gateClient *manager.GateKcpClient, msg *mod
 		gateClient.SendToGate(player.Id, message.MID_LoadPlayerRes, response, msg.Seq)
 		return
 	}
+	ctx, cancel := context.WithTimeout(context.Background(), time.Second*5)
+	defer cancel()
+	_, err = manager.GetRedisManager().CmdAble.HSet(ctx, config2.RedisPlayerLocation, fmt.Sprintf("%v", request.GetPlayerId()), fmt.Sprintf("%v", config.BaseConfig.Id)).Result()
+	if err != nil {
+		log.Error("%v 位置写入错误", err)
+	}
+
 	log.Info("%d 加载玩家数据", request.GetPlayerId())
 	response.PlayerInfo = &message.PlayerInfo{
 		PlayerId: player.Id,

@@ -22,8 +22,8 @@ import (
 // ServerManager 服务器-网络
 type ServerManager struct {
 	util.DefaultModule
-	gameClients      map[string]map[uint32]*GameKcpClient //游戏客户端 key=游戏名称 ==》游戏id
-	MessageIdService map[uint32]string                    //消息对应的服务，没加锁，更新变动new一个新的
+	gameClients      map[string][]*GameKcpClient //游戏客户端 key=游戏名称 ==》游戏id
+	MessageIdService map[uint32]string           //消息对应的服务，没加锁，更新变动new一个新的
 	mutex            sync.RWMutex
 }
 
@@ -33,7 +33,7 @@ var serverSingletonOnce sync.Once
 func GetServerManager() *ServerManager {
 	serverSingletonOnce.Do(func() {
 		serverManager = &ServerManager{
-			gameClients:      make(map[string]map[uint32]*GameKcpClient, 10),
+			gameClients:      make(map[string][]*GameKcpClient, 10),
 			MessageIdService: make(map[uint32]string, 200),
 		}
 	})
@@ -95,17 +95,25 @@ func (m *ServerManager) UpdateGameServer(serverInfo *message.ServerInfo, client 
 	defer m.mutex.Unlock()
 	m.mutex.Lock()
 	if serverList, ok := m.gameClients[serverInfo.GetName()]; ok {
-		if c, ok2 := serverList[serverInfo.GetId()]; ok2 {
-			c.Id = serverInfo.GetId()
-			c.Name = serverInfo.GetName()
-		} else {
-			serverList[serverInfo.GetId()] = client
+		find := false
+		//更新信息
+		for _, kcpClient := range serverList {
+			if kcpClient.Id == client.Id {
+				find = true
+				kcpClient.Name = serverInfo.GetName()
+				break
+			}
+		}
+		//添加
+		if !find {
+			serverList = append(serverList, client)
 			m.gameClients[serverInfo.GetName()] = serverList
 			log.Info("后端服务：%s-%d 注册", client.Name, client.Id)
 		}
 	} else {
-		serverList = make(map[uint32]*GameKcpClient, 2)
-		serverList[serverInfo.GetId()] = client
+		//添加
+		serverList = make([]*GameKcpClient, 0, 2)
+		serverList = append(serverList, client)
 		m.gameClients[serverInfo.GetName()] = serverList
 		log.Info("后端服务：%s-%d 注册", client.Name, client.Id)
 	}
@@ -116,24 +124,31 @@ func (m *ServerManager) removeGameServer(client *GameKcpClient) {
 	defer m.mutex.Unlock()
 	m.mutex.Lock()
 	if serverList, ok := m.gameClients[client.Name]; ok {
-		if _, ok2 := serverList[client.Id]; ok2 {
-			delete(serverList, client.Id)
-			m.gameClients[client.Name] = serverList
-			log.Info("后端服务：%s-%d 移除", client.Name, client.Id)
+		for i, kcpClient := range serverList {
+			if kcpClient.Id == client.Id {
+				serverList = append(serverList[:i], serverList[i+1:]...)
+				log.Info("后端服务：%s-%d 移除", client.Name, client.Id)
+			}
 		}
+		m.gameClients[client.Name] = serverList
 	}
 }
 
-// GetGameClient 获取客户端，id 小于0，直接返回第一个
+// GetGameClient 获取客户端，id 小于0，随机一个
 func (m *ServerManager) GetGameClient(serviceName string, id uint32) *GameKcpClient {
 	defer m.mutex.RUnlock()
 	m.mutex.RLock()
 	if clients, ok := m.gameClients[serviceName]; ok {
 		if id > 0 {
-			return clients[id]
-		} else {
 			for _, client := range clients {
-				return client
+				if client.Id == id {
+					return client
+				}
+			}
+		} else {
+			count := len(clients)
+			if count > 0 {
+				return clients[int(util.RandomInt32(0, int32(count-1)))]
 			}
 		}
 
@@ -141,19 +156,33 @@ func (m *ServerManager) GetGameClient(serviceName string, id uint32) *GameKcpCli
 	return nil
 }
 
-// AssignLobby 分配大厅 TODO 一致性hash？
+// AssignLobby 分配大厅
 func (m *ServerManager) AssignLobby(playerId int64) *GameKcpClient {
 	//TODO 暂时只有一个，随机
 	m.mutex.RLock()
-	defer m.mutex.RUnlock()
-	if serverList, ok := m.gameClients[config2.LobbyName]; ok {
-		if len(serverList) > 0 {
-			return serverList[1]
-		}
-		return nil
-	} else {
+	serverList := m.gameClients[config2.LobbyName]
+	if serverList == nil || len(serverList) < 1 {
+		log.Warn("%v 没有可用大厅服务", playerId)
+		m.mutex.RUnlock()
 		return nil
 	}
+	m.mutex.RUnlock()
+
+	serverIdStr := manager.GetRedisManager().HGet(config2.RedisPlayerLocation, fmt.Sprintf("%v", playerId))
+	// 根据位置获取
+	if serverIdStr != "" {
+		serverId := uint32(util.ParseInt32(serverIdStr))
+		for _, client := range serverList {
+			if client.Id == serverId {
+				return client
+			}
+		}
+		// 玩家ID取余
+	} else {
+		index := int(playerId) % len(serverList)
+		return serverList[index]
+	}
+	return nil
 }
 
 // 连接激活

@@ -1,12 +1,14 @@
 package manager
 
 import (
+	"context"
 	"encoding/json"
 	"errors"
 	"fmt"
 	"github.com/go-zookeeper/zk"
 	"github.com/jzyong/golib/log"
 	"github.com/jzyong/golib/util"
+	config2 "github.com/jzyong/ugk/common/config"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/connectivity"
 	"google.golang.org/grpc/credentials/insecure"
@@ -204,8 +206,10 @@ func (m *ServiceClientManager) ReloadService(conn *zk.Conn, profile, path string
 	}
 }
 
-// GetGrpcConn  id 小于0，直接返回第一个
-func (m *ServiceClientManager) GetGrpcConn(path string, id uint32) (*grpc.ClientConn, error) {
+// GetGrpc  id 小于0，直接返回第一个
+func (m *ServiceClientManager) GetGrpc(path string, id uint32) (*grpc.ClientConn, error) {
+	m.clientsLock.RLock()
+	defer m.clientsLock.RUnlock()
 	if clients, ok := m.clients[path]; ok {
 		if len(clients) < 1 {
 			return nil, errors.New(fmt.Sprintf("路径：%s 无可用服务", path))
@@ -223,8 +227,45 @@ func (m *ServiceClientManager) GetGrpcConn(path string, id uint32) (*grpc.Client
 			}
 		}
 	}
-
 	return nil, errors.New(fmt.Sprintf("路径：%s 服务不存在", path))
+}
+
+// GetLobbyGrpcByServerId 通过服务器Id获取大厅
+func (m *ServiceClientManager) GetLobbyGrpcByServerId(serverId uint32) (*grpc.ClientConn, error) {
+	path := config2.GetZKServicePath(GetZookeeperManager().ServiceCfg.GetProfile(), config2.LobbyName, 0)
+	return m.GetGrpc(path, serverId)
+}
+
+// GetLobbyGrpcByPlayerId 玩家获取大厅 grpc客户端 大厅Id
+func (m *ServiceClientManager) GetLobbyGrpcByPlayerId(playerId int64) (*grpc.ClientConn, error, uint32) {
+	path := config2.GetZKServicePath(GetZookeeperManager().ServiceCfg.GetProfile(), config2.LobbyName, 0)
+	serverIdStr := GetRedisManager().HGet(config2.RedisPlayerLocation, fmt.Sprintf("%v", playerId))
+	m.clientsLock.RLock()
+	defer m.clientsLock.RUnlock()
+
+	if clients, ok := m.clients[path]; ok {
+		if len(clients) < 1 {
+			return nil, errors.New(fmt.Sprintf("路径：%s 无可用服务", path)), 0
+		}
+		//根据玩家上次id获取
+		if serverIdStr != "" {
+			serverId := uint32(util.ParseInt32(serverIdStr))
+			for _, client := range clients {
+				if client.Id == serverId {
+					return client.ClientConn, nil, client.Id
+				}
+			}
+		} else {
+			log.Warn("玩家%d 未能获得位置，玩家ID是否非法", playerId)
+			ctx, cancel := context.WithTimeout(context.Background(), time.Second*5)
+			defer cancel()
+			for _, client := range clients {
+				GetRedisManager().CmdAble.HSet(ctx, config2.RedisPlayerLocation, fmt.Sprintf("%v", playerId))
+				return client.ClientConn, nil, client.Id
+			}
+		}
+	}
+	return nil, errors.New(fmt.Sprintf("路径：%s 服务不存在", path)), 0
 }
 
 func (m *ServiceClientManager) Stop() {

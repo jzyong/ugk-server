@@ -84,7 +84,7 @@ func (m *MachineManager) uploadMachineInfo() {
 	freeDiskSize = freeDiskSize / util.MB
 	log.Trace("剩余磁盘：%vM", freeDiskSize)
 
-	client, err := manager.GetServiceClientManager().GetGrpcConn(config2.GetZKServicePath(config.BaseConfig.Profile, config2.AgentManagerName, 0), 0)
+	client, err := manager.GetServiceClientManager().GetGrpc(config2.GetZKServicePath(config.BaseConfig.Profile, config2.AgentManagerName, 0), 0)
 	if err != nil {
 		log.Error("获取agent-manager失败：%v", err)
 		return

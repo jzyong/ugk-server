@@ -108,7 +108,7 @@ func (m *DockerManager) GetBestAgentClient() *grpc.ClientConn {
 		log.Warn("没有满足条件的可用主机\n%+v", m.MachineInfos)
 		return nil
 	}
-	client, err := manager.GetServiceClientManager().GetGrpcConn(config2.GetZKServicePath(config.BaseConfig.Profile, config2.AgentName, 0), machineInfo.GetServerId())
+	client, err := manager.GetServiceClientManager().GetGrpc(config2.GetZKServicePath(config.BaseConfig.Profile, config2.AgentName, 0), machineInfo.GetServerId())
 	if err != nil {
 		log.Error("获取agent客户端错误：%v", err)
 	}

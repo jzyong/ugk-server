@@ -10,3 +10,9 @@ type RedisConfig struct {
 	Password string `json:"password"`
 	Port     int32  `json:"port"`
 }
+
+//Redis key
+
+const (
+	RedisPlayerLocation = "Ugk:Lobby:PlayerLocation"
+)

@@ -15,6 +15,7 @@ type Player struct {
 	Level      uint32                 `level` //等级
 	Exp        uint32                 `exp`   //经验
 	Prepare    bool                   //是否准备
+	LobbyId    uint32                 //大厅ID
 	GateClient *manager.GateKcpClient //网关客户端
 	heartTime  time.Time              //心跳时间
 }

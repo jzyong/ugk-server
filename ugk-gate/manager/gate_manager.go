@@ -30,6 +30,7 @@ func (m *GateManager) Init() error {
 }
 
 func (m *GateManager) Run() {
+	go manager.GetRedisManager().Start()
 }
 
 func (m *GateManager) Stop() {

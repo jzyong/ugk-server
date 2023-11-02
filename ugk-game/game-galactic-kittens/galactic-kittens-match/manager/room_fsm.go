@@ -40,7 +40,7 @@ type RoomLoadState struct {
 
 func (state *RoomLoadState) Enter(room *mode.Room) {
 	// 请求agent-manager创建游戏服务
-	grpcClient, err := manager.GetServiceClientManager().GetGrpcConn(config2.GetZKServicePath(config.BaseConfig.Profile, config2.AgentManagerName, 0), 0)
+	grpcClient, err := manager.GetServiceClientManager().GetGrpc(config2.GetZKServicePath(config.BaseConfig.Profile, config2.AgentManagerName, 0), 0)
 	if err != nil {
 		//TODO 需要做异常处理
 		log.Error("%v创建房间游戏服失败：%v", room.Id, err)
@@ -105,7 +105,7 @@ func (state *RoomCloseState) Enter(room *mode.Room) {
 	//客户端收到该消息，将所有玩家踢回大厅
 	GetRoomManager().BroadcastRoomInfo(room)
 	// 请求agent-manager创建游戏服务
-	grpcClient, err := manager.GetServiceClientManager().GetGrpcConn(config2.GetZKServicePath(config.BaseConfig.Profile, config2.AgentManagerName, 0), 0)
+	grpcClient, err := manager.GetServiceClientManager().GetGrpc(config2.GetZKServicePath(config.BaseConfig.Profile, config2.AgentManagerName, 0), 0)
 	if err != nil {
 		//TODO 需要做异常处理
 		log.Error("%v关闭房间游戏服失败：%v", room.Id, err)

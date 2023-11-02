@@ -3,10 +3,8 @@ package handler
 import (
 	"context"
 	"github.com/jzyong/golib/log"
-	config2 "github.com/jzyong/ugk/common/config"
 	"github.com/jzyong/ugk/common/manager"
 	mode2 "github.com/jzyong/ugk/common/mode"
-	"github.com/jzyong/ugk/galactic-kittens-match/config"
 	manager2 "github.com/jzyong/ugk/galactic-kittens-match/manager"
 	"github.com/jzyong/ugk/galactic-kittens-match/mode"
 	"github.com/jzyong/ugk/message/message"
@@ -42,7 +40,7 @@ func enterRoom(player *mode.Player, room *mode.Room, gateClient *manager.GateKcp
 	}
 
 	// 需要向大厅获取玩家基础信息 ,暂时只考虑只有一个lobby，后面修改
-	hallGrpc, err := manager.GetServiceClientManager().GetGrpcConn(config2.GetZKServicePath(config.BaseConfig.Profile, config2.LobbyName, 0), 0)
+	hallGrpc, err, lobbyId := manager.GetServiceClientManager().GetLobbyGrpcByPlayerId(msg.PlayerId)
 	if err != nil {
 		log.Error("获取大厅异常：%v", err)
 		response.Result = &message.MessageResult{
@@ -73,6 +71,7 @@ func enterRoom(player *mode.Player, room *mode.Room, gateClient *manager.GateKcp
 	player.Level = playerInfo.GetLevel()
 	player.Exp = playerInfo.GetExp()
 	player.Nick = playerInfo.GetNick()
+	player.LobbyId = lobbyId
 	room.Players = append(room.Players, player)
 	response.Result = &message.MessageResult{
 		Status: 200,
