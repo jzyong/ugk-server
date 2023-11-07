@@ -65,9 +65,14 @@
 
 
 ## TODO
-* 网络同步、延迟、插值、回退（延迟补偿），物理同步，动画同步，位置方向同步
+* 网络同步、延迟、插值、回退（延迟补偿），**物理同步，动画同步**，位置方向同步
 * 场景同步消息，transform同步消息，aoi管理
-* 客户端封装NetworkBehavior？（参考Mirror）
+* 客户端同步封装，参考NetworkTransform、NetworkAnimator、NetworkRigidbody？（参考Mirror）  
+* 封装NetworkTransform 进行位置，方向，缩放同步，插值
+* 客户端NetworkTransform 封装成抽象类，具体子游戏继承，子弹类需要同步速度，需要同步实体的唯一ID，配置ID，ConfigRole
+* 服务器NetworkTransform只起配置作用，通过对象manager进行批量同步，子弹碰撞服务器检测，需要回滚
+* 客户端和服务器配置都通过go服务器拉取
+* 房间中客户端同步给服务器都时间应该用服务器都时间，自己本地时间没有意义
 * ugk-client 网络时间封装 NetworkTime（待测试）
 * 优先使用GalacticKittens 进行改造，服务器帧率30
 * 完整的GalacticKittensMatch流程
