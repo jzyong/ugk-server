@@ -77,7 +77,7 @@
 * 优先使用GalacticKittens 进行改造，服务器帧率30
 * 完整的GalacticKittensMatch流程
 * GalacticKittensGame获取玩家服务信息，向大厅拉取玩家信息，绑定网关连接（待测试）
-* GalacticKittensGame 退出房间逻辑
+* GalacticKittensGame 调试确认取消，取消客户端报错，对比原版效果
 
 
 ### 计划
