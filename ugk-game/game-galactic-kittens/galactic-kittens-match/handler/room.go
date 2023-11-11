@@ -27,15 +27,11 @@ func enterRoom(player *mode.Player, room *mode.Room, gateClient *manager.GateKcp
 		return
 	}
 
-	for _, p := range room.Players {
+	for i, p := range room.Players {
 		if p.Id == msg.PlayerId {
-			log.Error("玩家：%v已进入房间", msg.PlayerId)
-			response.Result = &message.MessageResult{
-				Status: 500,
-				Msg:    "Already enter room",
-			}
-			gateClient.SendToGate(msg.PlayerId, message.MID_GalacticKittensEnterRoomRes, response, msg.Seq)
-			return
+			//移除之前的，从新进入，可能断网重进，网关等连接已经改变了等
+			log.Info("玩家：%v已进入房间", msg.PlayerId)
+			room.Players = append(room.Players[:i], room.Players[i+1:]...)
 		}
 	}
 
@@ -141,7 +137,7 @@ func selectCharacter(player *mode.Player, room *mode.Room, gateClient *manager.G
 	log.Debug("%v选择角色%v", player.Id, player.CharacterId)
 }
 
-// 准备 TODO 待测试
+// 准备
 func prepare(player *mode.Player, room *mode.Room, gateClient *manager.GateKcpClient, msg *mode2.UgkMessage) {
 	response := &message.GalacticKittensPrepareResponse{}
 	if player == nil {
