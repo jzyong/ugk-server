@@ -169,6 +169,16 @@ func (m *ServiceClientManager) GetClients(path string) map[uint32]*ServiceClient
 	return m.clients[path]
 }
 
+// GetClient 获取客户端，参数为路径
+func (m *ServiceClientManager) GetClient(path string, severId uint32) *ServiceClient {
+	defer m.clientsLock.RUnlock()
+	m.clientsLock.RLock()
+	if clients, ok := m.clients[path]; ok {
+		return clients[severId]
+	}
+	return nil
+}
+
 // 移除客户端
 func (m *ServiceClientManager) removeClient(client *ServiceClient) {
 	m.clientsLock.Lock()

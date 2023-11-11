@@ -17,7 +17,7 @@ type MatchService struct {
 }
 
 // PlayerServerList 玩家服务器列表 TODO 待测试
-func (service *ServerService) PlayerServerList(ctx context.Context, request *message.GalacticKittensPlayerServerListRequest) (*message.GalacticKittensPlayerServerListResponse, error) {
+func (service *MatchService) PlayerServerList(ctx context.Context, request *message.GalacticKittensPlayerServerListRequest) (*message.GalacticKittensPlayerServerListResponse, error) {
 	var wg sync.WaitGroup
 	wg.Add(2)
 	response := &message.GalacticKittensPlayerServerListResponse{}
@@ -30,7 +30,14 @@ func (service *ServerService) PlayerServerList(ctx context.Context, request *mes
 		room.ProcessFun <- func() {
 			defer wg.Done()
 
-			lobbyClients := manager.GetServiceClientManager().GetClients(config2.GetZKServicePath(config.BaseConfig.Profile, config2.LobbyName, 0))
+			if len(room.Players) < 1 {
+				response.Result = &message.MessageResult{
+					Status: 500,
+					Msg:    "room no player",
+				}
+				return
+			}
+
 			for _, player := range room.Players {
 				gateServer := &message.ServerInfo{
 					Id:      player.GateClient.Id,
@@ -38,18 +45,20 @@ func (service *ServerService) PlayerServerList(ctx context.Context, request *mes
 					GrpcUrl: player.GateClient.Url,
 				}
 				gateServers[player.Id] = gateServer
+				_, err, lobbyId := manager.GetServiceClientManager().GetLobbyGrpcByPlayerId(player.Id)
+				if err != nil {
+					log.Warn("%v 没有正确获得大厅", player.Id)
+					continue
+				}
 
-				// 大厅 暂时只有一个，先这样 TODO
-				if lobbyClients != nil {
-					for _, c := range lobbyClients {
-						serverInfo := &message.ServerInfo{
-							Id:      c.Id,
-							Name:    config2.LobbyName,
-							GrpcUrl: c.Url,
-						}
-						lobbyServers[player.Id] = serverInfo
-						break
+				lobbyClient := manager.GetServiceClientManager().GetClient(config2.GetZKServicePath(config.BaseConfig.Profile, config2.LobbyName, 0), lobbyId)
+				if lobbyClient != nil {
+					serverInfo := &message.ServerInfo{
+						Id:      lobbyClient.Id,
+						Name:    config2.LobbyName,
+						GrpcUrl: lobbyClient.Url,
 					}
+					lobbyServers[player.Id] = serverInfo
 				}
 			}
 			response.PlayerGateServers = gateServers
@@ -65,7 +74,7 @@ func (service *ServerService) PlayerServerList(ctx context.Context, request *mes
 }
 
 // GameFinish 游戏完成 TODO 待测试
-func (service *ServerService) GameFinish(ctx context.Context, request *message.GalacticKittensGameFinishRequest) (*message.GalacticKittensGameFinishResponse, error) {
+func (service *MatchService) GameFinish(ctx context.Context, request *message.GalacticKittensGameFinishRequest) (*message.GalacticKittensGameFinishResponse, error) {
 	var wg sync.WaitGroup
 	wg.Add(2)
 	response := &message.GalacticKittensGameFinishResponse{}

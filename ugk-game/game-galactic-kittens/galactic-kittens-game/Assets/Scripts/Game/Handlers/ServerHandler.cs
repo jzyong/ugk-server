@@ -20,7 +20,19 @@ namespace Game.Handlers
         {
             var response = new ServerHeartResponse();
             response.MergeFrom(ugkMessage.Bytes);
-            Log.Debug($" receive heart: {ugkMessage.TimeStamp} {response}");
+            Log.Debug($" receive server heart: {ugkMessage.TimeStamp} {response}");
+        }
+        
+        
+        /// <summary>
+        /// 绑定游戏返回
+        /// </summary>
+        [MessageMap((int)MID.BindGameConnectRes)]
+        private static void BindGame(Player player, UgkMessage ugkMessage)
+        {
+            var response = new BindGameConnectResponse();
+            response.MergeFrom(ugkMessage.Bytes);
+            Log.Debug($"{player.Id} 绑定游戏:  {response}");
         }
     }
 }

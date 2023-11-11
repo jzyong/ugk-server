@@ -82,9 +82,18 @@ func enterRoom(player *mode.Player, room *mode.Room, gateClient *manager.GateKcp
 
 // 退出房间
 func quitRoom(player *mode.Player, room *mode.Room, gateClient *manager.GateKcpClient, msg *mode2.UgkMessage) {
+	response := &message.GalacticKittensQuitRoomResponse{}
+	if player == nil {
+		log.Error("%v未登录", msg.PlayerId)
+		response.Result = &message.MessageResult{
+			Status: 404,
+			Msg:    "Player not login",
+		}
+		gateClient.SendToGate(msg.PlayerId, message.MID_GalacticKittensQuitRoomRes, response, msg.Seq)
+		return
+	}
 	request := &message.GalacticKittensQuitRoomRequest{}
 	err := proto.Unmarshal(msg.Bytes, request)
-	response := &message.GalacticKittensQuitRoomResponse{}
 	if err != nil {
 		log.Error("解析消息错误：%v", err)
 		response.Result = &message.MessageResult{
@@ -113,9 +122,18 @@ func quitRoom(player *mode.Player, room *mode.Room, gateClient *manager.GateKcpC
 
 // 选择角色
 func selectCharacter(player *mode.Player, room *mode.Room, gateClient *manager.GateKcpClient, msg *mode2.UgkMessage) {
+	response := &message.GalacticKittenSelectCharacterResponse{}
+	if player == nil {
+		log.Error("%v未登录", msg.PlayerId)
+		response.Result = &message.MessageResult{
+			Status: 404,
+			Msg:    "Player not login",
+		}
+		gateClient.SendToGate(msg.PlayerId, message.MID_GalacticKittenSelectCharacterRes, response, msg.Seq)
+		return
+	}
 	request := &message.GalacticKittenSelectCharacterRequest{}
 	err := proto.Unmarshal(msg.Bytes, request)
-	response := &message.GalacticKittenSelectCharacterResponse{}
 	if err != nil {
 		log.Error("解析消息错误：%v", err)
 		response.Result = &message.MessageResult{
@@ -141,12 +159,12 @@ func selectCharacter(player *mode.Player, room *mode.Room, gateClient *manager.G
 func prepare(player *mode.Player, room *mode.Room, gateClient *manager.GateKcpClient, msg *mode2.UgkMessage) {
 	response := &message.GalacticKittensPrepareResponse{}
 	if player == nil {
-		log.Error("%未登录：%v", msg.PlayerId)
+		log.Error("%v未登录", msg.PlayerId)
 		response.Result = &message.MessageResult{
 			Status: 404,
 			Msg:    "Player not login",
 		}
-		gateClient.SendToGate(player.Id, message.MID_GalacticKittensPrepareRes, response, msg.Seq)
+		gateClient.SendToGate(msg.PlayerId, message.MID_GalacticKittensPrepareRes, response, msg.Seq)
 		return
 	}
 	request := &message.GalacticKittensPrepareRequest{}

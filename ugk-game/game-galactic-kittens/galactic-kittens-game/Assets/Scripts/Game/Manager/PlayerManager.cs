@@ -72,9 +72,9 @@ namespace Game.Manager
             };
             var response = client.playerServerListAsync(request).ResponseAsync.Result;
             Log.Info($"player list :{response}");
-            if (response.Result?.Status != 200)
+            if (response.Result!=null&&response.Result.Status != 200)
             {
-                Log.Error($"get server list error:{response.Result?.Msg}");
+                Log.Error($"get server list error:{response.Result.Msg}");
                 return;
             }
 
@@ -129,9 +129,14 @@ namespace Game.Manager
                 };
 
                 var response = client.GetPlayerInfoAsync(request).ResponseAsync.Result;
-                if (response.Result?.Status != 200)
+                if (response.Result!=null&&response.Result.Status != 200)
                 {
-                    Log.Error($"{player.Id} get info error:{response.Result?.Msg}");
+                    Log.Error($"{player.Id} get info error:{response.Result.Msg}");
+                    if (response.Result.Msg.Equals("room no player"))
+                    {
+                        Log.Error("quit game");
+                        Application.Quit();
+                    }
                     return;
                 }
 

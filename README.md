@@ -74,10 +74,9 @@
 * 客户端和服务器配置都通过go服务器拉取
 * 房间中客户端同步给服务器都时间应该用服务器都时间，自己本地时间没有意义
 * ugk-client 网络时间封装 NetworkTime（待测试）
-* 优先使用GalacticKittens 进行改造，服务器帧率30
 * 完整的GalacticKittensMatch流程
-* GalacticKittensGame获取玩家服务信息，向大厅拉取玩家信息，绑定网关连接（待测试）
-* GalacticKittensGame 调试确认取消，取消客户端报错，对比原版效果
+* Unity服务器日志打印类文件,添加Trace级别日志屏蔽输出
+* 玩家进入游戏后端已经可以通过agent创建unity docker容器；下一步需要前端进入游戏场景，时间同步调试，后端unity服务器开发，同步处理
 
 
 ### 计划
