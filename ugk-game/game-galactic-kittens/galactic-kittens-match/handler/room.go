@@ -72,6 +72,7 @@ func enterRoom(player *mode.Player, room *mode.Room, gateClient *manager.GateKcp
 	player.Exp = playerInfo.GetExp()
 	player.Nick = playerInfo.GetNick()
 	player.LobbyId = lobbyId
+	player.CharacterId = int32(len(room.Players))
 	room.Players = append(room.Players, player)
 	response.Result = &message.MessageResult{
 		Status: 200,
@@ -81,6 +82,63 @@ func enterRoom(player *mode.Player, room *mode.Room, gateClient *manager.GateKcp
 	gateClient.SendToGate(player.Id, message.MID_GalacticKittensEnterRoomRes, response, msg.Seq)
 	manager2.GetRoomManager().BroadcastRoomInfo(room)
 	log.Debug("%v进入房间%v", player.Id, room.Id)
+}
+
+// 退出房间
+func quitRoom(player *mode.Player, room *mode.Room, gateClient *manager.GateKcpClient, msg *mode2.UgkMessage) {
+	request := &message.GalacticKittensQuitRoomRequest{}
+	err := proto.Unmarshal(msg.Bytes, request)
+	response := &message.GalacticKittensQuitRoomResponse{}
+	if err != nil {
+		log.Error("解析消息错误：%v", err)
+		response.Result = &message.MessageResult{
+			Status: 500,
+			Msg:    err.Error(),
+		}
+		gateClient.SendToGate(msg.PlayerId, message.MID_GalacticKittensQuitRoomRes, response, msg.Seq)
+		return
+	}
+
+	for i, p := range room.Players {
+		if p.Id == player.Id {
+			room.Players = append(room.Players[:i], room.Players[i+1:]...)
+			break
+		}
+	}
+	response.Result = &message.MessageResult{
+		Status: 200,
+		Msg:    "success",
+	}
+
+	gateClient.SendToGate(player.Id, message.MID_GalacticKittensQuitRoomRes, response, msg.Seq)
+	manager2.GetRoomManager().BroadcastRoomInfo(room)
+	log.Debug("%v退出房间%v", player.Id, room.Id)
+}
+
+// 选择角色
+func selectCharacter(player *mode.Player, room *mode.Room, gateClient *manager.GateKcpClient, msg *mode2.UgkMessage) {
+	request := &message.GalacticKittenSelectCharacterRequest{}
+	err := proto.Unmarshal(msg.Bytes, request)
+	response := &message.GalacticKittenSelectCharacterResponse{}
+	if err != nil {
+		log.Error("解析消息错误：%v", err)
+		response.Result = &message.MessageResult{
+			Status: 500,
+			Msg:    err.Error(),
+		}
+		gateClient.SendToGate(msg.PlayerId, message.MID_GalacticKittenSelectCharacterRes, response, msg.Seq)
+		return
+	}
+
+	player.CharacterId = request.GetCharacterId()
+	response.Result = &message.MessageResult{
+		Status: 200,
+		Msg:    "success",
+	}
+
+	gateClient.SendToGate(player.Id, message.MID_GalacticKittenSelectCharacterRes, response, msg.Seq)
+	manager2.GetRoomManager().BroadcastRoomInfo(room)
+	log.Debug("%v选择角色%v", player.Id, player.CharacterId)
 }
 
 // 准备 TODO 待测试

@@ -118,6 +118,7 @@ func (m *RoomManager) BroadcastRoomInfo(room *mode.Room) {
 			PowerUpCount: 0,
 			Hp:           100,
 			Icon:         "icon", //信息待完善 TODO
+			CharacterId:  player.CharacterId,
 		}
 		playerInfos = append(playerInfos, playerInfo)
 	}

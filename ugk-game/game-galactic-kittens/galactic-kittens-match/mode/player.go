@@ -10,14 +10,15 @@ import (
 
 // Player 玩家，每个玩家一个routine处理逻辑 TODO 玩家发送消息，routine消息处理，记得关闭 ;提取公共的到ugk-common中
 type Player struct {
-	Id         int64                  `id`    //唯一id
-	Nick       string                 `nick`  //昵称
-	Level      uint32                 `level` //等级
-	Exp        uint32                 `exp`   //经验
-	Prepare    bool                   //是否准备
-	LobbyId    uint32                 //大厅ID
-	GateClient *manager.GateKcpClient //网关客户端
-	heartTime  time.Time              //心跳时间
+	Id          int64                  `id`    //唯一id
+	Nick        string                 `nick`  //昵称
+	Level       uint32                 `level` //等级
+	Exp         uint32                 `exp`   //经验
+	Prepare     bool                   //是否准备
+	LobbyId     uint32                 //大厅ID
+	CharacterId int32                  //玩家选择的角色Id
+	GateClient  *manager.GateKcpClient //网关客户端
+	heartTime   time.Time              //心跳时间
 }
 
 func NewPlayer(id int64) *Player {

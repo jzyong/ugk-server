@@ -11,30 +11,47 @@ message GalacticKittensEnterRoomResponse{
   MessageResult result = 1; //错误信息
 }
 
+// 退出房间
+message GalacticKittensQuitRoomRequest{
+}
+//退出房间
+message GalacticKittensQuitRoomResponse{
+  MessageResult result = 1; //错误信息
+}
+
 //推送房间信息
 message GalacticKittensRoomInfoResponse{
-  GalacticKittensRoomInfo room =1; //房间信息
+  GalacticKittensRoomInfo room = 1; //房间信息
 }
 
 //房间信息
 message GalacticKittensRoomInfo{
-  uint32 id =1; //房间ID
-  repeated GalacticKittensPlayerInfo player= 2;
-  uint32 state=3; //房间状态 0匹配；1准备；2加载；3游戏中；4完成；5结束
+  uint32 id = 1; //房间ID
+  repeated GalacticKittensPlayerInfo player = 2;
+  uint32 state = 3; //房间状态 0匹配；1准备；2加载；3游戏中；4完成；5结束
 }
 
-//玩家信息 TODO 选择的角色索引
+//玩家信息
 message GalacticKittensPlayerInfo{
   int64 playerId = 1; //玩家id
-  string nick=2; //昵称
-  bool prepare=3; //是否准备
-  int32 score= 4; //分数
-  int32 powerUpCount =5; //充能数
-  int32 hp=6; //血量
+  string nick = 2; //昵称
+  bool prepare = 3; //是否准备
+  int32 score = 4; //分数
+  int32 powerUpCount = 5; //充能数
+  int32 hp = 6; //血量
   string icon = 7; //头像
+  int32 characterId = 8; //角色索引id 0开始
 }
 
+//选择角色
+message GalacticKittenSelectCharacterRequest{
+  int32 characterId = 1; //角色索引id 0开始
+}
 
+//选择角色
+message GalacticKittenSelectCharacterResponse{
+  MessageResult result = 1; //错误信息
+}
 
 //准备
 message GalacticKittensPrepareRequest {
@@ -42,28 +59,28 @@ message GalacticKittensPrepareRequest {
 }
 //准备
 message GalacticKittensPrepareResponse {
-  MessageResult result = 2; //错误信息
+  MessageResult result = 1; //错误信息
 }
 
 // 玩家服务器信息列表 内部
 message GalacticKittensPlayerServerListRequest {
-  uint32 roomId= 1; //房间id
+  uint32 roomId = 1; //房间id
 }
 //玩家服务器信息列表 内部
 message GalacticKittensPlayerServerListResponse {
   MessageResult result = 1; //错误信息
-  map<int64,ServerInfo> playerGateServers =2; //玩家网关服务器信息
-  map<int64,ServerInfo> playerLobbyServers =3; //玩家大厅服务器信息
+  map<int64, ServerInfo> playerGateServers = 2; //玩家网关服务器信息
+  map<int64, ServerInfo> playerLobbyServers = 3; //玩家大厅服务器信息
 }
 
 //游戏完成 内部
 message GalacticKittensGameFinishRequest {
-  uint32 roomId=1; //房间id
+  uint32 roomId = 1; //房间id
 }
 //游戏完成 内部
 message GalacticKittensGameFinishResponse {
   MessageResult result = 1; //错误信息
-  GalacticKittensRoomInfo room =2; //房间信息
+  GalacticKittensRoomInfo room = 2; //房间信息
 }
 
 
@@ -76,7 +93,7 @@ message GalacticKittensGameFinishResponse {
 //GalacticKittens Match 服务
 service GalacticKittensMatchService{
   //玩家服务器列表
-   rpc playerServerList(GalacticKittensPlayerServerListRequest) returns (GalacticKittensPlayerServerListResponse);
+  rpc playerServerList(GalacticKittensPlayerServerListRequest) returns (GalacticKittensPlayerServerListResponse);
   // 游戏完成
   rpc gameFinish(GalacticKittensGameFinishRequest) returns (GalacticKittensGameFinishResponse);
 }

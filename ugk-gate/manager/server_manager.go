@@ -24,6 +24,7 @@ type ServerManager struct {
 	util.DefaultModule
 	gameClients      map[string][]*GameKcpClient //游戏客户端 key=游戏名称 ==》游戏id
 	MessageIdService map[uint32]string           //消息对应的服务，没加锁，更新变动new一个新的
+	watchMessageId   bool                        //是否在监视消息Id
 	mutex            sync.RWMutex
 }
 
@@ -158,7 +159,6 @@ func (m *ServerManager) GetGameClient(serviceName string, id uint32) *GameKcpCli
 
 // AssignLobby 分配大厅
 func (m *ServerManager) AssignLobby(playerId int64) *GameKcpClient {
-	//TODO 暂时只有一个，随机
 	m.mutex.RLock()
 	serverList := m.gameClients[config2.LobbyName]
 	if serverList == nil || len(serverList) < 1 {
@@ -252,9 +252,23 @@ func gameChannelRead(client *GameKcpClient) {
 }
 
 func (m *ServerManager) Run() {
+	go m.run()
 }
 
 func (m *ServerManager) Stop() {
+}
+
+func (m *ServerManager) run() {
+	ticker := time.Tick(time.Second * 5)
+	for {
+		select {
+		case <-ticker:
+			//定时检测是否在监听,如果监听
+			if m.watchMessageId == false {
+				go m.watchMessageService()
+			}
+		}
+	}
 }
 
 // 消息处理函数
@@ -457,6 +471,7 @@ func (client *GameKcpClient) SendToGame(playerId int64, mid message.MID, msg pro
 // 监听消息ID
 func (m *ServerManager) watchMessageService() {
 	children, errors := util.ZKWatchChildrenW(manager.GetZookeeperManager().GetConn(), fmt.Sprintf(config2.ZKMessageIdWatchPath, config.BaseConfig.Profile), false)
+	m.watchMessageId = true
 	go func() {
 		for {
 			select {
@@ -475,8 +490,8 @@ func (m *ServerManager) watchMessageService() {
 						messageIdService[messageId] = name
 					}
 					log.Info("%v 消息ID：%v", path, messageStr)
-					//同样的服务监听一个就好
-					break
+					////同样的服务监听一个就好
+					//break
 				}
 				//替换
 				for id, serviceName := range m.MessageIdService {
@@ -486,6 +501,7 @@ func (m *ServerManager) watchMessageService() {
 			case err := <-errors:
 				//config2.ZKMessageIdWatchPath 必须有一个有数据，否则会失败，因为监听的是永久节点，因此没有做相应的处理
 				log.Warn("messageId listen error：%v", err)
+				m.watchMessageId = false
 				return
 			}
 		}

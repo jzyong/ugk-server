@@ -48,6 +48,7 @@ func (m *MatchManager) Init() error {
 		messageIds = append(messageIds, messageId)
 	}
 	messageIdPath := fmt.Sprintf(config2.ZKMessageIdPath, config.BaseConfig.Profile, config2.GameGalacticKittensMatch)
+	log.Debug("注册消息：%v", messageIds)
 	util.ZKUpdate(manager.GetZookeeperManager().GetConn(), messageIdPath, util.ToString(messageIds))
 	return nil
 }
