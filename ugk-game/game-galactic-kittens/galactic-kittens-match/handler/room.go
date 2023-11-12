@@ -185,6 +185,7 @@ func prepare(player *mode.Player, room *mode.Room, gateClient *manager.GateKcpCl
 		room.StateMachine.ChangeState(manager2.PrepareStateRoom)
 	}
 	player.Prepare = request.Prepare
+	gateClient.SendToGate(player.Id, message.MID_GalacticKittensPrepareRes, response, msg.Seq)
 
 	prepareCount := 0
 	for _, p := range room.Players {
@@ -198,7 +199,6 @@ func prepare(player *mode.Player, room *mode.Room, gateClient *manager.GateKcpCl
 		room.StateMachine.ChangeState(manager2.LoadStateRoom)
 	}
 
-	gateClient.SendToGate(player.Id, message.MID_GalacticKittensPrepareRes, response, msg.Seq)
 	// 推送房间消息
 	manager2.GetRoomManager().BroadcastRoomInfo(room)
 }

@@ -72,11 +72,10 @@
 * 客户端NetworkTransform 封装成抽象类，具体子游戏继承，子弹类需要同步速度，需要同步实体的唯一ID，配置ID，ConfigRole
 * 服务器NetworkTransform只起配置作用，通过对象manager进行批量同步，子弹碰撞服务器检测，需要回滚
 * 客户端和服务器配置都通过go服务器拉取
-* 房间中客户端同步给服务器都时间应该用服务器都时间，自己本地时间没有意义
-* ugk-client 网络时间封装 NetworkTime（待测试）
 * 完整的GalacticKittensMatch流程
 * Unity服务器日志打印类文件,添加Trace级别日志屏蔽输出
-* 玩家进入游戏后端已经可以通过agent创建unity docker容器；下一步需要前端进入游戏场景，时间同步调试，后端unity服务器开发，同步处理
+* 玩家进入游戏后端已经可以通过agent创建unity docker容器；下一步需要前端进入游戏场景，后端unity服务器开发，
+* 房间号没有存数据库递增，一直是1？
 
 
 ### 计划

@@ -3,6 +3,7 @@ using Game.Manager;
 using Google.Protobuf;
 using Common.Network;
 using Common.Tools;
+using UnityEngine;
 
 
 namespace Game.Handlers
@@ -20,7 +21,7 @@ namespace Game.Handlers
         {
             var request = new HeartRequest();
             request.MergeFrom(ugkMessage.Bytes);
-            Log.Debug($" receive player heart: {ugkMessage.TimeStamp} {request}");
+            Log.Debug($" receive player heart: {ugkMessage.TimeStamp} clientTime={request.ClientTime} serverTime={Time.time}");
             var response = new HeartResponse()
             {
                 ClientTime = request.ClientTime
