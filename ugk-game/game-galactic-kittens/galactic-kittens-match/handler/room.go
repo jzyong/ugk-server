@@ -186,7 +186,10 @@ func prepare(player *mode.Player, room *mode.Room, gateClient *manager.GateKcpCl
 	}
 	player.Prepare = request.Prepare
 	gateClient.SendToGate(player.Id, message.MID_GalacticKittensPrepareRes, response, msg.Seq)
+	// 推送房间消息
+	manager2.GetRoomManager().BroadcastRoomInfo(room)
 
+	//检测是否可进入游戏
 	prepareCount := 0
 	for _, p := range room.Players {
 		if p.Prepare {
@@ -198,7 +201,4 @@ func prepare(player *mode.Player, room *mode.Room, gateClient *manager.GateKcpCl
 	} else if prepareCount == len(room.Players) {
 		room.StateMachine.ChangeState(manager2.LoadStateRoom)
 	}
-
-	// 推送房间消息
-	manager2.GetRoomManager().BroadcastRoomInfo(room)
 }

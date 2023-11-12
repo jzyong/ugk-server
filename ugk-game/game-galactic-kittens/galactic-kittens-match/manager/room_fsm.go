@@ -39,6 +39,7 @@ type RoomLoadState struct {
 }
 
 func (state *RoomLoadState) Enter(room *mode.Room) {
+	GetRoomManager().BroadcastRoomInfo(room)
 	// 请求agent-manager创建游戏服务
 	grpcClient, err := manager.GetServiceClientManager().GetGrpc(config2.GetZKServicePath(config.BaseConfig.Profile, config2.AgentManagerName, 0), 0)
 	if err != nil {
@@ -74,7 +75,7 @@ type RoomGamingState struct {
 	fsm.EmptyState[*mode.Room]
 }
 
-func (state *RoomLoadState) RoomGamingState(room *mode.Room) {
+func (state *RoomGamingState) Enter(room *mode.Room) {
 	GetRoomManager().BroadcastRoomInfo(room)
 }
 
@@ -137,22 +138,20 @@ func (state *RoomCloseState) Enter(room *mode.Room) {
 }
 
 // RoomState 房间状态
-func RoomState(stateMachine any) uint32 {
-	switch stateMachine.(type) {
-	case RoomInitState:
+func RoomState(room *mode.Room) uint32 {
+	if room.StateMachine.IsInState(InitStateRoom) {
 		return 0
-	case RoomPrepareState:
+	} else if room.StateMachine.IsInState(PrepareStateRoom) {
 		return 1
-	case RoomLoadState:
+	} else if room.StateMachine.IsInState(LoadStateRoom) {
 		return 2
-	case RoomGamingState:
+	} else if room.StateMachine.IsInState(GamingStateRoom) {
 		return 3
-	case RoomFinishState:
+	} else if room.StateMachine.IsInState(FinishStateRoom) {
 		return 4
-	case RoomCloseState:
+	} else if room.StateMachine.IsInState(CloseStateRoom) {
 		return 5
-	default:
-		return 0
 	}
+	return 0
 
 }
