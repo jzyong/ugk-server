@@ -4,6 +4,7 @@ using Common.Network;
 using Common.Tools;
 using Google.Protobuf;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Game.Manager
 {
@@ -109,6 +110,10 @@ namespace Game.Manager
 
             //  创建网关连接
             BindGateGameMapReq();
+            
+            // 切换场景 TODO 需要Unity开发快捷方式，待测试
+            SceneManager.LoadScene("GalacticKittensGamePlay");
+
         }
 
         private void PlayerInfoReq()

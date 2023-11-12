@@ -8,5 +8,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Bootstrap.unity
     guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 1
+    path: Assets/Scenes/Game/GalacticKittens/GalacticKittensGamePlay.unity
+    guid: 621c597343a83e14cb2d46b9d62e0e97
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0
