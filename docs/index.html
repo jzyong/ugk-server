@@ -1,0 +1,279 @@
+<!DOCTYPE HTML>
+<html lang="cn" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>简介 - &quot;ugk-server doc&quot;</title>
+        <!-- Custom HTML head -->
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="快节奏多人联网游戏Demo，UGK-Server：unity、go、kcp server ">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="简介.html" class="active"><strong aria-hidden="true">1.</strong> 简介</a></li><li class="spacer"></li><li class="chapter-item expanded "><a href="mongo/mongo.html"><strong aria-hidden="true">2.</strong> MongoDB</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">&quot;ugk-server doc&quot;</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/jzyong/ugk-server" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="ugk-server"><a class="header" href="#ugk-server">UGK-Server</a></h1>
+<p>  快节奏多人联网游戏Demo，UGK-Server：unity、go、kcp server 。
+服务器使用微服务架构，服务器游戏逻辑需要物理碰撞、寻路的使用Unity、C#开发，其他使用Go开发。
+对应客户端<a href="https://github.com/jzyong/ugk-client">ugk-client</a>。 开发中......
+<img src="../img/ugk_architecture.png" alt="ugk-architecture" /></p>
+<h2 id="服务"><a class="header" href="#服务">服务</a></h2>
+<h3 id="通用"><a class="header" href="#通用">通用</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>服务</th><th>描述</th></tr></thead><tbody>
+<tr><td>ugk-agent</td><td>执行unity服务器docker进程的创建销毁</td></tr>
+<tr><td>ugk-agent-manager</td><td>管理ugk-agent服务，为玩家房间分配游戏进程</td></tr>
+<tr><td>ugk-api</td><td>HTTP Restful请求接口</td></tr>
+<tr><td>ugk-charge</td><td>充值</td></tr>
+<tr><td>ugk-chat</td><td>聊天</td></tr>
+<tr><td>ugk-common</td><td>公共逻辑封装</td></tr>
+<tr><td>ugk-game</td><td>游戏微服务</td></tr>
+<tr><td>ugk-gate</td><td>网关，消息转换</td></tr>
+<tr><td>ugk-lobby</td><td>大厅，一般逻辑</td></tr>
+<tr><td>ugk-login</td><td>登录、账号</td></tr>
+<tr><td>ugk-message</td><td>协议消息</td></tr>
+<tr><td>ugk-resource</td><td>文档、脚本</td></tr>
+<tr><td>ugk-stress-testing</td><td>压力测试客户端集群</td></tr>
+</tbody></table>
+</div>
+<h3 id="游戏"><a class="header" href="#游戏">游戏</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>游戏</th><th>描述</th></tr></thead><tbody>
+<tr><td><a href="../../ugk-game/game-galactic-kittens/README.html">game-galactic-kittens</a></td><td>2D多人飞船射击游戏</td></tr>
+</tbody></table>
+</div>
+<h2 id="技术选择"><a class="header" href="#技术选择">技术选择</a></h2>
+<ul>
+<li>Unity、C# 客户端和服务器</li>
+<li>Go 服务器</li>
+<li>Kcp 网络通信 忘记和网关，网关和后端服务通信</li>
+<li>Protobuf+Grpc 内部网络通信</li>
+<li>Zookeeper 服务发现注册</li>
+<li>Mongodb,Redis 数据存储</li>
+<li>Docker、Jenkins 进行CI/CD</li>
+</ul>
+<h3 id="参考资料"><a class="header" href="#参考资料">参考资料</a></h3>
+<h4 id="网络"><a class="header" href="#网络">网络</a></h4>
+<ul>
+<li><a href="https://github.com/Unity-Technologies/com.unity.netcode.gameobjects">Unity Multiplayer Networking</a></li>
+<li><a href="https://github.com/FirstGearGames/FishNet/">FishNet</a></li>
+<li><a href="https://github.com/MirrorNetworking/Mirror">Mirror</a></li>
+<li><a href="https://github.com/vis2k/Telepathy">Telepathy</a> TCP前端</li>
+<li><a href="https://github.com/vis2k/kcp2k">kcp2k</a> unity前端</li>
+<li><a href="https://github.com/xtaci/kcp-go">kcp-go</a> go服务器</li>
+<li><a href="https://grpc.io/">grpc</a> 服务器之间通信</li>
+<li><a href="https://wetest.qq.com/lab/view/391.html">可靠UDP，KCP协议快在哪？</a></li>
+</ul>
+<h4 id="同步"><a class="header" href="#同步">同步</a></h4>
+<ul>
+<li><a href="https://www.gabrielgambetta.com/client-server-game-architecture.html">Prediction,Reconciliation,Lag Compensation</a></li>
+<li><a href="https://developer.valvesoftware.com/wiki/Latency_Compensating_Methods_in_Client/Server_In-game_Protocol_Design_and_Optimization">Latency Compensating Methods in Client/Server In-game Protocol Design and Optimization</a></li>
+<li><a href="https://technology.riotgames.com/news/peeking-valorants-netcode">无畏契约网络代码</a></li>
+</ul>
+<h4 id="unity"><a class="header" href="#unity">Unity</a></h4>
+<ul>
+<li><a href="https://github.com/Unity-Technologies/com.unity.multiplayer.samples.coop">com.unity.multiplayer.samples.coop</a>3D rpg示例demo</li>
+<li><a href="https://github.com/Unity-Technologies/com.unity.multiplayer.samples.bitesize">com.unity.multiplayer.samples.bitesize</a>小游戏示例demo</li>
+<li><a href="https://github.com/UnityTechnologies/GalacticKittens">GalacticKittens</a> 2D示例demo</li>
+<li><a href="https://github.com/Unity-Technologies/ECS-Network-Racing-Sample">ECS-Network-Racing-Sample</a> ECS 赛车demo</li>
+</ul>
+<h2 id="todo"><a class="header" href="#todo">TODO</a></h2>
+<ul>
+<li>网络同步、延迟、插值、回退（延迟补偿），<strong>物理同步，动画同步</strong>，位置方向同步</li>
+<li>场景同步消息，transform同步消息，aoi管理</li>
+<li>客户端同步封装，参考NetworkTransform、NetworkAnimator、NetworkRigidbody？（参考Mirror）</li>
+<li>封装NetworkTransform 进行位置，方向，缩放同步，插值</li>
+<li>客户端NetworkTransform 封装成抽象类，具体子游戏继承，子弹类需要同步速度，需要同步实体的唯一ID，配置ID，ConfigRole</li>
+<li>服务器NetworkTransform只起配置作用，通过对象manager进行批量同步，子弹碰撞服务器检测，需要回滚</li>
+<li>客户端和服务器配置都通过go服务器拉取</li>
+<li>完整的GalacticKittensMatch流程</li>
+<li>Unity服务器日志打印类文件,添加Trace级别日志屏蔽输出</li>
+<li>玩家进入游戏后端已经可以通过agent创建unity docker容器；下一步需要前端进入游戏场景，后端unity服务器开发，</li>
+<li>房间号没有存数据库递增，一直是1？</li>
+<li>场景消息同步定义，后端刷出小怪及客户端显示角色 ，小怪，boss同步频率低（1s一次？），给速度，客户端模拟，服务器出发了碰撞等在同步</li>
+</ul>
+<h3 id="计划"><a class="header" href="#计划">计划</a></h3>
+<ul>
+<li>Websocket网络通信</li>
+<li>压力测试客户端使用ugk-web开发界面（vue3）</li>
+<li>添加聊天、排行、匹配、房间（Mirror）服务</li>
+<li>广告、充值接取</li>
+<li>断线重连(ugk-client,unity后端服务器与网关等)</li>
+<li>使用c#开发导表等图形化工具</li>
+<li>服务器unity提取公共包，unity的package</li>
+<li>ugk-client 弹窗增加tween动画</li>
+<li>后台管理系统查看unity docker服务器</li>
+</ul>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="next" href="mongo/mongo.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="next" href="mongo/mongo.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+        <!-- Livereload script (if served using the cli tool) -->
+        <script type="text/javascript">
+            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
+            const socket = new WebSocket(wsAddress);
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+    </body>
+</html>
