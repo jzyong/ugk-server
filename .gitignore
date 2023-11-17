@@ -11,6 +11,7 @@ ugk-game/game-galactic-kittens/galactic-kittens-match/galactic-kittens-match
 ugk-gate/ugk-gate
 ugk-lobby/ugk-lobby
 ugk-login/ugk-login
+ugk-message/proto/c#
 
 # unity
 ugk-game/game-galactic-kittens/galactic-kittens-game/Logs/
