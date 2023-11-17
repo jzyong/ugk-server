@@ -22,7 +22,7 @@ public static partial class ConstantReflection {
   static ConstantReflection() {
     byte[] descriptorData = global::System.Convert.FromBase64String(
         string.Concat(
-          "Cg5jb25zdGFudC5wcm90byqEAwoDTUlEEggKBE5vbmUQABISCg5TZXJ2ZXJI",
+          "Cg5jb25zdGFudC5wcm90byqcBAoDTUlEEggKBE5vbmUQABISCg5TZXJ2ZXJI",
           "ZWFydFJlcRABEhIKDlNlcnZlckhlYXJ0UmVzEAISDgoISGVhcnRSZXEQwYQ9",
           "Eg4KCEhlYXJ0UmVzEMKEPRIOCghMb2dpblJlcRDDhD0SDgoITG9naW5SZXMQ",
           "xIQ9EhgKEkJpbmRHYW1lQ29ubmVjdFJlcRDFhD0SGAoSQmluZEdhbWVDb25u",
@@ -31,7 +31,10 @@ public static partial class ConstantReflection {
           "ChtHYWxhY3RpY0tpdHRlbnNFbnRlclJvb21SZXMQgoDgARIhChpHYWxhY3Rp",
           "Y0tpdHRlbnNSb29tSW5mb1JlcxCEgOABEiAKGUdhbGFjdGljS2l0dGVuc1By",
           "ZXBhcmVSZXEQhYDgARIgChlHYWxhY3RpY0tpdHRlbnNQcmVwYXJlUmVzEIaA",
-          "4AFCCloIL21lc3NhZ2ViBnByb3RvMw=="));
+          "4AESJwogR2FsYWN0aWNLaXR0ZW5TZWxlY3RDaGFyYWN0ZXJSZXEQh4DgARIn",
+          "CiBHYWxhY3RpY0tpdHRlblNlbGVjdENoYXJhY3RlclJlcxCIgOABEiEKGkdh",
+          "bGFjdGljS2l0dGVuc1F1aXRSb29tUmVxEImA4AESIQoaR2FsYWN0aWNLaXR0",
+          "ZW5zUXVpdFJvb21SZXMQioDgAUIKWggvbWVzc2FnZWIGcHJvdG8z"));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
         new pbr::FileDescriptor[] { },
         new pbr::GeneratedClrTypeInfo(new[] {typeof(global::MID), }, null, null));
@@ -96,6 +99,10 @@ public enum MID {
   [pbr::OriginalName("GalacticKittensRoomInfoRes")] GalacticKittensRoomInfoRes = 3670020,
   [pbr::OriginalName("GalacticKittensPrepareReq")] GalacticKittensPrepareReq = 3670021,
   [pbr::OriginalName("GalacticKittensPrepareRes")] GalacticKittensPrepareRes = 3670022,
+  [pbr::OriginalName("GalacticKittenSelectCharacterReq")] GalacticKittenSelectCharacterReq = 3670023,
+  [pbr::OriginalName("GalacticKittenSelectCharacterRes")] GalacticKittenSelectCharacterRes = 3670024,
+  [pbr::OriginalName("GalacticKittensQuitRoomReq")] GalacticKittensQuitRoomReq = 3670025,
+  [pbr::OriginalName("GalacticKittensQuitRoomRes")] GalacticKittensQuitRoomRes = 3670026,
 }
 
 #endregion

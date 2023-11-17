@@ -25,44 +25,54 @@ public static partial class GameGalacticKittensReflection {
           "ChtnYW1lX2dhbGFjdGljX2tpdHRlbnMucHJvdG8aDGNvbW1vbi5wcm90bxoM",
           "c2VydmVyLnByb3RvIiEKH0dhbGFjdGljS2l0dGVuc0VudGVyUm9vbVJlcXVl",
           "c3QiQgogR2FsYWN0aWNLaXR0ZW5zRW50ZXJSb29tUmVzcG9uc2USHgoGcmVz",
-          "dWx0GAEgASgLMg4uTWVzc2FnZVJlc3VsdCJJCh9HYWxhY3RpY0tpdHRlbnNS",
-          "b29tSW5mb1Jlc3BvbnNlEiYKBHJvb20YASABKAsyGC5HYWxhY3RpY0tpdHRl",
-          "bnNSb29tSW5mbyJgChdHYWxhY3RpY0tpdHRlbnNSb29tSW5mbxIKCgJpZBgB",
-          "IAEoDRIqCgZwbGF5ZXIYAiADKAsyGi5HYWxhY3RpY0tpdHRlbnNQbGF5ZXJJ",
-          "bmZvEg0KBXN0YXRlGAMgASgNIosBChlHYWxhY3RpY0tpdHRlbnNQbGF5ZXJJ",
-          "bmZvEhAKCHBsYXllcklkGAEgASgDEgwKBG5pY2sYAiABKAkSDwoHcHJlcGFy",
-          "ZRgDIAEoCBINCgVzY29yZRgEIAEoBRIUCgxwb3dlclVwQ291bnQYBSABKAUS",
-          "CgoCaHAYBiABKAUSDAoEaWNvbhgHIAEoCSIwCh1HYWxhY3RpY0tpdHRlbnNQ",
-          "cmVwYXJlUmVxdWVzdBIPCgdwcmVwYXJlGAEgASgIIkAKHkdhbGFjdGljS2l0",
-          "dGVuc1ByZXBhcmVSZXNwb25zZRIeCgZyZXN1bHQYAiABKAsyDi5NZXNzYWdl",
-          "UmVzdWx0IjgKJkdhbGFjdGljS2l0dGVuc1BsYXllclNlcnZlckxpc3RSZXF1",
-          "ZXN0Eg4KBnJvb21JZBgBIAEoDSKSAwonR2FsYWN0aWNLaXR0ZW5zUGxheWVy",
-          "U2VydmVyTGlzdFJlc3BvbnNlEh4KBnJlc3VsdBgBIAEoCzIOLk1lc3NhZ2VS",
-          "ZXN1bHQSWgoRcGxheWVyR2F0ZVNlcnZlcnMYAiADKAsyPy5HYWxhY3RpY0tp",
-          "dHRlbnNQbGF5ZXJTZXJ2ZXJMaXN0UmVzcG9uc2UuUGxheWVyR2F0ZVNlcnZl",
-          "cnNFbnRyeRJcChJwbGF5ZXJMb2JieVNlcnZlcnMYAyADKAsyQC5HYWxhY3Rp",
-          "Y0tpdHRlbnNQbGF5ZXJTZXJ2ZXJMaXN0UmVzcG9uc2UuUGxheWVyTG9iYnlT",
-          "ZXJ2ZXJzRW50cnkaRQoWUGxheWVyR2F0ZVNlcnZlcnNFbnRyeRILCgNrZXkY",
-          "ASABKAMSGgoFdmFsdWUYAiABKAsyCy5TZXJ2ZXJJbmZvOgI4ARpGChdQbGF5",
-          "ZXJMb2JieVNlcnZlcnNFbnRyeRILCgNrZXkYASABKAMSGgoFdmFsdWUYAiAB",
-          "KAsyCy5TZXJ2ZXJJbmZvOgI4ASIyCiBHYWxhY3RpY0tpdHRlbnNHYW1lRmlu",
-          "aXNoUmVxdWVzdBIOCgZyb29tSWQYASABKA0iawohR2FsYWN0aWNLaXR0ZW5z",
-          "R2FtZUZpbmlzaFJlc3BvbnNlEh4KBnJlc3VsdBgBIAEoCzIOLk1lc3NhZ2VS",
-          "ZXN1bHQSJgoEcm9vbRgCIAEoCzIYLkdhbGFjdGljS2l0dGVuc1Jvb21JbmZv",
-          "MtkBChtHYWxhY3RpY0tpdHRlbnNNYXRjaFNlcnZpY2USZQoQcGxheWVyU2Vy",
-          "dmVyTGlzdBInLkdhbGFjdGljS2l0dGVuc1BsYXllclNlcnZlckxpc3RSZXF1",
-          "ZXN0GiguR2FsYWN0aWNLaXR0ZW5zUGxheWVyU2VydmVyTGlzdFJlc3BvbnNl",
-          "ElMKCmdhbWVGaW5pc2gSIS5HYWxhY3RpY0tpdHRlbnNHYW1lRmluaXNoUmVx",
-          "dWVzdBoiLkdhbGFjdGljS2l0dGVuc0dhbWVGaW5pc2hSZXNwb25zZUIKWggv",
-          "bWVzc2FnZWIGcHJvdG8z"));
+          "dWx0GAEgASgLMg4uTWVzc2FnZVJlc3VsdCIgCh5HYWxhY3RpY0tpdHRlbnNR",
+          "dWl0Um9vbVJlcXVlc3QiQQofR2FsYWN0aWNLaXR0ZW5zUXVpdFJvb21SZXNw",
+          "b25zZRIeCgZyZXN1bHQYASABKAsyDi5NZXNzYWdlUmVzdWx0IkkKH0dhbGFj",
+          "dGljS2l0dGVuc1Jvb21JbmZvUmVzcG9uc2USJgoEcm9vbRgBIAEoCzIYLkdh",
+          "bGFjdGljS2l0dGVuc1Jvb21JbmZvImAKF0dhbGFjdGljS2l0dGVuc1Jvb21J",
+          "bmZvEgoKAmlkGAEgASgNEioKBnBsYXllchgCIAMoCzIaLkdhbGFjdGljS2l0",
+          "dGVuc1BsYXllckluZm8SDQoFc3RhdGUYAyABKA0ioAEKGUdhbGFjdGljS2l0",
+          "dGVuc1BsYXllckluZm8SEAoIcGxheWVySWQYASABKAMSDAoEbmljaxgCIAEo",
+          "CRIPCgdwcmVwYXJlGAMgASgIEg0KBXNjb3JlGAQgASgFEhQKDHBvd2VyVXBD",
+          "b3VudBgFIAEoBRIKCgJocBgGIAEoBRIMCgRpY29uGAcgASgJEhMKC2NoYXJh",
+          "Y3RlcklkGAggASgFIjsKJEdhbGFjdGljS2l0dGVuU2VsZWN0Q2hhcmFjdGVy",
+          "UmVxdWVzdBITCgtjaGFyYWN0ZXJJZBgBIAEoBSJHCiVHYWxhY3RpY0tpdHRl",
+          "blNlbGVjdENoYXJhY3RlclJlc3BvbnNlEh4KBnJlc3VsdBgBIAEoCzIOLk1l",
+          "c3NhZ2VSZXN1bHQiMAodR2FsYWN0aWNLaXR0ZW5zUHJlcGFyZVJlcXVlc3QS",
+          "DwoHcHJlcGFyZRgBIAEoCCJACh5HYWxhY3RpY0tpdHRlbnNQcmVwYXJlUmVz",
+          "cG9uc2USHgoGcmVzdWx0GAEgASgLMg4uTWVzc2FnZVJlc3VsdCI4CiZHYWxh",
+          "Y3RpY0tpdHRlbnNQbGF5ZXJTZXJ2ZXJMaXN0UmVxdWVzdBIOCgZyb29tSWQY",
+          "ASABKA0ikgMKJ0dhbGFjdGljS2l0dGVuc1BsYXllclNlcnZlckxpc3RSZXNw",
+          "b25zZRIeCgZyZXN1bHQYASABKAsyDi5NZXNzYWdlUmVzdWx0EloKEXBsYXll",
+          "ckdhdGVTZXJ2ZXJzGAIgAygLMj8uR2FsYWN0aWNLaXR0ZW5zUGxheWVyU2Vy",
+          "dmVyTGlzdFJlc3BvbnNlLlBsYXllckdhdGVTZXJ2ZXJzRW50cnkSXAoScGxh",
+          "eWVyTG9iYnlTZXJ2ZXJzGAMgAygLMkAuR2FsYWN0aWNLaXR0ZW5zUGxheWVy",
+          "U2VydmVyTGlzdFJlc3BvbnNlLlBsYXllckxvYmJ5U2VydmVyc0VudHJ5GkUK",
+          "FlBsYXllckdhdGVTZXJ2ZXJzRW50cnkSCwoDa2V5GAEgASgDEhoKBXZhbHVl",
+          "GAIgASgLMgsuU2VydmVySW5mbzoCOAEaRgoXUGxheWVyTG9iYnlTZXJ2ZXJz",
+          "RW50cnkSCwoDa2V5GAEgASgDEhoKBXZhbHVlGAIgASgLMgsuU2VydmVySW5m",
+          "bzoCOAEiMgogR2FsYWN0aWNLaXR0ZW5zR2FtZUZpbmlzaFJlcXVlc3QSDgoG",
+          "cm9vbUlkGAEgASgNImsKIUdhbGFjdGljS2l0dGVuc0dhbWVGaW5pc2hSZXNw",
+          "b25zZRIeCgZyZXN1bHQYASABKAsyDi5NZXNzYWdlUmVzdWx0EiYKBHJvb20Y",
+          "AiABKAsyGC5HYWxhY3RpY0tpdHRlbnNSb29tSW5mbzLZAQobR2FsYWN0aWNL",
+          "aXR0ZW5zTWF0Y2hTZXJ2aWNlEmUKEHBsYXllclNlcnZlckxpc3QSJy5HYWxh",
+          "Y3RpY0tpdHRlbnNQbGF5ZXJTZXJ2ZXJMaXN0UmVxdWVzdBooLkdhbGFjdGlj",
+          "S2l0dGVuc1BsYXllclNlcnZlckxpc3RSZXNwb25zZRJTCgpnYW1lRmluaXNo",
+          "EiEuR2FsYWN0aWNLaXR0ZW5zR2FtZUZpbmlzaFJlcXVlc3QaIi5HYWxhY3Rp",
+          "Y0tpdHRlbnNHYW1lRmluaXNoUmVzcG9uc2VCCloIL21lc3NhZ2ViBnByb3Rv",
+          "Mw=="));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
         new pbr::FileDescriptor[] { global::CommonReflection.Descriptor, global::ServerReflection.Descriptor, },
         new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
           new pbr::GeneratedClrTypeInfo(typeof(global::GalacticKittensEnterRoomRequest), global::GalacticKittensEnterRoomRequest.Parser, null, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::GalacticKittensEnterRoomResponse), global::GalacticKittensEnterRoomResponse.Parser, new[]{ "Result" }, null, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::GalacticKittensQuitRoomRequest), global::GalacticKittensQuitRoomRequest.Parser, null, null, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::GalacticKittensQuitRoomResponse), global::GalacticKittensQuitRoomResponse.Parser, new[]{ "Result" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::GalacticKittensRoomInfoResponse), global::GalacticKittensRoomInfoResponse.Parser, new[]{ "Room" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::GalacticKittensRoomInfo), global::GalacticKittensRoomInfo.Parser, new[]{ "Id", "Player", "State" }, null, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::GalacticKittensPlayerInfo), global::GalacticKittensPlayerInfo.Parser, new[]{ "PlayerId", "Nick", "Prepare", "Score", "PowerUpCount", "Hp", "Icon" }, null, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::GalacticKittensPlayerInfo), global::GalacticKittensPlayerInfo.Parser, new[]{ "PlayerId", "Nick", "Prepare", "Score", "PowerUpCount", "Hp", "Icon", "CharacterId" }, null, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::GalacticKittenSelectCharacterRequest), global::GalacticKittenSelectCharacterRequest.Parser, new[]{ "CharacterId" }, null, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::GalacticKittenSelectCharacterResponse), global::GalacticKittenSelectCharacterResponse.Parser, new[]{ "Result" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::GalacticKittensPrepareRequest), global::GalacticKittensPrepareRequest.Parser, new[]{ "Prepare" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::GalacticKittensPrepareResponse), global::GalacticKittensPrepareResponse.Parser, new[]{ "Result" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::GalacticKittensPlayerServerListRequest), global::GalacticKittensPlayerServerListRequest.Parser, new[]{ "RoomId" }, null, null, null, null),
@@ -435,6 +445,365 @@ public sealed partial class GalacticKittensEnterRoomResponse : pb::IMessage<Gala
 }
 
 /// <summary>
+/// 退出房间
+/// </summary>
+public sealed partial class GalacticKittensQuitRoomRequest : pb::IMessage<GalacticKittensQuitRoomRequest>
+#if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    , pb::IBufferMessage
+#endif
+{
+  private static readonly pb::MessageParser<GalacticKittensQuitRoomRequest> _parser = new pb::MessageParser<GalacticKittensQuitRoomRequest>(() => new GalacticKittensQuitRoomRequest());
+  private pb::UnknownFieldSet _unknownFields;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public static pb::MessageParser<GalacticKittensQuitRoomRequest> Parser { get { return _parser; } }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public static pbr::MessageDescriptor Descriptor {
+    get { return global::GameGalacticKittensReflection.Descriptor.MessageTypes[2]; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  pbr::MessageDescriptor pb::IMessage.Descriptor {
+    get { return Descriptor; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public GalacticKittensQuitRoomRequest() {
+    OnConstruction();
+  }
+
+  partial void OnConstruction();
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public GalacticKittensQuitRoomRequest(GalacticKittensQuitRoomRequest other) : this() {
+    _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public GalacticKittensQuitRoomRequest Clone() {
+    return new GalacticKittensQuitRoomRequest(this);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public override bool Equals(object other) {
+    return Equals(other as GalacticKittensQuitRoomRequest);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public bool Equals(GalacticKittensQuitRoomRequest other) {
+    if (ReferenceEquals(other, null)) {
+      return false;
+    }
+    if (ReferenceEquals(other, this)) {
+      return true;
+    }
+    return Equals(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public override int GetHashCode() {
+    int hash = 1;
+    if (_unknownFields != null) {
+      hash ^= _unknownFields.GetHashCode();
+    }
+    return hash;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public override string ToString() {
+    return pb::JsonFormatter.ToDiagnosticString(this);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public void WriteTo(pb::CodedOutputStream output) {
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    output.WriteRawMessage(this);
+  #else
+    if (_unknownFields != null) {
+      _unknownFields.WriteTo(output);
+    }
+  #endif
+  }
+
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
+    if (_unknownFields != null) {
+      _unknownFields.WriteTo(ref output);
+    }
+  }
+  #endif
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public int CalculateSize() {
+    int size = 0;
+    if (_unknownFields != null) {
+      size += _unknownFields.CalculateSize();
+    }
+    return size;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public void MergeFrom(GalacticKittensQuitRoomRequest other) {
+    if (other == null) {
+      return;
+    }
+    _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public void MergeFrom(pb::CodedInputStream input) {
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    input.ReadRawMessage(this);
+  #else
+    uint tag;
+    while ((tag = input.ReadTag()) != 0) {
+      switch(tag) {
+        default:
+          _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+          break;
+      }
+    }
+  #endif
+  }
+
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
+    uint tag;
+    while ((tag = input.ReadTag()) != 0) {
+      switch(tag) {
+        default:
+          _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
+          break;
+      }
+    }
+  }
+  #endif
+
+}
+
+/// <summary>
+///退出房间
+/// </summary>
+public sealed partial class GalacticKittensQuitRoomResponse : pb::IMessage<GalacticKittensQuitRoomResponse>
+#if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    , pb::IBufferMessage
+#endif
+{
+  private static readonly pb::MessageParser<GalacticKittensQuitRoomResponse> _parser = new pb::MessageParser<GalacticKittensQuitRoomResponse>(() => new GalacticKittensQuitRoomResponse());
+  private pb::UnknownFieldSet _unknownFields;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public static pb::MessageParser<GalacticKittensQuitRoomResponse> Parser { get { return _parser; } }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public static pbr::MessageDescriptor Descriptor {
+    get { return global::GameGalacticKittensReflection.Descriptor.MessageTypes[3]; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  pbr::MessageDescriptor pb::IMessage.Descriptor {
+    get { return Descriptor; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public GalacticKittensQuitRoomResponse() {
+    OnConstruction();
+  }
+
+  partial void OnConstruction();
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public GalacticKittensQuitRoomResponse(GalacticKittensQuitRoomResponse other) : this() {
+    result_ = other.result_ != null ? other.result_.Clone() : null;
+    _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public GalacticKittensQuitRoomResponse Clone() {
+    return new GalacticKittensQuitRoomResponse(this);
+  }
+
+  /// <summary>Field number for the "result" field.</summary>
+  public const int ResultFieldNumber = 1;
+  private global::MessageResult result_;
+  /// <summary>
+  ///错误信息
+  /// </summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public global::MessageResult Result {
+    get { return result_; }
+    set {
+      result_ = value;
+    }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public override bool Equals(object other) {
+    return Equals(other as GalacticKittensQuitRoomResponse);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public bool Equals(GalacticKittensQuitRoomResponse other) {
+    if (ReferenceEquals(other, null)) {
+      return false;
+    }
+    if (ReferenceEquals(other, this)) {
+      return true;
+    }
+    if (!object.Equals(Result, other.Result)) return false;
+    return Equals(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public override int GetHashCode() {
+    int hash = 1;
+    if (result_ != null) hash ^= Result.GetHashCode();
+    if (_unknownFields != null) {
+      hash ^= _unknownFields.GetHashCode();
+    }
+    return hash;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public override string ToString() {
+    return pb::JsonFormatter.ToDiagnosticString(this);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public void WriteTo(pb::CodedOutputStream output) {
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    output.WriteRawMessage(this);
+  #else
+    if (result_ != null) {
+      output.WriteRawTag(10);
+      output.WriteMessage(Result);
+    }
+    if (_unknownFields != null) {
+      _unknownFields.WriteTo(output);
+    }
+  #endif
+  }
+
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
+    if (result_ != null) {
+      output.WriteRawTag(10);
+      output.WriteMessage(Result);
+    }
+    if (_unknownFields != null) {
+      _unknownFields.WriteTo(ref output);
+    }
+  }
+  #endif
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public int CalculateSize() {
+    int size = 0;
+    if (result_ != null) {
+      size += 1 + pb::CodedOutputStream.ComputeMessageSize(Result);
+    }
+    if (_unknownFields != null) {
+      size += _unknownFields.CalculateSize();
+    }
+    return size;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public void MergeFrom(GalacticKittensQuitRoomResponse other) {
+    if (other == null) {
+      return;
+    }
+    if (other.result_ != null) {
+      if (result_ == null) {
+        Result = new global::MessageResult();
+      }
+      Result.MergeFrom(other.Result);
+    }
+    _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public void MergeFrom(pb::CodedInputStream input) {
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    input.ReadRawMessage(this);
+  #else
+    uint tag;
+    while ((tag = input.ReadTag()) != 0) {
+      switch(tag) {
+        default:
+          _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+          break;
+        case 10: {
+          if (result_ == null) {
+            Result = new global::MessageResult();
+          }
+          input.ReadMessage(Result);
+          break;
+        }
+      }
+    }
+  #endif
+  }
+
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
+    uint tag;
+    while ((tag = input.ReadTag()) != 0) {
+      switch(tag) {
+        default:
+          _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
+          break;
+        case 10: {
+          if (result_ == null) {
+            Result = new global::MessageResult();
+          }
+          input.ReadMessage(Result);
+          break;
+        }
+      }
+    }
+  }
+  #endif
+
+}
+
+/// <summary>
 ///推送房间信息
 /// </summary>
 public sealed partial class GalacticKittensRoomInfoResponse : pb::IMessage<GalacticKittensRoomInfoResponse>
@@ -451,7 +820,7 @@ public sealed partial class GalacticKittensRoomInfoResponse : pb::IMessage<Galac
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public static pbr::MessageDescriptor Descriptor {
-    get { return global::GameGalacticKittensReflection.Descriptor.MessageTypes[2]; }
+    get { return global::GameGalacticKittensReflection.Descriptor.MessageTypes[4]; }
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -655,7 +1024,7 @@ public sealed partial class GalacticKittensRoomInfo : pb::IMessage<GalacticKitte
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public static pbr::MessageDescriptor Descriptor {
-    get { return global::GameGalacticKittensReflection.Descriptor.MessageTypes[3]; }
+    get { return global::GameGalacticKittensReflection.Descriptor.MessageTypes[5]; }
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -916,7 +1285,7 @@ public sealed partial class GalacticKittensPlayerInfo : pb::IMessage<GalacticKit
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public static pbr::MessageDescriptor Descriptor {
-    get { return global::GameGalacticKittensReflection.Descriptor.MessageTypes[4]; }
+    get { return global::GameGalacticKittensReflection.Descriptor.MessageTypes[6]; }
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -943,6 +1312,7 @@ public sealed partial class GalacticKittensPlayerInfo : pb::IMessage<GalacticKit
     powerUpCount_ = other.powerUpCount_;
     hp_ = other.hp_;
     icon_ = other.icon_;
+    characterId_ = other.characterId_;
     _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
   }
 
@@ -1057,6 +1427,21 @@ public sealed partial class GalacticKittensPlayerInfo : pb::IMessage<GalacticKit
     }
   }
 
+  /// <summary>Field number for the "characterId" field.</summary>
+  public const int CharacterIdFieldNumber = 8;
+  private int characterId_;
+  /// <summary>
+  ///角色索引id 0开始
+  /// </summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public int CharacterId {
+    get { return characterId_; }
+    set {
+      characterId_ = value;
+    }
+  }
+
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public override bool Equals(object other) {
@@ -1079,6 +1464,7 @@ public sealed partial class GalacticKittensPlayerInfo : pb::IMessage<GalacticKit
     if (PowerUpCount != other.PowerUpCount) return false;
     if (Hp != other.Hp) return false;
     if (Icon != other.Icon) return false;
+    if (CharacterId != other.CharacterId) return false;
     return Equals(_unknownFields, other._unknownFields);
   }
 
@@ -1093,6 +1479,7 @@ public sealed partial class GalacticKittensPlayerInfo : pb::IMessage<GalacticKit
     if (PowerUpCount != 0) hash ^= PowerUpCount.GetHashCode();
     if (Hp != 0) hash ^= Hp.GetHashCode();
     if (Icon.Length != 0) hash ^= Icon.GetHashCode();
+    if (CharacterId != 0) hash ^= CharacterId.GetHashCode();
     if (_unknownFields != null) {
       hash ^= _unknownFields.GetHashCode();
     }
@@ -1139,6 +1526,10 @@ public sealed partial class GalacticKittensPlayerInfo : pb::IMessage<GalacticKit
       output.WriteRawTag(58);
       output.WriteString(Icon);
     }
+    if (CharacterId != 0) {
+      output.WriteRawTag(64);
+      output.WriteInt32(CharacterId);
+    }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(output);
     }
@@ -1177,6 +1568,10 @@ public sealed partial class GalacticKittensPlayerInfo : pb::IMessage<GalacticKit
       output.WriteRawTag(58);
       output.WriteString(Icon);
     }
+    if (CharacterId != 0) {
+      output.WriteRawTag(64);
+      output.WriteInt32(CharacterId);
+    }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(ref output);
     }
@@ -1207,6 +1602,9 @@ public sealed partial class GalacticKittensPlayerInfo : pb::IMessage<GalacticKit
     }
     if (Icon.Length != 0) {
       size += 1 + pb::CodedOutputStream.ComputeStringSize(Icon);
+    }
+    if (CharacterId != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeInt32Size(CharacterId);
     }
     if (_unknownFields != null) {
       size += _unknownFields.CalculateSize();
@@ -1240,6 +1638,9 @@ public sealed partial class GalacticKittensPlayerInfo : pb::IMessage<GalacticKit
     }
     if (other.Icon.Length != 0) {
       Icon = other.Icon;
+    }
+    if (other.CharacterId != 0) {
+      CharacterId = other.CharacterId;
     }
     _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
   }
@@ -1282,6 +1683,10 @@ public sealed partial class GalacticKittensPlayerInfo : pb::IMessage<GalacticKit
         }
         case 58: {
           Icon = input.ReadString();
+          break;
+        }
+        case 64: {
+          CharacterId = input.ReadInt32();
           break;
         }
       }
@@ -1327,6 +1732,409 @@ public sealed partial class GalacticKittensPlayerInfo : pb::IMessage<GalacticKit
           Icon = input.ReadString();
           break;
         }
+        case 64: {
+          CharacterId = input.ReadInt32();
+          break;
+        }
+      }
+    }
+  }
+  #endif
+
+}
+
+/// <summary>
+///选择角色
+/// </summary>
+public sealed partial class GalacticKittenSelectCharacterRequest : pb::IMessage<GalacticKittenSelectCharacterRequest>
+#if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    , pb::IBufferMessage
+#endif
+{
+  private static readonly pb::MessageParser<GalacticKittenSelectCharacterRequest> _parser = new pb::MessageParser<GalacticKittenSelectCharacterRequest>(() => new GalacticKittenSelectCharacterRequest());
+  private pb::UnknownFieldSet _unknownFields;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public static pb::MessageParser<GalacticKittenSelectCharacterRequest> Parser { get { return _parser; } }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public static pbr::MessageDescriptor Descriptor {
+    get { return global::GameGalacticKittensReflection.Descriptor.MessageTypes[7]; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  pbr::MessageDescriptor pb::IMessage.Descriptor {
+    get { return Descriptor; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public GalacticKittenSelectCharacterRequest() {
+    OnConstruction();
+  }
+
+  partial void OnConstruction();
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public GalacticKittenSelectCharacterRequest(GalacticKittenSelectCharacterRequest other) : this() {
+    characterId_ = other.characterId_;
+    _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public GalacticKittenSelectCharacterRequest Clone() {
+    return new GalacticKittenSelectCharacterRequest(this);
+  }
+
+  /// <summary>Field number for the "characterId" field.</summary>
+  public const int CharacterIdFieldNumber = 1;
+  private int characterId_;
+  /// <summary>
+  ///角色索引id 0开始
+  /// </summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public int CharacterId {
+    get { return characterId_; }
+    set {
+      characterId_ = value;
+    }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public override bool Equals(object other) {
+    return Equals(other as GalacticKittenSelectCharacterRequest);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public bool Equals(GalacticKittenSelectCharacterRequest other) {
+    if (ReferenceEquals(other, null)) {
+      return false;
+    }
+    if (ReferenceEquals(other, this)) {
+      return true;
+    }
+    if (CharacterId != other.CharacterId) return false;
+    return Equals(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public override int GetHashCode() {
+    int hash = 1;
+    if (CharacterId != 0) hash ^= CharacterId.GetHashCode();
+    if (_unknownFields != null) {
+      hash ^= _unknownFields.GetHashCode();
+    }
+    return hash;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public override string ToString() {
+    return pb::JsonFormatter.ToDiagnosticString(this);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public void WriteTo(pb::CodedOutputStream output) {
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    output.WriteRawMessage(this);
+  #else
+    if (CharacterId != 0) {
+      output.WriteRawTag(8);
+      output.WriteInt32(CharacterId);
+    }
+    if (_unknownFields != null) {
+      _unknownFields.WriteTo(output);
+    }
+  #endif
+  }
+
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
+    if (CharacterId != 0) {
+      output.WriteRawTag(8);
+      output.WriteInt32(CharacterId);
+    }
+    if (_unknownFields != null) {
+      _unknownFields.WriteTo(ref output);
+    }
+  }
+  #endif
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public int CalculateSize() {
+    int size = 0;
+    if (CharacterId != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeInt32Size(CharacterId);
+    }
+    if (_unknownFields != null) {
+      size += _unknownFields.CalculateSize();
+    }
+    return size;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public void MergeFrom(GalacticKittenSelectCharacterRequest other) {
+    if (other == null) {
+      return;
+    }
+    if (other.CharacterId != 0) {
+      CharacterId = other.CharacterId;
+    }
+    _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public void MergeFrom(pb::CodedInputStream input) {
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    input.ReadRawMessage(this);
+  #else
+    uint tag;
+    while ((tag = input.ReadTag()) != 0) {
+      switch(tag) {
+        default:
+          _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+          break;
+        case 8: {
+          CharacterId = input.ReadInt32();
+          break;
+        }
+      }
+    }
+  #endif
+  }
+
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
+    uint tag;
+    while ((tag = input.ReadTag()) != 0) {
+      switch(tag) {
+        default:
+          _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
+          break;
+        case 8: {
+          CharacterId = input.ReadInt32();
+          break;
+        }
+      }
+    }
+  }
+  #endif
+
+}
+
+/// <summary>
+///选择角色
+/// </summary>
+public sealed partial class GalacticKittenSelectCharacterResponse : pb::IMessage<GalacticKittenSelectCharacterResponse>
+#if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    , pb::IBufferMessage
+#endif
+{
+  private static readonly pb::MessageParser<GalacticKittenSelectCharacterResponse> _parser = new pb::MessageParser<GalacticKittenSelectCharacterResponse>(() => new GalacticKittenSelectCharacterResponse());
+  private pb::UnknownFieldSet _unknownFields;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public static pb::MessageParser<GalacticKittenSelectCharacterResponse> Parser { get { return _parser; } }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public static pbr::MessageDescriptor Descriptor {
+    get { return global::GameGalacticKittensReflection.Descriptor.MessageTypes[8]; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  pbr::MessageDescriptor pb::IMessage.Descriptor {
+    get { return Descriptor; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public GalacticKittenSelectCharacterResponse() {
+    OnConstruction();
+  }
+
+  partial void OnConstruction();
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public GalacticKittenSelectCharacterResponse(GalacticKittenSelectCharacterResponse other) : this() {
+    result_ = other.result_ != null ? other.result_.Clone() : null;
+    _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public GalacticKittenSelectCharacterResponse Clone() {
+    return new GalacticKittenSelectCharacterResponse(this);
+  }
+
+  /// <summary>Field number for the "result" field.</summary>
+  public const int ResultFieldNumber = 1;
+  private global::MessageResult result_;
+  /// <summary>
+  ///错误信息
+  /// </summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public global::MessageResult Result {
+    get { return result_; }
+    set {
+      result_ = value;
+    }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public override bool Equals(object other) {
+    return Equals(other as GalacticKittenSelectCharacterResponse);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public bool Equals(GalacticKittenSelectCharacterResponse other) {
+    if (ReferenceEquals(other, null)) {
+      return false;
+    }
+    if (ReferenceEquals(other, this)) {
+      return true;
+    }
+    if (!object.Equals(Result, other.Result)) return false;
+    return Equals(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public override int GetHashCode() {
+    int hash = 1;
+    if (result_ != null) hash ^= Result.GetHashCode();
+    if (_unknownFields != null) {
+      hash ^= _unknownFields.GetHashCode();
+    }
+    return hash;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public override string ToString() {
+    return pb::JsonFormatter.ToDiagnosticString(this);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public void WriteTo(pb::CodedOutputStream output) {
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    output.WriteRawMessage(this);
+  #else
+    if (result_ != null) {
+      output.WriteRawTag(10);
+      output.WriteMessage(Result);
+    }
+    if (_unknownFields != null) {
+      _unknownFields.WriteTo(output);
+    }
+  #endif
+  }
+
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
+    if (result_ != null) {
+      output.WriteRawTag(10);
+      output.WriteMessage(Result);
+    }
+    if (_unknownFields != null) {
+      _unknownFields.WriteTo(ref output);
+    }
+  }
+  #endif
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public int CalculateSize() {
+    int size = 0;
+    if (result_ != null) {
+      size += 1 + pb::CodedOutputStream.ComputeMessageSize(Result);
+    }
+    if (_unknownFields != null) {
+      size += _unknownFields.CalculateSize();
+    }
+    return size;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public void MergeFrom(GalacticKittenSelectCharacterResponse other) {
+    if (other == null) {
+      return;
+    }
+    if (other.result_ != null) {
+      if (result_ == null) {
+        Result = new global::MessageResult();
+      }
+      Result.MergeFrom(other.Result);
+    }
+    _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public void MergeFrom(pb::CodedInputStream input) {
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    input.ReadRawMessage(this);
+  #else
+    uint tag;
+    while ((tag = input.ReadTag()) != 0) {
+      switch(tag) {
+        default:
+          _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+          break;
+        case 10: {
+          if (result_ == null) {
+            Result = new global::MessageResult();
+          }
+          input.ReadMessage(Result);
+          break;
+        }
+      }
+    }
+  #endif
+  }
+
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
+    uint tag;
+    while ((tag = input.ReadTag()) != 0) {
+      switch(tag) {
+        default:
+          _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
+          break;
+        case 10: {
+          if (result_ == null) {
+            Result = new global::MessageResult();
+          }
+          input.ReadMessage(Result);
+          break;
+        }
       }
     }
   }
@@ -1351,7 +2159,7 @@ public sealed partial class GalacticKittensPrepareRequest : pb::IMessage<Galacti
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public static pbr::MessageDescriptor Descriptor {
-    get { return global::GameGalacticKittensReflection.Descriptor.MessageTypes[5]; }
+    get { return global::GameGalacticKittensReflection.Descriptor.MessageTypes[9]; }
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1546,7 +2354,7 @@ public sealed partial class GalacticKittensPrepareResponse : pb::IMessage<Galact
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public static pbr::MessageDescriptor Descriptor {
-    get { return global::GameGalacticKittensReflection.Descriptor.MessageTypes[6]; }
+    get { return global::GameGalacticKittensReflection.Descriptor.MessageTypes[10]; }
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1577,7 +2385,7 @@ public sealed partial class GalacticKittensPrepareResponse : pb::IMessage<Galact
   }
 
   /// <summary>Field number for the "result" field.</summary>
-  public const int ResultFieldNumber = 2;
+  public const int ResultFieldNumber = 1;
   private global::MessageResult result_;
   /// <summary>
   ///错误信息
@@ -1634,7 +2442,7 @@ public sealed partial class GalacticKittensPrepareResponse : pb::IMessage<Galact
     output.WriteRawMessage(this);
   #else
     if (result_ != null) {
-      output.WriteRawTag(18);
+      output.WriteRawTag(10);
       output.WriteMessage(Result);
     }
     if (_unknownFields != null) {
@@ -1648,7 +2456,7 @@ public sealed partial class GalacticKittensPrepareResponse : pb::IMessage<Galact
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
     if (result_ != null) {
-      output.WriteRawTag(18);
+      output.WriteRawTag(10);
       output.WriteMessage(Result);
     }
     if (_unknownFields != null) {
@@ -1697,7 +2505,7 @@ public sealed partial class GalacticKittensPrepareResponse : pb::IMessage<Galact
         default:
           _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
           break;
-        case 18: {
+        case 10: {
           if (result_ == null) {
             Result = new global::MessageResult();
           }
@@ -1719,7 +2527,7 @@ public sealed partial class GalacticKittensPrepareResponse : pb::IMessage<Galact
         default:
           _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
           break;
-        case 18: {
+        case 10: {
           if (result_ == null) {
             Result = new global::MessageResult();
           }
@@ -1750,7 +2558,7 @@ public sealed partial class GalacticKittensPlayerServerListRequest : pb::IMessag
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public static pbr::MessageDescriptor Descriptor {
-    get { return global::GameGalacticKittensReflection.Descriptor.MessageTypes[7]; }
+    get { return global::GameGalacticKittensReflection.Descriptor.MessageTypes[11]; }
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1945,7 +2753,7 @@ public sealed partial class GalacticKittensPlayerServerListResponse : pb::IMessa
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public static pbr::MessageDescriptor Descriptor {
-    get { return global::GameGalacticKittensReflection.Descriptor.MessageTypes[8]; }
+    get { return global::GameGalacticKittensReflection.Descriptor.MessageTypes[12]; }
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -2207,7 +3015,7 @@ public sealed partial class GalacticKittensGameFinishRequest : pb::IMessage<Gala
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public static pbr::MessageDescriptor Descriptor {
-    get { return global::GameGalacticKittensReflection.Descriptor.MessageTypes[9]; }
+    get { return global::GameGalacticKittensReflection.Descriptor.MessageTypes[13]; }
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -2402,7 +3210,7 @@ public sealed partial class GalacticKittensGameFinishResponse : pb::IMessage<Gal
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public static pbr::MessageDescriptor Descriptor {
-    get { return global::GameGalacticKittensReflection.Descriptor.MessageTypes[10]; }
+    get { return global::GameGalacticKittensReflection.Descriptor.MessageTypes[14]; }
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
