@@ -22,16 +22,16 @@ public static partial class CommonReflection {
   static CommonReflection() {
     byte[] descriptorData = global::System.Convert.FromBase64String(
         string.Concat(
-          "Cgxjb21tb24ucHJvdG8iKgoHVmVjdG9yMxIJCgF4GAEgASgCEgkKAXkYAiAB",
-          "KAISCQoBehgDIAEoAiJcCglUcmFuc2Zvcm0SGgoIcG9zaXRpb24YASABKAsy",
-          "CC5WZWN0b3IzEhoKCHJvdGF0aW9uGAIgASgLMgguVmVjdG9yMxIXCgVzY2Fs",
-          "ZRgDIAEoCzIILlZlY3RvcjMiLAoNTWVzc2FnZVJlc3VsdBIOCgZzdGF0dXMY",
-          "ASABKAUSCwoDbXNnGAIgASgJQgpaCC9tZXNzYWdlYgZwcm90bzM="));
+          "Cgxjb21tb24ucHJvdG8iKwoIVmVjdG9yM0QSCQoBeBgBIAEoAhIJCgF5GAIg",
+          "ASgCEgkKAXoYAyABKAIiYAoKVHJhbnNmb3JtcxIbCghwb3NpdGlvbhgBIAEo",
+          "CzIJLlZlY3RvcjNEEhsKCHJvdGF0aW9uGAIgASgLMgkuVmVjdG9yM0QSGAoF",
+          "c2NhbGUYAyABKAsyCS5WZWN0b3IzRCIsCg1NZXNzYWdlUmVzdWx0Eg4KBnN0",
+          "YXR1cxgBIAEoBRILCgNtc2cYAiABKAlCCloIL21lc3NhZ2ViBnByb3RvMw=="));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
         new pbr::FileDescriptor[] { },
         new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
-          new pbr::GeneratedClrTypeInfo(typeof(global::Vector3), global::Vector3.Parser, new[]{ "X", "Y", "Z" }, null, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::Transform), global::Transform.Parser, new[]{ "Position", "Rotation", "Scale" }, null, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::Vector3D), global::Vector3D.Parser, new[]{ "X", "Y", "Z" }, null, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::Transforms), global::Transforms.Parser, new[]{ "Position", "Rotation", "Scale" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::MessageResult), global::MessageResult.Parser, new[]{ "Status", "Msg" }, null, null, null, null)
         }));
   }
@@ -42,16 +42,16 @@ public static partial class CommonReflection {
 /// <summary>
 ///向量
 /// </summary>
-public sealed partial class Vector3 : pb::IMessage<Vector3>
+public sealed partial class Vector3D : pb::IMessage<Vector3D>
 #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
     , pb::IBufferMessage
 #endif
 {
-  private static readonly pb::MessageParser<Vector3> _parser = new pb::MessageParser<Vector3>(() => new Vector3());
+  private static readonly pb::MessageParser<Vector3D> _parser = new pb::MessageParser<Vector3D>(() => new Vector3D());
   private pb::UnknownFieldSet _unknownFields;
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  public static pb::MessageParser<Vector3> Parser { get { return _parser; } }
+  public static pb::MessageParser<Vector3D> Parser { get { return _parser; } }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
@@ -67,7 +67,7 @@ public sealed partial class Vector3 : pb::IMessage<Vector3>
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  public Vector3() {
+  public Vector3D() {
     OnConstruction();
   }
 
@@ -75,7 +75,7 @@ public sealed partial class Vector3 : pb::IMessage<Vector3>
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  public Vector3(Vector3 other) : this() {
+  public Vector3D(Vector3D other) : this() {
     x_ = other.x_;
     y_ = other.y_;
     z_ = other.z_;
@@ -84,8 +84,8 @@ public sealed partial class Vector3 : pb::IMessage<Vector3>
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  public Vector3 Clone() {
-    return new Vector3(this);
+  public Vector3D Clone() {
+    return new Vector3D(this);
   }
 
   /// <summary>Field number for the "x" field.</summary>
@@ -127,12 +127,12 @@ public sealed partial class Vector3 : pb::IMessage<Vector3>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public override bool Equals(object other) {
-    return Equals(other as Vector3);
+    return Equals(other as Vector3D);
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  public bool Equals(Vector3 other) {
+  public bool Equals(Vector3D other) {
     if (ReferenceEquals(other, null)) {
       return false;
     }
@@ -231,7 +231,7 @@ public sealed partial class Vector3 : pb::IMessage<Vector3>
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  public void MergeFrom(Vector3 other) {
+  public void MergeFrom(Vector3D other) {
     if (other == null) {
       return;
     }
@@ -308,16 +308,16 @@ public sealed partial class Vector3 : pb::IMessage<Vector3>
 /// <summary>
 ///变化
 /// </summary>
-public sealed partial class Transform : pb::IMessage<Transform>
+public sealed partial class Transforms : pb::IMessage<Transforms>
 #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
     , pb::IBufferMessage
 #endif
 {
-  private static readonly pb::MessageParser<Transform> _parser = new pb::MessageParser<Transform>(() => new Transform());
+  private static readonly pb::MessageParser<Transforms> _parser = new pb::MessageParser<Transforms>(() => new Transforms());
   private pb::UnknownFieldSet _unknownFields;
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  public static pb::MessageParser<Transform> Parser { get { return _parser; } }
+  public static pb::MessageParser<Transforms> Parser { get { return _parser; } }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
@@ -333,7 +333,7 @@ public sealed partial class Transform : pb::IMessage<Transform>
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  public Transform() {
+  public Transforms() {
     OnConstruction();
   }
 
@@ -341,7 +341,7 @@ public sealed partial class Transform : pb::IMessage<Transform>
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  public Transform(Transform other) : this() {
+  public Transforms(Transforms other) : this() {
     position_ = other.position_ != null ? other.position_.Clone() : null;
     rotation_ = other.rotation_ != null ? other.rotation_.Clone() : null;
     scale_ = other.scale_ != null ? other.scale_.Clone() : null;
@@ -350,19 +350,19 @@ public sealed partial class Transform : pb::IMessage<Transform>
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  public Transform Clone() {
-    return new Transform(this);
+  public Transforms Clone() {
+    return new Transforms(this);
   }
 
   /// <summary>Field number for the "position" field.</summary>
   public const int PositionFieldNumber = 1;
-  private global::Vector3 position_;
+  private global::Vector3D position_;
   /// <summary>
   ///位置
   /// </summary>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  public global::Vector3 Position {
+  public global::Vector3D Position {
     get { return position_; }
     set {
       position_ = value;
@@ -371,13 +371,13 @@ public sealed partial class Transform : pb::IMessage<Transform>
 
   /// <summary>Field number for the "rotation" field.</summary>
   public const int RotationFieldNumber = 2;
-  private global::Vector3 rotation_;
+  private global::Vector3D rotation_;
   /// <summary>
   ///选择
   /// </summary>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  public global::Vector3 Rotation {
+  public global::Vector3D Rotation {
     get { return rotation_; }
     set {
       rotation_ = value;
@@ -386,13 +386,13 @@ public sealed partial class Transform : pb::IMessage<Transform>
 
   /// <summary>Field number for the "scale" field.</summary>
   public const int ScaleFieldNumber = 3;
-  private global::Vector3 scale_;
+  private global::Vector3D scale_;
   /// <summary>
   ///缩放
   /// </summary>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  public global::Vector3 Scale {
+  public global::Vector3D Scale {
     get { return scale_; }
     set {
       scale_ = value;
@@ -402,12 +402,12 @@ public sealed partial class Transform : pb::IMessage<Transform>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public override bool Equals(object other) {
-    return Equals(other as Transform);
+    return Equals(other as Transforms);
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  public bool Equals(Transform other) {
+  public bool Equals(Transforms other) {
     if (ReferenceEquals(other, null)) {
       return false;
     }
@@ -506,25 +506,25 @@ public sealed partial class Transform : pb::IMessage<Transform>
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  public void MergeFrom(Transform other) {
+  public void MergeFrom(Transforms other) {
     if (other == null) {
       return;
     }
     if (other.position_ != null) {
       if (position_ == null) {
-        Position = new global::Vector3();
+        Position = new global::Vector3D();
       }
       Position.MergeFrom(other.Position);
     }
     if (other.rotation_ != null) {
       if (rotation_ == null) {
-        Rotation = new global::Vector3();
+        Rotation = new global::Vector3D();
       }
       Rotation.MergeFrom(other.Rotation);
     }
     if (other.scale_ != null) {
       if (scale_ == null) {
-        Scale = new global::Vector3();
+        Scale = new global::Vector3D();
       }
       Scale.MergeFrom(other.Scale);
     }
@@ -545,21 +545,21 @@ public sealed partial class Transform : pb::IMessage<Transform>
           break;
         case 10: {
           if (position_ == null) {
-            Position = new global::Vector3();
+            Position = new global::Vector3D();
           }
           input.ReadMessage(Position);
           break;
         }
         case 18: {
           if (rotation_ == null) {
-            Rotation = new global::Vector3();
+            Rotation = new global::Vector3D();
           }
           input.ReadMessage(Rotation);
           break;
         }
         case 26: {
           if (scale_ == null) {
-            Scale = new global::Vector3();
+            Scale = new global::Vector3D();
           }
           input.ReadMessage(Scale);
           break;
@@ -581,21 +581,21 @@ public sealed partial class Transform : pb::IMessage<Transform>
           break;
         case 10: {
           if (position_ == null) {
-            Position = new global::Vector3();
+            Position = new global::Vector3D();
           }
           input.ReadMessage(Position);
           break;
         }
         case 18: {
           if (rotation_ == null) {
-            Rotation = new global::Vector3();
+            Rotation = new global::Vector3D();
           }
           input.ReadMessage(Rotation);
           break;
         }
         case 26: {
           if (scale_ == null) {
-            Scale = new global::Vector3();
+            Scale = new global::Vector3D();
           }
           input.ReadMessage(Scale);
           break;

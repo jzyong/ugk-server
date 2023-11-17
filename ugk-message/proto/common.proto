@@ -3,17 +3,17 @@ option go_package = "/message";
 
 
 //向量
-message Vector3{
+message Vector3D{
   float x = 1;
   float y = 2;
   float z = 3;
 }
 
 //变化
-message Transform{
-  Vector3 position =1; //位置
-  Vector3 rotation =2; //选择
-  Vector3 scale =3; //缩放
+message Transforms{
+  Vector3D position =1; //位置
+  Vector3D rotation =2; //选择
+  Vector3D scale =3; //缩放
 }
 
 //消息结果
