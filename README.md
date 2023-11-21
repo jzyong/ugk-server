@@ -65,10 +65,10 @@
 
 
 ## TODO
-* 网络同步、延迟、插值、回退（延迟补偿），**物理同步，动画同步**，位置方向同步
+* 网络同步、延迟、插值、回退（延迟补偿,外插），**物理同步，动画同步**，位置方向同步
 * 场景同步消息，transform同步消息，aoi管理
 * 客户端同步封装，参考NetworkTransform、NetworkAnimator、NetworkRigidbody？（参考Mirror）  
-* 封装NetworkTransform 进行位置，方向，缩放同步，插值
+* 封装NetworkTransform 进行位置，方向，缩放同步，插值；快照插值作为可选项
 * 客户端NetworkTransform 封装成抽象类，具体子游戏继承，子弹类需要同步速度，需要同步实体的唯一ID，配置ID，ConfigRole
 * 服务器NetworkTransform只起配置作用，通过对象manager进行批量同步，子弹碰撞服务器检测，需要回滚
 * 客户端和服务器配置都通过go服务器拉取
@@ -77,6 +77,7 @@
 * 玩家进入游戏后端已经可以通过agent创建unity docker容器；下一步需要前端进入游戏场景，后端unity服务器开发，
 * 房间号没有存数据库递增，一直是1？
 * 场景消息同步定义，后端刷出小怪及客户端显示角色 ，小怪，boss同步频率低（1s一次？），给速度，客户端模拟，服务器出发了碰撞等在同步
+* GalacticKittens不使用快照插值同步，Push coin使用快照插值同步
 
 
 ### 计划
@@ -89,3 +90,7 @@
 * 服务器unity提取公共包，unity的package
 * ugk-client 弹窗增加tween动画
 * 后台管理系统查看unity docker服务器
+
+感谢
+---------
+<img src="https://resources.jetbrains.com/storage/products/company/brand/logos/jb_beam.png" width = "150" height = "150" div align=left />
