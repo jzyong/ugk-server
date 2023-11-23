@@ -16,7 +16,7 @@ type MatchService struct {
 	message.UnimplementedGalacticKittensMatchServiceServer
 }
 
-// PlayerServerList 玩家服务器列表 TODO 待测试
+// PlayerServerList 玩家服务器列表
 func (service *MatchService) PlayerServerList(ctx context.Context, request *message.GalacticKittensPlayerServerListRequest) (*message.GalacticKittensPlayerServerListResponse, error) {
 	var wg sync.WaitGroup
 	wg.Add(2)

@@ -73,9 +73,7 @@
 * 服务器NetworkTransform只起配置作用，通过对象manager进行批量同步，子弹碰撞服务器检测，需要回滚
 * 客户端和服务器配置都通过go服务器拉取
 * 完整的GalacticKittensMatch流程
-* Unity服务器日志打印类文件,添加Trace级别日志屏蔽输出
 * 玩家进入游戏后端已经可以通过agent创建unity docker容器；下一步需要前端进入游戏场景，后端unity服务器开发，
-* 房间号没有存数据库递增，一直是1？
 * 场景消息同步定义，后端刷出小怪及客户端显示角色 ，小怪，boss同步频率低（1s一次？），给速度，客户端模拟，服务器出发了碰撞等在同步
 * GalacticKittens不使用快照插值同步，Push coin使用快照插值同步，方向，位置等同步需要压缩
 * 实现快照插值SnapTransform（需要实现增量压缩算法）和预测外推插值PredictionTransform（需要高速线速度和角速度）两种方式同步，继承NetworkTransform，定义统一的同步消息

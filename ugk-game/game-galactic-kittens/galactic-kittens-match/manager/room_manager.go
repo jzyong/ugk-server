@@ -80,6 +80,12 @@ func (m *RoomManager) autoAssignRoom(playerId int64) *mode.Room {
 	}
 	server := GetDataManager().GetServer()
 	server.RoomId += 1
+	//TODO 待测试
+	serverData := manager.GetMongoManager().StructToM(server)
+	GetDataManager().DataProcessChan <- func() {
+		GetDataManager().SaveServer(serverData)
+	}
+
 	return m.GetRoom(server.RoomId)
 }
 
