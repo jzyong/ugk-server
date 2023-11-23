@@ -30,10 +30,13 @@ namespace kcp2k
         // take an element from the pool, or create a new one if empty
         public T Take() => objects.Count > 0 ? objects.Pop() : objectGenerator();
 
+        public T Get() => Take();
+
         // return an element to the pool
         public void Return(T item)
         {
-            objectResetter(item);
+            objectResetter?.Invoke(item);
+
             objects.Push(item);
         }
 

@@ -30,7 +30,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <NoWarn>0169,0649</NoWarn>
-    <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
     <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup>
@@ -47,13 +47,17 @@
   <ItemGroup>
      <Compile Include="Assets\Scripts\Common\Tools\SingletonInstance.cs" />
      <Compile Include="Assets\Scripts\Game\Bootstrap.cs" />
+     <Compile Include="Assets\Scripts\Common\Network\Serialize\NetworkWriter.cs" />
      <Compile Include="Assets\Scripts\Common\Network\Kcp\kcp2k\highlevel\KcpServerConnection.cs" />
+     <Compile Include="Assets\Scripts\Common\Network\Serialize\NetworkWriterPool.cs" />
      <Compile Include="Assets\Scripts\Common\Network\NetworkManager.cs" />
      <Compile Include="Assets\Scripts\Game\Manager\MessageEventManager.cs" />
      <Compile Include="Assets\Scripts\Common\Network\Kcp\kcp2k\highlevel\Log.cs" />
+     <Compile Include="Assets\Scripts\Common\Tools\Extensions.cs" />
      <Compile Include="Assets\Scripts\Game\Messages\Player.cs" />
      <Compile Include="Assets\Scripts\Common\Network\Kcp\kcp2k\kcp\Pool.cs" />
      <Compile Include="Assets\Scripts\Common\Network\Kcp\kcp2k\kcp\Segment.cs" />
+     <Compile Include="Assets\Scripts\Common\Network\Serialize\NetworkReaderPooled.cs" />
      <Compile Include="Assets\Scripts\Common\Network\TransportError.cs" />
      <Compile Include="Assets\Scripts\Common\Network\UgkMessage.cs" />
      <Compile Include="Assets\Scripts\Common\Tools\ExponentialMovingAverage.cs" />
@@ -70,11 +74,15 @@
      <Compile Include="Assets\Scripts\Common\Network\Kcp\kcp2k\highlevel\KcpConfig.cs" />
      <Compile Include="Assets\Scripts\Common\Network\Kcp\kcp2k\highlevel\Extensions.cs" />
      <Compile Include="Assets\Scripts\Game\Manager\DataManager.cs" />
+     <Compile Include="Assets\Scripts\Common\Network\Serialize\NetworkReaderPool.cs" />
      <Compile Include="Assets\Scripts\Game\Messages\GameGalacticKittensGrpc.cs" />
      <Compile Include="Assets\Scripts\Common\Tools\Log.cs" />
      <Compile Include="Assets\Scripts\Common\Network\Sync\NetworkTransform.cs" />
      <Compile Include="Assets\Scripts\Game\Messages\Constant.cs" />
      <Compile Include="Assets\Scripts\Common\Network\Exceptions.cs" />
+     <Compile Include="Assets\Scripts\Common\Network\Serialize\NetworkReaderExtensions.cs" />
+     <Compile Include="Assets\Scripts\Common\Network\Serialize\NetworkWriterPooled.cs" />
+     <Compile Include="Assets\Scripts\Common\Network\Serialize\NetworkReader.cs" />
      <Compile Include="Assets\Scripts\Common\Tools\Mathd.cs" />
      <Compile Include="Assets\Scripts\Common\Network\Kcp\kcp2k\kcp\AckItem.cs" />
      <Compile Include="Assets\Scripts\Game\Manager\PlayerManager.cs" />
@@ -91,6 +99,7 @@
      <Compile Include="Assets\Scripts\Common\Network\Kcp\kcp2k\highlevel\Common.cs" />
      <Compile Include="Assets\Scripts\Common\Network\Kcp\kcp2k\kcp\Kcp.cs" />
      <Compile Include="Assets\Scripts\Common\Network\Kcp\kcp2k\highlevel\KcpClient.cs" />
+     <Compile Include="Assets\Scripts\Common\Network\Serialize\NetworkWriterExtensions.cs" />
      <Compile Include="Assets\Scripts\Game\Messages\Login.cs" />
      <Compile Include="Assets\Scripts\Game\Handlers\PlayerHandler.cs" />
      <Compile Include="Assets\Scripts\Common\Tools\BaseEventManager.cs" />
@@ -105,6 +114,7 @@
      <Folder Include="Assets\Scripts\Common\Network\Kcp\kcp2k" />
      <Folder Include="Assets\Scripts\Common\Network\Sync" />
      <Folder Include="Assets\Scripts\Game\Messages" />
+     <Folder Include="Assets\Scripts\Common\Network\Serialize" />
      <Folder Include="Assets\Scripts\Common\Network" />
      <Folder Include="Assets\Scripts\Common\Network\Kcp\kcp2k\highlevel" />
      <Folder Include="Assets\Scripts\Common" />

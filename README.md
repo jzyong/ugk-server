@@ -79,7 +79,9 @@
 * 实现快照插值SnapTransform（需要实现增量压缩算法）和预测外推插值PredictionTransform（需要高速线速度和角速度）两种方式同步，继承NetworkTransform，定义统一的同步消息
 * 状态同步每次更新最多发送64个对象，使用优先级权重发送（每帧计算，位置变动为1，速度，方向改变权重大？）代码参考[oculus-networked-physics-sample](https://github.com/fbsamples/oculus-networked-physics-sample)
 * Delta Compression 参考Mirror和[oculus-networked-physics-sample](https://github.com/fbsamples/oculus-networked-physics-sample)
+* 同步使用Mirror的NetworkWriter和NetworkReader，支持Unity原生对象序列化？在protobuf中再嵌入一层？但是只支持C#，Unity引擎
 * GalacticKittens 产生，消费、同步，发射子弹，协议
+* unity 包制作
 
 
 ### 计划
