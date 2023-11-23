@@ -28,6 +28,7 @@ namespace Common.Tools
         /// </summary>
         public enum LogLevel
         {
+            Trace = 0,
             Debug = 1,
             Info = 2,
             Warn = 3,
@@ -47,15 +48,28 @@ namespace Common.Tools
             // 开发环境可以获取文件名和行号，运行环境不行？网上说需要pdb文件一起发布，但是在unity构建中勾选了复制pdb仍然不行
             //ChatGPT解释：unity为了减少包大小和性能需求，对此进行了剥离优化，要显示构建时选择Development Build并在Player Settings中启用Script Debugging
             StackFrame st = new StackTrace(2, true).GetFrame(0);
-            var fileName=st.GetFileName();
-            if (fileName!=null)
+            var fileName = st.GetFileName();
+            if (fileName != null)
             {
                 var strings = fileName.Split("\\");
                 fileName = strings[strings.Length - 1];
             }
-            
+
             return
                 $"{TimeUtil.CurrentFormatTime()} [{logLevel.ToString()}]{fileName}({st.GetFileLineNumber()})--> {msg}";
+        }
+
+        /// <summary>
+        /// 跟踪调试，默认是关闭日志
+        /// </summary>
+        /// <param name="msg"></param>
+        public static void Trace(string msg)
+        {
+            if (WriteLevel <= LogLevel.Trace)
+            {
+                msg = FormatMessage(msg, LogLevel.Trace);
+                UnityEngine.Debug.Log(msg);
+            }
         }
 
         public static void Debug(string msg)
@@ -119,7 +133,7 @@ namespace Common.Tools
                 logQueue.Enqueue(msg);
 
                 string sFilePath = LogPaths[0];
-                string sFileName = "game_"+DateTime.Now.ToString("yyyy-MM-dd") + ".log";
+                string sFileName = "game_" + DateTime.Now.ToString("yyyy-MM-dd") + ".log";
                 //文件的绝对路径
                 sFileName = Path.Combine(sFilePath, sFileName);
                 //验证路径是否存在,不存在则创建

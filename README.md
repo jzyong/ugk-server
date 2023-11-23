@@ -78,6 +78,10 @@
 * 房间号没有存数据库递增，一直是1？
 * 场景消息同步定义，后端刷出小怪及客户端显示角色 ，小怪，boss同步频率低（1s一次？），给速度，客户端模拟，服务器出发了碰撞等在同步
 * GalacticKittens不使用快照插值同步，Push coin使用快照插值同步，方向，位置等同步需要压缩
+* 实现快照插值SnapTransform（需要实现增量压缩算法）和预测外推插值PredictionTransform（需要高速线速度和角速度）两种方式同步，继承NetworkTransform，定义统一的同步消息
+* 状态同步每次更新最多发送64个对象，使用优先级权重发送（每帧计算，位置变动为1，速度，方向改变权重大？）代码参考[oculus-networked-physics-sample](https://github.com/fbsamples/oculus-networked-physics-sample)
+* Delta Compression 参考Mirror和[oculus-networked-physics-sample](https://github.com/fbsamples/oculus-networked-physics-sample)
+* GalacticKittens 产生，消费、同步，发射子弹，协议
 
 
 ### 计划

@@ -21,7 +21,7 @@ namespace Game.Handlers
         {
             var request = new HeartRequest();
             request.MergeFrom(ugkMessage.Bytes);
-            Log.Debug($" receive player heart: {ugkMessage.TimeStamp} clientTime={request.ClientTime} serverTime={Time.time}");
+            Log.Trace($" receive player heart: {ugkMessage.TimeStamp} clientTime={request.ClientTime} serverTime={Time.time}");
             var response = new HeartResponse()
             {
                 ClientTime = request.ClientTime
