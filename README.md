@@ -5,6 +5,10 @@
 对应客户端[ugk-client](https://github.com/jzyong/ugk-client)。 开发中......
 ![ugk-architecture](ugk-resource/img/ugk_architecture.png)
 
+## 特性
+* 自动化编排Docker，容器化运行Unity dedicated server
+* 前后端分离
+* 快照同步，状态同步预测插值
 
 ## 服务
 ### 通用
@@ -34,7 +38,7 @@
 ## 技术选择
 * Unity、C# 客户端和服务器
 * Go 服务器
-* Kcp 网络通信 忘记和网关，网关和后端服务通信
+* Kcp 网络通信 客户端和网关，网关和后端服务通信
 * Protobuf+Grpc 内部网络通信
 * Zookeeper 服务发现注册
 * Mongodb,Redis 数据存储
@@ -79,9 +83,11 @@
 * 实现快照插值SnapTransform（需要实现增量压缩算法）和预测外推插值PredictionTransform（需要高速线速度和角速度）两种方式同步，继承NetworkTransform，定义统一的同步消息
 * 状态同步每次更新最多发送64个对象，使用优先级权重发送（每帧计算，位置变动为1，速度，方向改变权重大？）代码参考[oculus-networked-physics-sample](https://github.com/fbsamples/oculus-networked-physics-sample)
 * Delta Compression 参考Mirror和[oculus-networked-physics-sample](https://github.com/fbsamples/oculus-networked-physics-sample)
-* 同步使用Mirror的NetworkWriter和NetworkReader，支持Unity原生对象序列化？在protobuf中再嵌入一层？但是只支持C#，Unity引擎
+* 同步使用Mirror的NetworkWriter和NetworkReader，支持Unity原生对象序列化？在protobuf中再嵌入一层？但是只支持C#，Unity引擎；需要同步每个实体的id
 * GalacticKittens 产生，消费、同步，发射子弹，协议
-* unity 包制作
+* 对象id使用小整数，可节约带宽
+* 
+
 
 
 ### 计划

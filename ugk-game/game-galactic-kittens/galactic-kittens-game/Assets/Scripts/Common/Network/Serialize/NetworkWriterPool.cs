@@ -2,7 +2,6 @@
 
 using System.Runtime.CompilerServices;
 using kcp2k;
-using Mirror;
 
 namespace Common.Network.Serialize
 {

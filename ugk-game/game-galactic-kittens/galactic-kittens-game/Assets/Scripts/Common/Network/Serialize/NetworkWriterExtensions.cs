@@ -1,9 +1,8 @@
 using System;
 using System.Collections.Generic;
-using Common.Network.Serialize;
 using UnityEngine;
 
-namespace Mirror
+namespace Common.Network.Serialize
 {
     // Mirror's Weaver automatically detects all NetworkWriter function types,
     // but they do all need to be extensions.

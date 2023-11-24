@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using Mirror;
 using UnityEngine;
 
 namespace Common.Network.Serialize

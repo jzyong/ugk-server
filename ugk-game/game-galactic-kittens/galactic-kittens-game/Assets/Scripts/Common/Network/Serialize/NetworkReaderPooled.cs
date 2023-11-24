@@ -2,7 +2,6 @@
 // easier IDE workflow and more elegant code.
 
 using System;
-using Mirror;
 
 namespace Common.Network.Serialize
 {
