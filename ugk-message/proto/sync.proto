@@ -1,0 +1,29 @@
+syntax = "proto3";
+option go_package = "/message";
+
+//通用消息同步
+
+//快照同步，不包含速度
+message SnapSyncRequest{
+  map<int64,bytes> payload =1; //key对象id，value自定义序列化，使用增量压缩
+}
+//快照同步，不包含速度
+message SnapSyncResponse{
+  map<int64,bytes> payload =1; //key对象id，value自定义序列化，使用增量压缩
+}
+
+//预测同步，需要发送线速度和角速度
+message PredictionSyncRequest {
+  map<int64,bytes> payload =1; //key对象id，value自定义序列化，使用增量压缩
+}
+//预测同步，需要发送线速度和角速度
+message PredictionSyncResponse {
+  map<int64,bytes> payload =1; //key对象id，value自定义序列化，使用增量压缩
+}
+
+
+
+
+
+
+

@@ -2,7 +2,7 @@ syntax = "proto3";
 option go_package = "/message";
 
 
-//向量
+//向量 后端服务器非unity，unity写服务器直接使用自带的Vector3
 message Vector3D{
   float x = 1;
   float y = 2;

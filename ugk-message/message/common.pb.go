@@ -20,7 +20,7 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-// 向量
+// 向量 后端服务器非unity，unity写服务器直接使用自带的Vector3
 type Vector3D struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
