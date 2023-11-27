@@ -84,10 +84,31 @@ message GalacticKittensGameFinishResponse {
 }
 
 
-//TODO 其他游戏中的同步消息，如敌人，boss出生，位置同步，命中碰撞监测等 （直接网关转发到子游戏）
 
 
+//游戏对象产出
+message GalacticKittensObjectSpawnResponse{
+  int64 ownerId = 1; //拥有者Id
+  int64 id= 2; //对象唯一id
+  uint32 configId= 3; //配置id
+  bytes syncPayload=4; //同步对象初始化数据
+}
 
+//游戏对象死亡
+message GalacticKittensObjectDieResponse{
+  int64 ownerId = 1; //拥有者Id
+  int64 killerId = 2; //击杀者
+  int64 id= 3; //对象唯一id
+}
+
+//开火请求 ,只有玩家控制的对象请求，子弹服务器生成推送
+message GalacticKittensFireRequest{
+
+}
+//开火请求 ,只有玩家控制的对象请求，子弹服务器生成推送
+message GalacticKittensFireResponse{
+  MessageResult result = 1; //错误信息
+}
 
 
 //GalacticKittens Match 服务

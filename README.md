@@ -86,7 +86,7 @@
 * 同步使用Mirror的NetworkWriter和NetworkReader，支持Unity原生对象序列化？在protobuf中再嵌入一层？但是只支持C#，Unity引擎；需要同步每个实体的id
 * GalacticKittens 产生，消费、同步，发射子弹，协议
 * 对象id使用小整数，可节约带宽
-* 
+* 显示网络同步统计信息
 
 
 
