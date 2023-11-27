@@ -818,6 +818,229 @@ func (x *GalacticKittensGameFinishResponse) GetRoom() *GalacticKittensRoomInfo {
 	return nil
 }
 
+// 游戏对象产出
+type GalacticKittensObjectSpawnResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	OwnerId     int64  `protobuf:"varint,1,opt,name=ownerId,proto3" json:"ownerId,omitempty"`        //拥有者Id
+	Id          int64  `protobuf:"varint,2,opt,name=id,proto3" json:"id,omitempty"`                  //对象唯一id
+	ConfigId    uint32 `protobuf:"varint,3,opt,name=configId,proto3" json:"configId,omitempty"`      //配置id
+	SyncPayload []byte `protobuf:"bytes,4,opt,name=syncPayload,proto3" json:"syncPayload,omitempty"` //同步对象初始化数据
+}
+
+func (x *GalacticKittensObjectSpawnResponse) Reset() {
+	*x = GalacticKittensObjectSpawnResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_game_galactic_kittens_proto_msgTypes[15]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *GalacticKittensObjectSpawnResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GalacticKittensObjectSpawnResponse) ProtoMessage() {}
+
+func (x *GalacticKittensObjectSpawnResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_game_galactic_kittens_proto_msgTypes[15]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GalacticKittensObjectSpawnResponse.ProtoReflect.Descriptor instead.
+func (*GalacticKittensObjectSpawnResponse) Descriptor() ([]byte, []int) {
+	return file_game_galactic_kittens_proto_rawDescGZIP(), []int{15}
+}
+
+func (x *GalacticKittensObjectSpawnResponse) GetOwnerId() int64 {
+	if x != nil {
+		return x.OwnerId
+	}
+	return 0
+}
+
+func (x *GalacticKittensObjectSpawnResponse) GetId() int64 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
+}
+
+func (x *GalacticKittensObjectSpawnResponse) GetConfigId() uint32 {
+	if x != nil {
+		return x.ConfigId
+	}
+	return 0
+}
+
+func (x *GalacticKittensObjectSpawnResponse) GetSyncPayload() []byte {
+	if x != nil {
+		return x.SyncPayload
+	}
+	return nil
+}
+
+// 游戏对象死亡
+type GalacticKittensObjectDieResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	OwnerId  int64 `protobuf:"varint,1,opt,name=ownerId,proto3" json:"ownerId,omitempty"`   //拥有者Id
+	KillerId int64 `protobuf:"varint,2,opt,name=killerId,proto3" json:"killerId,omitempty"` //击杀者
+	Id       int64 `protobuf:"varint,3,opt,name=id,proto3" json:"id,omitempty"`             //对象唯一id
+}
+
+func (x *GalacticKittensObjectDieResponse) Reset() {
+	*x = GalacticKittensObjectDieResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_game_galactic_kittens_proto_msgTypes[16]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *GalacticKittensObjectDieResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GalacticKittensObjectDieResponse) ProtoMessage() {}
+
+func (x *GalacticKittensObjectDieResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_game_galactic_kittens_proto_msgTypes[16]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GalacticKittensObjectDieResponse.ProtoReflect.Descriptor instead.
+func (*GalacticKittensObjectDieResponse) Descriptor() ([]byte, []int) {
+	return file_game_galactic_kittens_proto_rawDescGZIP(), []int{16}
+}
+
+func (x *GalacticKittensObjectDieResponse) GetOwnerId() int64 {
+	if x != nil {
+		return x.OwnerId
+	}
+	return 0
+}
+
+func (x *GalacticKittensObjectDieResponse) GetKillerId() int64 {
+	if x != nil {
+		return x.KillerId
+	}
+	return 0
+}
+
+func (x *GalacticKittensObjectDieResponse) GetId() int64 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
+}
+
+// 开火请求 ,只有玩家控制的对象请求，子弹服务器生成推送
+type GalacticKittensFireRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *GalacticKittensFireRequest) Reset() {
+	*x = GalacticKittensFireRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_game_galactic_kittens_proto_msgTypes[17]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *GalacticKittensFireRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GalacticKittensFireRequest) ProtoMessage() {}
+
+func (x *GalacticKittensFireRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_game_galactic_kittens_proto_msgTypes[17]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GalacticKittensFireRequest.ProtoReflect.Descriptor instead.
+func (*GalacticKittensFireRequest) Descriptor() ([]byte, []int) {
+	return file_game_galactic_kittens_proto_rawDescGZIP(), []int{17}
+}
+
+// 开火请求 ,只有玩家控制的对象请求，子弹服务器生成推送
+type GalacticKittensFireResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Result *MessageResult `protobuf:"bytes,1,opt,name=result,proto3" json:"result,omitempty"` //错误信息
+}
+
+func (x *GalacticKittensFireResponse) Reset() {
+	*x = GalacticKittensFireResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_game_galactic_kittens_proto_msgTypes[18]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *GalacticKittensFireResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GalacticKittensFireResponse) ProtoMessage() {}
+
+func (x *GalacticKittensFireResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_game_galactic_kittens_proto_msgTypes[18]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GalacticKittensFireResponse.ProtoReflect.Descriptor instead.
+func (*GalacticKittensFireResponse) Descriptor() ([]byte, []int) {
+	return file_game_galactic_kittens_proto_rawDescGZIP(), []int{18}
+}
+
+func (x *GalacticKittensFireResponse) GetResult() *MessageResult {
+	if x != nil {
+		return x.Result
+	}
+	return nil
+}
+
 var File_game_galactic_kittens_proto protoreflect.FileDescriptor
 
 var file_game_galactic_kittens_proto_rawDesc = []byte{
@@ -928,22 +1151,44 @@ var file_game_galactic_kittens_proto_rawDesc = []byte{
 	0x6c, 0x74, 0x52, 0x06, 0x72, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x12, 0x2c, 0x0a, 0x04, 0x72, 0x6f,
 	0x6f, 0x6d, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x18, 0x2e, 0x47, 0x61, 0x6c, 0x61, 0x63,
 	0x74, 0x69, 0x63, 0x4b, 0x69, 0x74, 0x74, 0x65, 0x6e, 0x73, 0x52, 0x6f, 0x6f, 0x6d, 0x49, 0x6e,
-	0x66, 0x6f, 0x52, 0x04, 0x72, 0x6f, 0x6f, 0x6d, 0x32, 0xd9, 0x01, 0x0a, 0x1b, 0x47, 0x61, 0x6c,
-	0x61, 0x63, 0x74, 0x69, 0x63, 0x4b, 0x69, 0x74, 0x74, 0x65, 0x6e, 0x73, 0x4d, 0x61, 0x74, 0x63,
-	0x68, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x12, 0x65, 0x0a, 0x10, 0x70, 0x6c, 0x61, 0x79,
-	0x65, 0x72, 0x53, 0x65, 0x72, 0x76, 0x65, 0x72, 0x4c, 0x69, 0x73, 0x74, 0x12, 0x27, 0x2e, 0x47,
-	0x61, 0x6c, 0x61, 0x63, 0x74, 0x69, 0x63, 0x4b, 0x69, 0x74, 0x74, 0x65, 0x6e, 0x73, 0x50, 0x6c,
-	0x61, 0x79, 0x65, 0x72, 0x53, 0x65, 0x72, 0x76, 0x65, 0x72, 0x4c, 0x69, 0x73, 0x74, 0x52, 0x65,
-	0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x28, 0x2e, 0x47, 0x61, 0x6c, 0x61, 0x63, 0x74, 0x69, 0x63,
-	0x4b, 0x69, 0x74, 0x74, 0x65, 0x6e, 0x73, 0x50, 0x6c, 0x61, 0x79, 0x65, 0x72, 0x53, 0x65, 0x72,
-	0x76, 0x65, 0x72, 0x4c, 0x69, 0x73, 0x74, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12,
-	0x53, 0x0a, 0x0a, 0x67, 0x61, 0x6d, 0x65, 0x46, 0x69, 0x6e, 0x69, 0x73, 0x68, 0x12, 0x21, 0x2e,
-	0x47, 0x61, 0x6c, 0x61, 0x63, 0x74, 0x69, 0x63, 0x4b, 0x69, 0x74, 0x74, 0x65, 0x6e, 0x73, 0x47,
-	0x61, 0x6d, 0x65, 0x46, 0x69, 0x6e, 0x69, 0x73, 0x68, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74,
-	0x1a, 0x22, 0x2e, 0x47, 0x61, 0x6c, 0x61, 0x63, 0x74, 0x69, 0x63, 0x4b, 0x69, 0x74, 0x74, 0x65,
-	0x6e, 0x73, 0x47, 0x61, 0x6d, 0x65, 0x46, 0x69, 0x6e, 0x69, 0x73, 0x68, 0x52, 0x65, 0x73, 0x70,
-	0x6f, 0x6e, 0x73, 0x65, 0x42, 0x0a, 0x5a, 0x08, 0x2f, 0x6d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65,
-	0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x66, 0x6f, 0x52, 0x04, 0x72, 0x6f, 0x6f, 0x6d, 0x22, 0x8c, 0x01, 0x0a, 0x22, 0x47, 0x61, 0x6c,
+	0x61, 0x63, 0x74, 0x69, 0x63, 0x4b, 0x69, 0x74, 0x74, 0x65, 0x6e, 0x73, 0x4f, 0x62, 0x6a, 0x65,
+	0x63, 0x74, 0x53, 0x70, 0x61, 0x77, 0x6e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12,
+	0x18, 0x0a, 0x07, 0x6f, 0x77, 0x6e, 0x65, 0x72, 0x49, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03,
+	0x52, 0x07, 0x6f, 0x77, 0x6e, 0x65, 0x72, 0x49, 0x64, 0x12, 0x0e, 0x0a, 0x02, 0x69, 0x64, 0x18,
+	0x02, 0x20, 0x01, 0x28, 0x03, 0x52, 0x02, 0x69, 0x64, 0x12, 0x1a, 0x0a, 0x08, 0x63, 0x6f, 0x6e,
+	0x66, 0x69, 0x67, 0x49, 0x64, 0x18, 0x03, 0x20, 0x01, 0x28, 0x0d, 0x52, 0x08, 0x63, 0x6f, 0x6e,
+	0x66, 0x69, 0x67, 0x49, 0x64, 0x12, 0x20, 0x0a, 0x0b, 0x73, 0x79, 0x6e, 0x63, 0x50, 0x61, 0x79,
+	0x6c, 0x6f, 0x61, 0x64, 0x18, 0x04, 0x20, 0x01, 0x28, 0x0c, 0x52, 0x0b, 0x73, 0x79, 0x6e, 0x63,
+	0x50, 0x61, 0x79, 0x6c, 0x6f, 0x61, 0x64, 0x22, 0x68, 0x0a, 0x20, 0x47, 0x61, 0x6c, 0x61, 0x63,
+	0x74, 0x69, 0x63, 0x4b, 0x69, 0x74, 0x74, 0x65, 0x6e, 0x73, 0x4f, 0x62, 0x6a, 0x65, 0x63, 0x74,
+	0x44, 0x69, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x18, 0x0a, 0x07, 0x6f,
+	0x77, 0x6e, 0x65, 0x72, 0x49, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03, 0x52, 0x07, 0x6f, 0x77,
+	0x6e, 0x65, 0x72, 0x49, 0x64, 0x12, 0x1a, 0x0a, 0x08, 0x6b, 0x69, 0x6c, 0x6c, 0x65, 0x72, 0x49,
+	0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x03, 0x52, 0x08, 0x6b, 0x69, 0x6c, 0x6c, 0x65, 0x72, 0x49,
+	0x64, 0x12, 0x0e, 0x0a, 0x02, 0x69, 0x64, 0x18, 0x03, 0x20, 0x01, 0x28, 0x03, 0x52, 0x02, 0x69,
+	0x64, 0x22, 0x1c, 0x0a, 0x1a, 0x47, 0x61, 0x6c, 0x61, 0x63, 0x74, 0x69, 0x63, 0x4b, 0x69, 0x74,
+	0x74, 0x65, 0x6e, 0x73, 0x46, 0x69, 0x72, 0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x22,
+	0x45, 0x0a, 0x1b, 0x47, 0x61, 0x6c, 0x61, 0x63, 0x74, 0x69, 0x63, 0x4b, 0x69, 0x74, 0x74, 0x65,
+	0x6e, 0x73, 0x46, 0x69, 0x72, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x26,
+	0x0a, 0x06, 0x72, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x0e,
+	0x2e, 0x4d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x52, 0x06,
+	0x72, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x32, 0xd9, 0x01, 0x0a, 0x1b, 0x47, 0x61, 0x6c, 0x61, 0x63,
+	0x74, 0x69, 0x63, 0x4b, 0x69, 0x74, 0x74, 0x65, 0x6e, 0x73, 0x4d, 0x61, 0x74, 0x63, 0x68, 0x53,
+	0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x12, 0x65, 0x0a, 0x10, 0x70, 0x6c, 0x61, 0x79, 0x65, 0x72,
+	0x53, 0x65, 0x72, 0x76, 0x65, 0x72, 0x4c, 0x69, 0x73, 0x74, 0x12, 0x27, 0x2e, 0x47, 0x61, 0x6c,
+	0x61, 0x63, 0x74, 0x69, 0x63, 0x4b, 0x69, 0x74, 0x74, 0x65, 0x6e, 0x73, 0x50, 0x6c, 0x61, 0x79,
+	0x65, 0x72, 0x53, 0x65, 0x72, 0x76, 0x65, 0x72, 0x4c, 0x69, 0x73, 0x74, 0x52, 0x65, 0x71, 0x75,
+	0x65, 0x73, 0x74, 0x1a, 0x28, 0x2e, 0x47, 0x61, 0x6c, 0x61, 0x63, 0x74, 0x69, 0x63, 0x4b, 0x69,
+	0x74, 0x74, 0x65, 0x6e, 0x73, 0x50, 0x6c, 0x61, 0x79, 0x65, 0x72, 0x53, 0x65, 0x72, 0x76, 0x65,
+	0x72, 0x4c, 0x69, 0x73, 0x74, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x53, 0x0a,
+	0x0a, 0x67, 0x61, 0x6d, 0x65, 0x46, 0x69, 0x6e, 0x69, 0x73, 0x68, 0x12, 0x21, 0x2e, 0x47, 0x61,
+	0x6c, 0x61, 0x63, 0x74, 0x69, 0x63, 0x4b, 0x69, 0x74, 0x74, 0x65, 0x6e, 0x73, 0x47, 0x61, 0x6d,
+	0x65, 0x46, 0x69, 0x6e, 0x69, 0x73, 0x68, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x22,
+	0x2e, 0x47, 0x61, 0x6c, 0x61, 0x63, 0x74, 0x69, 0x63, 0x4b, 0x69, 0x74, 0x74, 0x65, 0x6e, 0x73,
+	0x47, 0x61, 0x6d, 0x65, 0x46, 0x69, 0x6e, 0x69, 0x73, 0x68, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e,
+	0x73, 0x65, 0x42, 0x0a, 0x5a, 0x08, 0x2f, 0x6d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x62, 0x06,
+	0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -958,7 +1203,7 @@ func file_game_galactic_kittens_proto_rawDescGZIP() []byte {
 	return file_game_galactic_kittens_proto_rawDescData
 }
 
-var file_game_galactic_kittens_proto_msgTypes = make([]protoimpl.MessageInfo, 17)
+var file_game_galactic_kittens_proto_msgTypes = make([]protoimpl.MessageInfo, 21)
 var file_game_galactic_kittens_proto_goTypes = []interface{}{
 	(*GalacticKittensEnterRoomRequest)(nil),         // 0: GalacticKittensEnterRoomRequest
 	(*GalacticKittensEnterRoomResponse)(nil),        // 1: GalacticKittensEnterRoomResponse
@@ -975,34 +1220,39 @@ var file_game_galactic_kittens_proto_goTypes = []interface{}{
 	(*GalacticKittensPlayerServerListResponse)(nil), // 12: GalacticKittensPlayerServerListResponse
 	(*GalacticKittensGameFinishRequest)(nil),        // 13: GalacticKittensGameFinishRequest
 	(*GalacticKittensGameFinishResponse)(nil),       // 14: GalacticKittensGameFinishResponse
-	nil,                   // 15: GalacticKittensPlayerServerListResponse.PlayerGateServersEntry
-	nil,                   // 16: GalacticKittensPlayerServerListResponse.PlayerLobbyServersEntry
-	(*MessageResult)(nil), // 17: MessageResult
-	(*ServerInfo)(nil),    // 18: ServerInfo
+	(*GalacticKittensObjectSpawnResponse)(nil),      // 15: GalacticKittensObjectSpawnResponse
+	(*GalacticKittensObjectDieResponse)(nil),        // 16: GalacticKittensObjectDieResponse
+	(*GalacticKittensFireRequest)(nil),              // 17: GalacticKittensFireRequest
+	(*GalacticKittensFireResponse)(nil),             // 18: GalacticKittensFireResponse
+	nil,                                             // 19: GalacticKittensPlayerServerListResponse.PlayerGateServersEntry
+	nil,                                             // 20: GalacticKittensPlayerServerListResponse.PlayerLobbyServersEntry
+	(*MessageResult)(nil),                           // 21: MessageResult
+	(*ServerInfo)(nil),                              // 22: ServerInfo
 }
 var file_game_galactic_kittens_proto_depIdxs = []int32{
-	17, // 0: GalacticKittensEnterRoomResponse.result:type_name -> MessageResult
-	17, // 1: GalacticKittensQuitRoomResponse.result:type_name -> MessageResult
+	21, // 0: GalacticKittensEnterRoomResponse.result:type_name -> MessageResult
+	21, // 1: GalacticKittensQuitRoomResponse.result:type_name -> MessageResult
 	5,  // 2: GalacticKittensRoomInfoResponse.room:type_name -> GalacticKittensRoomInfo
 	6,  // 3: GalacticKittensRoomInfo.player:type_name -> GalacticKittensPlayerInfo
-	17, // 4: GalacticKittenSelectCharacterResponse.result:type_name -> MessageResult
-	17, // 5: GalacticKittensPrepareResponse.result:type_name -> MessageResult
-	17, // 6: GalacticKittensPlayerServerListResponse.result:type_name -> MessageResult
-	15, // 7: GalacticKittensPlayerServerListResponse.playerGateServers:type_name -> GalacticKittensPlayerServerListResponse.PlayerGateServersEntry
-	16, // 8: GalacticKittensPlayerServerListResponse.playerLobbyServers:type_name -> GalacticKittensPlayerServerListResponse.PlayerLobbyServersEntry
-	17, // 9: GalacticKittensGameFinishResponse.result:type_name -> MessageResult
+	21, // 4: GalacticKittenSelectCharacterResponse.result:type_name -> MessageResult
+	21, // 5: GalacticKittensPrepareResponse.result:type_name -> MessageResult
+	21, // 6: GalacticKittensPlayerServerListResponse.result:type_name -> MessageResult
+	19, // 7: GalacticKittensPlayerServerListResponse.playerGateServers:type_name -> GalacticKittensPlayerServerListResponse.PlayerGateServersEntry
+	20, // 8: GalacticKittensPlayerServerListResponse.playerLobbyServers:type_name -> GalacticKittensPlayerServerListResponse.PlayerLobbyServersEntry
+	21, // 9: GalacticKittensGameFinishResponse.result:type_name -> MessageResult
 	5,  // 10: GalacticKittensGameFinishResponse.room:type_name -> GalacticKittensRoomInfo
-	18, // 11: GalacticKittensPlayerServerListResponse.PlayerGateServersEntry.value:type_name -> ServerInfo
-	18, // 12: GalacticKittensPlayerServerListResponse.PlayerLobbyServersEntry.value:type_name -> ServerInfo
-	11, // 13: GalacticKittensMatchService.playerServerList:input_type -> GalacticKittensPlayerServerListRequest
-	13, // 14: GalacticKittensMatchService.gameFinish:input_type -> GalacticKittensGameFinishRequest
-	12, // 15: GalacticKittensMatchService.playerServerList:output_type -> GalacticKittensPlayerServerListResponse
-	14, // 16: GalacticKittensMatchService.gameFinish:output_type -> GalacticKittensGameFinishResponse
-	15, // [15:17] is the sub-list for method output_type
-	13, // [13:15] is the sub-list for method input_type
-	13, // [13:13] is the sub-list for extension type_name
-	13, // [13:13] is the sub-list for extension extendee
-	0,  // [0:13] is the sub-list for field type_name
+	21, // 11: GalacticKittensFireResponse.result:type_name -> MessageResult
+	22, // 12: GalacticKittensPlayerServerListResponse.PlayerGateServersEntry.value:type_name -> ServerInfo
+	22, // 13: GalacticKittensPlayerServerListResponse.PlayerLobbyServersEntry.value:type_name -> ServerInfo
+	11, // 14: GalacticKittensMatchService.playerServerList:input_type -> GalacticKittensPlayerServerListRequest
+	13, // 15: GalacticKittensMatchService.gameFinish:input_type -> GalacticKittensGameFinishRequest
+	12, // 16: GalacticKittensMatchService.playerServerList:output_type -> GalacticKittensPlayerServerListResponse
+	14, // 17: GalacticKittensMatchService.gameFinish:output_type -> GalacticKittensGameFinishResponse
+	16, // [16:18] is the sub-list for method output_type
+	14, // [14:16] is the sub-list for method input_type
+	14, // [14:14] is the sub-list for extension type_name
+	14, // [14:14] is the sub-list for extension extendee
+	0,  // [0:14] is the sub-list for field type_name
 }
 
 func init() { file_game_galactic_kittens_proto_init() }
@@ -1193,6 +1443,54 @@ func file_game_galactic_kittens_proto_init() {
 				return nil
 			}
 		}
+		file_game_galactic_kittens_proto_msgTypes[15].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*GalacticKittensObjectSpawnResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_game_galactic_kittens_proto_msgTypes[16].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*GalacticKittensObjectDieResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_game_galactic_kittens_proto_msgTypes[17].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*GalacticKittensFireRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_game_galactic_kittens_proto_msgTypes[18].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*GalacticKittensFireResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
@@ -1200,7 +1498,7 @@ func file_game_galactic_kittens_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_game_galactic_kittens_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   17,
+			NumMessages:   21,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
