@@ -6,7 +6,7 @@
 ![ugk-architecture](ugk-resource/img/ugk_architecture.png)
 
 ## 特性
-* 自动化编排Docker，容器化运行Unity dedicated server
+* 自动化编排Docker容器(Unity dedicated server)
 * 前后端分离
 * 快照同步，状态同步预测插值
 
@@ -71,22 +71,17 @@
 ## TODO
 * 网络同步、延迟、插值、回退（延迟补偿,外插），**物理同步，动画同步**，位置方向同步
 * 场景同步消息，transform同步消息，aoi管理
-* 客户端同步封装，参考NetworkTransform、NetworkAnimator、NetworkRigidbody？（参考Mirror）  
-* 封装NetworkTransform 进行位置，方向，缩放同步，插值；快照插值作为可选项
-* 客户端NetworkTransform 封装成抽象类，具体子游戏继承，子弹类需要同步速度，需要同步实体的唯一ID，配置ID，ConfigRole
+* 客户端同步封装，参考NetworkTransform、NetworkAnimator、NetworkRigidbody？（参考Mirror）
 * 服务器NetworkTransform只起配置作用，通过对象manager进行批量同步，子弹碰撞服务器检测，需要回滚
 * 客户端和服务器配置都通过go服务器拉取
 * 完整的GalacticKittensMatch流程
 * 玩家进入游戏后端已经可以通过agent创建unity docker容器；下一步需要前端进入游戏场景，后端unity服务器开发，
-* 场景消息同步定义，后端刷出小怪及客户端显示角色 ，小怪，boss同步频率低（1s一次？），给速度，客户端模拟，服务器出发了碰撞等在同步
-* GalacticKittens不使用快照插值同步，Push coin使用快照插值同步，方向，位置等同步需要压缩
-* 实现快照插值SnapTransform（需要实现增量压缩算法）和预测外推插值PredictionTransform（需要高速线速度和角速度）两种方式同步，继承NetworkTransform，定义统一的同步消息
-* 状态同步每次更新最多发送64个对象，使用优先级权重发送（每帧计算，位置变动为1，速度，方向改变权重大？）代码参考[oculus-networked-physics-sample](https://github.com/fbsamples/oculus-networked-physics-sample)
-* Delta Compression 参考Mirror和[oculus-networked-physics-sample](https://github.com/fbsamples/oculus-networked-physics-sample)
-* 同步使用Mirror的NetworkWriter和NetworkReader，支持Unity原生对象序列化？在protobuf中再嵌入一层？但是只支持C#，Unity引擎；需要同步每个实体的id
-* GalacticKittens 产生，消费、同步，发射子弹，协议
-* 对象id使用小整数，可节约带宽
+* 场景消息同步定义，后端刷出小怪及客户端显示角色 ，给速度，客户端模拟，服务器出发了碰撞等在同步
+* GalacticKittens客户端控制的使用快照插值同步，服务器控制的使用预测插值；Push coin使用快照插值同步
+* 预测外推插值PredictionTransform（需要线速度和角速度）
+* 状态同步每次更新最多发送64个对象，使用优先级权重发送（每帧计算，位置变动为1，速度，方向改变权重大？）
 * 显示网络同步统计信息
+* 参考[fps-netcode](https://github.com/minism/fps-netcode)的网络同步，实现fps
 
 
 
@@ -100,6 +95,7 @@
 * 服务器unity提取公共包，unity的package
 * ugk-client 弹窗增加tween动画
 * 后台管理系统查看unity docker服务器
+
 
 感谢
 ---------
