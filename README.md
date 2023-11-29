@@ -80,7 +80,7 @@
 * GalacticKittens客户端控制的使用快照插值同步，服务器控制的使用预测插值；Push coin使用快照插值同步
 * 预测外推插值PredictionTransform（需要线速度和角速度）
 * 显示网络同步统计信息
-* 参考[fps-netcode](https://github.com/minism/fps-netcode)的网络同步，实现fps
+* GalacticKittens 让服务器进行子弹命中判断，需要将客户端发射子弹的延迟加上
 
 
 
