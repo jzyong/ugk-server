@@ -69,8 +69,8 @@
 
 
 ## TODO
-* 网络同步、延迟、插值、回退（延迟补偿,外插），**物理同步，动画同步**，位置方向同步
-* 场景同步消息，transform同步消息，aoi管理
+* 物理同步，动画同步
+* aoi管理
 * 客户端同步封装，参考NetworkTransform、NetworkAnimator、NetworkRigidbody？（参考Mirror）
 * 服务器NetworkTransform只起配置作用，通过对象manager进行批量同步，子弹碰撞服务器检测，需要回滚
 * 客户端和服务器配置都通过go服务器拉取
@@ -78,7 +78,6 @@
 * 玩家进入游戏后端已经可以通过agent创建unity docker容器；下一步需要前端进入游戏场景，后端unity服务器开发，
 * 场景消息同步定义，后端刷出小怪及客户端显示角色 ，给速度，客户端模拟，服务器出发了碰撞等在同步
 * GalacticKittens客户端控制的使用快照插值同步，服务器控制的使用预测插值；Push coin使用快照插值同步
-* 预测外推插值PredictionTransform（需要线速度和角速度）
 * 显示网络同步统计信息
 * GalacticKittens 让服务器进行子弹命中判断，需要将客户端发射子弹的延迟加上
 

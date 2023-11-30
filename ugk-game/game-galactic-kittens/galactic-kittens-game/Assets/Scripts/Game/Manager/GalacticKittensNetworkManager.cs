@@ -68,7 +68,6 @@ namespace Game.Manager
                 }
                 else
                 {
-                    //TODO 获取玩家
                     var protoData = new byte[messageLength - 24];
                     Array.Copy(bytes, 28, protoData, 0, protoData.Length);
                     ugkMessage.Bytes = protoData;

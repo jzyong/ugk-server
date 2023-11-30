@@ -36,7 +36,7 @@ namespace Game.Manager
         }
 
         /// <summary>
-        /// 发送消息 TODO 待测试
+        /// 发送消息 
         /// </summary>
         /// <param name="player"></param>
         /// <param name="mid"></param>
@@ -58,6 +58,21 @@ namespace Game.Manager
             return player.GateClient.SendMsg(player.Id, (int)mid, msg, seq);
         }
 
+        /// <summary>
+        /// 广播消息
+        /// </summary>
+        /// <param name="mid"></param>
+        /// <param name="message"></param>
+        /// <param name="seq"></param>
+        /// <returns></returns>
+        public void BroadcastMsg(MID mid, IMessage message, uint seq = 0)
+        {
+            foreach (var player in players)
+            {
+                SendMsg(player, mid, message, seq);
+            }
+        }
+
 
         /// <summary>
         /// 请求玩家列表，并初始化网络 TODO 待测试,会阻塞主线程吗？
@@ -73,7 +88,7 @@ namespace Game.Manager
             };
             var response = client.playerServerListAsync(request).ResponseAsync.Result;
             Log.Info($"player list :{response}");
-            if (response.Result!=null&&response.Result.Status != 200)
+            if (response.Result != null && response.Result.Status != 200)
             {
                 Log.Error($"get server list error:{response.Result.Msg}");
                 return;
@@ -110,10 +125,9 @@ namespace Game.Manager
 
             //  创建网关连接
             BindGateGameMapReq();
-            
+
             // 切换场景 TODO 需要Unity开发快捷方式，待测试
             SceneManager.LoadScene("GalacticKittensGamePlay");
-
         }
 
         private void PlayerInfoReq()
@@ -134,7 +148,7 @@ namespace Game.Manager
                 };
 
                 var response = client.GetPlayerInfoAsync(request).ResponseAsync.Result;
-                if (response.Result!=null&&response.Result.Status != 200)
+                if (response.Result != null && response.Result.Status != 200)
                 {
                     Log.Error($"{player.Id} get info error:{response.Result.Msg}");
                     if (response.Result.Msg.Equals("room no player"))
@@ -142,6 +156,7 @@ namespace Game.Manager
                         Log.Error("quit game");
                         Application.Quit();
                     }
+
                     return;
                 }
 

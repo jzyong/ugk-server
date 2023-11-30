@@ -22,19 +22,21 @@ public static partial class ConstantReflection {
   static ConstantReflection() {
     byte[] descriptorData = global::System.Convert.FromBase64String(
         string.Concat(
-          "Cg5jb25zdGFudC5wcm90byqcBAoDTUlEEggKBE5vbmUQABISCg5TZXJ2ZXJI",
+          "Cg5jb25zdGFudC5wcm90byr4BAoDTUlEEggKBE5vbmUQABISCg5TZXJ2ZXJI",
           "ZWFydFJlcRABEhIKDlNlcnZlckhlYXJ0UmVzEAISDgoISGVhcnRSZXEQwYQ9",
           "Eg4KCEhlYXJ0UmVzEMKEPRIOCghMb2dpblJlcRDDhD0SDgoITG9naW5SZXMQ",
           "xIQ9EhgKEkJpbmRHYW1lQ29ubmVjdFJlcRDFhD0SGAoSQmluZEdhbWVDb25u",
           "ZWN0UmVzEMaEPRITCg1Mb2FkUGxheWVyUmVxEJmAQBITCg1Mb2FkUGxheWVy",
-          "UmVzEJqAQBIiChtHYWxhY3RpY0tpdHRlbnNFbnRlclJvb21SZXEQgYDgARIi",
-          "ChtHYWxhY3RpY0tpdHRlbnNFbnRlclJvb21SZXMQgoDgARIhChpHYWxhY3Rp",
-          "Y0tpdHRlbnNSb29tSW5mb1JlcxCEgOABEiAKGUdhbGFjdGljS2l0dGVuc1By",
-          "ZXBhcmVSZXEQhYDgARIgChlHYWxhY3RpY0tpdHRlbnNQcmVwYXJlUmVzEIaA",
-          "4AESJwogR2FsYWN0aWNLaXR0ZW5TZWxlY3RDaGFyYWN0ZXJSZXEQh4DgARIn",
-          "CiBHYWxhY3RpY0tpdHRlblNlbGVjdENoYXJhY3RlclJlcxCIgOABEiEKGkdh",
-          "bGFjdGljS2l0dGVuc1F1aXRSb29tUmVxEImA4AESIQoaR2FsYWN0aWNLaXR0",
-          "ZW5zUXVpdFJvb21SZXMQioDgAUIKWggvbWVzc2FnZWIGcHJvdG8z"));
+          "UmVzEJqAQBISCgtTbmFwU3luY1JlcRCBgMACEhIKC1NuYXBTeW5jUmVzEIKA",
+          "wAISGAoRUHJlZGljdGlvblN5bmNSZXEQg4DAAhIYChFQcmVkaWN0aW9uU3lu",
+          "Y1JlcxCEgMACEiIKG0dhbGFjdGljS2l0dGVuc0VudGVyUm9vbVJlcRCBgOAB",
+          "EiIKG0dhbGFjdGljS2l0dGVuc0VudGVyUm9vbVJlcxCCgOABEiEKGkdhbGFj",
+          "dGljS2l0dGVuc1Jvb21JbmZvUmVzEISA4AESIAoZR2FsYWN0aWNLaXR0ZW5z",
+          "UHJlcGFyZVJlcRCFgOABEiAKGUdhbGFjdGljS2l0dGVuc1ByZXBhcmVSZXMQ",
+          "hoDgARInCiBHYWxhY3RpY0tpdHRlblNlbGVjdENoYXJhY3RlclJlcRCHgOAB",
+          "EicKIEdhbGFjdGljS2l0dGVuU2VsZWN0Q2hhcmFjdGVyUmVzEIiA4AESIQoa",
+          "R2FsYWN0aWNLaXR0ZW5zUXVpdFJvb21SZXEQiYDgARIhChpHYWxhY3RpY0tp",
+          "dHRlbnNRdWl0Um9vbVJlcxCKgOABQgpaCC9tZXNzYWdlYgZwcm90bzM="));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
         new pbr::FileDescriptor[] { },
         new pbr::GeneratedClrTypeInfo(new[] {typeof(global::MID), }, null, null));
@@ -91,7 +93,13 @@ public enum MID {
   /// </summary>
   [pbr::OriginalName("LoadPlayerRes")] LoadPlayerRes = 1048602,
   /// <summary>
-  ///游戏
+  ///通用 5242880（5&lt;&lt;20）
+  /// </summary>
+  [pbr::OriginalName("SnapSyncReq")] SnapSyncReq = 5242881,
+  [pbr::OriginalName("SnapSyncRes")] SnapSyncRes = 5242882,
+  [pbr::OriginalName("PredictionSyncReq")] PredictionSyncReq = 5242883,
+  [pbr::OriginalName("PredictionSyncRes")] PredictionSyncRes = 5242884,
+  /// <summary>
   ///Galactic-kittens match 3145728(3&lt;&lt;20)+ 524288(1&lt;19)= 3670016
   /// </summary>
   [pbr::OriginalName("GalacticKittensEnterRoomReq")] GalacticKittensEnterRoomReq = 3670017,
