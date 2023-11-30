@@ -22,7 +22,7 @@ public static partial class ConstantReflection {
   static ConstantReflection() {
     byte[] descriptorData = global::System.Convert.FromBase64String(
         string.Concat(
-          "Cg5jb25zdGFudC5wcm90byr4BAoDTUlEEggKBE5vbmUQABISCg5TZXJ2ZXJI",
+          "Cg5jb25zdGFudC5wcm90byqABgoDTUlEEggKBE5vbmUQABISCg5TZXJ2ZXJI",
           "ZWFydFJlcRABEhIKDlNlcnZlckhlYXJ0UmVzEAISDgoISGVhcnRSZXEQwYQ9",
           "Eg4KCEhlYXJ0UmVzEMKEPRIOCghMb2dpblJlcRDDhD0SDgoITG9naW5SZXMQ",
           "xIQ9EhgKEkJpbmRHYW1lQ29ubmVjdFJlcRDFhD0SGAoSQmluZEdhbWVDb25u",
@@ -36,7 +36,10 @@ public static partial class ConstantReflection {
           "hoDgARInCiBHYWxhY3RpY0tpdHRlblNlbGVjdENoYXJhY3RlclJlcRCHgOAB",
           "EicKIEdhbGFjdGljS2l0dGVuU2VsZWN0Q2hhcmFjdGVyUmVzEIiA4AESIQoa",
           "R2FsYWN0aWNLaXR0ZW5zUXVpdFJvb21SZXEQiYDgARIhChpHYWxhY3RpY0tp",
-          "dHRlbnNRdWl0Um9vbVJlcxCKgOABQgpaCC9tZXNzYWdlYgZwcm90bzM="));
+          "dHRlbnNRdWl0Um9vbVJlcxCKgOABEiQKHUdhbGFjdGljS2l0dGVuc09iamVj",
+          "dFNwYXduUmVzEIyA4AESIgobR2FsYWN0aWNLaXR0ZW5zT2JqZWN0RGllUmVz",
+          "EI6A4AESHQoWR2FsYWN0aWNLaXR0ZW5zRmlyZVJlcRCPgOABEh0KFkdhbGFj",
+          "dGljS2l0dGVuc0ZpcmVSZXMQkIDgAUIKWggvbWVzc2FnZWIGcHJvdG8z"));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
         new pbr::FileDescriptor[] { },
         new pbr::GeneratedClrTypeInfo(new[] {typeof(global::MID), }, null, null));
@@ -111,6 +114,10 @@ public enum MID {
   [pbr::OriginalName("GalacticKittenSelectCharacterRes")] GalacticKittenSelectCharacterRes = 3670024,
   [pbr::OriginalName("GalacticKittensQuitRoomReq")] GalacticKittensQuitRoomReq = 3670025,
   [pbr::OriginalName("GalacticKittensQuitRoomRes")] GalacticKittensQuitRoomRes = 3670026,
+  [pbr::OriginalName("GalacticKittensObjectSpawnRes")] GalacticKittensObjectSpawnRes = 3670028,
+  [pbr::OriginalName("GalacticKittensObjectDieRes")] GalacticKittensObjectDieRes = 3670030,
+  [pbr::OriginalName("GalacticKittensFireReq")] GalacticKittensFireReq = 3670031,
+  [pbr::OriginalName("GalacticKittensFireRes")] GalacticKittensFireRes = 3670032,
 }
 
 #endregion

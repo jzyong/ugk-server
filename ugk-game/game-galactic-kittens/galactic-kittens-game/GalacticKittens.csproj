@@ -57,6 +57,7 @@
      <Compile Include="Assets\Scripts\Common\Network\Kcp\kcp2k\highlevel\Log.cs" />
      <Compile Include="Assets\Scripts\Common\Tools\Extensions.cs" />
      <Compile Include="Assets\Scripts\Game\Messages\Player.cs" />
+     <Compile Include="Assets\Scripts\Game\Handlers\RoomHandler.cs" />
      <Compile Include="Assets\Scripts\Game\Handlers\SyncHandler.cs" />
      <Compile Include="Assets\Scripts\Common\Network\Kcp\kcp2k\kcp\Pool.cs" />
      <Compile Include="Assets\Scripts\Common\Network\Kcp\kcp2k\kcp\Segment.cs" />
@@ -79,6 +80,7 @@
      <Compile Include="Assets\Scripts\Common\Network\Kcp\kcp2k\highlevel\Extensions.cs" />
      <Compile Include="Assets\Scripts\Common\Network\Sync\SnapTransform.cs" />
      <Compile Include="Assets\Scripts\Common\Tools\SnapshotInterpolation\Snapshot.cs" />
+     <Compile Include="Assets\Scripts\Game\Room\Bullet.cs" />
      <Compile Include="Assets\Scripts\Game\Manager\DataManager.cs" />
      <Compile Include="Assets\Scripts\Common\Network\Serialize\NetworkReaderPool.cs" />
      <Compile Include="Assets\Scripts\Game\Messages\GameGalacticKittensGrpc.cs" />
@@ -119,6 +121,7 @@
      <Folder Include="Assets\Scripts\Common\Network\Kcp" />
      <Folder Include="Assets\Scripts\Common\Tools" />
      <Folder Include="Assets\Scripts\Common\Network\Kcp\kcp2k\kcp" />
+     <Folder Include="Assets\Scripts\Game\Room" />
      <Folder Include="Assets\Scripts\Game\Manager" />
      <Folder Include="Assets\Scripts\Common\Tools\SnapshotInterpolation" />
      <Folder Include="Assets\Scripts" />

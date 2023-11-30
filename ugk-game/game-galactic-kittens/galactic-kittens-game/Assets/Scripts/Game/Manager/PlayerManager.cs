@@ -128,6 +128,8 @@ namespace Game.Manager
 
             // 切换场景 TODO 需要Unity开发快捷方式，待测试
             SceneManager.LoadScene("GalacticKittensGamePlay");
+            
+            RoomManager.Instance.SpawnPlayers(players);
         }
 
         private void PlayerInfoReq()
@@ -184,5 +186,7 @@ namespace Game.Manager
                 SendMsg(player, MID.BindGameConnectReq, request);
             }
         }
+
+       
     }
 }

@@ -88,10 +88,16 @@ message GalacticKittensGameFinishResponse {
 
 //游戏对象产出
 message GalacticKittensObjectSpawnResponse{
-  int64 ownerId = 1; //拥有者Id
-  int64 id= 2; //对象唯一id
-  uint32 configId= 3; //配置id
-  bytes syncPayload=4; //同步对象初始化数据
+  repeated SpawnInfo spawn =1 ;//出生信息
+
+  //出生信息
+  message SpawnInfo{
+    int64 ownerId = 1; //拥有者Id
+    int64 id= 2; //对象唯一id
+    uint32 configId= 3; //配置id 1玩家
+    bytes syncPayload=4; //同步对象初始化数据
+  }
+
 }
 
 //游戏对象死亡
