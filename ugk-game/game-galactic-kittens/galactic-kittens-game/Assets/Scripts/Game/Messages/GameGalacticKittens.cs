@@ -62,12 +62,15 @@ public static partial class GameGalacticKittensReflection {
           "S2l0dGVuc09iamVjdERpZVJlc3BvbnNlEg8KB293bmVySWQYASABKAMSEAoI",
           "a2lsbGVySWQYAiABKAMSCgoCaWQYAyABKAMiHAoaR2FsYWN0aWNLaXR0ZW5z",
           "RmlyZVJlcXVlc3QiPQobR2FsYWN0aWNLaXR0ZW5zRmlyZVJlc3BvbnNlEh4K",
-          "BnJlc3VsdBgBIAEoCzIOLk1lc3NhZ2VSZXN1bHQy2QEKG0dhbGFjdGljS2l0",
-          "dGVuc01hdGNoU2VydmljZRJlChBwbGF5ZXJTZXJ2ZXJMaXN0EicuR2FsYWN0",
-          "aWNLaXR0ZW5zUGxheWVyU2VydmVyTGlzdFJlcXVlc3QaKC5HYWxhY3RpY0tp",
-          "dHRlbnNQbGF5ZXJTZXJ2ZXJMaXN0UmVzcG9uc2USUwoKZ2FtZUZpbmlzaBIh",
-          "LkdhbGFjdGljS2l0dGVuc0dhbWVGaW5pc2hSZXF1ZXN0GiIuR2FsYWN0aWNL",
-          "aXR0ZW5zR2FtZUZpbmlzaFJlc3BvbnNlQgpaCC9tZXNzYWdlYgZwcm90bzM="));
+          "BnJlc3VsdBgBIAEoCzIOLk1lc3NhZ2VSZXN1bHQiIQofR2FsYWN0aWNLaXR0",
+          "ZW5zVXNlU2hpZWxkUmVxdWVzdCJhCiBHYWxhY3RpY0tpdHRlbnNVc2VTaGll",
+          "bGRSZXNwb25zZRIeCgZyZXN1bHQYASABKAsyDi5NZXNzYWdlUmVzdWx0Eg4K",
+          "BnNoaXBJZBgCIAEoAxINCgVzdGF0ZRgDIAEoDTLZAQobR2FsYWN0aWNLaXR0",
+          "ZW5zTWF0Y2hTZXJ2aWNlEmUKEHBsYXllclNlcnZlckxpc3QSJy5HYWxhY3Rp",
+          "Y0tpdHRlbnNQbGF5ZXJTZXJ2ZXJMaXN0UmVxdWVzdBooLkdhbGFjdGljS2l0",
+          "dGVuc1BsYXllclNlcnZlckxpc3RSZXNwb25zZRJTCgpnYW1lRmluaXNoEiEu",
+          "R2FsYWN0aWNLaXR0ZW5zR2FtZUZpbmlzaFJlcXVlc3QaIi5HYWxhY3RpY0tp",
+          "dHRlbnNHYW1lRmluaXNoUmVzcG9uc2VCCloIL21lc3NhZ2ViBnByb3RvMw=="));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
         new pbr::FileDescriptor[] { global::CommonReflection.Descriptor, global::ServerReflection.Descriptor, },
         new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
@@ -89,7 +92,9 @@ public static partial class GameGalacticKittensReflection {
           new pbr::GeneratedClrTypeInfo(typeof(global::GalacticKittensObjectSpawnResponse), global::GalacticKittensObjectSpawnResponse.Parser, new[]{ "Spawn" }, null, null, null, new pbr::GeneratedClrTypeInfo[] { new pbr::GeneratedClrTypeInfo(typeof(global::GalacticKittensObjectSpawnResponse.Types.SpawnInfo), global::GalacticKittensObjectSpawnResponse.Types.SpawnInfo.Parser, new[]{ "OwnerId", "Id", "ConfigId", "SyncPayload" }, null, null, null, null)}),
           new pbr::GeneratedClrTypeInfo(typeof(global::GalacticKittensObjectDieResponse), global::GalacticKittensObjectDieResponse.Parser, new[]{ "OwnerId", "KillerId", "Id" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::GalacticKittensFireRequest), global::GalacticKittensFireRequest.Parser, null, null, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::GalacticKittensFireResponse), global::GalacticKittensFireResponse.Parser, new[]{ "Result" }, null, null, null, null)
+          new pbr::GeneratedClrTypeInfo(typeof(global::GalacticKittensFireResponse), global::GalacticKittensFireResponse.Parser, new[]{ "Result" }, null, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::GalacticKittensUseShieldRequest), global::GalacticKittensUseShieldRequest.Parser, null, null, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::GalacticKittensUseShieldResponse), global::GalacticKittensUseShieldResponse.Parser, new[]{ "Result", "ShipId", "State" }, null, null, null, null)
         }));
   }
   #endregion
@@ -4589,6 +4594,445 @@ public sealed partial class GalacticKittensFireResponse : pb::IMessage<GalacticK
             Result = new global::MessageResult();
           }
           input.ReadMessage(Result);
+          break;
+        }
+      }
+    }
+  }
+  #endif
+
+}
+
+/// <summary>
+///使用护盾
+/// </summary>
+public sealed partial class GalacticKittensUseShieldRequest : pb::IMessage<GalacticKittensUseShieldRequest>
+#if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    , pb::IBufferMessage
+#endif
+{
+  private static readonly pb::MessageParser<GalacticKittensUseShieldRequest> _parser = new pb::MessageParser<GalacticKittensUseShieldRequest>(() => new GalacticKittensUseShieldRequest());
+  private pb::UnknownFieldSet _unknownFields;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public static pb::MessageParser<GalacticKittensUseShieldRequest> Parser { get { return _parser; } }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public static pbr::MessageDescriptor Descriptor {
+    get { return global::GameGalacticKittensReflection.Descriptor.MessageTypes[19]; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  pbr::MessageDescriptor pb::IMessage.Descriptor {
+    get { return Descriptor; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public GalacticKittensUseShieldRequest() {
+    OnConstruction();
+  }
+
+  partial void OnConstruction();
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public GalacticKittensUseShieldRequest(GalacticKittensUseShieldRequest other) : this() {
+    _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public GalacticKittensUseShieldRequest Clone() {
+    return new GalacticKittensUseShieldRequest(this);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public override bool Equals(object other) {
+    return Equals(other as GalacticKittensUseShieldRequest);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public bool Equals(GalacticKittensUseShieldRequest other) {
+    if (ReferenceEquals(other, null)) {
+      return false;
+    }
+    if (ReferenceEquals(other, this)) {
+      return true;
+    }
+    return Equals(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public override int GetHashCode() {
+    int hash = 1;
+    if (_unknownFields != null) {
+      hash ^= _unknownFields.GetHashCode();
+    }
+    return hash;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public override string ToString() {
+    return pb::JsonFormatter.ToDiagnosticString(this);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public void WriteTo(pb::CodedOutputStream output) {
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    output.WriteRawMessage(this);
+  #else
+    if (_unknownFields != null) {
+      _unknownFields.WriteTo(output);
+    }
+  #endif
+  }
+
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
+    if (_unknownFields != null) {
+      _unknownFields.WriteTo(ref output);
+    }
+  }
+  #endif
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public int CalculateSize() {
+    int size = 0;
+    if (_unknownFields != null) {
+      size += _unknownFields.CalculateSize();
+    }
+    return size;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public void MergeFrom(GalacticKittensUseShieldRequest other) {
+    if (other == null) {
+      return;
+    }
+    _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public void MergeFrom(pb::CodedInputStream input) {
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    input.ReadRawMessage(this);
+  #else
+    uint tag;
+    while ((tag = input.ReadTag()) != 0) {
+      switch(tag) {
+        default:
+          _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+          break;
+      }
+    }
+  #endif
+  }
+
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
+    uint tag;
+    while ((tag = input.ReadTag()) != 0) {
+      switch(tag) {
+        default:
+          _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
+          break;
+      }
+    }
+  }
+  #endif
+
+}
+
+/// <summary>
+///使用护盾
+/// </summary>
+public sealed partial class GalacticKittensUseShieldResponse : pb::IMessage<GalacticKittensUseShieldResponse>
+#if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    , pb::IBufferMessage
+#endif
+{
+  private static readonly pb::MessageParser<GalacticKittensUseShieldResponse> _parser = new pb::MessageParser<GalacticKittensUseShieldResponse>(() => new GalacticKittensUseShieldResponse());
+  private pb::UnknownFieldSet _unknownFields;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public static pb::MessageParser<GalacticKittensUseShieldResponse> Parser { get { return _parser; } }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public static pbr::MessageDescriptor Descriptor {
+    get { return global::GameGalacticKittensReflection.Descriptor.MessageTypes[20]; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  pbr::MessageDescriptor pb::IMessage.Descriptor {
+    get { return Descriptor; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public GalacticKittensUseShieldResponse() {
+    OnConstruction();
+  }
+
+  partial void OnConstruction();
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public GalacticKittensUseShieldResponse(GalacticKittensUseShieldResponse other) : this() {
+    result_ = other.result_ != null ? other.result_.Clone() : null;
+    shipId_ = other.shipId_;
+    state_ = other.state_;
+    _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public GalacticKittensUseShieldResponse Clone() {
+    return new GalacticKittensUseShieldResponse(this);
+  }
+
+  /// <summary>Field number for the "result" field.</summary>
+  public const int ResultFieldNumber = 1;
+  private global::MessageResult result_;
+  /// <summary>
+  ///错误信息
+  /// </summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public global::MessageResult Result {
+    get { return result_; }
+    set {
+      result_ = value;
+    }
+  }
+
+  /// <summary>Field number for the "shipId" field.</summary>
+  public const int ShipIdFieldNumber = 2;
+  private long shipId_;
+  /// <summary>
+  ///使用护盾的飞船ID
+  /// </summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public long ShipId {
+    get { return shipId_; }
+    set {
+      shipId_ = value;
+    }
+  }
+
+  /// <summary>Field number for the "state" field.</summary>
+  public const int StateFieldNumber = 3;
+  private uint state_;
+  /// <summary>
+  ///0添加，1消失
+  /// </summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public uint State {
+    get { return state_; }
+    set {
+      state_ = value;
+    }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public override bool Equals(object other) {
+    return Equals(other as GalacticKittensUseShieldResponse);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public bool Equals(GalacticKittensUseShieldResponse other) {
+    if (ReferenceEquals(other, null)) {
+      return false;
+    }
+    if (ReferenceEquals(other, this)) {
+      return true;
+    }
+    if (!object.Equals(Result, other.Result)) return false;
+    if (ShipId != other.ShipId) return false;
+    if (State != other.State) return false;
+    return Equals(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public override int GetHashCode() {
+    int hash = 1;
+    if (result_ != null) hash ^= Result.GetHashCode();
+    if (ShipId != 0L) hash ^= ShipId.GetHashCode();
+    if (State != 0) hash ^= State.GetHashCode();
+    if (_unknownFields != null) {
+      hash ^= _unknownFields.GetHashCode();
+    }
+    return hash;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public override string ToString() {
+    return pb::JsonFormatter.ToDiagnosticString(this);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public void WriteTo(pb::CodedOutputStream output) {
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    output.WriteRawMessage(this);
+  #else
+    if (result_ != null) {
+      output.WriteRawTag(10);
+      output.WriteMessage(Result);
+    }
+    if (ShipId != 0L) {
+      output.WriteRawTag(16);
+      output.WriteInt64(ShipId);
+    }
+    if (State != 0) {
+      output.WriteRawTag(24);
+      output.WriteUInt32(State);
+    }
+    if (_unknownFields != null) {
+      _unknownFields.WriteTo(output);
+    }
+  #endif
+  }
+
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
+    if (result_ != null) {
+      output.WriteRawTag(10);
+      output.WriteMessage(Result);
+    }
+    if (ShipId != 0L) {
+      output.WriteRawTag(16);
+      output.WriteInt64(ShipId);
+    }
+    if (State != 0) {
+      output.WriteRawTag(24);
+      output.WriteUInt32(State);
+    }
+    if (_unknownFields != null) {
+      _unknownFields.WriteTo(ref output);
+    }
+  }
+  #endif
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public int CalculateSize() {
+    int size = 0;
+    if (result_ != null) {
+      size += 1 + pb::CodedOutputStream.ComputeMessageSize(Result);
+    }
+    if (ShipId != 0L) {
+      size += 1 + pb::CodedOutputStream.ComputeInt64Size(ShipId);
+    }
+    if (State != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeUInt32Size(State);
+    }
+    if (_unknownFields != null) {
+      size += _unknownFields.CalculateSize();
+    }
+    return size;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public void MergeFrom(GalacticKittensUseShieldResponse other) {
+    if (other == null) {
+      return;
+    }
+    if (other.result_ != null) {
+      if (result_ == null) {
+        Result = new global::MessageResult();
+      }
+      Result.MergeFrom(other.Result);
+    }
+    if (other.ShipId != 0L) {
+      ShipId = other.ShipId;
+    }
+    if (other.State != 0) {
+      State = other.State;
+    }
+    _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public void MergeFrom(pb::CodedInputStream input) {
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    input.ReadRawMessage(this);
+  #else
+    uint tag;
+    while ((tag = input.ReadTag()) != 0) {
+      switch(tag) {
+        default:
+          _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+          break;
+        case 10: {
+          if (result_ == null) {
+            Result = new global::MessageResult();
+          }
+          input.ReadMessage(Result);
+          break;
+        }
+        case 16: {
+          ShipId = input.ReadInt64();
+          break;
+        }
+        case 24: {
+          State = input.ReadUInt32();
+          break;
+        }
+      }
+    }
+  #endif
+  }
+
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
+    uint tag;
+    while ((tag = input.ReadTag()) != 0) {
+      switch(tag) {
+        default:
+          _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
+          break;
+        case 10: {
+          if (result_ == null) {
+            Result = new global::MessageResult();
+          }
+          input.ReadMessage(Result);
+          break;
+        }
+        case 16: {
+          ShipId = input.ReadInt64();
+          break;
+        }
+        case 24: {
+          State = input.ReadUInt32();
           break;
         }
       }

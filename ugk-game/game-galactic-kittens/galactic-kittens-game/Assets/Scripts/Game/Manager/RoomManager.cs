@@ -66,12 +66,19 @@ namespace Game.Manager
         }
 
         /// <summary>
-        /// 角色死亡
+        /// 对象死亡
         /// </summary>
         /// <param name="killerId"></param>
         /// <param name="dieId"></param>
-        public void RoleDie(long killerId, long dieId)
+        public void DespawnObject(long killerId, long dieId, bool removeObject =true )
         {
+            if (removeObject)
+            {    
+                //移除的对象全部使用预测
+                SyncManager.Instance.RemovePredictionTransform(dieId);
+            }
+            
+            
             //TODO 清除对象，发送消息
             GalacticKittensObjectDieResponse response = new GalacticKittensObjectDieResponse()
             {
@@ -82,6 +89,8 @@ namespace Game.Manager
 
             PlayerManager.Singleton.BroadcastMsg(MID.GalacticKittensObjectDieRes, response);
         }
+        
+        
 
 
         /// <summary>

@@ -94,7 +94,7 @@ message GalacticKittensObjectSpawnResponse{
   message SpawnInfo{
     int64 ownerId = 1; //拥有者Id
     int64 id= 2; //对象唯一id
-    uint32 configId= 3; //配置id 1玩家
+    uint32 configId= 3; //配置id 1玩家；20Boss；30玩家子弹，31敌人子弹；
     bytes syncPayload=4; //同步对象初始化数据
   }
 
@@ -114,6 +114,17 @@ message GalacticKittensFireRequest{
 //开火请求 ,只有玩家控制的对象请求，子弹服务器生成推送
 message GalacticKittensFireResponse{
   MessageResult result = 1; //错误信息
+}
+
+//使用护盾
+message GalacticKittensUseShieldRequest{
+
+}
+//使用护盾
+message GalacticKittensUseShieldResponse{
+  MessageResult result = 1; //错误信息
+  int64 shipId = 2; //使用护盾的飞船ID
+  uint32 state = 3; //0添加，1消失
 }
 
 

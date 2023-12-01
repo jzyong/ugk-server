@@ -48,6 +48,8 @@ enum MID {
   GalacticKittensObjectDieRes = 3670030;
   GalacticKittensFireReq = 3670031;
   GalacticKittensFireRes = 3670032;
+  GalacticKittensUseShieldReq = 3670033;
+  GalacticKittensUseShieldRes = 3670034;
 
 
 }

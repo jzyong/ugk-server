@@ -293,8 +293,9 @@ namespace Network.Sync
             target.position += LinearVelocity * deltaTime;
             if (syncAngularVelocity)
             {
-                var rotation = Quaternion.Euler(AngularVelocity * deltaTime);
-                target.transform.rotation = Quaternion.LerpUnclamped(target.transform.rotation, rotation, 1);
+                // var rotation = Quaternion.Euler(AngularVelocity * deltaTime);
+                // target.transform.rotation = Quaternion.LerpUnclamped(target.transform.rotation, rotation, 1);
+                target.transform.Rotate(deltaTime*AngularVelocity);
             }
         }
     }

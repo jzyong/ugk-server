@@ -148,6 +148,54 @@ namespace Game.Manager
             }
         }
 
+        /// <summary>
+        /// 移除
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="type">0移除，1移除并隐藏，2移除并销毁</param>
+        public bool RemovePredictionTransform(long id, int type = 0)
+        {
+            if (_predictionTransforms.Remove(id, out PredictionTransform predictionTransform))
+            {
+                if (type == 1)
+                {
+                    predictionTransform.gameObject.SetActive(false);
+                }
+                else if (type == 2)
+                {
+                    Destroy(predictionTransform);
+                }
+
+                return true;
+            }
+
+            return false;
+        }
+        
+        /// <summary>
+        /// 移除
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="type">0移除，1移除并隐藏，2移除并销毁</param>
+        public bool RemoveSnapTransform(long id, int type = 0)
+        {
+            if (_snapTransforms.Remove(id, out SnapTransform snapTransform))
+            {
+                if (type == 1)
+                {
+                    snapTransform.gameObject.SetActive(false);
+                }
+                else if (type == 2)
+                {
+                    Destroy(snapTransform);
+                }
+
+                return true;
+            }
+
+            return false;
+        }
+
 
         public void Update()
         {
