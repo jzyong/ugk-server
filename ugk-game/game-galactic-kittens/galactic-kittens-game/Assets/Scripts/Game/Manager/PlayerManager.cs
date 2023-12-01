@@ -64,11 +64,17 @@ namespace Game.Manager
         /// <param name="mid"></param>
         /// <param name="message"></param>
         /// <param name="seq"></param>
+        /// <param name="excludePredicate"></param>
         /// <returns></returns>
-        public void BroadcastMsg(MID mid, IMessage message, uint seq = 0)
+        public void BroadcastMsg(MID mid, IMessage message, uint seq = 0, Predicate<long> excludePredicate = null)
         {
             foreach (var player in players)
             {
+                if (excludePredicate != null && excludePredicate.Invoke(player.Id))
+                {
+                    continue;
+                }
+
                 SendMsg(player, mid, message, seq);
             }
         }
@@ -128,7 +134,7 @@ namespace Game.Manager
 
             // 切换场景 TODO 需要Unity开发快捷方式，待测试
             SceneManager.LoadScene("GalacticKittensGamePlay");
-            
+
             RoomManager.Instance.SpawnPlayers(players);
         }
 
@@ -186,7 +192,5 @@ namespace Game.Manager
                 SendMsg(player, MID.BindGameConnectReq, request);
             }
         }
-
-       
     }
 }

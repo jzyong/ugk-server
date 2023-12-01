@@ -123,10 +123,24 @@ message GalacticKittensUseShieldRequest{
 //使用护盾
 message GalacticKittensUseShieldResponse{
   MessageResult result = 1; //错误信息
-  int64 shipId = 2; //使用护盾的飞船ID
-  uint32 state = 3; //0添加，1消失
 }
 
+//飞船护盾状态
+message GalacticKittensShipShieldStateResponse{
+  int64 shipId = 1; //使用护盾的飞船ID
+  uint32 state = 2; //0无，1有
+}
+
+//飞船移动状态同步
+message GalacticKittensShipMoveStateRequest{
+  uint32 state =1 ; //0初始化，1向上，2向下
+}
+//飞船移动状态同步
+message GalacticKittensShipMoveStateResponse{
+  MessageResult result = 1; //错误信息
+  int64 shipId = 2; //飞船ID
+  uint32 state =3 ; //0初始化，1向上，2向下
+}
 
 //GalacticKittens Match 服务
 service GalacticKittensMatchService{

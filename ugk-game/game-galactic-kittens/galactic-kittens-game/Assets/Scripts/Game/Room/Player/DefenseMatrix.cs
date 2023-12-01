@@ -35,12 +35,12 @@ namespace Game.Room
                 //TODO 通知客户端关闭护盾
                 isShieldActive = false;
 
-                GalacticKittensUseShieldResponse response = new GalacticKittensUseShieldResponse()
+                GalacticKittensShipShieldStateResponse response = new GalacticKittensShipShieldStateResponse()
                 {
                     //TODO 获取所属的飞船ID
                     State = 1
                 };
-                PlayerManager.Singleton.BroadcastMsg(MID.GalacticKittensUseShieldRes, response);
+                PlayerManager.Singleton.BroadcastMsg(MID.GalacticKittensShipShieldStateRes, response);
             }
         }
 

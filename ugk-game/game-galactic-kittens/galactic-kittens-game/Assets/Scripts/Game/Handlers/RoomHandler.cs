@@ -32,8 +32,8 @@ namespace Game.Handlers
 
             PlayerManager.Singleton.SendMsg(player, MID.GalacticKittensFireRes, response, ugkMessage.Seq);
         }
-        
-        
+
+
         /// <summary>
         /// 使用护盾
         /// </summary>
@@ -44,7 +44,7 @@ namespace Game.Handlers
             request.MergeFrom(ugkMessage.Bytes);
             Log.Trace($" receive use shield {player.Id}-{player.Nick}");
 
-           //TODO 使用护盾逻辑,获取玩家飞船，并添加护盾
+            //TODO 使用护盾逻辑,获取玩家飞船，并添加护盾 ，广播护盾消息 GalacticKittensShipShieldStateResponse
             GalacticKittensUseShieldResponse response = new GalacticKittensUseShieldResponse()
             {
                 Result = new MessageResult()
@@ -55,6 +55,26 @@ namespace Game.Handlers
             };
 
             PlayerManager.Singleton.SendMsg(player, MID.GalacticKittensFireRes, response, ugkMessage.Seq);
+        }
+
+        /// <summary>
+        /// 使用护盾
+        /// </summary>
+        [MessageMap((int)MID.GalacticKittensShipMoveStateReq)]
+        private static void ShipMoveState(Player player, UgkMessage ugkMessage)
+        {
+            var request = new GalacticKittensShipMoveStateRequest();
+            request.MergeFrom(ugkMessage.Bytes);
+            Log.Trace($"  {player.Id}-{player.Nick} ship state {request.State}");
+
+            GalacticKittensShipMoveStateResponse response = new GalacticKittensShipMoveStateResponse()
+            {
+                //TODO 获取飞船ID
+                State = request.State
+            };
+            PlayerManager.Singleton.SendMsg(player, MID.GalacticKittensShipMoveStateRes, response, ugkMessage.Seq);
+            PlayerManager.Singleton.BroadcastMsg(MID.GalacticKittensShipMoveStateRes, response,
+                excludePredicate: id => id == player.Id);
         }
     }
 }
