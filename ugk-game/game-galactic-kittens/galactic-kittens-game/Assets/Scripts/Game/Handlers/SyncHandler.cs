@@ -12,7 +12,7 @@ namespace Game.Handlers
         /// <summary>
         /// 快照插值同步
         /// </summary>
-        [MessageMap((int)MID.SnapSyncRes)]
+        [MessageMap((int)MID.SnapSyncReq)]
         private static void SnapSync(Player player, UgkMessage ugkMessage)
         {
             var request = new SnapSyncRequest();
@@ -23,7 +23,7 @@ namespace Game.Handlers
         /// <summary>
         /// 快照插值同步
         /// </summary>
-        [MessageMap((int)MID.PredictionSyncRes)]
+        [MessageMap((int)MID.PredictionSyncReq)]
         private static void PredictionSync(Player player, UgkMessage ugkMessage)
         {
             var request = new PredictionSyncRequest();

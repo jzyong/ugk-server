@@ -11,7 +11,7 @@ import (
 	"runtime"
 )
 
-// gate 入口
+// 入口
 func main() {
 	runtime.GOMAXPROCS(runtime.NumCPU())
 	config.InitConfigAndLog()
@@ -29,7 +29,6 @@ func main() {
 	util.WaitForTerminate()
 	m.Stop()
 
-	util.WaitForTerminate()
 }
 
 type ModuleManager struct {

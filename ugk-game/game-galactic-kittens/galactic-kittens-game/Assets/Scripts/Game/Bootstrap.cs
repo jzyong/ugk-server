@@ -17,7 +17,19 @@ namespace Game
         private void Start()
         {
             // 初始化
-            PlayerManager.Singleton.PlayerListReq();
+            if (Application.isEditor)
+            {
+                PlayerManager.Instance.PlayerListReq(0);
+            }
+            else
+            {
+                PlayerManager.Instance.PlayerListReq();
+            }
+            
         }
+
+
+       
+        
     }
 }

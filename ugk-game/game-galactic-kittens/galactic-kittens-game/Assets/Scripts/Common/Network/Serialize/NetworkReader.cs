@@ -79,6 +79,12 @@ namespace Common.Network.Serialize
             buffer = segment;
             Position = 0;
         }
+        
+        public void Reset()
+        {
+            buffer = null;
+            Position = 0;
+        }
 
 #if !UNITY_2021_3_OR_NEWER
         // Unity 2019 doesn't have the implicit byte[] to segment conversion yet

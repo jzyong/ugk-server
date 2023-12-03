@@ -45,19 +45,24 @@ const (
 	MID_PredictionSyncReq MID = 5242883
 	MID_PredictionSyncRes MID = 5242884
 	// Galactic-kittens match 3145728(3<<20)+ 524288(1<19)= 3670016
-	MID_GalacticKittensEnterRoomReq      MID = 3670017
-	MID_GalacticKittensEnterRoomRes      MID = 3670018
-	MID_GalacticKittensRoomInfoRes       MID = 3670020
-	MID_GalacticKittensPrepareReq        MID = 3670021
-	MID_GalacticKittensPrepareRes        MID = 3670022
-	MID_GalacticKittenSelectCharacterReq MID = 3670023
-	MID_GalacticKittenSelectCharacterRes MID = 3670024
-	MID_GalacticKittensQuitRoomReq       MID = 3670025
-	MID_GalacticKittensQuitRoomRes       MID = 3670026
-	MID_GalacticKittensObjectSpawnRes    MID = 3670028
-	MID_GalacticKittensObjectDieRes      MID = 3670030
-	MID_GalacticKittensFireReq           MID = 3670031
-	MID_GalacticKittensFireRes           MID = 3670032
+	MID_GalacticKittensEnterRoomReq       MID = 3670017
+	MID_GalacticKittensEnterRoomRes       MID = 3670018
+	MID_GalacticKittensRoomInfoRes        MID = 3670020
+	MID_GalacticKittensPrepareReq         MID = 3670021
+	MID_GalacticKittensPrepareRes         MID = 3670022
+	MID_GalacticKittenSelectCharacterReq  MID = 3670023
+	MID_GalacticKittenSelectCharacterRes  MID = 3670024
+	MID_GalacticKittensQuitRoomReq        MID = 3670025
+	MID_GalacticKittensQuitRoomRes        MID = 3670026
+	MID_GalacticKittensObjectSpawnRes     MID = 3670028
+	MID_GalacticKittensObjectDieRes       MID = 3670030
+	MID_GalacticKittensFireReq            MID = 3670031
+	MID_GalacticKittensFireRes            MID = 3670032
+	MID_GalacticKittensUseShieldReq       MID = 3670033
+	MID_GalacticKittensUseShieldRes       MID = 3670034
+	MID_GalacticKittensShipShieldStateRes MID = 3670036
+	MID_GalacticKittensShipMoveStateReq   MID = 3670037
+	MID_GalacticKittensShipMoveStateRes   MID = 3670038
 )
 
 // Enum value maps for MID.
@@ -91,36 +96,46 @@ var (
 		3670030: "GalacticKittensObjectDieRes",
 		3670031: "GalacticKittensFireReq",
 		3670032: "GalacticKittensFireRes",
+		3670033: "GalacticKittensUseShieldReq",
+		3670034: "GalacticKittensUseShieldRes",
+		3670036: "GalacticKittensShipShieldStateRes",
+		3670037: "GalacticKittensShipMoveStateReq",
+		3670038: "GalacticKittensShipMoveStateRes",
 	}
 	MID_value = map[string]int32{
-		"None":                             0,
-		"ServerHeartReq":                   1,
-		"ServerHeartRes":                   2,
-		"HeartReq":                         1000001,
-		"HeartRes":                         1000002,
-		"LoginReq":                         1000003,
-		"LoginRes":                         1000004,
-		"BindGameConnectReq":               1000005,
-		"BindGameConnectRes":               1000006,
-		"LoadPlayerReq":                    1048601,
-		"LoadPlayerRes":                    1048602,
-		"SnapSyncReq":                      5242881,
-		"SnapSyncRes":                      5242882,
-		"PredictionSyncReq":                5242883,
-		"PredictionSyncRes":                5242884,
-		"GalacticKittensEnterRoomReq":      3670017,
-		"GalacticKittensEnterRoomRes":      3670018,
-		"GalacticKittensRoomInfoRes":       3670020,
-		"GalacticKittensPrepareReq":        3670021,
-		"GalacticKittensPrepareRes":        3670022,
-		"GalacticKittenSelectCharacterReq": 3670023,
-		"GalacticKittenSelectCharacterRes": 3670024,
-		"GalacticKittensQuitRoomReq":       3670025,
-		"GalacticKittensQuitRoomRes":       3670026,
-		"GalacticKittensObjectSpawnRes":    3670028,
-		"GalacticKittensObjectDieRes":      3670030,
-		"GalacticKittensFireReq":           3670031,
-		"GalacticKittensFireRes":           3670032,
+		"None":                              0,
+		"ServerHeartReq":                    1,
+		"ServerHeartRes":                    2,
+		"HeartReq":                          1000001,
+		"HeartRes":                          1000002,
+		"LoginReq":                          1000003,
+		"LoginRes":                          1000004,
+		"BindGameConnectReq":                1000005,
+		"BindGameConnectRes":                1000006,
+		"LoadPlayerReq":                     1048601,
+		"LoadPlayerRes":                     1048602,
+		"SnapSyncReq":                       5242881,
+		"SnapSyncRes":                       5242882,
+		"PredictionSyncReq":                 5242883,
+		"PredictionSyncRes":                 5242884,
+		"GalacticKittensEnterRoomReq":       3670017,
+		"GalacticKittensEnterRoomRes":       3670018,
+		"GalacticKittensRoomInfoRes":        3670020,
+		"GalacticKittensPrepareReq":         3670021,
+		"GalacticKittensPrepareRes":         3670022,
+		"GalacticKittenSelectCharacterReq":  3670023,
+		"GalacticKittenSelectCharacterRes":  3670024,
+		"GalacticKittensQuitRoomReq":        3670025,
+		"GalacticKittensQuitRoomRes":        3670026,
+		"GalacticKittensObjectSpawnRes":     3670028,
+		"GalacticKittensObjectDieRes":       3670030,
+		"GalacticKittensFireReq":            3670031,
+		"GalacticKittensFireRes":            3670032,
+		"GalacticKittensUseShieldReq":       3670033,
+		"GalacticKittensUseShieldRes":       3670034,
+		"GalacticKittensShipShieldStateRes": 3670036,
+		"GalacticKittensShipMoveStateReq":   3670037,
+		"GalacticKittensShipMoveStateRes":   3670038,
 	}
 )
 
@@ -155,7 +170,7 @@ var File_constant_proto protoreflect.FileDescriptor
 
 var file_constant_proto_rawDesc = []byte{
 	0x0a, 0x0e, 0x63, 0x6f, 0x6e, 0x73, 0x74, 0x61, 0x6e, 0x74, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f,
-	0x2a, 0x80, 0x06, 0x0a, 0x03, 0x4d, 0x49, 0x44, 0x12, 0x08, 0x0a, 0x04, 0x4e, 0x6f, 0x6e, 0x65,
+	0x2a, 0xc2, 0x07, 0x0a, 0x03, 0x4d, 0x49, 0x44, 0x12, 0x08, 0x0a, 0x04, 0x4e, 0x6f, 0x6e, 0x65,
 	0x10, 0x00, 0x12, 0x12, 0x0a, 0x0e, 0x53, 0x65, 0x72, 0x76, 0x65, 0x72, 0x48, 0x65, 0x61, 0x72,
 	0x74, 0x52, 0x65, 0x71, 0x10, 0x01, 0x12, 0x12, 0x0a, 0x0e, 0x53, 0x65, 0x72, 0x76, 0x65, 0x72,
 	0x48, 0x65, 0x61, 0x72, 0x74, 0x52, 0x65, 0x73, 0x10, 0x02, 0x12, 0x0e, 0x0a, 0x08, 0x48, 0x65,
@@ -203,8 +218,20 @@ var file_constant_proto_rawDesc = []byte{
 	0x63, 0x4b, 0x69, 0x74, 0x74, 0x65, 0x6e, 0x73, 0x46, 0x69, 0x72, 0x65, 0x52, 0x65, 0x71, 0x10,
 	0x8f, 0x80, 0xe0, 0x01, 0x12, 0x1d, 0x0a, 0x16, 0x47, 0x61, 0x6c, 0x61, 0x63, 0x74, 0x69, 0x63,
 	0x4b, 0x69, 0x74, 0x74, 0x65, 0x6e, 0x73, 0x46, 0x69, 0x72, 0x65, 0x52, 0x65, 0x73, 0x10, 0x90,
-	0x80, 0xe0, 0x01, 0x42, 0x0a, 0x5a, 0x08, 0x2f, 0x6d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x62,
-	0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x80, 0xe0, 0x01, 0x12, 0x22, 0x0a, 0x1b, 0x47, 0x61, 0x6c, 0x61, 0x63, 0x74, 0x69, 0x63, 0x4b,
+	0x69, 0x74, 0x74, 0x65, 0x6e, 0x73, 0x55, 0x73, 0x65, 0x53, 0x68, 0x69, 0x65, 0x6c, 0x64, 0x52,
+	0x65, 0x71, 0x10, 0x91, 0x80, 0xe0, 0x01, 0x12, 0x22, 0x0a, 0x1b, 0x47, 0x61, 0x6c, 0x61, 0x63,
+	0x74, 0x69, 0x63, 0x4b, 0x69, 0x74, 0x74, 0x65, 0x6e, 0x73, 0x55, 0x73, 0x65, 0x53, 0x68, 0x69,
+	0x65, 0x6c, 0x64, 0x52, 0x65, 0x73, 0x10, 0x92, 0x80, 0xe0, 0x01, 0x12, 0x28, 0x0a, 0x21, 0x47,
+	0x61, 0x6c, 0x61, 0x63, 0x74, 0x69, 0x63, 0x4b, 0x69, 0x74, 0x74, 0x65, 0x6e, 0x73, 0x53, 0x68,
+	0x69, 0x70, 0x53, 0x68, 0x69, 0x65, 0x6c, 0x64, 0x53, 0x74, 0x61, 0x74, 0x65, 0x52, 0x65, 0x73,
+	0x10, 0x94, 0x80, 0xe0, 0x01, 0x12, 0x26, 0x0a, 0x1f, 0x47, 0x61, 0x6c, 0x61, 0x63, 0x74, 0x69,
+	0x63, 0x4b, 0x69, 0x74, 0x74, 0x65, 0x6e, 0x73, 0x53, 0x68, 0x69, 0x70, 0x4d, 0x6f, 0x76, 0x65,
+	0x53, 0x74, 0x61, 0x74, 0x65, 0x52, 0x65, 0x71, 0x10, 0x95, 0x80, 0xe0, 0x01, 0x12, 0x26, 0x0a,
+	0x1f, 0x47, 0x61, 0x6c, 0x61, 0x63, 0x74, 0x69, 0x63, 0x4b, 0x69, 0x74, 0x74, 0x65, 0x6e, 0x73,
+	0x53, 0x68, 0x69, 0x70, 0x4d, 0x6f, 0x76, 0x65, 0x53, 0x74, 0x61, 0x74, 0x65, 0x52, 0x65, 0x73,
+	0x10, 0x96, 0x80, 0xe0, 0x01, 0x42, 0x0a, 0x5a, 0x08, 0x2f, 0x6d, 0x65, 0x73, 0x73, 0x61, 0x67,
+	0x65, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (

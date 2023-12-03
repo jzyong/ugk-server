@@ -82,6 +82,7 @@
      <Compile Include="Assets\Scripts\Common\Network\Kcp\kcp2k\highlevel\Extensions.cs" />
      <Compile Include="Assets\Scripts\Common\Network\Sync\SnapTransform.cs" />
      <Compile Include="Assets\Scripts\Common\Tools\SnapshotInterpolation\Snapshot.cs" />
+     <Compile Include="Assets\Scripts\Game\Room\Player\SpaceShip.cs" />
      <Compile Include="Assets\Scripts\Game\Manager\DataManager.cs" />
      <Compile Include="Assets\Scripts\Common\Network\Serialize\NetworkReaderPool.cs" />
      <Compile Include="Assets\Scripts\Game\Messages\GameGalacticKittensGrpc.cs" />

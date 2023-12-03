@@ -40,6 +40,13 @@ type RoomLoadState struct {
 
 func (state *RoomLoadState) Enter(room *mode.Room) {
 	GetRoomManager().BroadcastRoomInfo(room)
+
+	//编辑器运行模式直接返回，不创建docker容器
+	if config.EditorMode {
+		room.StateMachine.ChangeState(GamingStateRoom)
+		return
+	}
+
 	// 请求agent-manager创建游戏服务
 	grpcClient, err := manager.GetServiceClientManager().GetGrpc(config2.GetZKServicePath(config.BaseConfig.Profile, config2.AgentManagerName, 0), 0)
 	if err != nil {

@@ -80,6 +80,9 @@
 * GalacticKittens客户端控制的使用快照插值同步，服务器控制的使用预测插值；Push coin使用快照插值同步
 * 显示网络同步统计信息
 * GalacticKittens 让服务器进行子弹命中判断，需要将客户端发射子弹的延迟加上，添加护盾开启关闭消息
+* GalacticKittens 背景异常
+* GalacticKittens 角色选择服务器没有同步获取
+* 同步添加判断是世界坐标还是相对坐标系
 
 
 

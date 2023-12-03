@@ -26,7 +26,7 @@ namespace Game.Handlers
             {
                 ClientTime = request.ClientTime
             };
-            PlayerManager.Singleton.SendMsg(player, MID.HeartRes, response, ugkMessage.Seq);
+            PlayerManager.Instance.SendMsg(player, MID.HeartRes, response, ugkMessage.Seq);
         }
     }
 }

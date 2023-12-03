@@ -23,8 +23,12 @@ func (service *MatchService) PlayerServerList(ctx context.Context, request *mess
 	response := &message.GalacticKittensPlayerServerListResponse{}
 
 	manager2.GetRoomManager().ProcessFun <- func() {
+		roomId := request.GetRoomId()
+		if roomId < 1 {
+			roomId = manager2.GetDataManager().GetServer().RoomId
+		}
 
-		room := manager2.GetRoomManager().GetRoom(request.GetRoomId())
+		room := manager2.GetRoomManager().GetRoom(roomId)
 		gateServers := make(map[int64]*message.ServerInfo, len(room.Players))
 		lobbyServers := make(map[int64]*message.ServerInfo, len(room.Players))
 		room.ProcessFun <- func() {
@@ -63,6 +67,7 @@ func (service *MatchService) PlayerServerList(ctx context.Context, request *mess
 			}
 			response.PlayerGateServers = gateServers
 			response.PlayerLobbyServers = lobbyServers
+			response.RoomId = roomId
 		}
 		wg.Done()
 	}

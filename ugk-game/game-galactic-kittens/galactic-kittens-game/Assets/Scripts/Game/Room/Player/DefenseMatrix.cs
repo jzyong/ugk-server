@@ -40,7 +40,7 @@ namespace Game.Room
                     //TODO 获取所属的飞船ID
                     State = 1
                 };
-                PlayerManager.Singleton.BroadcastMsg(MID.GalacticKittensShipShieldStateRes, response);
+                PlayerManager.Instance.BroadcastMsg(MID.GalacticKittensShipShieldStateRes, response);
             }
         }
 

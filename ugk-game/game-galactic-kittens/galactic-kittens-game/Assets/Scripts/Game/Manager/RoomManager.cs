@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using Common.Network;
+using Common.Network.Sync;
 using Common.Tools;
+using Game.Room.Player;
 using UnityEngine;
 
 namespace Game.Manager
@@ -11,6 +13,14 @@ namespace Game.Manager
     /// </summary>
     public class RoomManager : SingletonPersistent<RoomManager>
     {
+        [SerializeField] [Tooltip("飞船")] private SpaceShip _spaceShip;
+
+        /// <summary>
+        /// 飞船出生坐标
+        /// </summary>
+        private Vector3[] shipSpawnPositions = new[]
+            { new Vector3(-8, 4), new Vector3(-8, 1.5f), new Vector3(-8, -1f), new Vector3(-8, -3.5f) };
+
         /// <summary>
         /// 对象同步Id
         /// </summary>
@@ -27,25 +37,30 @@ namespace Game.Manager
         public void SpawnPlayers(List<Player> players)
         {
             GalacticKittensObjectSpawnResponse spawnResponse = new GalacticKittensObjectSpawnResponse();
-            //TODO 构建飞船对象,添加 SnapTransform
-            foreach (var player in players)
+            for (int i = 0; i < players.Count; i++)
             {
-                //TODO 根据角色创建对应的实体对象，添加SnapTransform组件
-
+                // 根据角色创建对应的实体对象，添加SnapTransform组件
+                var player = players[i];
+                var spaceShip = Instantiate(_spaceShip, shipSpawnPositions[i], Quaternion.identity,
+                    RoomManager.Instance.transform);
+                var snapTransform = spaceShip.GetComponent<SnapTransform>();
+                snapTransform.Id = player.Id;
+                snapTransform.OnSerialize(true);
                 GalacticKittensObjectSpawnResponse.Types.SpawnInfo spawnInfo =
                     new GalacticKittensObjectSpawnResponse.Types.SpawnInfo()
                     {
                         OwnerId = player.Id,
-                        Id = SyncId++,
-                        ConfigId = 1,
-                        //
-                        // SyncPayload = ; //TODO
+                        Id = player.Id,
+                        ConfigId = 1, //TODO 需要match 告知选择的那个角色对象
+                        SyncPayload = snapTransform.SyncData
                     };
-
+                snapTransform.SyncData = null;
+                SyncManager.Instance.AddSnapTransform(snapTransform); //添加同步对象
                 spawnResponse.Spawn.Add(spawnInfo);
+                Log.Info($"{player.Id} born in {shipSpawnPositions[i]}");
             }
 
-            PlayerManager.Singleton.BroadcastMsg(MID.GalacticKittensObjectSpawnRes, spawnResponse);
+            PlayerManager.Instance.BroadcastMsg(MID.GalacticKittensObjectSpawnRes, spawnResponse);
         }
 
         /// <summary>
@@ -70,15 +85,15 @@ namespace Game.Manager
         /// </summary>
         /// <param name="killerId"></param>
         /// <param name="dieId"></param>
-        public void DespawnObject(long killerId, long dieId, bool removeObject =true )
+        public void DespawnObject(long killerId, long dieId, bool removeObject = true)
         {
             if (removeObject)
-            {    
+            {
                 //移除的对象全部使用预测
                 SyncManager.Instance.RemovePredictionTransform(dieId);
             }
-            
-            
+
+
             //TODO 清除对象，发送消息
             GalacticKittensObjectDieResponse response = new GalacticKittensObjectDieResponse()
             {
@@ -87,10 +102,8 @@ namespace Game.Manager
                 // OwnerId = //TOD
             };
 
-            PlayerManager.Singleton.BroadcastMsg(MID.GalacticKittensObjectDieRes, response);
+            PlayerManager.Instance.BroadcastMsg(MID.GalacticKittensObjectDieRes, response);
         }
-        
-        
 
 
         /// <summary>
@@ -100,10 +113,10 @@ namespace Game.Manager
         {
             var client =
                 new GalacticKittensMatchService.GalacticKittensMatchServiceClient(GalacticKittensNetworkManager
-                    .singleton.MatchChannel);
+                    .Instance.MatchChannel);
             var request = new GalacticKittensGameFinishRequest()
             {
-                RoomId = GalacticKittensNetworkManager.singleton.ServerId
+                RoomId = GalacticKittensNetworkManager.Instance.ServerId
             };
             var response = client.gameFinishAsync(request).ResponseAsync.Result;
             Log.Info($"game finish :{response}");
@@ -114,7 +127,7 @@ namespace Game.Manager
             }
 
             // 解绑玩家网关映射
-            PlayerManager.Singleton.BindGateGameMapReq(false);
+            PlayerManager.Instance.BindGateGameMapReq(false);
 
             Application.Quit();
         }

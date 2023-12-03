@@ -15,7 +15,7 @@ namespace Common.Network.Serialize
         static readonly Pool<NetworkReaderPooled> Pool = new Pool<NetworkReaderPooled>(
             // byte[] will be assigned in GetReader
             () => new NetworkReaderPooled(new byte[]{}),
-            null,
+            reader =>reader.Reset(),
             // initial capacity to avoid allocations in the first few frames
             1000
         );

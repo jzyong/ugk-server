@@ -71,6 +71,7 @@ message GalacticKittensPlayerServerListResponse {
   MessageResult result = 1; //错误信息
   map<int64, ServerInfo> playerGateServers = 2; //玩家网关服务器信息
   map<int64, ServerInfo> playerLobbyServers = 3; //玩家大厅服务器信息
+  uint32 roomId= 4; //房间id
 }
 
 //游戏完成 内部

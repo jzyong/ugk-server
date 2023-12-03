@@ -108,7 +108,7 @@ namespace Common.Network
 
         void OnTransportError(TransportError error, string reason)
         {
-            Log.Warn("Client Transport Error: {error}: {reason}. This is fine.");
+            Log.Warn($"Client Transport Error: {error}: {reason}. This is fine.");
             OnErrorEvent?.Invoke(error, reason);
         }
 

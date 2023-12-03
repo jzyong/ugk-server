@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Common.Network;
 using Common.Network.Sync;
 using Common.Tools;
@@ -69,16 +70,24 @@ namespace Game.Manager
                 return;
             }
 
-            foreach (var kv in request.Payload)
+            try
             {
-                if (!_snapTransforms.TryGetValue(kv.Key, out SnapTransform snapTransform))
+                foreach (var kv in request.Payload)
                 {
-                    Debug.LogWarning($"同步对象{kv.Key} 不存在");
-                    continue;
-                }
+                    if (!_snapTransforms.TryGetValue(kv.Key, out SnapTransform snapTransform))
+                    {
+                        Debug.LogWarning($"同步对象{kv.Key} 不存在");
+                        continue;
+                    }
 
-                snapTransform.OnDeserialize(kv.Value, false);
+                    snapTransform.OnDeserialize(kv.Value, false);
+                }
             }
+            catch (Exception e)
+            {
+               Log.Error($"解析快照插值消息错误：{e}");
+            }
+           
         }
 
         /// <summary>
@@ -91,16 +100,24 @@ namespace Game.Manager
                 return;
             }
 
-            foreach (var kv in request.Payload)
+            try
             {
-                if (!_predictionTransforms.TryGetValue(kv.Key, out PredictionTransform predictionTransform))
+                foreach (var kv in request.Payload)
                 {
-                    Debug.LogWarning($"同步对象{kv.Key} 不存在");
-                    continue;
-                }
+                    if (!_predictionTransforms.TryGetValue(kv.Key, out PredictionTransform predictionTransform))
+                    {
+                        Debug.LogWarning($"同步对象{kv.Key} 不存在");
+                        continue;
+                    }
 
-                predictionTransform.OnDeserialize(ugkMessage, kv.Value, false);
+                    predictionTransform.OnDeserialize(ugkMessage, kv.Value, false);
+                }
             }
+            catch (Exception e)
+            {
+                Log.Error($"解析预测同步消息错误：{e}");
+            }
+           
         }
 
 
@@ -131,14 +148,14 @@ namespace Game.Manager
             //批量同步消息
             if (snapSyncMessage.Payload.Count > 0)
             {
-                PlayerManager.Singleton.BroadcastMsg(MID.SnapSyncRes, snapSyncMessage);
+                PlayerManager.Instance.BroadcastMsg(MID.SnapSyncRes, snapSyncMessage);
                 snapSyncMessage.Payload.Clear();
             }
 
             var predictionCount = predictionSyncMessage.Payload.Count;
             if (predictionCount > 0)
             {
-                PlayerManager.Singleton.BroadcastMsg(MID.PredictionSyncRes, predictionSyncMessage);
+                PlayerManager.Instance.BroadcastMsg(MID.PredictionSyncRes, predictionSyncMessage);
                 if (predictionCount > 64)
                 {
                     Debug.LogWarning($"同步消息太多{predictionCount} =>{predictionSyncMessage.Payload.Keys}");
@@ -171,7 +188,7 @@ namespace Game.Manager
 
             return false;
         }
-        
+
         /// <summary>
         /// 移除
         /// </summary>
@@ -194,6 +211,17 @@ namespace Game.Manager
             }
 
             return false;
+        }
+
+        public void AddSnapTransform(SnapTransform snapTransform)
+        {
+            _snapTransforms[snapTransform.Id] = snapTransform;
+        }
+
+
+        public void AddPredictionTransform(PredictionTransform predictionTransform)
+        {
+            _predictionTransforms[predictionTransform.Id] = predictionTransform;
         }
 
 

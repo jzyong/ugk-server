@@ -15,7 +15,7 @@ namespace Common.Network.Serialize
         // assign the internal buffer before reusing.
         static readonly Pool<NetworkWriterPooled> Pool = new Pool<NetworkWriterPooled>(
             () => new NetworkWriterPooled(),
-            null,
+            writer=>writer.Reset(),
             // initial capacity to avoid allocations in the first few frames
             // 1000 * 1200 bytes = around 1 MB.
             1000
@@ -26,7 +26,7 @@ namespace Common.Network.Serialize
         {
             // grab from pool & reset position
             NetworkWriterPooled writer = Pool.Get();
-            writer.Reset();
+            // writer.Reset();
             return writer;
         }
 

@@ -200,7 +200,7 @@ namespace Common.Network.Sync
         /// <summary>
         /// 发送同步数据,序列化
         /// </summary>
-        protected void OnSerialize(bool initialState)
+        public void OnSerialize(bool initialState)
         {
             using (NetworkWriterPooled writer = NetworkWriterPool.Get())
             {

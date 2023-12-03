@@ -47,7 +47,7 @@ namespace Game.Manager
         {
             if (player.GateClient == null)
             {
-                player.GateClient = GalacticKittensNetworkManager.singleton.GetGateClient(player.GateUrl);
+                player.GateClient = GalacticKittensNetworkManager.Instance.GetGateClient(player.GateUrl);
                 if (player.GateClient == null)
                 {
                     Log.Error($"{player.Id} message {mid} send fail: gate client {player.GateUrl} not find");
@@ -81,17 +81,20 @@ namespace Game.Manager
 
 
         /// <summary>
-        /// 请求玩家列表，并初始化网络 TODO 待测试,会阻塞主线程吗？
+        /// 请求玩家列表，并初始化网络
+        /// <param name="roomId">0 编辑器测试模式，匹配服分配，其他需要正确的id</param>
         /// </summary>
-        public void PlayerListReq()
+        public void PlayerListReq(uint roomId=1)
         {
             var client =
                 new GalacticKittensMatchService.GalacticKittensMatchServiceClient(GalacticKittensNetworkManager
-                    .singleton.MatchChannel);
+                    .Instance.MatchChannel);
             var request = new GalacticKittensPlayerServerListRequest()
             {
-                RoomId = GalacticKittensNetworkManager.singleton.ServerId
+                RoomId =roomId==0?roomId: GalacticKittensNetworkManager.Instance.ServerId
             };
+            
+            //TODO 需要获取玩家选择的角色等其他信息，不在大厅
             var response = client.playerServerListAsync(request).ResponseAsync.Result;
             Log.Info($"player list :{response}");
             if (response.Result != null && response.Result.Status != 200)
@@ -99,6 +102,8 @@ namespace Game.Manager
                 Log.Error($"get server list error:{response.Result.Msg}");
                 return;
             }
+
+            GalacticKittensNetworkManager.Instance.ServerId = response.RoomId;
 
             //网关
             Dictionary<uint, ServerInfo> gateServers = new Dictionary<uint, ServerInfo>(2);
@@ -112,7 +117,7 @@ namespace Game.Manager
                 gateServers[serverInfo.Id] = serverInfo;
             }
 
-            GalacticKittensNetworkManager.singleton.ConnectToGate(gateServers);
+            GalacticKittensNetworkManager.Instance.ConnectToGate(gateServers);
 
             //大厅
             Dictionary<uint, ServerInfo> lobbyServers = new Dictionary<uint, ServerInfo>(2);
@@ -124,7 +129,7 @@ namespace Game.Manager
                 player.LobbyId = serverInfo.Id;
             }
 
-            GalacticKittensNetworkManager.singleton.ConnectToLobby(lobbyServers);
+            GalacticKittensNetworkManager.Instance.ConnectToLobby(lobbyServers);
 
             // 向大厅请求玩家基础信息 
             PlayerInfoReq();
@@ -132,7 +137,7 @@ namespace Game.Manager
             //  创建网关连接
             BindGateGameMapReq();
 
-            // 切换场景 TODO 需要Unity开发快捷方式，待测试
+            // 切换场景 
             SceneManager.LoadScene("GalacticKittensGamePlay");
 
             RoomManager.Instance.SpawnPlayers(players);
@@ -142,7 +147,7 @@ namespace Game.Manager
         {
             foreach (var player in players)
             {
-                var channel = GalacticKittensNetworkManager.singleton.GetLobbyChannel(player.LobbyId);
+                var channel = GalacticKittensNetworkManager.Instance.GetLobbyChannel(player.LobbyId);
                 if (channel == null)
                 {
                     Log.Error($"{player.Id} lobby {player.LobbyId} channel not exist");

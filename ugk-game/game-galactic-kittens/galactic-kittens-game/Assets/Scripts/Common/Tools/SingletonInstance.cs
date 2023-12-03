@@ -10,7 +10,7 @@ namespace Common.Tools
         private static T instance = default(T);
 
 
-        public static T Singleton
+        public static T Instance
         {
             get
             {

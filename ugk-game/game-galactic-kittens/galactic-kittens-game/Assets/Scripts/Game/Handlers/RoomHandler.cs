@@ -30,7 +30,7 @@ namespace Game.Handlers
                 }
             };
 
-            PlayerManager.Singleton.SendMsg(player, MID.GalacticKittensFireRes, response, ugkMessage.Seq);
+            PlayerManager.Instance.SendMsg(player, MID.GalacticKittensFireRes, response, ugkMessage.Seq);
         }
 
 
@@ -54,7 +54,7 @@ namespace Game.Handlers
                 }
             };
 
-            PlayerManager.Singleton.SendMsg(player, MID.GalacticKittensFireRes, response, ugkMessage.Seq);
+            PlayerManager.Instance.SendMsg(player, MID.GalacticKittensFireRes, response, ugkMessage.Seq);
         }
 
         /// <summary>
@@ -72,8 +72,8 @@ namespace Game.Handlers
                 //TODO 获取飞船ID
                 State = request.State
             };
-            PlayerManager.Singleton.SendMsg(player, MID.GalacticKittensShipMoveStateRes, response, ugkMessage.Seq);
-            PlayerManager.Singleton.BroadcastMsg(MID.GalacticKittensShipMoveStateRes, response,
+            PlayerManager.Instance.SendMsg(player, MID.GalacticKittensShipMoveStateRes, response, ugkMessage.Seq);
+            PlayerManager.Instance.BroadcastMsg(MID.GalacticKittensShipMoveStateRes, response,
                 excludePredicate: id => id == player.Id);
         }
     }

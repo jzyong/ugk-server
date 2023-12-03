@@ -15,7 +15,7 @@ namespace Common.Network.Sync
         // selective sync 
         [Header("Selective Sync\nDon't change these at Runtime")]
         public bool syncPosition = true; // do not change at runtime!
-        public bool syncRotation = true; // do not change at runtime!
+        public bool syncRotation = false; // do not change at runtime!
         public bool syncScale = false; // do not change at runtime! rare. off by default.
 
         [Tooltip("消息发送间隔")] public double sendInterval = 0.033;

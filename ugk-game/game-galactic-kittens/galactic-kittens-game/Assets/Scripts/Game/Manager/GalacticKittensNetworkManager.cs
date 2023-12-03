@@ -14,7 +14,7 @@ namespace Game.Manager
     /// </summary>
     public class GalacticKittensNetworkManager : NetworkManager<Player>
     {
-        public static GalacticKittensNetworkManager singleton { get; private set; }
+        public static GalacticKittensNetworkManager Instance { get; private set; }
 
         // 后面从agent通过参数传输过来？
         [SerializeField] [Tooltip("匹配服Grpc地址")]
@@ -35,14 +35,12 @@ namespace Game.Manager
             Log.WriteLevel = Log.LogLevel.Info;
             base.Awake();
             Application.targetFrameRate = 30;
-            singleton = this;
+            Instance = this;
         }
 
         public override void Start()
         {
             base.Start();
-            // 初始化Grpc ，测试用
-            // ServerInfoRequest();
         }
 
 
@@ -71,7 +69,7 @@ namespace Game.Manager
                     var protoData = new byte[messageLength - 24];
                     Array.Copy(bytes, 28, protoData, 0, protoData.Length);
                     ugkMessage.Bytes = protoData;
-                    var player = PlayerManager.Singleton.GetPlayer(ugkMessage.PlayerId);
+                    var player = PlayerManager.Instance.GetPlayer(ugkMessage.PlayerId);
                     handler(player, ugkMessage);
                 }
             }
@@ -146,7 +144,7 @@ namespace Game.Manager
         /// <summary>
         /// 请求服务器信息,并创建相应的grpc和kcp连接(所有大厅和网关连接) ，测试用
         /// </summary>
-        private void ServerInfoRequest()
+        public void CreateTestConnect()
         {
             var client = new ServerService.ServerServiceClient(MatchChannel);
             var response = client.getServerInfoAsync(new GetServerInfoRequest()).ResponseAsync.Result;
