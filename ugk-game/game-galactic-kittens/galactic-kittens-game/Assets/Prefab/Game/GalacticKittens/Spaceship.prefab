@@ -208,6 +208,6 @@ MonoBehaviour:
   scalePrecision: 0.01
   onlySyncOnChange: 0
   interpolatePosition: 1
-  interpolateRotation: 1
-  interpolateScale: 1
+  interpolateRotation: 0
+  interpolateScale: 0
   rotationSensitivity: 0.01

@@ -41,23 +41,27 @@ namespace Game.Manager
             {
                 // 根据角色创建对应的实体对象，添加SnapTransform组件
                 var player = players[i];
-                var spaceShip = Instantiate(_spaceShip, shipSpawnPositions[i], Quaternion.identity,
+                var spawnPosition = shipSpawnPositions[i];
+                var spaceShip = Instantiate(_spaceShip, spawnPosition, Quaternion.identity,
                     RoomManager.Instance.transform);
                 var snapTransform = spaceShip.GetComponent<SnapTransform>();
                 snapTransform.Id = player.Id;
-                snapTransform.OnSerialize(true);
                 GalacticKittensObjectSpawnResponse.Types.SpawnInfo spawnInfo =
                     new GalacticKittensObjectSpawnResponse.Types.SpawnInfo()
                     {
                         OwnerId = player.Id,
                         Id = player.Id,
                         ConfigId = 1, //TODO 需要match 告知选择的那个角色对象
-                        SyncPayload = snapTransform.SyncData
+                        Position = new Vector3D()
+                        {
+                            X = spawnPosition.x,
+                            Y = spawnPosition.y,
+                            Z = spawnPosition.z
+                        }
                     };
-                snapTransform.SyncData = null;
                 SyncManager.Instance.AddSnapTransform(snapTransform); //添加同步对象
                 spawnResponse.Spawn.Add(spawnInfo);
-                Log.Info($"{player.Id} born in {shipSpawnPositions[i]}");
+                Log.Info($"{player.Id} born in {spawnPosition}");
             }
 
             PlayerManager.Instance.BroadcastMsg(MID.GalacticKittensObjectSpawnRes, spawnResponse);

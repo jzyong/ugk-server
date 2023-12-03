@@ -96,7 +96,7 @@ message GalacticKittensObjectSpawnResponse{
     int64 ownerId = 1; //拥有者Id
     int64 id= 2; //对象唯一id
     uint32 configId= 3; //配置id 1玩家；20Boss；30玩家子弹，31敌人子弹；
-    bytes syncPayload=4; //同步对象初始化数据
+    Vector3D position =4; //出生位置
   }
 
 }

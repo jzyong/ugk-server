@@ -17,7 +17,7 @@ namespace Game.Handlers
         {
             var request = new SnapSyncRequest();
             request.MergeFrom(ugkMessage.Bytes);
-            SyncManager.Instance.OnSnapSyncReceive(request);
+            SyncManager.Instance.OnSnapSyncReceive(ugkMessage,request);
         }
 
         /// <summary>

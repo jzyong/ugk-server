@@ -20,7 +20,7 @@ namespace Game.Handlers
         {
             var response = new ServerHeartResponse();
             response.MergeFrom(ugkMessage.Bytes);
-            Log.Debug($" receive server heart: {ugkMessage.TimeStamp} {response}");
+           // Log.Debug($" receive server heart: {ugkMessage.TimeStamp} {response}");
         }
         
         

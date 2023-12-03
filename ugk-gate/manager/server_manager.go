@@ -194,7 +194,12 @@ func gameChannelActive(session *kcp.UDPSession) *GameKcpClient {
 // 连接关闭
 // 客户端强制杀进程，服务器不知道连接断开。kcp-go源码没有示例,因此使用自定义心跳（每2s请求一次心跳，超过10s断开连接）
 func gameChannelInactive(client *GameKcpClient, err error) {
-	log.Info("%d - %s 连接关闭:%s", client.Id, client.UdpSession.RemoteAddr(), err)
+	defer log.Info("%d - %s 连接关闭:%s", client.Id, client.UdpSession.RemoteAddr(), err)
+	defer func() {
+		if err := recover(); err != nil {
+			log.Error("游戏服连接异常：%v", err)
+		}
+	}()
 	// 移除客户端对象
 	GetServerManager().removeGameServer(client)
 	close(client.CloseChan)

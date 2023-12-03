@@ -62,8 +62,7 @@ namespace Game.Manager
         /// <summary>
         /// 收到同步消息
         /// </summary>
-        /// <param name="request"></param>
-        public void OnSnapSyncReceive(SnapSyncRequest request)
+        public void OnSnapSyncReceive(UgkMessage ugkMessage,SnapSyncRequest request)
         {
             if (!gameObject.activeSelf)
             {
@@ -80,7 +79,7 @@ namespace Game.Manager
                         continue;
                     }
 
-                    snapTransform.OnDeserialize(kv.Value, false);
+                    snapTransform.OnDeserialize(ugkMessage,kv.Value, false);
                 }
             }
             catch (Exception e)

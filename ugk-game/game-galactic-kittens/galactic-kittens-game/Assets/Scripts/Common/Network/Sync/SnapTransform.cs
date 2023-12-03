@@ -24,7 +24,7 @@ namespace Common.Network.Sync
         [Header("Sync Only If Changed")]
         [Tooltip("When true, changes are not sent unless greater than sensitivity values below.")]
         public bool onlySyncOnChange = true;
-        
+
         // interpolation is on by default, but can be disabled to jump to
         // the destination immediately. some projects need this.
         [Header("Interpolation")] [Tooltip("Set to false to have a snap-like effect on position movement.")]
@@ -36,13 +36,13 @@ namespace Common.Network.Sync
         [Tooltip(
             "Set to false to remove scale smoothing. Example use-case: Instant flipping of sprites that use -X and +X for direction.")]
         public bool interpolateScale = true;
-        
+
         [Header("Rotation")] [Tooltip("Sensitivity of changes needed before an updated state is sent over the network")]
         public float rotationSensitivity = 0.01f;
 
         // Used to store last sent snapshots
         protected TransformSnapshot last;
-        
+
         /// <summary>
         /// 同步数据
         /// </summary>
@@ -96,6 +96,8 @@ namespace Common.Network.Sync
             if (!scale.HasValue)
                 scale = snapshots.Count > 0 ? snapshots.Values[snapshots.Count - 1].scale : target.lossyScale;
 
+            //Log.Info($"收到Transform position={position.Value} rotation={rotation.Value} scale={scale.Value} remoteTime={timeStamp} localTime={Time.unscaledTime}");
+
             // insert transform snapshot
             SnapshotInterpolation.InsertIfNotExists(snapshots, new TransformSnapshot(
                 timeStamp, // arrival remote timestamp. NOT remote time.
@@ -106,38 +108,32 @@ namespace Common.Network.Sync
             ));
         }
 
-        // apply a snapshot to the Transform.
-        // -> start, end, interpolated are all passed in caes they are needed
-        // -> a regular game would apply the 'interpolated' snapshot
-        // -> a board game might want to jump to 'goal' directly
-        // (it's easier to always interpolate and then apply selectively,
-        //  instead of manually interpolating x, y, z, ... depending on flags)
-        // => internal for testing
-        //
-        // NOTE: stuck detection is unnecessary here.
-        //       we always set transform.position anyway, we can't get stuck. 
-        protected virtual void Apply(TransformSnapshot interpolated, TransformSnapshot endGoal)
-        {
-            // local position/rotation for VR support
-            //
-            // if syncPosition/Rotation/Scale is disabled then we received nulls
-            // -> current position/rotation/scale would've been added as snapshot
-            // -> we still interpolated
-            // -> but simply don't apply it. if the user doesn't want to sync
-            //    scale, then we should not touch scale etc.
 
+        protected virtual void Apply(TransformSnapshot from, TransformSnapshot to, float t)
+        {
             if (syncPosition)
-                target.position = interpolatePosition ? interpolated.position : endGoal.position;
+            {
+                target.position = interpolatePosition
+                    ? Vector3.LerpUnclamped(from.position, to.position, (float)t)
+                    : to.position;
+            }
 
             if (syncRotation)
-                target.rotation = interpolateRotation ? interpolated.rotation : endGoal.rotation;
+            {
+                target.rotation = interpolateRotation
+                    ? Quaternion.SlerpUnclamped(from.rotation, to.rotation, (float)t)
+                    : to.rotation;
+            }
+
 
             // Unity doesn't support setting world scale.
             // OnValidate disables syncScale in world mode.
             // else
             // target.lossyScale = scale; //
             if (syncScale)
-                target.localScale = interpolateScale ? interpolated.scale : endGoal.scale;
+            {
+                target.localScale = interpolateScale ? Vector3.LerpUnclamped(from.scale, to.scale, t) : to.scale;
+            }
         }
 
         /// <summary>
@@ -191,9 +187,9 @@ namespace Common.Network.Sync
                     out TransformSnapshot to,
                     out double t);
 
-                // interpolate & apply
-                TransformSnapshot computed = TransformSnapshot.Interpolate(from, to, t);
-                Apply(computed, to);
+                //Log.Info($"快照数量:{snapshots.Count} from:{from.position} to:{to.position} t={t}");
+                //插值并引用
+                Apply(from, to, (float)t);
             }
         }
 
@@ -268,7 +264,7 @@ namespace Common.Network.Sync
         /// </summary>
         /// <param name="data"></param>
         /// <param name="initialState"></param>
-        public void OnDeserialize(ByteString data, bool initialState)
+        public void OnDeserialize(UgkMessage ugkMessage, ByteString data, bool initialState)
         {
             var segment = new ArraySegment<byte>(data.ToByteArray());
             using (NetworkReaderPooled reader = NetworkReaderPool.Get(segment))
@@ -318,7 +314,8 @@ namespace Common.Network.Sync
                     }
                 }
 
-                OnReceiveTransform(position, rotation, scale);
+                //保存sendInterval时间段快照数据，让平滑移动 
+                OnReceiveTransform(position, rotation, scale, ugkMessage.GetTime() + sendInterval);
 
                 // save deserialized as 'last' for next delta compression
                 if (syncPosition)
@@ -329,7 +326,7 @@ namespace Common.Network.Sync
 
 
         // check if position / rotation / scale changed since last sync 
-        protected  bool Changed(TransformSnapshot current) =>
+        protected bool Changed(TransformSnapshot current) =>
             // position is quantized and delta compressed.
             // only consider it changed if the quantized representation is changed.
             QuantizedChanged(last.position, current.position, positionPrecision) ||
@@ -352,22 +349,22 @@ namespace Common.Network.Sync
 
 
         // server broadcasts sync message to all clients
-        protected  void OnReceiveTransform(Vector3? position, Quaternion? rotation, Vector3? scale)
+        protected void OnReceiveTransform(Vector3? position, Quaternion? rotation, Vector3? scale, double timeStamp)
         {
             // 'only sync on change' needs a correction on every new move sequence.
-            if (onlySyncOnChange && NeedsCorrection(snapshots, Time.unscaledTime, sendInterval, 2))
+            if (onlySyncOnChange && NeedsCorrection(snapshots, timeStamp, sendInterval, 2))
             {
                 RewriteHistory(
                     snapshots,
-                    Time.unscaledTime, // arrival remote timestamp. NOT remote timeline.
-                   Time.unscaledTime, // Unity 2019 doesn't have timeAsDouble yet
+                    timeStamp, // arrival remote timestamp. NOT remote timeline.
+                    Time.unscaledTime, // Unity 2019 doesn't have timeAsDouble yet
                     sendInterval,
                     target.position,
                     target.rotation,
                     target.lossyScale);
             }
 
-            AddSnapshot(Time.unscaledTime, position, rotation, scale);
+            AddSnapshot(timeStamp, position, rotation, scale);
         }
 
         // only sync on change /////////////////////////////////////////////////

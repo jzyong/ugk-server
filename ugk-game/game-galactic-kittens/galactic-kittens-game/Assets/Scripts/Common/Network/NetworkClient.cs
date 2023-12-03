@@ -140,7 +140,7 @@ namespace Common.Network
             byte[] playerIdBytes = BitConverter.GetBytes(playerId);
             byte[] msgId = BitConverter.GetBytes(mid);
             byte[] seqBytes = BitConverter.GetBytes(seq);
-            long time = (long)(Time.time*1000); 
+            long time = (long)(Time.unscaledTime*1000); 
             byte[] timeStamp = BitConverter.GetBytes(time);
             byte[] datas = new byte[28 + data.Length];
 
