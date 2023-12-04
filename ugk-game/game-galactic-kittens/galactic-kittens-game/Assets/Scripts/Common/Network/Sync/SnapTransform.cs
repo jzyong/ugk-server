@@ -109,7 +109,7 @@ namespace Common.Network.Sync
         }
 
 
-        protected virtual void Apply(TransformSnapshot from, TransformSnapshot to, float t)
+        protected  void Apply(TransformSnapshot from, TransformSnapshot to, float t)
         {
             if (syncPosition)
             {
@@ -139,7 +139,7 @@ namespace Common.Network.Sync
         /// <summary>
         /// 
         /// </summary>
-        public virtual void Reset()
+        public  void Reset()
         {
             // disabled objects aren't updated anymore.
             // so let's clear the buffers.
@@ -148,12 +148,12 @@ namespace Common.Network.Sync
             last = new TransformSnapshot(0, 0, Vector3.zero, Quaternion.identity, Vector3.zero);
         }
 
-        protected virtual void OnEnable()
+        protected  void OnEnable()
         {
             Reset();
         }
 
-        protected virtual void OnDisable()
+        protected  void OnDisable()
         {
             Reset();
         }
@@ -173,7 +173,7 @@ namespace Common.Network.Sync
             }
         }
 
-        protected virtual void UpdateClient()
+        protected  void UpdateClient()
         {
             // only while we have snapshots
             if (snapshots.Count > 0)
@@ -262,8 +262,6 @@ namespace Common.Network.Sync
         /// <summary>
         /// 接收同步数据
         /// </summary>
-        /// <param name="data"></param>
-        /// <param name="initialState"></param>
         public void OnDeserialize(UgkMessage ugkMessage, ByteString data, bool initialState)
         {
             var segment = new ArraySegment<byte>(data.ToByteArray());

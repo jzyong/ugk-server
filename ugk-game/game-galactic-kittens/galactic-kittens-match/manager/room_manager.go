@@ -75,28 +75,31 @@ func (m *RoomManager) GetRoomByPlayerId(playerId int64) *mode.Room {
 func (m *RoomManager) autoAssignRoom(playerId int64) *mode.Room {
 	for _, room := range m.IdRooms {
 		if len(room.Players) < 4 && room.StateMachine.IsInState(InitStateRoom) {
+			m.PlayerRooms[playerId] = room.Id
 			return room
 		}
 	}
 	server := GetDataManager().GetServer()
-	server.RoomId += 1
-	//TODO 待测试
-	serverData := manager.GetMongoManager().StructToM(server)
-	GetDataManager().DataProcessChan <- func() {
-		GetDataManager().SaveServer(serverData)
-	}
-
-	return m.GetRoom(server.RoomId)
+	room := m.GetRoom(server.RoomId)
+	m.PlayerRooms[playerId] = room.Id
+	return room
 }
 
 func (m *RoomManager) GetRoom(id uint32) *mode.Room {
 	if room, ok := m.IdRooms[id]; ok {
 		return room
 	} else {
-		room = mode.NewRoom(id)
+		server := GetDataManager().GetServer()
+		server.RoomId += 1
+		room = mode.NewRoom(server.RoomId)
 		room.StateMachine = &fsm.DefaultStateMachine[*mode.Room]{Owner: room}
 		room.StateMachine.SetInitialState(InitStateRoom)
-		m.IdRooms[id] = room
+		m.IdRooms[room.Id] = room
+
+		serverData := manager.GetMongoManager().StructToM(server)
+		GetDataManager().DataProcessChan <- func() {
+			GetDataManager().SaveServer(serverData)
+		}
 		go roomRun(room)
 		return room
 	}
@@ -172,6 +175,7 @@ func handRequest(room *mode.Room, msg *mode2.UgkMessage) {
 	for _, p := range room.Players {
 		if p.Id == msg.PlayerId {
 			player = p
+			break
 		}
 	}
 	if player != nil {
@@ -180,7 +184,7 @@ func handRequest(room *mode.Room, msg *mode2.UgkMessage) {
 
 	handFunc(player, room, msg.Client.(*manager.GateKcpClient), msg)
 	room.SetHeartTime(util.Now())
-	log.Debug("%d 收到消息 mid=%d seq=%d", room.Id, msg.MessageId, msg.Seq)
+	log.Debug("%d 收到消息 mid=%d seq=%d playerId=%d 玩家数=%d", room.Id, msg.MessageId, msg.Seq, msg.PlayerId, len(room.Players))
 }
 
 // 房间每秒监测

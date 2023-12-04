@@ -155,7 +155,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6010710980933777190}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -206,7 +206,7 @@ MonoBehaviour:
   compressRotation: 1
   positionPrecision: 0.01
   scalePrecision: 0.01
-  onlySyncOnChange: 0
+  onlySyncOnChange: 1
   interpolatePosition: 1
   interpolateRotation: 0
   interpolateScale: 0
