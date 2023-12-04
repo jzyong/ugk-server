@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Common.Network;
 using Common.Tools;
 using Google.Protobuf;
 using UnityEngine;
@@ -13,6 +12,10 @@ namespace Game.Manager
     /// </summary>
     public class Player : Person
     {
+        /// <summary>
+        /// 选择的角色id
+        /// </summary>
+        public Int32 CharacterId { get; set; }
     }
 
     /// <summary>
@@ -94,7 +97,7 @@ namespace Game.Manager
                 RoomId =roomId==0?roomId: GalacticKittensNetworkManager.Instance.ServerId
             };
             
-            //TODO 需要获取玩家选择的角色等其他信息，不在大厅
+            
             var response = client.playerServerListAsync(request).ResponseAsync.Result;
             Log.Info($"player list :{response}");
             if (response.Result != null && response.Result.Status != 200)
@@ -109,17 +112,21 @@ namespace Game.Manager
             Dictionary<uint, ServerInfo> gateServers = new Dictionary<uint, ServerInfo>(2);
             foreach (var info in response.PlayerGateServers)
             {
-                var player = new Player();
-                player.Id = info.Key;
+                var player = new Player
+                {
+                    Id = info.Key
+                };
                 var serverInfo = info.Value;
                 player.GateUrl = serverInfo.GrpcUrl;
+                var playerInfo = response.PlayerInfos[player.Id];
+                player.CharacterId = playerInfo.CharacterId;
                 players.Add(player);
                 gateServers[serverInfo.Id] = serverInfo;
             }
 
             GalacticKittensNetworkManager.Instance.ConnectToGate(gateServers);
 
-            //大厅
+            //大厅 不用连接大厅，通过match中转连接大厅可能更好，集中处理相关逻辑
             Dictionary<uint, ServerInfo> lobbyServers = new Dictionary<uint, ServerInfo>(2);
             foreach (var info in response.PlayerLobbyServers)
             {

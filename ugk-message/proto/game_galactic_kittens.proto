@@ -72,6 +72,11 @@ message GalacticKittensPlayerServerListResponse {
   map<int64, ServerInfo> playerGateServers = 2; //玩家网关服务器信息
   map<int64, ServerInfo> playerLobbyServers = 3; //玩家大厅服务器信息
   uint32 roomId= 4; //房间id
+  map<int64,PlayerInfo> playerInfos= 5; //玩家信息
+
+  message PlayerInfo{
+    int32 CharacterId= 1; //选择的角色ID
+  }
 }
 
 //游戏完成 内部
@@ -95,7 +100,7 @@ message GalacticKittensObjectSpawnResponse{
   message SpawnInfo{
     int64 ownerId = 1; //拥有者Id
     int64 id= 2; //对象唯一id
-    uint32 configId= 3; //配置id 1玩家；20Boss；30玩家子弹，31敌人子弹；
+    uint32 configId= 3; //配置id 0-3玩家飞船；20Boss；30玩家子弹，31敌人子弹；
     Vector3D position =4; //出生位置
   }
 

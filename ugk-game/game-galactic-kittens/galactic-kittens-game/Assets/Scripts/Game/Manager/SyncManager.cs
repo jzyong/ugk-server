@@ -17,12 +17,12 @@ namespace Game.Manager
         /// <summary>
         /// 场景中所有快照同步对象
         /// </summary>
-        private Dictionary<long, SnapTransform> _snapTransforms = new Dictionary<long, SnapTransform>();
+        private readonly Dictionary<long, SnapTransform> _snapTransforms = new Dictionary<long, SnapTransform>();
 
         /// <summary>
         /// 场景中所有预测同步对象
         /// </summary>
-        private Dictionary<long, PredictionTransform> _predictionTransforms =
+        private readonly Dictionary<long, PredictionTransform> _predictionTransforms =
             new Dictionary<long, PredictionTransform>();
 
         /// <summary>

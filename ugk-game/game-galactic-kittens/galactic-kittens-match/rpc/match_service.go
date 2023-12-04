@@ -31,6 +31,7 @@ func (service *MatchService) PlayerServerList(ctx context.Context, request *mess
 		room := manager2.GetRoomManager().GetRoom(roomId)
 		gateServers := make(map[int64]*message.ServerInfo, len(room.Players))
 		lobbyServers := make(map[int64]*message.ServerInfo, len(room.Players))
+		playerInfos := make(map[int64]*message.GalacticKittensPlayerServerListResponse_PlayerInfo, len(room.Players))
 		room.ProcessFun <- func() {
 			defer wg.Done()
 
@@ -64,9 +65,14 @@ func (service *MatchService) PlayerServerList(ctx context.Context, request *mess
 					}
 					lobbyServers[player.Id] = serverInfo
 				}
+
+				playerInfo := &message.GalacticKittensPlayerServerListResponse_PlayerInfo{CharacterId: player.CharacterId}
+				playerInfos[player.Id] = playerInfo
+
 			}
 			response.PlayerGateServers = gateServers
 			response.PlayerLobbyServers = lobbyServers
+			response.PlayerInfos = playerInfos
 			response.RoomId = roomId
 		}
 		wg.Done()

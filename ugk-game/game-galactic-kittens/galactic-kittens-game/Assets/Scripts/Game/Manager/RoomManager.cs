@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Common.Network;
+﻿using System.Collections.Generic;
 using Common.Network.Sync;
 using Common.Tools;
 using Game.Room.Player;
@@ -13,12 +11,12 @@ namespace Game.Manager
     /// </summary>
     public class RoomManager : SingletonPersistent<RoomManager>
     {
-        [SerializeField] [Tooltip("飞船")] private SpaceShip _spaceShip;
+        [SerializeField] [Tooltip("飞船，服务器只需要一个简单对象即可")] private SpaceShip _spaceShip;
 
         /// <summary>
         /// 飞船出生坐标
         /// </summary>
-        private Vector3[] shipSpawnPositions = new[]
+        private readonly Vector3[] shipSpawnPositions = new[]
             { new Vector3(-8, 4), new Vector3(-8, 1.5f), new Vector3(-8, -1f), new Vector3(-8, -3.5f) };
 
         /// <summary>
@@ -43,7 +41,7 @@ namespace Game.Manager
                 var player = players[i];
                 var spawnPosition = shipSpawnPositions[i];
                 var spaceShip = Instantiate(_spaceShip, spawnPosition, Quaternion.identity,
-                    RoomManager.Instance.transform);
+                    Instance.transform);
                 var snapTransform = spaceShip.GetComponent<SnapTransform>();
                 snapTransform.Id = player.Id;
                 GalacticKittensObjectSpawnResponse.Types.SpawnInfo spawnInfo =
@@ -51,7 +49,7 @@ namespace Game.Manager
                     {
                         OwnerId = player.Id,
                         Id = player.Id,
-                        ConfigId = 1, //TODO 需要match 告知选择的那个角色对象
+                        ConfigId = (uint)player.CharacterId, //0-3
                         Position = new Vector3D()
                         {
                             X = spawnPosition.x,
@@ -81,14 +79,12 @@ namespace Game.Manager
         /// <param name="player"></param>
         public void SpawnBullet(Player player)
         {
-            //TODO 获取玩家位置，产出子弹 ，子弹碰撞监测
+            //TODO 获取玩家位置，产出子弹 ，子弹碰撞监测,prefab
         }
 
         /// <summary>
         /// 对象死亡
         /// </summary>
-        /// <param name="killerId"></param>
-        /// <param name="dieId"></param>
         public void DespawnObject(long killerId, long dieId, bool removeObject = true)
         {
             if (removeObject)
