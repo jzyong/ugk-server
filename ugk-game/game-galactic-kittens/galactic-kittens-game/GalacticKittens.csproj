@@ -108,7 +108,9 @@
      <Compile Include="Assets\Scripts\Game\Handlers\ServerHandler.cs" />
      <Compile Include="Assets\Scripts\Common\Network\NetworkClient.cs" />
      <Compile Include="Assets\Scripts\Game\Manager\GalacticKittensNetworkManager.cs" />
+     <Compile Include="Assets\Scripts\Game\Room\Player\SpaceshipBullet.cs" />
      <Compile Include="Assets\Scripts\Common\Network\Kcp\kcp2k\kcp\Utils.cs" />
+     <Compile Include="Assets\Scripts\Game\Messages\ProtoUtil.cs" />
      <Compile Include="Assets\Scripts\Game\Messages\Common.cs" />
      <Compile Include="Assets\Scripts\Common\Network\Transport.cs" />
      <Compile Include="Assets\Scripts\Common\Tools\Person.cs" />

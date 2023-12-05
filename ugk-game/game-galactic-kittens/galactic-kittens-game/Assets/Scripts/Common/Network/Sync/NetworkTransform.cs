@@ -1,3 +1,4 @@
+using Common.Network.Serialize;
 using Common.Tools;
 using UnityEngine;
 
@@ -69,6 +70,24 @@ namespace Common.Network.Sync
         {
             // set target to self if none yet
             if (target == null) target = transform;
+        }
+        
+        /// <summary>
+        /// 设置最后一次反序列化缓存的坐标，增量压缩还原需要
+        /// </summary>
+        /// <param name="position"></param>
+        public void SetLastDeserializedPositon(Vector3 position)
+        {
+            Compression.ScaleToLong(position, positionPrecision, out lastDeserializedPosition);
+        }
+        
+        /// <summary>
+        /// 设置最后一次反序列化缓存的缩放，增量压缩还原需要
+        /// </summary>
+        /// <param name="scale"></param>
+        public void SetLastDeserializedScale(Vector3 scale)
+        {
+            Compression.ScaleToLong(scale, scalePrecision, out lastDeserializedScale);
         }
 
 

@@ -28,7 +28,7 @@ namespace Game.Room
                 damagable.Hit(damage);
                 if (m_owner==BulletOwner.player)
                 {
-                    // 增加玩家命中计数
+                    // 增加玩家命中计数 TODO
                 }
 
                 //  广播子弹消失

@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
 using Common.Network.Sync;
 using Common.Tools;
+using Game.Messages;
 using Game.Room.Player;
+using Network.Sync;
 using UnityEngine;
 
 namespace Game.Manager
@@ -11,13 +13,19 @@ namespace Game.Manager
     /// </summary>
     public class RoomManager : SingletonPersistent<RoomManager>
     {
-        [SerializeField] [Tooltip("飞船，服务器只需要一个简单对象即可")] private SpaceShip _spaceShip;
+        [SerializeField] [Tooltip("飞船，服务器只需要一个简单对象即可")]
+        private SpaceShip _spaceShip;
+
+        private SpaceshipBullet _spaceshipBullet;
+
 
         /// <summary>
         /// 飞船出生坐标
         /// </summary>
         private readonly Vector3[] shipSpawnPositions = new[]
             { new Vector3(-8, 4), new Vector3(-8, 1.5f), new Vector3(-8, -1f), new Vector3(-8, -3.5f) };
+
+        private Dictionary<long, SpaceShip> _spaceShips = new Dictionary<long, SpaceShip>(4);
 
         /// <summary>
         /// 对象同步Id
@@ -59,6 +67,7 @@ namespace Game.Manager
                     };
                 SyncManager.Instance.AddSnapTransform(snapTransform); //添加同步对象
                 spawnResponse.Spawn.Add(spawnInfo);
+                _spaceShips[player.Id] = spaceShip;
                 Log.Info($"{player.Id} born in {spawnPosition}");
             }
 
@@ -79,7 +88,29 @@ namespace Game.Manager
         /// <param name="player"></param>
         public void SpawnBullet(Player player)
         {
-            //TODO 获取玩家位置，产出子弹 ，子弹碰撞监测,prefab
+            //TODO 子弹碰撞监测,prefab 待测试
+            GalacticKittensObjectSpawnResponse spawnResponse = new GalacticKittensObjectSpawnResponse();
+            SpaceShip spaceShip = _spaceShips[player.Id];
+
+            var spawnPosition = spaceShip.transform.position;
+            var spaceshipBullet = Instantiate(_spaceshipBullet, spawnPosition, Quaternion.identity,
+                Instance.transform);
+            var predictionTransform = spaceshipBullet.GetComponent<PredictionTransform>();
+            predictionTransform.Id = SyncId++;
+            GalacticKittensObjectSpawnResponse.Types.SpawnInfo spawnInfo =
+                new GalacticKittensObjectSpawnResponse.Types.SpawnInfo()
+                {
+                    OwnerId = player.Id,
+                    Id = predictionTransform.Id,
+                    ConfigId = 30, 
+                    Position = ProtoUtil.BuildVector3D(spawnPosition),
+                    LinearVelocity = ProtoUtil.BuildVector3D(spaceshipBullet.linearVelocity),
+                };
+            SyncManager.Instance.AddPredictionTransform(predictionTransform); //添加同步对象
+            spawnResponse.Spawn.Add(spawnInfo);
+            Log.Info($"{player.Id} bullet born in {spawnPosition}");
+
+            PlayerManager.Instance.BroadcastMsg(MID.GalacticKittensObjectSpawnRes, spawnResponse);
         }
 
         /// <summary>

@@ -102,6 +102,7 @@ message GalacticKittensObjectSpawnResponse{
     int64 id= 2; //对象唯一id
     uint32 configId= 3; //配置id 0-3玩家飞船；20Boss；30玩家子弹，31敌人子弹；
     Vector3D position =4; //出生位置
+    Vector3D linearVelocity = 5; //线速度
   }
 
 }
