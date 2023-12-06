@@ -94,6 +94,7 @@
      <Compile Include="Assets\Scripts\Common\Network\Sync\NetworkTransform.cs" />
      <Compile Include="Assets\Scripts\Game\Messages\Constant.cs" />
      <Compile Include="Assets\Scripts\Common\Tools\SnapshotInterpolation\SnapshotInterpolationSettings.cs" />
+     <Compile Include="Assets\Scripts\Common\Network\Serialize\Batcher.cs" />
      <Compile Include="Assets\Scripts\Common\Network\Exceptions.cs" />
      <Compile Include="Assets\Scripts\Game\Messages\Sync.cs" />
      <Compile Include="Assets\Scripts\Common\Network\Serialize\NetworkReaderExtensions.cs" />

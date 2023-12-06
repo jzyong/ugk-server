@@ -69,14 +69,10 @@
 
 ## TODO
 * GalacticKittens --> PushCoin --> Client Driven Overview --> coop 
-* 物理同步，动画同步
-* aoi管理
-* 客户端同步封装，参考NetworkTransform、NetworkAnimator、NetworkRigidbody？（参考Mirror）
-* 子弹碰撞服务器检测，需要回滚
+* 物理同步，动画同步、延迟补偿、预测、aoi管理（参考Mirror的NetworkAnimator、NetworkRigidbody、LagCompensation、Prediction）
 * 客户端和服务器配置都通过go服务器拉取
 * 完整的GalacticKittensMatch流程
 * 玩家进入游戏后端已经可以通过agent创建unity docker容器；下一步需要前端进入游戏场景，后端unity服务器开发，
-* 场景消息同步定义，后端刷出小怪及客户端显示角色 ，给速度，客户端模拟，服务器出发了碰撞等在同步
 * GalacticKittens客户端控制的使用快照插值同步，服务器控制的使用预测插值；Push coin使用快照插值同步
 * 显示网络同步统计信息
 * GalacticKittens 让服务器进行子弹命中判断，需要将客户端发射子弹的延迟加上；添加护盾开启关闭消息；场景切换渐入渐出效果;
@@ -87,6 +83,7 @@
 * 获取飞船对象，设置移动状态，获取飞船对象，激活或取消护盾
 * 添加[com.unity.multiplayer.samples.bitesize](https://github.com/Unity-Technologies/com.unity.multiplayer.samples.bitesize)中的机器人同步demo **_Client Driven Overview_**
 * 测试Unity服务器运行CPU，内存，网络消耗统计，通过docker实现
+* 网关消息进行合并，超时时间为10ms？
 
 
 ### 计划

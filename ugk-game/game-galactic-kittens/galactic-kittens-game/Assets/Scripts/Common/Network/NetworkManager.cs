@@ -77,9 +77,15 @@ namespace Common.Network
         public void Update()
         {
             //进程超过最大存在时间，直接退出，防止资源泄漏
-            if (Time.time>ExistMaxTime)
+            if (Time.time > ExistMaxTime)
             {
                 Application.Quit();
+            }
+
+            //批量发送消息
+            foreach (var kv in gateClients)
+            {
+                kv.Value.BatchSendMsg();
             }
         }
 
@@ -305,7 +311,7 @@ namespace Common.Network
         /// <returns></returns>
         public NetworkClient GetGateClient(String url)
         {
-            if (gateClients.TryGetValue(url,out var client))
+            if (gateClients.TryGetValue(url, out var client))
             {
                 return client;
             }

@@ -44,7 +44,8 @@ namespace Game.Manager
         }
 
 
-        //获取消息并处理 
+        //获取消息并处理
+        // 服务器端不存在一个kcp包包含多个消息，因为网关拦截处理已经分成一个一个的消息包
         protected override void OnTransportData(ArraySegment<byte> data)
         {
             using (UgkMessage ugkMessage = UgkMessagePool.Get())
