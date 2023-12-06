@@ -48,9 +48,6 @@ namespace Common.Network.Sync
         /// </summary>
         public ByteString SyncData { get; set; }
 
-        protected void Awake()
-        {
-        }
 
 
         /// <summary>

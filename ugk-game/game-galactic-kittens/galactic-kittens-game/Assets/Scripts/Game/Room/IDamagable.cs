@@ -6,6 +6,5 @@ namespace Game.Room
     {
         void Hit(int damage);
 
-        IEnumerator HitEffect();
     }
 }

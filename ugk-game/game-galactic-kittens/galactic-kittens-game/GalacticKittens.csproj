@@ -65,12 +65,15 @@
      <Compile Include="Assets\Scripts\Common\Network\Serialize\NetworkReaderPooled.cs" />
      <Compile Include="Assets\Scripts\Common\Network\TransportError.cs" />
      <Compile Include="Assets\Scripts\Common\Network\UgkMessage.cs" />
+     <Compile Include="Assets\Scripts\Game\Room\Enemy\SpaceGhostEnemyBehavior.cs" />
      <Compile Include="Assets\Scripts\Common\Tools\ExponentialMovingAverage.cs" />
      <Compile Include="Assets\Scripts\Common\Network\Kcp\kcp2k\kcp\AssemblyInfo.cs" />
+     <Compile Include="Assets\Scripts\Game\Room\Enemy\EnemySpawner.cs" />
      <Compile Include="Assets\Scripts\Game\Room\BulletController.cs" />
      <Compile Include="Assets\Scripts\Common\Tools\Vector3Long.cs" />
      <Compile Include="Assets\Scripts\Common\Network\Kcp\kcp2k\highlevel\KcpPeer.cs" />
      <Compile Include="Assets\Scripts\Game\Messages\Gate.cs" />
+     <Compile Include="Assets\Scripts\Game\Room\Enemy\MeteorSpawner.cs" />
      <Compile Include="Assets\Scripts\Game\Messages\PlayerGrpc.cs" />
      <Compile Include="Assets\Scripts\Common\Network\Kcp\kcp2k\highlevel\ErrorCode.cs" />
      <Compile Include="Assets\Scripts\Common\Network\NetworkLoop.cs" />
@@ -85,6 +88,7 @@
      <Compile Include="Assets\Scripts\Game\Room\Player\SpaceShip.cs" />
      <Compile Include="Assets\Scripts\Game\Manager\DataManager.cs" />
      <Compile Include="Assets\Scripts\Common\Network\Serialize\NetworkReaderPool.cs" />
+     <Compile Include="Assets\Scripts\Game\Room\Enemy\SpaceShooterEnemyBehavior.cs" />
      <Compile Include="Assets\Scripts\Game\Messages\GameGalacticKittensGrpc.cs" />
      <Compile Include="Assets\Scripts\Common\Tools\Log.cs" />
      <Compile Include="Assets\Scripts\Common\Network\Sync\NetworkTransform.cs" />
@@ -108,9 +112,11 @@
      <Compile Include="Assets\Scripts\Game\Handlers\ServerHandler.cs" />
      <Compile Include="Assets\Scripts\Common\Network\NetworkClient.cs" />
      <Compile Include="Assets\Scripts\Game\Manager\GalacticKittensNetworkManager.cs" />
+     <Compile Include="Assets\Scripts\Game\Room\Enemy\Meteor.cs" />
      <Compile Include="Assets\Scripts\Game\Room\Player\SpaceshipBullet.cs" />
      <Compile Include="Assets\Scripts\Common\Network\Kcp\kcp2k\kcp\Utils.cs" />
      <Compile Include="Assets\Scripts\Game\Messages\ProtoUtil.cs" />
+     <Compile Include="Assets\Scripts\Game\Room\Enemy\PowerUpSpawnController.cs" />
      <Compile Include="Assets\Scripts\Game\Messages\Common.cs" />
      <Compile Include="Assets\Scripts\Common\Network\Transport.cs" />
      <Compile Include="Assets\Scripts\Common\Tools\Person.cs" />
@@ -119,6 +125,7 @@
      <Compile Include="Assets\Scripts\Common\Network\Kcp\kcp2k\highlevel\KcpClient.cs" />
      <Compile Include="Assets\Scripts\Common\Network\Serialize\NetworkWriterExtensions.cs" />
      <Compile Include="Assets\Scripts\Common\Network\Sync\PredictionTransform.cs" />
+     <Compile Include="Assets\Scripts\Game\Room\Enemy\BaseEnemyBehavior.cs" />
      <Compile Include="Assets\Scripts\Game\Manager\SyncManager.cs" />
      <Compile Include="Assets\Scripts\Game\Messages\Login.cs" />
      <Compile Include="Assets\Scripts\Game\Room\IDamagable.cs" />
@@ -131,6 +138,7 @@
      <Folder Include="Assets\Scripts\Game\Manager" />
      <Folder Include="Assets\Scripts\Common\Tools\SnapshotInterpolation" />
      <Folder Include="Assets\Scripts" />
+     <Folder Include="Assets\Scripts\Game\Room\Enemy" />
      <Folder Include="Assets\Scripts\Game\Room\Player" />
      <Folder Include="Assets\Scripts\Game\Handlers" />
      <None Include="Assets\Scripts\GalacticKittens.asmdef" />

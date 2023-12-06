@@ -80,7 +80,6 @@ namespace kcp2k
             int Timeout            = KcpPeer.DEFAULT_TIMEOUT,
             uint MaxRetransmits    = Kcp.DEADLINK)
         {
-            this.DualMode = DualMode;
             this.RecvBufferSize = RecvBufferSize;
             this.SendBufferSize = SendBufferSize;
             this.Mtu = Mtu;

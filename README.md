@@ -49,9 +49,9 @@
 
 ### 参考资料
 #### 网络
+* [Mirror](https://github.com/MirrorNetworking/Mirror)
 * [Unity Multiplayer Networking](https://github.com/Unity-Technologies/com.unity.netcode.gameobjects)
 * [FishNet](https://github.com/FirstGearGames/FishNet/)
-* [Mirror](https://github.com/MirrorNetworking/Mirror)
 * [Telepathy](https://github.com/vis2k/Telepathy) TCP前端
 * [kcp2k](https://github.com/vis2k/kcp2k) unity前端
 * [kcp-go](https://github.com/xtaci/kcp-go) go服务器
@@ -65,10 +65,10 @@
 * [com.unity.multiplayer.samples.coop](https://github.com/Unity-Technologies/com.unity.multiplayer.samples.coop)3D rpg示例demo
 * [com.unity.multiplayer.samples.bitesize](https://github.com/Unity-Technologies/com.unity.multiplayer.samples.bitesize)小游戏示例demo
 * [GalacticKittens](https://github.com/UnityTechnologies/GalacticKittens) 2D示例demo
-* [ECS-Network-Racing-Sample](https://github.com/Unity-Technologies/ECS-Network-Racing-Sample) ECS 赛车demo
 
 
 ## TODO
+* GalacticKittens --> PushCoin --> Client Driven Overview --> coop 
 * 物理同步，动画同步
 * aoi管理
 * 客户端同步封装，参考NetworkTransform、NetworkAnimator、NetworkRigidbody？（参考Mirror）
@@ -79,12 +79,14 @@
 * 场景消息同步定义，后端刷出小怪及客户端显示角色 ，给速度，客户端模拟，服务器出发了碰撞等在同步
 * GalacticKittens客户端控制的使用快照插值同步，服务器控制的使用预测插值；Push coin使用快照插值同步
 * 显示网络同步统计信息
-* GalacticKittens 让服务器进行子弹命中判断，需要将客户端发射子弹的延迟加上，添加护盾开启关闭消息，场景切换渐入渐出效果;自己实现UI相关逻辑，不参考
+* GalacticKittens 让服务器进行子弹命中判断，需要将客户端发射子弹的延迟加上；添加护盾开启关闭消息；场景切换渐入渐出效果;
+自己实现UI相关逻辑，不参考;敌人、Boss同步；
 * 同步添加判断是世界坐标还是相对坐标系
 * 快照同步调试：只发送改变和全部发送的流量消耗对比
-*  两个玩家快照插值调试
-*  获取飞船对象，设置移动状态，获取飞船对象，激活或取消护盾
-
+* 两个玩家快照插值调试
+* 获取飞船对象，设置移动状态，获取飞船对象，激活或取消护盾
+* 添加[com.unity.multiplayer.samples.bitesize](https://github.com/Unity-Technologies/com.unity.multiplayer.samples.bitesize)中的机器人同步demo **_Client Driven Overview_**
+* 测试Unity服务器运行CPU，内存，网络消耗统计，通过docker实现
 
 
 ### 计划
@@ -97,7 +99,8 @@
 * 服务器unity提取公共包，unity的package
 * ugk-client 弹窗增加tween动画
 * 后台管理系统查看unity docker服务器
-
+* Limits how often data is sent for objects distance to players to reduce how much bandwidth the server uses. Tests show this feature can reduce transform updates, such as moving objects, between 90-97%. FishNet解决方案，远的对象，减少同步频率
+* 网关消息合并批量发送；消息长度大于600的进行压缩并进行CPU消耗、压缩比测试
 
 感谢
 ---------

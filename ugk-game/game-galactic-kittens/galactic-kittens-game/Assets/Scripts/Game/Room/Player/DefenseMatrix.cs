@@ -43,11 +43,5 @@ namespace Game.Room
                 PlayerManager.Instance.BroadcastMsg(MID.GalacticKittensShipShieldStateRes, response);
             }
         }
-
-
-        IEnumerator IDamagable.HitEffect()
-        {
-            return null;
-        }
     }
 }

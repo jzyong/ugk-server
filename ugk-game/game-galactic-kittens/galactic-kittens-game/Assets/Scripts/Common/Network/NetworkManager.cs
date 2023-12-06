@@ -26,7 +26,7 @@ namespace Common.Network
         /// <summary>
         /// 消息处理
         /// </summary>
-        public delegate void MessageHandler<T>(T player, UgkMessage ugkMessage) where T : Person;
+        public delegate void MessageHandler<in P>(P player, UgkMessage ugkMessage) where P : Person;
 
         /// <summary>
         /// 消息处理器
