@@ -17,14 +17,15 @@ var FilePath string
 // AppConfig 配置
 type AppConfig struct {
 	config2.ServiceConfigImpl
-	PublicIp   string `json:"publicIp"`   //公网IP
-	PrivateIp  string `json:"privateIp"`  //内网IP
-	ClientPort uint16 `json:"clientPort"` //客户端端口 KCP
-	GamePort   uint16 `json:"gamePort"`   //内网游戏连接端口 TCP
+	PublicIp     string `json:"publicIp"`     //公网IP
+	PrivateIp    string `json:"privateIp"`    //内网IP
+	ClientPort   uint16 `json:"clientPort"`   //客户端端口 KCP
+	GamePort     uint16 `json:"gamePort"`     //内网游戏连接端口 TCP
+	BatchMessage bool   `json:"batchMessage"` //对消息进行批量打包
 }
 
 func init() {
-	BaseConfig = &AppConfig{}
+	BaseConfig = &AppConfig{BatchMessage: true}
 }
 
 // 初始化项目配置和日志

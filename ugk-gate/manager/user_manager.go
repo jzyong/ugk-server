@@ -9,6 +9,7 @@ import (
 	"github.com/jzyong/golib/util"
 	"github.com/jzyong/ugk/common/config"
 	"github.com/jzyong/ugk/common/mode"
+	config2 "github.com/jzyong/ugk/gate/config"
 	"github.com/jzyong/ugk/message/message"
 	"github.com/xtaci/kcp-go/v5"
 	"google.golang.org/protobuf/proto"
@@ -77,8 +78,8 @@ type User struct {
 	ClientSession    *kcp.UDPSession       //客户端连接会话
 	LobbyClient      *GameKcpClient        //大厅连接会话
 	GameClient       *GameKcpClient        //游戏连接会话
-	SendBuffer       *bytes.Buffer         //发送缓冲区，单线程调用
-	ReceiveBuffer    *bytes.Buffer         //接收缓冲区
+	SendBuffer       *bytes.Buffer         //发送缓冲区，消息批量合并，单线程调用
+	ReceiveBuffer    *bytes.Buffer         //接收缓冲区,
 	ReceiveBytes     chan []byte           //接收到的消息
 	GameMessages     chan *mode.UgkMessage //游戏服返回的消息 proto字节流、消息id、序列号、客户端
 	ReceiveReadCache []byte                // 接收端读取Byte缓存
@@ -122,7 +123,7 @@ func (user *User) run() {
 			user.State = Offline
 			return
 		case <-messageMergeTicker:
-			user.sendMergeMessage()
+			user.batchTransmitToClient()
 		case <-secondTicker:
 			user.secondUpdate()
 		}
@@ -137,11 +138,6 @@ func (user *User) secondUpdate() {
 		channelInactive(user, errors.New(fmt.Sprintf("心跳超时%f", time.Now().Sub(user.HeartTime).Seconds())))
 	}
 
-}
-
-// 将缓存的消息合并批量发送
-func (user *User) sendMergeMessage() {
-	//TODO 合并消息包等逻辑
 }
 
 func (user *User) messageDistribute(data []byte) {
@@ -307,7 +303,6 @@ func (user *User) toGameBytes(clientData []byte, messageId uint32) ([]byte, erro
 
 // TransmitToClient 转发到客户端
 func (user *User) TransmitToClient(gameData []byte, messageId uint32) error {
-	//TODO 进行消息批量转发
 	if user.ClientSession == nil {
 		log.Warn("玩家：%d无客户端连接", user.Id)
 		return errors.New(fmt.Sprintf("玩家：%d无客户端连接", user.Id))
@@ -318,8 +313,43 @@ func (user *User) TransmitToClient(gameData []byte, messageId uint32) error {
 		return errors.New("消息超长")
 	}
 
+	//直接发送
+	if config2.BaseConfig.BatchMessage == false {
+		return user.immediateTransmitToClient(gameLength, messageId, gameData)
+		// 消息合并批量发送，将小于MTU的消息合并，大于的直接发送，减少丢包重传率，减少IO
+	} else {
+		//当前消息大于mtu，先将老的发送，然后立即发送当前消息
+		if gameLength > config.MTU {
+			user.batchTransmitToClient()
+			user.immediateTransmitToClient(gameLength, messageId, gameData)
+			//将消息写入缓存
+		} else {
+			//写dataLen 不包含自身长度,比客户端长度多8字节玩家id gameLength-8-4
+			if err := binary.Write(user.SendBuffer, binary.LittleEndian, uint32(gameLength-12)); err != nil {
+				log.Error("%d - %s 发送消息 %d 失败：%v", user.Id, user.ClientSession.RemoteAddr().String(), messageId, err)
+				return err
+			}
+			data := gameData[12:]
+			//写data数据
+			if err := binary.Write(user.SendBuffer, binary.LittleEndian, data); err != nil {
+				log.Error("%d - %s 发送消息 %d 失败：%v", user.Id, user.ClientSession.RemoteAddr().String(), messageId, err)
+				return err
+			}
+
+			//已经超过mtu ，直接推送
+			if user.SendBuffer.Len() > config.MTU {
+				user.batchTransmitToClient()
+			}
+		}
+	}
+
+	return nil
+}
+
+// 立即发送客户端
+func (user *User) immediateTransmitToClient(gameLength int, messageId uint32, gameData []byte) error {
 	//消息长度4+玩家ID+消息id4+序列号4+时间戳8+protobuf消息体 ==》消息长度4+消息id4+序列号4+时间戳8+protobuf消息体
-	buffer := bytes.NewBuffer([]byte{})
+	buffer := user.SendBuffer
 	//写dataLen 不包含自身长度,比客户端长度多8字节玩家id gameLength-8-4
 	if err := binary.Write(buffer, binary.LittleEndian, uint32(gameLength-12)); err != nil {
 		log.Error("%d - %s 发送消息 %d 失败：%v", user.Id, user.ClientSession.RemoteAddr().String(), messageId, err)
@@ -334,10 +364,27 @@ func (user *User) TransmitToClient(gameData []byte, messageId uint32) error {
 	}
 
 	_, err := user.ClientSession.Write(buffer.Bytes())
+	buffer.Reset()
 	if err != nil {
 		log.Error("%d - %s 发送消息 %d 失败：%v", user.Id, user.ClientSession.RemoteAddr().String(), messageId, err)
 		return err
 	}
+
+	return nil
+}
+
+// 批量发送缓存的消息到客户端
+func (user *User) batchTransmitToClient() error {
+	if user.SendBuffer.Len() < 1 {
+		return nil
+	}
+	_, err := user.ClientSession.Write(user.SendBuffer.Bytes())
+	user.SendBuffer.Reset()
+	if err != nil {
+		log.Error("%d - %s 批量发送消息失败：%v", user.Id, user.ClientSession.RemoteAddr().String(), err)
+		return err
+	}
+
 	return nil
 }
 
