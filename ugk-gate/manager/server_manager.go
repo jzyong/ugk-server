@@ -435,7 +435,7 @@ func (client *GameKcpClient) SendToGame(playerId int64, mid message.MID, msg pro
 	buffer := bytes.NewBuffer([]byte{})
 	//写dataLen 不包含自身长度
 	if err := binary.Write(buffer, binary.LittleEndian, uint32(24+protoLength)); err != nil {
-		log.Error("%d - %s 发送消息 %d 失败：%v", client.UdpSession, client.UdpSession.RemoteAddr().String(), mid, err)
+		log.Error("%v - %s 发送消息 %d 失败：%v", client.UdpSession, client.UdpSession.RemoteAddr().String(), mid, err)
 		return err
 	}
 

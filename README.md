@@ -83,7 +83,6 @@
 * 获取飞船对象，设置移动状态，获取飞船对象，激活或取消护盾
 * 添加[com.unity.multiplayer.samples.bitesize](https://github.com/Unity-Technologies/com.unity.multiplayer.samples.bitesize)中的机器人同步demo **_Client Driven Overview_**
 * 测试Unity服务器运行CPU，内存，网络消耗统计，通过docker实现
-* 网关消息进行合并，超时时间为10ms？
 
 
 ### 计划
@@ -97,7 +96,6 @@
 * ugk-client 弹窗增加tween动画
 * 后台管理系统查看unity docker服务器
 * Limits how often data is sent for objects distance to players to reduce how much bandwidth the server uses. Tests show this feature can reduce transform updates, such as moving objects, between 90-97%. FishNet解决方案，远的对象，减少同步频率
-* 网关消息合并批量发送；消息长度大于600的进行压缩并进行CPU消耗、压缩比测试
 
 感谢
 ---------
