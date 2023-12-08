@@ -83,10 +83,10 @@
 * 获取飞船对象，设置移动状态，获取飞船对象，激活或取消护盾
 * 添加[com.unity.multiplayer.samples.bitesize](https://github.com/Unity-Technologies/com.unity.multiplayer.samples.bitesize)中的机器人同步demo **_Client Driven Overview_**
 * 测试Unity服务器运行CPU，内存，网络消耗统计，通过docker实现
+* Websocket网络通信
 
 
 ### 计划
-* Websocket网络通信
 * 压力测试客户端使用ugk-web开发界面（vue3）
 * 添加聊天、排行、匹配、房间（Mirror）服务
 * 广告、充值接取
@@ -97,6 +97,11 @@
 * 后台管理系统查看unity docker服务器
 * Limits how often data is sent for objects distance to players to reduce how much bandwidth the server uses. Tests show this feature can reduce transform updates, such as moving objects, between 90-97%. FishNet解决方案，远的对象，减少同步频率
 
+交流讨论
+---------
+* **QQ群：** 236076532
+
 感谢
 ---------
 <img src="https://resources.jetbrains.com/storage/products/company/brand/logos/jb_beam.png" width = "150" height = "150" div align=left />
+

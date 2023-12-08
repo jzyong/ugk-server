@@ -7,6 +7,7 @@ using Common.Network.Serialize;
 using Common.Tools;
 using Common.Tools.SnapshotInterpolation;
 using Google.Protobuf;
+using JetBrains.Annotations;
 using Network.Sync;
 using UnityEngine;
 
@@ -49,6 +50,10 @@ namespace Common.Network.Sync
         public ByteString SyncData { get; set; }
 
 
+        protected override void Awake()
+        {
+            SyncData = null; //初始化为null
+        }
 
         /// <summary>
         /// 构建当前的快照
@@ -106,7 +111,7 @@ namespace Common.Network.Sync
         }
 
 
-        protected  void Apply(TransformSnapshot from, TransformSnapshot to, float t)
+        protected void Apply(TransformSnapshot from, TransformSnapshot to, float t)
         {
             if (syncPosition)
             {
@@ -136,21 +141,22 @@ namespace Common.Network.Sync
         /// <summary>
         /// 
         /// </summary>
-        public  void Reset()
+        public void Reset()
         {
             // disabled objects aren't updated anymore.
             // so let's clear the buffers.
             snapshots.Clear();
             // reset 'last' for delta too
             last = new TransformSnapshot(0, 0, Vector3.zero, Quaternion.identity, Vector3.zero);
+            SyncData = null;
         }
 
-        protected  void OnEnable()
+        protected void OnEnable()
         {
             Reset();
         }
 
-        protected  void OnDisable()
+        protected void OnDisable()
         {
             Reset();
         }
@@ -170,7 +176,7 @@ namespace Common.Network.Sync
             }
         }
 
-        protected  void UpdateClient()
+        protected void UpdateClient()
         {
             // only while we have snapshots
             if (snapshots.Count > 0)
