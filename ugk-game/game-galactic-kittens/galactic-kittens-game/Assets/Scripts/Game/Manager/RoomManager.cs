@@ -65,6 +65,7 @@ namespace Game.Manager
                             Z = spawnPosition.z
                         }
                     };
+                snapTransform.InitTransform(spawnPosition,null);
                 SyncManager.Instance.AddSnapTransform(snapTransform); //添加同步对象
                 spawnResponse.Spawn.Add(spawnInfo);
                 _spaceShips[player.Id] = spaceShip;

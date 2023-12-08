@@ -46,6 +46,10 @@ namespace Common.Network.Sync
          * 每个对象的唯一id
          */
         public long Id { get; set; }
+        /// <summary>
+        /// 拥有者ID
+        /// </summary>
+        public long OwnerId { get; set; }
         //下次消息发送时间
         protected double nextSendTime;
         // delta compression needs to remember 'last' to compress against
@@ -54,6 +58,11 @@ namespace Common.Network.Sync
 
         protected Vector3Long lastSerializedScale = Vector3Long.zero;
         protected Vector3Long lastDeserializedScale = Vector3Long.zero;
+        
+        /// <summary>
+        /// 是否初始位置
+        /// </summary>
+        protected bool initPosition;
         
         /// <summary>
         /// 是否为本地玩家拥有者
@@ -72,23 +81,27 @@ namespace Common.Network.Sync
             if (target == null) target = transform;
         }
         
-        /// <summary>
-        /// 设置最后一次反序列化缓存的坐标，增量压缩还原需要
-        /// </summary>
-        /// <param name="position"></param>
-        public void SetLastDeserializedPositon(Vector3 position)
-        {
-            Compression.ScaleToLong(position, positionPrecision, out lastDeserializedPosition);
-        }
-        
-        /// <summary>
-        /// 设置最后一次反序列化缓存的缩放，增量压缩还原需要
-        /// </summary>
-        /// <param name="scale"></param>
-        public void SetLastDeserializedScale(Vector3 scale)
-        {
-            Compression.ScaleToLong(scale, scalePrecision, out lastDeserializedScale);
-        }
+        // /// <summary>
+        // /// 初始化最新 序列号和反序列化坐标，增量压缩还原需要
+        // /// </summary>
+        // /// <param name="position"></param>
+        // public virtual void InitLastVector3LongPositon(Vector3 position)
+        // {
+        //     Compression.ScaleToLong(position, positionPrecision, out lastDeserializedPosition);
+        //     lastSerializedPosition = new Vector3Long(lastDeserializedPosition.x, lastDeserializedPosition.y,
+        //         lastDeserializedPosition.z);
+        // }
+        //
+        // /// <summary>
+        // /// 设置最后一次反序列化缓存的缩放，增量压缩还原需要
+        // /// </summary>
+        // /// <param name="scale"></param>
+        // public virtual void InitLastVector3LongScale(Vector3 scale)
+        // {
+        //     Compression.ScaleToLong(scale, scalePrecision, out lastDeserializedScale);
+        //     lastSerializedScale =
+        //         new Vector3Long(lastDeserializedScale.x, lastDeserializedScale.y, lastDeserializedScale.z);
+        // }
 
 
     }

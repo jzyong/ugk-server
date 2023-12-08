@@ -201,52 +201,37 @@ namespace Common.Network.Sync
         /// </summary>
         public void OnSerialize(bool initialState)
         {
+            if (!initPosition)
+            {
+                return;
+            }
+
             using (NetworkWriterPooled writer = NetworkWriterPool.Get())
             {
                 // get current snapshot for broadcasting.
                 TransformSnapshot snapshot = Construct();
 
-                // initial
-                if (initialState)
+                if (syncPosition)
                 {
-                    if (last.remoteTime > 0) snapshot = last;
-                    if (syncPosition) writer.WriteVector3(snapshot.position);
-                    if (syncRotation)
-                    {
-                        // (optional) smallest three compression for now. no delta.
-                        if (compressRotation)
-                            writer.WriteUInt(Compression.CompressQuaternion(snapshot.rotation));
-                        else
-                            writer.WriteQuaternion(snapshot.rotation);
-                    }
-
-                    if (syncScale) writer.WriteVector3(snapshot.scale);
+                    // quantize -> delta -> varint
+                    Compression.ScaleToLong(snapshot.position, positionPrecision, out Vector3Long quantized);
+                    DeltaCompression.Compress(writer, lastSerializedPosition, quantized);
                 }
-                // delta
-                else
+
+                if (syncRotation)
                 {
-                    if (syncPosition)
-                    {
-                        // quantize -> delta -> varint
-                        Compression.ScaleToLong(snapshot.position, positionPrecision, out Vector3Long quantized);
-                        DeltaCompression.Compress(writer, lastSerializedPosition, quantized);
-                    }
+                    // (optional) smallest three compression for now. no delta.
+                    if (compressRotation)
+                        writer.WriteUInt(Compression.CompressQuaternion(snapshot.rotation));
+                    else
+                        writer.WriteQuaternion(snapshot.rotation);
+                }
 
-                    if (syncRotation)
-                    {
-                        // (optional) smallest three compression for now. no delta.
-                        if (compressRotation)
-                            writer.WriteUInt(Compression.CompressQuaternion(snapshot.rotation));
-                        else
-                            writer.WriteQuaternion(snapshot.rotation);
-                    }
-
-                    if (syncScale)
-                    {
-                        // quantize -> delta -> varint
-                        Compression.ScaleToLong(snapshot.scale, scalePrecision, out Vector3Long quantized);
-                        DeltaCompression.Compress(writer, lastSerializedScale, quantized);
-                    }
+                if (syncScale)
+                {
+                    // quantize -> delta -> varint
+                    Compression.ScaleToLong(snapshot.scale, scalePrecision, out Vector3Long quantized);
+                    DeltaCompression.Compress(writer, lastSerializedScale, quantized);
                 }
 
                 // save serialized as 'last' for next delta compression
@@ -256,6 +241,8 @@ namespace Common.Network.Sync
 
                 // set 'last'
                 last = snapshot;
+
+                Debug.Log($"{Id} 发送坐标{last.position} {lastSerializedPosition}");
 
                 //发送数据
                 SyncData = ByteString.CopyFrom(writer.ToArray());
@@ -267,6 +254,11 @@ namespace Common.Network.Sync
         /// </summary>
         public void OnDeserialize(UgkMessage ugkMessage, ByteString data, bool initialState)
         {
+            if (!initPosition)
+            {
+                return;
+            }
+
             var segment = new ArraySegment<byte>(data.ToByteArray());
             using (NetworkReaderPooled reader = NetworkReaderPool.Get(segment))
             {
@@ -274,46 +266,29 @@ namespace Common.Network.Sync
                 Quaternion? rotation = null;
                 Vector3? scale = null;
 
-                // initial
-                if (initialState)
+                // varint -> delta -> quantize
+                if (syncPosition)
                 {
-                    if (syncPosition) position = reader.ReadVector3();
-                    if (syncRotation)
-                    {
-                        // (optional) smallest three compression for now. no delta.
-                        if (compressRotation)
-                            rotation = Compression.DecompressQuaternion(reader.ReadUInt());
-                        else
-                            rotation = reader.ReadQuaternion();
-                    }
-
-                    if (syncScale) scale = reader.ReadVector3();
+                    Vector3Long quantized = DeltaCompression.Decompress(reader, lastDeserializedPosition);
+                    position = Compression.ScaleToFloat(quantized, positionPrecision);
                 }
-                // delta
-                else
+
+                if (syncRotation)
                 {
-                    // varint -> delta -> quantize
-                    if (syncPosition)
-                    {
-                        Vector3Long quantized = DeltaCompression.Decompress(reader, lastDeserializedPosition);
-                        position = Compression.ScaleToFloat(quantized, positionPrecision);
-                    }
-
-                    if (syncRotation)
-                    {
-                        // (optional) smallest three compression for now. no delta.
-                        if (compressRotation)
-                            rotation = Compression.DecompressQuaternion(reader.ReadUInt());
-                        else
-                            rotation = reader.ReadQuaternion();
-                    }
-
-                    if (syncScale)
-                    {
-                        Vector3Long quantized = DeltaCompression.Decompress(reader, lastDeserializedScale);
-                        scale = Compression.ScaleToFloat(quantized, scalePrecision);
-                    }
+                    // (optional) smallest three compression for now. no delta.
+                    if (compressRotation)
+                        rotation = Compression.DecompressQuaternion(reader.ReadUInt());
+                    else
+                        rotation = reader.ReadQuaternion();
                 }
+
+                if (syncScale)
+                {
+                    Vector3Long quantized = DeltaCompression.Decompress(reader, lastDeserializedScale);
+                    scale = Compression.ScaleToFloat(quantized, scalePrecision);
+                }
+
+                Debug.Log($"{Id} 接收坐标{position} {lastDeserializedPosition} {ugkMessage.Seq}");
 
                 //保存sendInterval时间段快照数据，让平滑移动 
                 OnReceiveTransform(position, rotation, scale, ugkMessage.GetTime() + sendInterval);
@@ -408,6 +383,31 @@ namespace Common.Network.Sync
                 rotation,
                 scale
             ));
+        }
+
+        /// <summary>
+        /// 出生初始化
+        /// </summary>
+        /// <param name="position"></param>
+        /// <param name="scale"></param>
+        public void InitTransform(Vector3? position, Vector3? scale)
+        {
+            initPosition = true;
+            if (position.HasValue)
+            {
+                Compression.ScaleToLong(position.Value, positionPrecision, out lastDeserializedPosition);
+                lastSerializedPosition = new Vector3Long(lastDeserializedPosition.x, lastDeserializedPosition.y,
+                    lastDeserializedPosition.z);
+                last.position = new Vector3(position.Value.x, position.Value.y, position.Value.z);
+            }
+
+            if (scale.HasValue)
+            {
+                Compression.ScaleToLong(scale.Value, scalePrecision, out lastDeserializedScale);
+                lastSerializedScale =
+                    new Vector3Long(lastDeserializedScale.x, lastDeserializedScale.y, lastDeserializedScale.z);
+                last.scale = new Vector3(scale.Value.x, scale.Value.y, scale.Value.z);
+            }
         }
     }
 }

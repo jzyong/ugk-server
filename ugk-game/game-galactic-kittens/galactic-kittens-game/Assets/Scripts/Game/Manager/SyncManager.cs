@@ -62,7 +62,7 @@ namespace Game.Manager
         /// <summary>
         /// 收到同步消息
         /// </summary>
-        public void OnSnapSyncReceive(UgkMessage ugkMessage,SnapSyncRequest request)
+        public void OnSnapSyncReceive(Player player,UgkMessage ugkMessage,SnapSyncRequest request)
         {
             if (!gameObject.activeSelf)
             {
@@ -77,6 +77,12 @@ namespace Game.Manager
                     {
                         Debug.LogWarning($"同步对象{kv.Key} 不存在");
                         continue;
+                    }
+
+                    if (player.Id!=snapTransform.Id)
+                    {
+                        Log.Warn($"{player.Id} push other people's position");
+                        return;
                     }
 
                     snapTransform.OnDeserialize(ugkMessage,kv.Value, false);
