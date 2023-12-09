@@ -17,8 +17,6 @@ import (
 	"time"
 )
 
-//TODO 获取功能服务会话
-
 // UserManager 客户端-用户
 type UserManager struct {
 	util.DefaultModule
@@ -253,7 +251,7 @@ func (user *User) TransmitToBackend(clientData []byte, messageId uint32) error {
 	return nil
 }
 
-// TransmitToGame 转发unity游戏服务 TODO 待测试
+// TransmitToGame 转发unity游戏服务
 func (user *User) TransmitToGame(clientData []byte, messageId uint32) error {
 	if user.GameClient == nil {
 		msg := fmt.Sprintf("玩家%d 消息：%v游戏服务未注册", user.Id, messageId)

@@ -44,15 +44,17 @@ enum MID {
   GalacticKittenSelectCharacterRes = 3670024;
   GalacticKittensQuitRoomReq = 3670025;
   GalacticKittensQuitRoomRes = 3670026;
-  GalacticKittensObjectSpawnRes = 3670028;
-  GalacticKittensObjectDieRes = 3670030;
-  GalacticKittensFireReq = 3670031;
-  GalacticKittensFireRes = 3670032;
-  GalacticKittensUseShieldReq = 3670033;
-  GalacticKittensUseShieldRes = 3670034;
-  GalacticKittensShipShieldStateRes = 3670036;
-  GalacticKittensShipMoveStateReq = 3670037;
-  GalacticKittensShipMoveStateRes = 3670038;
+
+  //Galactic-kittens game 4194304(4<<20)+ 524288(1<19)= 4718592
+  GalacticKittensObjectSpawnRes = 4718594;
+  GalacticKittensObjectDieRes = 4718596;
+  GalacticKittensFireReq = 4718597;
+  GalacticKittensFireRes = 4718598;
+  GalacticKittensUseShieldReq = 4718599;
+  GalacticKittensUseShieldRes = 4718600;
+  GalacticKittensShipShieldStateRes = 4718602;
+  GalacticKittensShipMoveStateReq = 4718603;
+  GalacticKittensShipMoveStateRes = 4718604;
 
 
 }

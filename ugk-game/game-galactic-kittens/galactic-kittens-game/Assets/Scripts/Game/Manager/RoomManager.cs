@@ -16,6 +16,7 @@ namespace Game.Manager
         [SerializeField] [Tooltip("飞船，服务器只需要一个简单对象即可")]
         private SpaceShip _spaceShip;
 
+        [SerializeField][Tooltip("子弹")]
         private SpaceshipBullet _spaceshipBullet;
 
 
@@ -162,6 +163,16 @@ namespace Game.Manager
             PlayerManager.Instance.BindGateGameMapReq(false);
 
             Application.Quit();
+        }
+
+        public SpaceShip GetSpaceShip(long id)
+        {
+            if (_spaceShips.TryGetValue(id,out SpaceShip spaceShip))
+            {
+                return spaceShip;
+            }
+            Log.Warn($"ship {id} not find");
+            return null;
         }
     }
 }

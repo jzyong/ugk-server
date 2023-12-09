@@ -1,4 +1,5 @@
-﻿using Game.Manager;
+﻿using System;
+using Game.Manager;
 using Network.Sync;
 using UnityEngine;
 
@@ -7,6 +8,7 @@ namespace Game.Room
     /// <summary>
     /// 子弹控制器 
     /// </summary>
+    [Obsolete]
     public class BulletController : MonoBehaviour
     {
         private enum BulletOwner

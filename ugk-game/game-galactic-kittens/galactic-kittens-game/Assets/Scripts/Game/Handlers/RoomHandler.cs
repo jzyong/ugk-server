@@ -67,9 +67,24 @@ namespace Game.Handlers
             request.MergeFrom(ugkMessage.Bytes);
             Log.Trace($"  {player.Id}-{player.Nick} ship state {request.State}");
 
+            var spaceShip = RoomManager.Instance.GetSpaceShip(player.Id);
+            if (spaceShip == null)
+            {
+                GalacticKittensShipMoveStateResponse response2 = new GalacticKittensShipMoveStateResponse()
+                {
+                    Result = new MessageResult()
+                    {
+                        Status = 500,
+                        Msg = "Request ship id not exist"
+                    }
+                };
+                PlayerManager.Instance.SendMsg(player, MID.GalacticKittensShipMoveStateRes, response2, ugkMessage.Seq);
+                return;
+            }
+
             GalacticKittensShipMoveStateResponse response = new GalacticKittensShipMoveStateResponse()
             {
-                //TODO 获取飞船ID
+                ShipId = player.Id, //飞船id等于玩家id
                 State = request.State
             };
             PlayerManager.Instance.SendMsg(player, MID.GalacticKittensShipMoveStateRes, response, ugkMessage.Seq);

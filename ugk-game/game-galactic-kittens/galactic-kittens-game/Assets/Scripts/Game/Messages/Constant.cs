@@ -37,13 +37,13 @@ public static partial class ConstantReflection {
           "EicKIEdhbGFjdGljS2l0dGVuU2VsZWN0Q2hhcmFjdGVyUmVzEIiA4AESIQoa",
           "R2FsYWN0aWNLaXR0ZW5zUXVpdFJvb21SZXEQiYDgARIhChpHYWxhY3RpY0tp",
           "dHRlbnNRdWl0Um9vbVJlcxCKgOABEiQKHUdhbGFjdGljS2l0dGVuc09iamVj",
-          "dFNwYXduUmVzEIyA4AESIgobR2FsYWN0aWNLaXR0ZW5zT2JqZWN0RGllUmVz",
-          "EI6A4AESHQoWR2FsYWN0aWNLaXR0ZW5zRmlyZVJlcRCPgOABEh0KFkdhbGFj",
-          "dGljS2l0dGVuc0ZpcmVSZXMQkIDgARIiChtHYWxhY3RpY0tpdHRlbnNVc2VT",
-          "aGllbGRSZXEQkYDgARIiChtHYWxhY3RpY0tpdHRlbnNVc2VTaGllbGRSZXMQ",
-          "koDgARIoCiFHYWxhY3RpY0tpdHRlbnNTaGlwU2hpZWxkU3RhdGVSZXMQlIDg",
-          "ARImCh9HYWxhY3RpY0tpdHRlbnNTaGlwTW92ZVN0YXRlUmVxEJWA4AESJgof",
-          "R2FsYWN0aWNLaXR0ZW5zU2hpcE1vdmVTdGF0ZVJlcxCWgOABQgpaCC9tZXNz",
+          "dFNwYXduUmVzEIKAoAISIgobR2FsYWN0aWNLaXR0ZW5zT2JqZWN0RGllUmVz",
+          "EISAoAISHQoWR2FsYWN0aWNLaXR0ZW5zRmlyZVJlcRCFgKACEh0KFkdhbGFj",
+          "dGljS2l0dGVuc0ZpcmVSZXMQhoCgAhIiChtHYWxhY3RpY0tpdHRlbnNVc2VT",
+          "aGllbGRSZXEQh4CgAhIiChtHYWxhY3RpY0tpdHRlbnNVc2VTaGllbGRSZXMQ",
+          "iICgAhIoCiFHYWxhY3RpY0tpdHRlbnNTaGlwU2hpZWxkU3RhdGVSZXMQioCg",
+          "AhImCh9HYWxhY3RpY0tpdHRlbnNTaGlwTW92ZVN0YXRlUmVxEIuAoAISJgof",
+          "R2FsYWN0aWNLaXR0ZW5zU2hpcE1vdmVTdGF0ZVJlcxCMgKACQgpaCC9tZXNz",
           "YWdlYgZwcm90bzM="));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
         new pbr::FileDescriptor[] { },
@@ -119,15 +119,18 @@ public enum MID {
   [pbr::OriginalName("GalacticKittenSelectCharacterRes")] GalacticKittenSelectCharacterRes = 3670024,
   [pbr::OriginalName("GalacticKittensQuitRoomReq")] GalacticKittensQuitRoomReq = 3670025,
   [pbr::OriginalName("GalacticKittensQuitRoomRes")] GalacticKittensQuitRoomRes = 3670026,
-  [pbr::OriginalName("GalacticKittensObjectSpawnRes")] GalacticKittensObjectSpawnRes = 3670028,
-  [pbr::OriginalName("GalacticKittensObjectDieRes")] GalacticKittensObjectDieRes = 3670030,
-  [pbr::OriginalName("GalacticKittensFireReq")] GalacticKittensFireReq = 3670031,
-  [pbr::OriginalName("GalacticKittensFireRes")] GalacticKittensFireRes = 3670032,
-  [pbr::OriginalName("GalacticKittensUseShieldReq")] GalacticKittensUseShieldReq = 3670033,
-  [pbr::OriginalName("GalacticKittensUseShieldRes")] GalacticKittensUseShieldRes = 3670034,
-  [pbr::OriginalName("GalacticKittensShipShieldStateRes")] GalacticKittensShipShieldStateRes = 3670036,
-  [pbr::OriginalName("GalacticKittensShipMoveStateReq")] GalacticKittensShipMoveStateReq = 3670037,
-  [pbr::OriginalName("GalacticKittensShipMoveStateRes")] GalacticKittensShipMoveStateRes = 3670038,
+  /// <summary>
+  ///Galactic-kittens game 4194304(4&lt;&lt;20)+ 524288(1&lt;19)= 4718592
+  /// </summary>
+  [pbr::OriginalName("GalacticKittensObjectSpawnRes")] GalacticKittensObjectSpawnRes = 4718594,
+  [pbr::OriginalName("GalacticKittensObjectDieRes")] GalacticKittensObjectDieRes = 4718596,
+  [pbr::OriginalName("GalacticKittensFireReq")] GalacticKittensFireReq = 4718597,
+  [pbr::OriginalName("GalacticKittensFireRes")] GalacticKittensFireRes = 4718598,
+  [pbr::OriginalName("GalacticKittensUseShieldReq")] GalacticKittensUseShieldReq = 4718599,
+  [pbr::OriginalName("GalacticKittensUseShieldRes")] GalacticKittensUseShieldRes = 4718600,
+  [pbr::OriginalName("GalacticKittensShipShieldStateRes")] GalacticKittensShipShieldStateRes = 4718602,
+  [pbr::OriginalName("GalacticKittensShipMoveStateReq")] GalacticKittensShipMoveStateReq = 4718603,
+  [pbr::OriginalName("GalacticKittensShipMoveStateRes")] GalacticKittensShipMoveStateRes = 4718604,
 }
 
 #endregion
