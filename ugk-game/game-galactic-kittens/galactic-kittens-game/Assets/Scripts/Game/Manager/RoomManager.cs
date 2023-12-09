@@ -94,6 +94,7 @@ namespace Game.Manager
             SpaceShip spaceShip = _spaceShips[player.Id];
 
             var spawnPosition = spaceShip.transform.position;
+            spawnPosition = new Vector3(spawnPosition.x+0.8f, spawnPosition.y - 0.3f, spawnPosition.z); //y轴下移一点
             var spaceshipBullet = Instantiate(_spaceshipBullet, spawnPosition, Quaternion.identity,
                 Instance.transform);
             var predictionTransform = spaceshipBullet.GetComponent<PredictionTransform>();
