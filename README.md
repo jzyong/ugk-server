@@ -84,6 +84,7 @@
 * 添加[com.unity.multiplayer.samples.bitesize](https://github.com/Unity-Technologies/com.unity.multiplayer.samples.bitesize)中的机器人同步demo **_Client Driven Overview_**
 * 测试Unity服务器运行CPU，内存，网络消耗统计，通过docker实现
 * Websocket网络通信
+* GalacticKittens 子弹，敌人碰撞监测，血量，UI；快照同步有问题，运行一段时间子弹位置，飞船同步位置有偏差，程序卡死（死循环？）；有的飞船发射子弹特效太靠前
 
 
 

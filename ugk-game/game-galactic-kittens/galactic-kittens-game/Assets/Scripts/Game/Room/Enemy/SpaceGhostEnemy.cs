@@ -6,7 +6,7 @@ namespace Game.Room.Enemy
     /// <summary>
     /// 不发射子弹，只有碰撞的敌人
     /// </summary>
-    public class SpaceGhostEnemyBehavior : BaseEnemyBehavior
+    public class SpaceGhostEnemy : BaseEnemyBehavior
     {
 
         private bool m_IsFlashingFromHit = false;
@@ -25,7 +25,7 @@ namespace Game.Room.Enemy
                 }
             }
 
-            MoveEnemy();
+            ChangeVelocity();
         }
 
         protected override void UpdateDefeatedAnimation()

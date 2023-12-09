@@ -1,17 +1,16 @@
 ﻿using System;
-using Common.Network;
 using Common.Network.Serialize;
-using Common.Network.Sync;
 using Common.Tools;
 using Google.Protobuf;
 using UnityEngine;
 
-namespace Network.Sync
+namespace Common.Network.Sync
 {
     /// <summary>
-    /// 预测同步   TODO 待测试
+    /// 预测同步   
     /// <para>本地控制对象直接应用，然后对结果进行矫正；</para>
     /// <para>其他玩家或服务器控制对象使用航位推测进行计算，然后对结果进行矫正</para>
+    /// <remarks>每帧都改变方向的曲线运动效果不理想，抖动厉害</remarks>
     /// </summary>
     public class PredictionTransform : NetworkTransform
     {

@@ -8,7 +8,6 @@ using Common.Tools;
 using Common.Tools.SnapshotInterpolation;
 using Google.Protobuf;
 using JetBrains.Annotations;
-using Network.Sync;
 using UnityEngine;
 
 namespace Common.Network.Sync

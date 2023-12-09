@@ -6,7 +6,7 @@ namespace Game.Room.Enemy
     /// <summary>
     /// 发射子弹的敌人
     /// </summary>
-    public class SpaceShooterEnemyBehavior : BaseEnemyBehavior
+    public class SpaceShooterEnemy : BaseEnemyBehavior
     {
         [SerializeField]
         public GameObject m_EnemyBulletPrefab;
@@ -21,7 +21,7 @@ namespace Game.Room.Enemy
 
         protected override void UpdateActive()
         {
-            MoveEnemy();
+            ChangeVelocity();
 
             m_CurrentCooldownTime += Time.deltaTime;
             if (m_CurrentCooldownTime >= m_ShootingCooldown)

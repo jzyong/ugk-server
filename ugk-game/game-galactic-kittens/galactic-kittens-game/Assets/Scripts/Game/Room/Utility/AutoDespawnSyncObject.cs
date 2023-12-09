@@ -1,6 +1,6 @@
 using System;
+using Common.Network.Sync;
 using Game.Manager;
-using Network.Sync;
 using UnityEngine;
 
 namespace Game.Room.Utility
@@ -8,11 +8,10 @@ namespace Game.Room.Utility
     /// <summary>
     /// 自动销毁同步对象，用于移动的敌人离开视野
     /// </summary>
-    [RequireComponent(typeof(PredictionTransform))]
     public class AutoDespawnOnServer : MonoBehaviour
     {
         [Min(0f)] [SerializeField] [Header("Time alive in seconds (s)")]
-        private float m_autoDestroyTime;
+        private float m_autoDestroyTime=2;
 
         [SerializeField] [Tooltip("销毁的对象")] private GameObject target;
 

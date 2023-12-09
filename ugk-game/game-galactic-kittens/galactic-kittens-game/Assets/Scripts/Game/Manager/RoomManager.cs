@@ -1,10 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Common.Network.Sync;
 using Common.Tools;
 using Game.Messages;
+using Game.Room.Enemy;
 using Game.Room.Player;
-using Network.Sync;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Game.Manager
 {
@@ -14,9 +16,22 @@ namespace Game.Manager
     public class RoomManager : SingletonPersistent<RoomManager>
     {
         [SerializeField] [Tooltip("飞船，服务器只需要一个简单对象即可")]
-        private SpaceShip _spaceShip;
+        private SpaceShip _spaceShipPrefab;
 
-        [SerializeField] [Tooltip("子弹")] private SpaceshipBullet _spaceshipBullet;
+        [SerializeField] [Tooltip("子弹")] private SpaceshipBullet _spaceshipBulletPrefab;
+
+        [SerializeField] [Tooltip("不射击的敌人")] private SpaceGhostEnemy _spaceGhostEnemyPrefab;
+        [SerializeField] [Tooltip("击的敌人")] private SpaceShooterEnemy _spaceShooterEnemyPrefab;
+
+
+        [Header("Enemies")] [SerializeField] private float m_EnemySpawnTime = 1.8f;
+        [SerializeField] private float m_bossSpawnTime = 75;
+        private Vector3 m_CurrentNewEnemyPosition = new Vector3();
+        private float m_CurrentEnemySpawnTime = 0f;
+        private Vector3 m_CurrentNewMeteorPosition = new Vector3();
+        private float m_CurrentMeteorSpawnTime = 0f;
+        private float m_CurrentBossSpawnTime = 0f;
+        private bool m_IsSpawning = true;
 
 
         /// <summary>
@@ -31,6 +46,16 @@ namespace Game.Manager
         /// 对象同步Id
         /// </summary>
         private long SyncId { get; set; }
+
+        private void Start()
+        {
+            // Initialize the enemy and meteor spawn position based on my owning GO's x position
+            m_CurrentNewEnemyPosition.x = 9;
+            m_CurrentNewEnemyPosition.z = 0f;
+
+            m_CurrentNewMeteorPosition.x = 9;
+            m_CurrentNewMeteorPosition.z = 0f;
+        }
 
         private void Update()
         {
@@ -48,7 +73,7 @@ namespace Game.Manager
                 // 根据角色创建对应的实体对象，添加SnapTransform组件
                 var player = players[i];
                 var spawnPosition = shipSpawnPositions[i];
-                var spaceShip = Instantiate(_spaceShip, spawnPosition, Quaternion.identity,
+                var spaceShip = Instantiate(_spaceShipPrefab, spawnPosition, Quaternion.identity,
                     Instance.transform);
                 var snapTransform = spaceShip.GetComponent<SnapTransform>();
                 snapTransform.Id = player.Id;
@@ -80,8 +105,59 @@ namespace Game.Manager
         /// </summary>
         private void SpawnEnemy()
         {
-            //TODO 规则是什么？
+            m_CurrentEnemySpawnTime += Time.deltaTime;
+            if (m_CurrentEnemySpawnTime >= m_EnemySpawnTime)
+            {
+                // update the new enemy's spawn position(y value). This way we don't have to allocate
+                // a new Vector3 each time.
+                m_CurrentNewEnemyPosition.y = Random.Range(-5f, 5f);
+                int randomPick = Random.Range(0, 99);
+
+                GalacticKittensObjectSpawnResponse spawnResponse = new GalacticKittensObjectSpawnResponse();
+
+
+                GameObject gameObject;
+
+
+                uint configId = 40; //40射击敌人、41幽灵敌人、41陨石
+                //射击
+                if (randomPick < 50)
+                {
+                    gameObject = Instantiate(_spaceShooterEnemyPrefab, m_CurrentNewEnemyPosition,
+                        Quaternion.identity,
+                        Instance.transform).gameObject;
+                }
+                else
+                {
+                    gameObject = Instantiate(_spaceGhostEnemyPrefab, m_CurrentNewEnemyPosition,
+                        Quaternion.identity,
+                        Instance.transform).gameObject;
+                    configId = 41;
+                }
+
+                var snapTransform = gameObject.GetComponent<SnapTransform>();
+                snapTransform.Id = SyncId++;
+                snapTransform.Onwer = true;
+                gameObject.name = $"SpaceEnemy-{snapTransform.Id}";
+                GalacticKittensObjectSpawnResponse.Types.SpawnInfo spawnInfo =
+                    new GalacticKittensObjectSpawnResponse.Types.SpawnInfo()
+                    {
+                        OwnerId = 0,
+                        Id = snapTransform.Id,
+                        ConfigId = configId,
+                        Position = ProtoUtil.BuildVector3D(m_CurrentNewEnemyPosition),
+                    };
+                snapTransform.InitTransform(m_CurrentNewEnemyPosition,null);
+                SyncManager.Instance.AddSnapTransform(snapTransform); //添加同步对象
+                spawnResponse.Spawn.Add(spawnInfo);
+                Log.Info($"enemy {snapTransform.Id}  born in {m_CurrentNewEnemyPosition}");
+
+                PlayerManager.Instance.BroadcastMsg(MID.GalacticKittensObjectSpawnRes, spawnResponse);
+
+                m_CurrentEnemySpawnTime = 0f;
+            }
         }
+
 
         /// <summary>
         /// 创建子弹
@@ -94,8 +170,8 @@ namespace Game.Manager
             SpaceShip spaceShip = _spaceShips[player.Id];
 
             var spawnPosition = spaceShip.transform.position;
-            spawnPosition = new Vector3(spawnPosition.x+0.8f, spawnPosition.y - 0.3f, spawnPosition.z); //y轴下移一点
-            var spaceshipBullet = Instantiate(_spaceshipBullet, spawnPosition, Quaternion.identity,
+            spawnPosition = new Vector3(spawnPosition.x + 0.8f, spawnPosition.y - 0.3f, spawnPosition.z); //y轴下移一点
+            var spaceshipBullet = Instantiate(_spaceshipBulletPrefab, spawnPosition, Quaternion.identity,
                 Instance.transform);
             var predictionTransform = spaceshipBullet.GetComponent<PredictionTransform>();
             predictionTransform.Id = SyncId++;
@@ -125,11 +201,9 @@ namespace Game.Manager
             if (removeObject)
             {
                 //移除的对象全部使用预测
-                SyncManager.Instance.RemovePredictionTransform(dieId);
+                SyncManager.Instance.RemoveSyncObject(dieId);
             }
 
-
-            //TODO 清除对象，发送消息
             GalacticKittensObjectDieResponse response = new GalacticKittensObjectDieResponse()
             {
                 KillerId = killerId,

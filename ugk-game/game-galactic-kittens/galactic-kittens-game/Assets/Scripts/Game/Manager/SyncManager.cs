@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using Common.Network;
 using Common.Network.Sync;
 using Common.Tools;
-using Network.Sync;
 using UnityEngine;
 
 namespace Game.Manager
@@ -218,6 +217,22 @@ namespace Game.Manager
             return false;
         }
 
+        /// <summary>
+        /// 移除同步对象
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="type">0移除，1移除并隐藏，2移除并销毁</param>
+        /// <returns></returns>
+        public bool RemoveSyncObject(long id, int type = 0)
+        {
+            if (RemoveSnapTransform(id, type))
+            {
+                return true;
+            }
+
+            return RemovePredictionTransform(id, type);
+        }
+        
         public void AddSnapTransform(SnapTransform snapTransform)
         {
             _snapTransforms[snapTransform.Id] = snapTransform;
