@@ -81,7 +81,11 @@ namespace Common.Network
             {
                 Application.Quit();
             }
+          
+        }
 
+        public void LateUpdate()
+        {
             //批量发送消息
             foreach (var kv in gateClients)
             {

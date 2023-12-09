@@ -1,3 +1,4 @@
+using System;
 using Game.Manager;
 using Network.Sync;
 using UnityEngine;
@@ -13,8 +14,16 @@ namespace Game.Room.Utility
         [Min(0f)] [SerializeField] [Header("Time alive in seconds (s)")]
         private float m_autoDestroyTime;
 
-        private GameObject target;
+        [SerializeField] [Tooltip("销毁的对象")] private GameObject target;
 
+
+        private void OnValidate()
+        {
+            if (target == null)
+            {
+                target = transform.gameObject;
+            }
+        }
 
         private void Update()
         {

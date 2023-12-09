@@ -16,8 +16,7 @@ namespace Game.Manager
         [SerializeField] [Tooltip("飞船，服务器只需要一个简单对象即可")]
         private SpaceShip _spaceShip;
 
-        [SerializeField][Tooltip("子弹")]
-        private SpaceshipBullet _spaceshipBullet;
+        [SerializeField] [Tooltip("子弹")] private SpaceshipBullet _spaceshipBullet;
 
 
         /// <summary>
@@ -66,7 +65,7 @@ namespace Game.Manager
                             Z = spawnPosition.z
                         }
                     };
-                snapTransform.InitTransform(spawnPosition,null);
+                snapTransform.InitTransform(spawnPosition, null);
                 SyncManager.Instance.AddSnapTransform(snapTransform); //添加同步对象
                 spawnResponse.Spawn.Add(spawnInfo);
                 _spaceShips[player.Id] = spaceShip;
@@ -99,12 +98,14 @@ namespace Game.Manager
                 Instance.transform);
             var predictionTransform = spaceshipBullet.GetComponent<PredictionTransform>();
             predictionTransform.Id = SyncId++;
+            spaceShip.name = $"SpaceBullet{player.Id}-{predictionTransform.Id}";
+            predictionTransform.LinearVelocity = spaceshipBullet.linearVelocity;
             GalacticKittensObjectSpawnResponse.Types.SpawnInfo spawnInfo =
                 new GalacticKittensObjectSpawnResponse.Types.SpawnInfo()
                 {
                     OwnerId = player.Id,
                     Id = predictionTransform.Id,
-                    ConfigId = 30, 
+                    ConfigId = 30,
                     Position = ProtoUtil.BuildVector3D(spawnPosition),
                     LinearVelocity = ProtoUtil.BuildVector3D(spaceshipBullet.linearVelocity),
                 };
@@ -167,10 +168,11 @@ namespace Game.Manager
 
         public SpaceShip GetSpaceShip(long id)
         {
-            if (_spaceShips.TryGetValue(id,out SpaceShip spaceShip))
+            if (_spaceShips.TryGetValue(id, out SpaceShip spaceShip))
             {
                 return spaceShip;
             }
+
             Log.Warn($"ship {id} not find");
             return null;
         }

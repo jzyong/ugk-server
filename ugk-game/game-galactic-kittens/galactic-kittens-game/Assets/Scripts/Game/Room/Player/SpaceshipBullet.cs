@@ -17,7 +17,7 @@ namespace Game.Room.Player
 
          private void Awake()
          {
-             _predictionTransform.GetComponent<PredictionTransform>();
+            _predictionTransform=  transform.GetComponent<PredictionTransform>();
              _predictionTransform.AngularVelocity = linearVelocity;
          }
 
