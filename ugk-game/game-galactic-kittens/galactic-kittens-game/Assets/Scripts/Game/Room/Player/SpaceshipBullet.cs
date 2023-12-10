@@ -1,6 +1,7 @@
 using System;
 using Common.Network.Sync;
 using Game.Manager;
+using Game.Room.Enemy;
 using kcp2k;
 using UnityEngine;
 
@@ -30,12 +31,18 @@ namespace Game.Room.Player
                 {
                     return;
                 }
-                
+
                 Log.Info($"命中敌人{collider.name}");
                 damagable.Hit(damage);
+                long killerId = 0;
 
+                var snapTransform = collider.GetComponent<SnapTransform>();
+                if (snapTransform != null)
+                {
+                    killerId = snapTransform.Id;
+                }
                 //  广播子弹消失
-                RoomManager.Instance.DespawnObject(0, _predictionTransform.Id);
+                RoomManager.Instance.DespawnObject(killerId, _predictionTransform.Id);
             }
         }
     }

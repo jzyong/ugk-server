@@ -10,6 +10,11 @@
 * 前后端分离，最小化unity服务器资源内存、cpu消耗
 * 快照同步，状态同步预测插值
 
+### 前后端分离
+* 减少服务器所需要的资源，最小化unity服务器资源内存、cpu消耗
+* 游戏逻辑更加简单明了
+* 可以减少网络带宽（Mirror和Unity官方的组件都封装了Spawn和Despawn，需要额外的消息同步特效，音效等）
+
 ## 服务
 ### 通用
 | 服务	                | 描述                        |
@@ -70,12 +75,7 @@
 ## TODO
 * GalacticKittens --> PushCoin --> Client Driven Overview --> coop 
 * 物理同步，动画同步、延迟补偿、预测、aoi管理（参考Mirror的NetworkAnimator、NetworkRigidbody、LagCompensation、Prediction）
-* 客户端和服务器配置都通过go服务器拉取
-* 完整的GalacticKittensMatch流程
-* 玩家进入游戏后端已经可以通过agent创建unity docker容器；下一步需要前端进入游戏场景，后端unity服务器开发，
-* GalacticKittens客户端控制的使用快照插值同步，服务器控制的使用预测插值；Push coin使用快照插值同步
 * 显示网络同步统计信息
-* GalacticKittens 让服务器进行子弹命中判断，需要将客户端发射子弹的延迟加上；添加护盾开启关闭消息；场景切换渐入渐出效果;
 自己实现UI相关逻辑，不参考;敌人、Boss同步；
 * 同步添加判断是世界坐标还是相对坐标系
 * 快照同步调试：只发送改变和全部发送的流量消耗对比
@@ -83,7 +83,7 @@
 * 添加[com.unity.multiplayer.samples.bitesize](https://github.com/Unity-Technologies/com.unity.multiplayer.samples.bitesize)中的机器人同步demo **_Client Driven Overview_**
 * 测试Unity服务器运行CPU，内存，网络消耗统计，通过docker实现
 * Websocket网络通信
-* GalacticKittens 子弹，敌人碰撞监测，血量，UI；音效调优
+* GalacticKittens 血量，UI；音效调优；添加护盾开启关闭消息；场景切换渐入渐出效果;
 * 网关消息合并，偶发性出现会导致客户端收到不完整的消息包，导致坐标对应不上？
 * 部署到公网测试网络
 
