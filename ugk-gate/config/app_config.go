@@ -25,7 +25,7 @@ type AppConfig struct {
 }
 
 func init() {
-	BaseConfig = &AppConfig{BatchMessage: true}
+	BaseConfig = &AppConfig{BatchMessage: false}
 }
 
 // 初始化项目配置和日志

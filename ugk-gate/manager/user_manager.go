@@ -373,7 +373,7 @@ func (user *User) immediateTransmitToClient(gameLength int, messageId uint32, ga
 
 // 批量发送缓存的消息到客户端
 func (user *User) batchTransmitToClient() error {
-	if user.SendBuffer.Len() < 1 {
+	if config2.BaseConfig.BatchMessage == false || user.SendBuffer.Len() < 1 {
 		return nil
 	}
 	_, err := user.ClientSession.Write(user.SendBuffer.Bytes())

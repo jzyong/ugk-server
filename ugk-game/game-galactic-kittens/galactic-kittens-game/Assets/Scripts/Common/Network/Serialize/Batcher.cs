@@ -13,7 +13,7 @@ namespace Common.Network.Serialize
     {
         //Mirror 阈值使用mtu或者接收端可接受的最大容器，因为批量消息共用一个时间戳。但是我们是每个消息共用一个时间戳，因此最大消息不超过mtu
         //大消息包分片再合并可能会额外增加延迟 ， 内部阈值可以直接使用接收端的容量大小？
-        readonly int threshold = Kcp.MTU_DEF - 28;
+        readonly int threshold = Kcp.MTU_DEF - 50;
 
 
 
@@ -36,7 +36,7 @@ namespace Common.Network.Serialize
                 batch.Position + message.Count > threshold)
             {
                 batches.Enqueue(batch);
-                batch = null;
+                batch =NetworkWriterPool.Get();
             }
 
             // initialize a new batch if necessary

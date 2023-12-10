@@ -83,10 +83,8 @@
 * 添加[com.unity.multiplayer.samples.bitesize](https://github.com/Unity-Technologies/com.unity.multiplayer.samples.bitesize)中的机器人同步demo **_Client Driven Overview_**
 * 测试Unity服务器运行CPU，内存，网络消耗统计，通过docker实现
 * Websocket网络通信
-* GalacticKittens 子弹，敌人碰撞监测，血量，UI；快照同步有问题，运行一段时间子弹位置，飞船同步位置有偏差（存在丢失消息包，导致两边坐标不同步？隔一段时间进行位置校对一下？）；有的飞船发射子弹特效太靠前
-* 快照同步时间通过参数告知客户端
-* 同步初始化，单独定义一个proto结构体，告知同步参数（坐标，缩放，旋转是否同步；出生坐标、旋转、缩放；线速度、角速度），客户端动态添加同步组件
-* 快照插值有抖动？
+* GalacticKittens 子弹，敌人碰撞监测，血量，UI；音效调优
+* 网关消息合并，偶发性出现会导致客户端收到不完整的消息包，导致坐标对应不上？
 
 
 ### 计划

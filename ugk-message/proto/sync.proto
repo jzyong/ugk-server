@@ -1,5 +1,7 @@
 syntax = "proto3";
+import "common.proto";
 option go_package = "/message";
+
 
 //通用消息同步
 
