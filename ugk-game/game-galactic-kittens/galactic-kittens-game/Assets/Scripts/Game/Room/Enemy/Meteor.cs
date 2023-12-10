@@ -1,6 +1,7 @@
 using System.Collections;
 using Common.Network.Sync;
 using Game.Manager;
+using Game.Room.Player;
 using UnityEngine;
 
 namespace Game.Room.Enemy
@@ -20,6 +21,8 @@ namespace Game.Room.Enemy
 
         [SerializeField] private float m_scaleMax = 1.5f;
 
+        private long killerId;
+
 
         private void Start()
         {
@@ -36,12 +39,23 @@ namespace Game.Room.Enemy
         {
             if (collider.TryGetComponent(out IDamagable damagable))
             {
+                if (damagable is BaseEnemyBehavior)
+                {
+                    return;
+                }
+
+                if (damagable is SpaceShip)
+                {
+                    killerId = collider.GetComponent<SnapTransform>().Id;
+                }
+
+
                 // Hit the object that collide with me
                 damagable.Hit(m_damage);
 
+
                 // Hit me too!
                 Hit(m_damage);
-                
             }
         }
 
@@ -53,7 +67,7 @@ namespace Game.Room.Enemy
             {
                 // 产生道具  TODO
                 //PowerUpSpawnController.instance.OnPowerUpSpawn(transform.position);
-                RoomManager.Instance.DespawnObject(0, GetComponent<PredictionTransform>().Id);
+                RoomManager.Instance.DespawnObject(killerId, GetComponent<PredictionTransform>().Id);
                 Destroy(gameObject);
             }
         }

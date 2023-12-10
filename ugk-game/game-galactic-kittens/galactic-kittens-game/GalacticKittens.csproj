@@ -57,6 +57,7 @@
      <Compile Include="Assets\Scripts\Common\Network\Serialize\DeltaCompression.cs" />
      <Compile Include="Assets\Scripts\Common\Network\Kcp\kcp2k\highlevel\Log.cs" />
      <Compile Include="Assets\Scripts\Common\Tools\Extensions.cs" />
+     <Compile Include="Assets\Scripts\Game\Room\Enemy\EnemyBullet.cs" />
      <Compile Include="Assets\Scripts\Game\Messages\Player.cs" />
      <Compile Include="Assets\Scripts\Game\Handlers\RoomHandler.cs" />
      <Compile Include="Assets\Scripts\Game\Handlers\SyncHandler.cs" />

@@ -19,6 +19,7 @@ namespace Game.Manager
         private SpaceShip _spaceShipPrefab;
 
         [SerializeField] [Tooltip("子弹")] private SpaceshipBullet _spaceshipBulletPrefab;
+        [SerializeField] [Tooltip("敌人子弹")] private EnemyBullet _enemyBulletPrefab;
 
         [SerializeField] [Tooltip("不射击的敌人")] private SpaceGhostEnemy _spaceGhostEnemyPrefab;
         [SerializeField] [Tooltip("击的敌人")] private SpaceShooterEnemy _spaceShooterEnemyPrefab;
@@ -217,7 +218,7 @@ namespace Game.Manager
                 Instance.transform);
             var predictionTransform = spaceshipBullet.GetComponent<PredictionTransform>();
             predictionTransform.Id = SyncId++;
-            spaceShip.name = $"SpaceBullet{player.Id}-{predictionTransform.Id}";
+            spaceshipBullet.name = $"SpaceBullet{player.Id}-{predictionTransform.Id}";
             predictionTransform.LinearVelocity = spaceshipBullet.linearVelocity;
             GalacticKittensObjectSpawnResponse.Types.SpawnInfo spawnInfo =
                 new GalacticKittensObjectSpawnResponse.Types.SpawnInfo()
@@ -231,6 +232,37 @@ namespace Game.Manager
             SyncManager.Instance.AddPredictionTransform(predictionTransform); //添加同步对象
             spawnResponse.Spawn.Add(spawnInfo);
             Log.Info($"{player.Id} bullet born in {spawnPosition}");
+
+            PlayerManager.Instance.BroadcastMsg(MID.GalacticKittensObjectSpawnRes, spawnResponse);
+        }
+
+        /// <summary>
+        /// 创建敌人子弹
+        /// </summary>
+        /// <param name="enemy"></param>
+        public void SpawnEnemyBullet(SpaceShooterEnemy enemy)
+        {
+            GalacticKittensObjectSpawnResponse spawnResponse = new GalacticKittensObjectSpawnResponse();
+
+            var spawnPosition = enemy.transform.position;
+            var bullet = Instantiate(_enemyBulletPrefab, spawnPosition, Quaternion.identity,
+                Instance.transform);
+            var predictionTransform = bullet.GetComponent<PredictionTransform>();
+            predictionTransform.Id = SyncId++;
+            bullet.name = $"EnemyBullet-{predictionTransform.Id}";
+            predictionTransform.LinearVelocity = bullet.linearVelocity;
+            GalacticKittensObjectSpawnResponse.Types.SpawnInfo spawnInfo =
+                new GalacticKittensObjectSpawnResponse.Types.SpawnInfo()
+                {
+                    OwnerId = enemy.GetComponent<SnapTransform>().Id,
+                    Id = predictionTransform.Id,
+                    ConfigId = 31,
+                    Position = ProtoUtil.BuildVector3D(spawnPosition),
+                    LinearVelocity = ProtoUtil.BuildVector3D(bullet.linearVelocity),
+                };
+            SyncManager.Instance.AddPredictionTransform(predictionTransform); //添加同步对象
+            spawnResponse.Spawn.Add(spawnInfo);
+            Log.Info($"enemy bullet born in {spawnPosition}");
 
             PlayerManager.Instance.BroadcastMsg(MID.GalacticKittensObjectSpawnRes, spawnResponse);
         }

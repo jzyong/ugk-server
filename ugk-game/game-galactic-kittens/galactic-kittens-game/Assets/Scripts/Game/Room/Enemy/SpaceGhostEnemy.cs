@@ -10,30 +10,25 @@ namespace Game.Room.Enemy
     /// </summary>
     public class SpaceGhostEnemy : BaseEnemyBehavior
     {
-
         protected override void Update()
         {
             ChangeVelocity();
         }
 
 
-
         private void OnTriggerEnter2D(Collider2D otherObject)
         {
-
             // check if it's collided with a player spaceship
             var spaceShip = otherObject.gameObject.GetComponent<SpaceShip>();
             if (spaceShip != null)
             {
                 // tell the spaceship that it's taken damage
                 spaceShip.Hit(1);
-                
-                RoomManager.Instance.DespawnObject(0,gameObject.GetComponent<SnapTransform>().Id);
+
+                RoomManager.Instance.DespawnObject(spaceShip.GetComponent<SnapTransform>().Id,
+                    gameObject.GetComponent<SnapTransform>().Id);
                 Destroy(gameObject);
-                
             }
         }
-
-      
     }
 }
