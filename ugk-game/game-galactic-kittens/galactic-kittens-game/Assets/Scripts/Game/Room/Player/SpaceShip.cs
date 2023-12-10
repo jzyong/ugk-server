@@ -10,7 +10,6 @@ namespace Game.Room.Player
         public void Hit(int damage)
         {
             //TODO
-            throw new System.NotImplementedException();
         }
     }
 }

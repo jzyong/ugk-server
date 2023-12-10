@@ -1,4 +1,6 @@
 using System.Collections;
+using Common.Network.Sync;
+using Game.Manager;
 using UnityEngine;
 
 namespace Game.Room.Enemy
@@ -8,24 +10,19 @@ namespace Game.Room.Enemy
     /// </summary>
     public class Meteor : MonoBehaviour, IDamagable
     {
-        [SerializeField]
-        private int m_damage = 1;
-    
-        [SerializeField]
-        private int m_health = 1;
+        [SerializeField] private int m_damage = 1;
+
+        [SerializeField] private int m_health = 1;
 
 
-        [Header("Range for random scale value")]
-        [SerializeField]
+        [Header("Range for random scale value")] [SerializeField]
         private float m_scaleMin = 0.8f;
 
-        [SerializeField]
-        private float m_scaleMax = 1.5f;
+        [SerializeField] private float m_scaleMax = 1.5f;
+
 
         private void Start()
         {
-
-          
         }
 
         public void SpawnInit()
@@ -37,7 +34,6 @@ namespace Game.Room.Enemy
 
         private void OnTriggerEnter2D(Collider2D collider)
         {
-
             if (collider.TryGetComponent(out IDamagable damagable))
             {
                 // Hit the object that collide with me
@@ -45,13 +41,21 @@ namespace Game.Room.Enemy
 
                 // Hit me too!
                 Hit(m_damage);
+                
             }
         }
 
 
         public void Hit(int damage)
         {
-           //TODO
+            m_health -= damage;
+            if (m_health <= 0)
+            {
+                // 产生道具  TODO
+                //PowerUpSpawnController.instance.OnPowerUpSpawn(transform.position);
+                RoomManager.Instance.DespawnObject(0, GetComponent<PredictionTransform>().Id);
+                Destroy(gameObject);
+            }
         }
     }
 }

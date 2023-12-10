@@ -1,3 +1,5 @@
+using Common.Network.Sync;
+using Game.Manager;
 using Game.Room.Player;
 using UnityEngine;
 
@@ -9,28 +11,12 @@ namespace Game.Room.Enemy
     public class SpaceGhostEnemy : BaseEnemyBehavior
     {
 
-        private bool m_IsFlashingFromHit = false;
-        private float m_FlashFromHitTime = 0.7f;
-
-
-
-
-        protected override void UpdateActive()
+        protected override void Update()
         {
-            if (m_IsFlashingFromHit)
-            {
-                m_FlashFromHitTime -= Time.deltaTime;
-                if (m_FlashFromHitTime <= 0f)
-                {
-                }
-            }
-
             ChangeVelocity();
         }
 
-        protected override void UpdateDefeatedAnimation()
-        {
-        }
+
 
         private void OnTriggerEnter2D(Collider2D otherObject)
         {
@@ -41,25 +27,13 @@ namespace Game.Room.Enemy
             {
                 // tell the spaceship that it's taken damage
                 spaceShip.Hit(1);
-
-                // enemy explodes when it collides with the a player's ship
-                m_EnemyState = EnemyState.defeatAnimation;
+                
+                RoomManager.Instance.DespawnObject(0,gameObject.GetComponent<SnapTransform>().Id);
+                Destroy(gameObject);
+                
             }
         }
 
       
-      
-
-
-
-        private void OnEnemyHealthPointsChange(int oldHP, int newHP)
-        {
-            // if enemy's health is 0, then time to start enemy dead animation
-            if (newHP <= 0)
-            {
-                m_EnemyState = EnemyState.defeatAnimation;
-            }
-        }
-        
     }
 }

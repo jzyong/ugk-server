@@ -1,6 +1,7 @@
 using System;
 using Common.Network.Sync;
 using Game.Manager;
+using kcp2k;
 using UnityEngine;
 
 namespace Game.Room.Player
@@ -10,26 +11,32 @@ namespace Game.Room.Player
     /// </summary>
     public class SpaceshipBullet : MonoBehaviour
     {
-         [Tooltip("线速度")] public Vector3 linearVelocity = Vector3.right * 2;
-         
-         public int damage = 1;
-         private PredictionTransform _predictionTransform;
+        [Tooltip("线速度")] public Vector3 linearVelocity = Vector3.right * 2;
 
-         private void Awake()
-         {
-            _predictionTransform=  transform.GetComponent<PredictionTransform>();
-             _predictionTransform.AngularVelocity = linearVelocity;
-         }
+        public int damage = 1;
+        private PredictionTransform _predictionTransform;
 
-         private void OnTriggerEnter2D(Collider2D collider)
-         {
-             if (collider.TryGetComponent(out IDamagable damagable))
-             {
-                 damagable.Hit(damage);
+        private void Awake()
+        {
+            _predictionTransform = transform.GetComponent<PredictionTransform>();
+            _predictionTransform.AngularVelocity = linearVelocity;
+        }
 
-                 //  广播子弹消失
-                 RoomManager.Instance.DespawnObject(0, _predictionTransform.Id);
-             }
-         }
+        private void OnTriggerEnter2D(Collider2D collider)
+        {
+            if (collider.TryGetComponent(out IDamagable damagable))
+            {
+                if (damagable is SpaceShip)
+                {
+                    return;
+                }
+                
+                Log.Info($"命中敌人{collider.name}");
+                damagable.Hit(damage);
+
+                //  广播子弹消失
+                RoomManager.Instance.DespawnObject(0, _predictionTransform.Id);
+            }
+        }
     }
 }

@@ -20,12 +20,6 @@ namespace Game.Room.Enemy
             COUNT //MAX - used to get random value
         }
 
-        protected enum EnemyState : byte
-        {
-            active,
-            defeatAnimation,
-            defeated
-        }
 
         [SerializeField] protected float m_EnemySpeed = 4f;
 
@@ -36,8 +30,6 @@ namespace Game.Room.Enemy
         [SerializeField] protected int m_EnemyHealthPoints = 3;
 
 
-        //TODO 需要同步
-        protected EnemyState m_EnemyState = EnemyState.active;
 
         protected EnemyMovementType m_EnemyMovementType;
 
@@ -56,35 +48,15 @@ namespace Game.Room.Enemy
 
         protected virtual void Update()
         {
-            if (m_EnemyState == EnemyState.active)
-            {
-                UpdateActive();
-            }
-            else if (m_EnemyState == EnemyState.defeatAnimation)
-            {
-                UpdateDefeatedAnimation();
-            }
-            else // (m_EnemyState.Value == EnemyState.defeated)
-            {
-                DespawnEnemy();
-            }
-
         }
 
-        protected virtual void UpdateActive()
-        {
-        }
-
-        protected virtual void UpdateDefeatedAnimation()
-        {
-        }
 
         /// <summary>
         /// 改变速度
         /// </summary>
         protected virtual void ChangeVelocity()
         {
-            if (m_EnemyMovementType == EnemyMovementType.sineWave )
+            if (m_EnemyMovementType == EnemyMovementType.sineWave)
             {
                 m_Direction.x = -1f; //to move from right to left
                 m_Direction.y = Mathf.Sin(Time.time * m_WaveAmplitude);
@@ -118,12 +90,11 @@ namespace Game.Room.Enemy
         public virtual void Hit(int damage)
         {
             m_EnemyHealthPoints -= 1;
-            //TODO 广播命中，客户端显示击中效果
-        }
-
-        public IEnumerator HitEffect()
-        {
-            throw new System.NotImplementedException();
+            if (m_EnemyHealthPoints < 1)
+            {
+                RoomManager.Instance.DespawnObject(0, GetComponent<SnapTransform>().Id);
+                Destroy(gameObject);
+            }
         }
     }
 }

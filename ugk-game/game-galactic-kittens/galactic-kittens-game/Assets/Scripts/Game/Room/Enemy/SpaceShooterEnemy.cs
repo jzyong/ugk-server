@@ -1,3 +1,5 @@
+using Common.Network.Sync;
+using Game.Manager;
 using Game.Room.Player;
 using UnityEngine;
 
@@ -8,21 +10,17 @@ namespace Game.Room.Enemy
     /// </summary>
     public class SpaceShooterEnemy : BaseEnemyBehavior
     {
-        [SerializeField]
-        public GameObject m_EnemyBulletPrefab;
+        [SerializeField] public GameObject m_EnemyBulletPrefab;
 
-        [SerializeField]
-        private float m_ShootingCooldown =2 ;
+        [SerializeField] private float m_ShootingCooldown = 2;
 
 
         private float m_CurrentCooldownTime = 0f;
 
 
-
-        protected override void UpdateActive()
+        protected override void Update()
         {
             ChangeVelocity();
-
             m_CurrentCooldownTime += Time.deltaTime;
             if (m_CurrentCooldownTime >= m_ShootingCooldown)
             {
@@ -30,7 +28,7 @@ namespace Game.Room.Enemy
                 ShootLaserServerRpc();
             }
         }
-        
+
 
         private void ShootLaserServerRpc()
         {
@@ -49,16 +47,14 @@ namespace Game.Room.Enemy
 
         private void OnTriggerEnter2D(Collider2D otherObject)
         {
-
             // check if it's collided with a player spaceship
             var spaceShip = otherObject.gameObject.GetComponent<SpaceShip>();
             if (spaceShip != null)
             {
                 // tell the spaceship that it's taken damage
                 spaceShip.Hit(1);
-
-                // enemy explodes when it collides with the a player's ship
-                m_EnemyState = EnemyState.defeatAnimation;
+                RoomManager.Instance.DespawnObject(0, gameObject.GetComponent<SnapTransform>().Id);
+                Destroy(gameObject);
             }
 
             // check if it's collided with a player's bullet
@@ -67,15 +63,6 @@ namespace Game.Room.Enemy
             {
                 // if so, take one health point away from enemy
                 m_EnemyHealthPoints -= 1;
-            }
-        }
-
-        private void OnEnemyHealthPointsChange(int oldHP, int newHP)
-        {
-            // if enemy's health is 0, then time to start enemy dead animation
-            if (newHP <= 0)
-            {
-                m_EnemyState = EnemyState.defeatAnimation;
             }
         }
     }
