@@ -25,6 +25,11 @@ namespace Game.Room.Enemy
         private void Start()
         {
 
+          
+        }
+
+        public void SpawnInit()
+        {
             // Randomly scale the meteor
             float randomScale = Random.Range(m_scaleMin, m_scaleMax);
             transform.localScale = new Vector3(randomScale, randomScale, 1f);

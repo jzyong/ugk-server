@@ -14,7 +14,7 @@ namespace Common.Network.Sync
 {
     /// <summary>
     /// 快照同步
-    /// 客户端只同步玩家自己操作的  TODO 待测试
+    /// 客户端只同步玩家自己操作的,Unity 官方的网络库增量压缩详细到了xyz轴，可进一步减少流量。但是同步一般只需要坐标，缩放，旋转都很少用到
     /// </summary>
     public class SnapTransform : NetworkTransform
     {
@@ -241,7 +241,7 @@ namespace Common.Network.Sync
                 // set 'last'
                 last = snapshot;
 
-                Debug.Log($"{Id} 发送坐标{last.position} {lastSerializedPosition}");
+                // Debug.Log($"{Id} 发送坐标{last.position} {lastSerializedPosition}");
 
                 //发送数据
                 SyncData = ByteString.CopyFrom(writer.ToArray());

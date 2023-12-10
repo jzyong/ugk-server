@@ -22,9 +22,11 @@ namespace Game.Manager
 
         [SerializeField] [Tooltip("不射击的敌人")] private SpaceGhostEnemy _spaceGhostEnemyPrefab;
         [SerializeField] [Tooltip("击的敌人")] private SpaceShooterEnemy _spaceShooterEnemyPrefab;
+        [SerializeField] [Tooltip("陨石")] private Meteor _meteorPrefab;
 
 
         [Header("Enemies")] [SerializeField] private float m_EnemySpawnTime = 1.8f;
+        [SerializeField] private float m_meteorSpawningTime = 1f;
         [SerializeField] private float m_bossSpawnTime = 75;
         private Vector3 m_CurrentNewEnemyPosition = new Vector3();
         private float m_CurrentEnemySpawnTime = 0f;
@@ -53,13 +55,14 @@ namespace Game.Manager
             m_CurrentNewEnemyPosition.x = 9;
             m_CurrentNewEnemyPosition.z = 0f;
 
-            m_CurrentNewMeteorPosition.x = 9;
+            m_CurrentNewMeteorPosition.x = 10; //客户端对象出生计算位置时会快速移动一小段，因此从屏幕外出生
             m_CurrentNewMeteorPosition.z = 0f;
         }
 
         private void Update()
         {
             SpawnEnemy();
+            SpawnMeteor();
         }
 
         /// <summary>
@@ -83,12 +86,8 @@ namespace Game.Manager
                         OwnerId = player.Id,
                         Id = player.Id,
                         ConfigId = (uint)player.CharacterId, //0-3
-                        Position = new Vector3D()
-                        {
-                            X = spawnPosition.x,
-                            Y = spawnPosition.y,
-                            Z = spawnPosition.z
-                        }
+                        SyncInterval = snapTransform.sendInterval,
+                        Position = ProtoUtil.BuildVector3D(spawnPosition)
                     };
                 snapTransform.InitTransform(spawnPosition, null);
                 SyncManager.Instance.AddSnapTransform(snapTransform); //添加同步对象
@@ -145,9 +144,10 @@ namespace Game.Manager
                         OwnerId = 0,
                         Id = snapTransform.Id,
                         ConfigId = configId,
+                        SyncInterval = snapTransform.sendInterval,
                         Position = ProtoUtil.BuildVector3D(m_CurrentNewEnemyPosition),
                     };
-                snapTransform.InitTransform(m_CurrentNewEnemyPosition,null);
+                snapTransform.InitTransform(m_CurrentNewEnemyPosition, null);
                 SyncManager.Instance.AddSnapTransform(snapTransform); //添加同步对象
                 spawnResponse.Spawn.Add(spawnInfo);
                 Log.Info($"enemy {snapTransform.Id}  born in {m_CurrentNewEnemyPosition}");
@@ -158,6 +158,49 @@ namespace Game.Manager
             }
         }
 
+        /// <summary>
+        /// 出生陨石
+        /// </summary>
+        private void SpawnMeteor()
+        {
+            m_CurrentMeteorSpawnTime += Time.deltaTime;
+            if (m_CurrentMeteorSpawnTime >= m_meteorSpawningTime)
+            {
+                m_CurrentNewMeteorPosition.y = Random.Range(-5f, 6f);
+
+                GalacticKittensObjectSpawnResponse spawnResponse = new GalacticKittensObjectSpawnResponse();
+
+
+                Meteor meteor = Instantiate(_meteorPrefab, m_CurrentNewMeteorPosition, Quaternion.identity,
+                    Instance.transform);
+                meteor.SpawnInit();
+                uint configId = 42; //40射击敌人、41幽灵敌人、42陨石
+
+                var predictionTransform = meteor.GetComponent<PredictionTransform>();
+                predictionTransform.Id = SyncId++;
+                predictionTransform.Onwer = true;
+                predictionTransform.LinearVelocity = Vector3.left * 4;
+                meteor.name = $"Meteor-{predictionTransform.Id}";
+                GalacticKittensObjectSpawnResponse.Types.SpawnInfo spawnInfo =
+                    new GalacticKittensObjectSpawnResponse.Types.SpawnInfo()
+                    {
+                        OwnerId = 0,
+                        Id = predictionTransform.Id,
+                        ConfigId = configId,
+                        Position = ProtoUtil.BuildVector3D(m_CurrentNewMeteorPosition),
+                        LinearVelocity = ProtoUtil.BuildVector3D(predictionTransform.LinearVelocity),
+                        Scale = ProtoUtil.BuildVector3D(meteor.transform.localScale)
+                    };
+                SyncManager.Instance.AddPredictionTransform(predictionTransform); //添加同步对象
+                spawnResponse.Spawn.Add(spawnInfo);
+                Log.Info($"meteor {predictionTransform.Id}  born in {m_CurrentNewMeteorPosition}");
+
+                PlayerManager.Instance.BroadcastMsg(MID.GalacticKittensObjectSpawnRes, spawnResponse);
+
+                m_CurrentMeteorSpawnTime = 0f;
+            }
+        }
+
 
         /// <summary>
         /// 创建子弹
@@ -165,12 +208,11 @@ namespace Game.Manager
         /// <param name="player"></param>
         public void SpawnBullet(Player player)
         {
-            //TODO 子弹碰撞监测,prefab 待测试
             GalacticKittensObjectSpawnResponse spawnResponse = new GalacticKittensObjectSpawnResponse();
             SpaceShip spaceShip = _spaceShips[player.Id];
 
             var spawnPosition = spaceShip.transform.position;
-            spawnPosition = new Vector3(spawnPosition.x + 0.8f, spawnPosition.y - 0.3f, spawnPosition.z); //y轴下移一点
+            spawnPosition = new Vector3(spawnPosition.x + 1f, spawnPosition.y - 0.3f, spawnPosition.z); //y轴下移一点
             var spaceshipBullet = Instantiate(_spaceshipBulletPrefab, spawnPosition, Quaternion.identity,
                 Instance.transform);
             var predictionTransform = spaceshipBullet.GetComponent<PredictionTransform>();

@@ -11,10 +11,25 @@ namespace Game.Room.Utility
     public class AutoDespawnOnServer : MonoBehaviour
     {
         [Min(0f)] [SerializeField] [Header("Time alive in seconds (s)")]
-        private float m_autoDestroyTime=2;
+        private float m_autoDestroyTime = 2;
 
         [SerializeField] [Tooltip("销毁的对象")] private GameObject target;
 
+        private long id;
+
+
+        private void Start()
+        {
+            var predictionTransform = target.GetComponent<PredictionTransform>();
+            if (predictionTransform != null)
+            {
+                id = predictionTransform.Id;
+            }
+            else
+            {
+                id = target.GetComponent<SnapTransform>().Id;
+            }
+        }
 
         private void OnValidate()
         {
@@ -31,7 +46,7 @@ namespace Game.Room.Utility
             if (m_autoDestroyTime <= 0f)
             {
                 // 广播对象死亡，销毁GameObject和移动组件
-                RoomManager.Instance.DespawnObject(0, target.GetComponent<PredictionTransform>().Id);
+                RoomManager.Instance.DespawnObject(0, id);
                 DestroyImmediate(gameObject);
             }
         }

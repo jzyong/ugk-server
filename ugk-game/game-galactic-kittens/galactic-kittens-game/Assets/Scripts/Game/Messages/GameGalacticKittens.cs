@@ -59,29 +59,30 @@ public static partial class GameGalacticKittensReflection {
           "aGFyYWN0ZXJJZBgBIAEoBSIyCiBHYWxhY3RpY0tpdHRlbnNHYW1lRmluaXNo",
           "UmVxdWVzdBIOCgZyb29tSWQYASABKA0iawohR2FsYWN0aWNLaXR0ZW5zR2Ft",
           "ZUZpbmlzaFJlc3BvbnNlEh4KBnJlc3VsdBgBIAEoCzIOLk1lc3NhZ2VSZXN1",
-          "bHQSJgoEcm9vbRgCIAEoCzIYLkdhbGFjdGljS2l0dGVuc1Jvb21JbmZvIt4B",
+          "bHQSJgoEcm9vbRgCIAEoCzIYLkdhbGFjdGljS2l0dGVuc1Jvb21JbmZvIo8C",
           "CiJHYWxhY3RpY0tpdHRlbnNPYmplY3RTcGF3blJlc3BvbnNlEjwKBXNwYXdu",
           "GAEgAygLMi0uR2FsYWN0aWNLaXR0ZW5zT2JqZWN0U3Bhd25SZXNwb25zZS5T",
-          "cGF3bkluZm8aegoJU3Bhd25JbmZvEg8KB293bmVySWQYASABKAMSCgoCaWQY",
-          "AiABKAMSEAoIY29uZmlnSWQYAyABKA0SGwoIcG9zaXRpb24YBCABKAsyCS5W",
-          "ZWN0b3IzRBIhCg5saW5lYXJWZWxvY2l0eRgFIAEoCzIJLlZlY3RvcjNEIlEK",
-          "IEdhbGFjdGljS2l0dGVuc09iamVjdERpZVJlc3BvbnNlEg8KB293bmVySWQY",
-          "ASABKAMSEAoIa2lsbGVySWQYAiABKAMSCgoCaWQYAyABKAMiHAoaR2FsYWN0",
-          "aWNLaXR0ZW5zRmlyZVJlcXVlc3QiPQobR2FsYWN0aWNLaXR0ZW5zRmlyZVJl",
-          "c3BvbnNlEh4KBnJlc3VsdBgBIAEoCzIOLk1lc3NhZ2VSZXN1bHQiIQofR2Fs",
-          "YWN0aWNLaXR0ZW5zVXNlU2hpZWxkUmVxdWVzdCJCCiBHYWxhY3RpY0tpdHRl",
-          "bnNVc2VTaGllbGRSZXNwb25zZRIeCgZyZXN1bHQYASABKAsyDi5NZXNzYWdl",
-          "UmVzdWx0IkcKJkdhbGFjdGljS2l0dGVuc1NoaXBTaGllbGRTdGF0ZVJlc3Bv",
-          "bnNlEg4KBnNoaXBJZBgBIAEoAxINCgVzdGF0ZRgCIAEoDSI0CiNHYWxhY3Rp",
-          "Y0tpdHRlbnNTaGlwTW92ZVN0YXRlUmVxdWVzdBINCgVzdGF0ZRgBIAEoDSJl",
-          "CiRHYWxhY3RpY0tpdHRlbnNTaGlwTW92ZVN0YXRlUmVzcG9uc2USHgoGcmVz",
-          "dWx0GAEgASgLMg4uTWVzc2FnZVJlc3VsdBIOCgZzaGlwSWQYAiABKAMSDQoF",
-          "c3RhdGUYAyABKA0y2QEKG0dhbGFjdGljS2l0dGVuc01hdGNoU2VydmljZRJl",
-          "ChBwbGF5ZXJTZXJ2ZXJMaXN0EicuR2FsYWN0aWNLaXR0ZW5zUGxheWVyU2Vy",
-          "dmVyTGlzdFJlcXVlc3QaKC5HYWxhY3RpY0tpdHRlbnNQbGF5ZXJTZXJ2ZXJM",
-          "aXN0UmVzcG9uc2USUwoKZ2FtZUZpbmlzaBIhLkdhbGFjdGljS2l0dGVuc0dh",
-          "bWVGaW5pc2hSZXF1ZXN0GiIuR2FsYWN0aWNLaXR0ZW5zR2FtZUZpbmlzaFJl",
-          "c3BvbnNlQgpaCC9tZXNzYWdlYgZwcm90bzM="));
+          "cGF3bkluZm8aqgEKCVNwYXduSW5mbxIPCgdvd25lcklkGAEgASgDEgoKAmlk",
+          "GAIgASgDEhAKCGNvbmZpZ0lkGAMgASgNEhsKCHBvc2l0aW9uGAQgASgLMgku",
+          "VmVjdG9yM0QSIQoObGluZWFyVmVsb2NpdHkYBSABKAsyCS5WZWN0b3IzRBIY",
+          "CgVzY2FsZRgGIAEoCzIJLlZlY3RvcjNEEhQKDHN5bmNJbnRlcnZhbBgHIAEo",
+          "AiJRCiBHYWxhY3RpY0tpdHRlbnNPYmplY3REaWVSZXNwb25zZRIPCgdvd25l",
+          "cklkGAEgASgDEhAKCGtpbGxlcklkGAIgASgDEgoKAmlkGAMgASgDIhwKGkdh",
+          "bGFjdGljS2l0dGVuc0ZpcmVSZXF1ZXN0Ij0KG0dhbGFjdGljS2l0dGVuc0Zp",
+          "cmVSZXNwb25zZRIeCgZyZXN1bHQYASABKAsyDi5NZXNzYWdlUmVzdWx0IiEK",
+          "H0dhbGFjdGljS2l0dGVuc1VzZVNoaWVsZFJlcXVlc3QiQgogR2FsYWN0aWNL",
+          "aXR0ZW5zVXNlU2hpZWxkUmVzcG9uc2USHgoGcmVzdWx0GAEgASgLMg4uTWVz",
+          "c2FnZVJlc3VsdCJHCiZHYWxhY3RpY0tpdHRlbnNTaGlwU2hpZWxkU3RhdGVS",
+          "ZXNwb25zZRIOCgZzaGlwSWQYASABKAMSDQoFc3RhdGUYAiABKA0iNAojR2Fs",
+          "YWN0aWNLaXR0ZW5zU2hpcE1vdmVTdGF0ZVJlcXVlc3QSDQoFc3RhdGUYASAB",
+          "KA0iZQokR2FsYWN0aWNLaXR0ZW5zU2hpcE1vdmVTdGF0ZVJlc3BvbnNlEh4K",
+          "BnJlc3VsdBgBIAEoCzIOLk1lc3NhZ2VSZXN1bHQSDgoGc2hpcElkGAIgASgD",
+          "Eg0KBXN0YXRlGAMgASgNMtkBChtHYWxhY3RpY0tpdHRlbnNNYXRjaFNlcnZp",
+          "Y2USZQoQcGxheWVyU2VydmVyTGlzdBInLkdhbGFjdGljS2l0dGVuc1BsYXll",
+          "clNlcnZlckxpc3RSZXF1ZXN0GiguR2FsYWN0aWNLaXR0ZW5zUGxheWVyU2Vy",
+          "dmVyTGlzdFJlc3BvbnNlElMKCmdhbWVGaW5pc2gSIS5HYWxhY3RpY0tpdHRl",
+          "bnNHYW1lRmluaXNoUmVxdWVzdBoiLkdhbGFjdGljS2l0dGVuc0dhbWVGaW5p",
+          "c2hSZXNwb25zZUIKWggvbWVzc2FnZWIGcHJvdG8z"));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
         new pbr::FileDescriptor[] { global::CommonReflection.Descriptor, global::ServerReflection.Descriptor, },
         new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
@@ -100,7 +101,7 @@ public static partial class GameGalacticKittensReflection {
           new pbr::GeneratedClrTypeInfo(typeof(global::GalacticKittensPlayerServerListResponse), global::GalacticKittensPlayerServerListResponse.Parser, new[]{ "Result", "PlayerGateServers", "PlayerLobbyServers", "RoomId", "PlayerInfos" }, null, null, null, new pbr::GeneratedClrTypeInfo[] { null, null, null, new pbr::GeneratedClrTypeInfo(typeof(global::GalacticKittensPlayerServerListResponse.Types.PlayerInfo), global::GalacticKittensPlayerServerListResponse.Types.PlayerInfo.Parser, new[]{ "CharacterId" }, null, null, null, null)}),
           new pbr::GeneratedClrTypeInfo(typeof(global::GalacticKittensGameFinishRequest), global::GalacticKittensGameFinishRequest.Parser, new[]{ "RoomId" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::GalacticKittensGameFinishResponse), global::GalacticKittensGameFinishResponse.Parser, new[]{ "Result", "Room" }, null, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::GalacticKittensObjectSpawnResponse), global::GalacticKittensObjectSpawnResponse.Parser, new[]{ "Spawn" }, null, null, null, new pbr::GeneratedClrTypeInfo[] { new pbr::GeneratedClrTypeInfo(typeof(global::GalacticKittensObjectSpawnResponse.Types.SpawnInfo), global::GalacticKittensObjectSpawnResponse.Types.SpawnInfo.Parser, new[]{ "OwnerId", "Id", "ConfigId", "Position", "LinearVelocity" }, null, null, null, null)}),
+          new pbr::GeneratedClrTypeInfo(typeof(global::GalacticKittensObjectSpawnResponse), global::GalacticKittensObjectSpawnResponse.Parser, new[]{ "Spawn" }, null, null, null, new pbr::GeneratedClrTypeInfo[] { new pbr::GeneratedClrTypeInfo(typeof(global::GalacticKittensObjectSpawnResponse.Types.SpawnInfo), global::GalacticKittensObjectSpawnResponse.Types.SpawnInfo.Parser, new[]{ "OwnerId", "Id", "ConfigId", "Position", "LinearVelocity", "Scale", "SyncInterval" }, null, null, null, null)}),
           new pbr::GeneratedClrTypeInfo(typeof(global::GalacticKittensObjectDieResponse), global::GalacticKittensObjectDieResponse.Parser, new[]{ "OwnerId", "KillerId", "Id" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::GalacticKittensFireRequest), global::GalacticKittensFireRequest.Parser, null, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::GalacticKittensFireResponse), global::GalacticKittensFireResponse.Parser, new[]{ "Result" }, null, null, null, null),
@@ -3974,6 +3975,8 @@ public sealed partial class GalacticKittensObjectSpawnResponse : pb::IMessage<Ga
         configId_ = other.configId_;
         position_ = other.position_ != null ? other.position_.Clone() : null;
         linearVelocity_ = other.linearVelocity_ != null ? other.linearVelocity_.Clone() : null;
+        scale_ = other.scale_ != null ? other.scale_.Clone() : null;
+        syncInterval_ = other.syncInterval_;
         _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
       }
 
@@ -4017,7 +4020,7 @@ public sealed partial class GalacticKittensObjectSpawnResponse : pb::IMessage<Ga
       public const int ConfigIdFieldNumber = 3;
       private uint configId_;
       /// <summary>
-      ///配置id 0-3玩家飞船；20Boss；30玩家子弹，31敌人子弹；
+      ///配置id 0-3玩家飞船；20Boss；30玩家子弹，31敌人子弹；40射击敌人、41幽灵敌人、41陨石
       /// </summary>
       [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
       [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
@@ -4058,6 +4061,36 @@ public sealed partial class GalacticKittensObjectSpawnResponse : pb::IMessage<Ga
         }
       }
 
+      /// <summary>Field number for the "scale" field.</summary>
+      public const int ScaleFieldNumber = 6;
+      private global::Vector3D scale_;
+      /// <summary>
+      ///缩放
+      /// </summary>
+      [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+      [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+      public global::Vector3D Scale {
+        get { return scale_; }
+        set {
+          scale_ = value;
+        }
+      }
+
+      /// <summary>Field number for the "syncInterval" field.</summary>
+      public const int SyncIntervalFieldNumber = 7;
+      private float syncInterval_;
+      /// <summary>
+      ///同步间隔，服务器告知，用于两边同步
+      /// </summary>
+      [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+      [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+      public float SyncInterval {
+        get { return syncInterval_; }
+        set {
+          syncInterval_ = value;
+        }
+      }
+
       [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
       [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
       public override bool Equals(object other) {
@@ -4078,6 +4111,8 @@ public sealed partial class GalacticKittensObjectSpawnResponse : pb::IMessage<Ga
         if (ConfigId != other.ConfigId) return false;
         if (!object.Equals(Position, other.Position)) return false;
         if (!object.Equals(LinearVelocity, other.LinearVelocity)) return false;
+        if (!object.Equals(Scale, other.Scale)) return false;
+        if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(SyncInterval, other.SyncInterval)) return false;
         return Equals(_unknownFields, other._unknownFields);
       }
 
@@ -4090,6 +4125,8 @@ public sealed partial class GalacticKittensObjectSpawnResponse : pb::IMessage<Ga
         if (ConfigId != 0) hash ^= ConfigId.GetHashCode();
         if (position_ != null) hash ^= Position.GetHashCode();
         if (linearVelocity_ != null) hash ^= LinearVelocity.GetHashCode();
+        if (scale_ != null) hash ^= Scale.GetHashCode();
+        if (SyncInterval != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(SyncInterval);
         if (_unknownFields != null) {
           hash ^= _unknownFields.GetHashCode();
         }
@@ -4128,6 +4165,14 @@ public sealed partial class GalacticKittensObjectSpawnResponse : pb::IMessage<Ga
           output.WriteRawTag(42);
           output.WriteMessage(LinearVelocity);
         }
+        if (scale_ != null) {
+          output.WriteRawTag(50);
+          output.WriteMessage(Scale);
+        }
+        if (SyncInterval != 0F) {
+          output.WriteRawTag(61);
+          output.WriteFloat(SyncInterval);
+        }
         if (_unknownFields != null) {
           _unknownFields.WriteTo(output);
         }
@@ -4158,6 +4203,14 @@ public sealed partial class GalacticKittensObjectSpawnResponse : pb::IMessage<Ga
           output.WriteRawTag(42);
           output.WriteMessage(LinearVelocity);
         }
+        if (scale_ != null) {
+          output.WriteRawTag(50);
+          output.WriteMessage(Scale);
+        }
+        if (SyncInterval != 0F) {
+          output.WriteRawTag(61);
+          output.WriteFloat(SyncInterval);
+        }
         if (_unknownFields != null) {
           _unknownFields.WriteTo(ref output);
         }
@@ -4182,6 +4235,12 @@ public sealed partial class GalacticKittensObjectSpawnResponse : pb::IMessage<Ga
         }
         if (linearVelocity_ != null) {
           size += 1 + pb::CodedOutputStream.ComputeMessageSize(LinearVelocity);
+        }
+        if (scale_ != null) {
+          size += 1 + pb::CodedOutputStream.ComputeMessageSize(Scale);
+        }
+        if (SyncInterval != 0F) {
+          size += 1 + 4;
         }
         if (_unknownFields != null) {
           size += _unknownFields.CalculateSize();
@@ -4215,6 +4274,15 @@ public sealed partial class GalacticKittensObjectSpawnResponse : pb::IMessage<Ga
             LinearVelocity = new global::Vector3D();
           }
           LinearVelocity.MergeFrom(other.LinearVelocity);
+        }
+        if (other.scale_ != null) {
+          if (scale_ == null) {
+            Scale = new global::Vector3D();
+          }
+          Scale.MergeFrom(other.Scale);
+        }
+        if (other.SyncInterval != 0F) {
+          SyncInterval = other.SyncInterval;
         }
         _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
       }
@@ -4257,6 +4325,17 @@ public sealed partial class GalacticKittensObjectSpawnResponse : pb::IMessage<Ga
               input.ReadMessage(LinearVelocity);
               break;
             }
+            case 50: {
+              if (scale_ == null) {
+                Scale = new global::Vector3D();
+              }
+              input.ReadMessage(Scale);
+              break;
+            }
+            case 61: {
+              SyncInterval = input.ReadFloat();
+              break;
+            }
           }
         }
       #endif
@@ -4296,6 +4375,17 @@ public sealed partial class GalacticKittensObjectSpawnResponse : pb::IMessage<Ga
                 LinearVelocity = new global::Vector3D();
               }
               input.ReadMessage(LinearVelocity);
+              break;
+            }
+            case 50: {
+              if (scale_ == null) {
+                Scale = new global::Vector3D();
+              }
+              input.ReadMessage(Scale);
+              break;
+            }
+            case 61: {
+              SyncInterval = input.ReadFloat();
               break;
             }
           }

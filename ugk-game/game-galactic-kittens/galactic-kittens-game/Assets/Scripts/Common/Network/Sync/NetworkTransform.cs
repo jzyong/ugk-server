@@ -19,7 +19,7 @@ namespace Common.Network.Sync
         public bool syncRotation = false; // do not change at runtime!
         public bool syncScale = false; // do not change at runtime! rare. off by default.
 
-        [Tooltip("消息发送间隔")] public double sendInterval = 0.033;
+        [Tooltip("消息发送间隔")] public float sendInterval = 0.033f;
         
 
         [Tooltip(

@@ -54,6 +54,8 @@ namespace Common.Network.Sync
             {
                 sendInterval = 1;
             }
+
+            nextSendTime = sendInterval+Time.unscaledTime;
         }
 
         public void Update()
