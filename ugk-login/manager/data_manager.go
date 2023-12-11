@@ -9,6 +9,7 @@ import (
 	"github.com/jzyong/ugk/login/mode"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
+	"go.mongodb.org/mongo-driver/mongo/options"
 	"sync"
 	"time"
 )
@@ -103,12 +104,15 @@ func (dataManager *DataManager) FindAccount(id string) *mode.Account {
 	if result.Err() != nil {
 		//插入新的实例对象
 		if result.Err() == mongo.ErrNoDocuments {
-			playerId, _ := dataManager.snowflake.GetId()
+			playerId, err := dataManager.GetNextSequence("playerId")
+			if err != nil {
+				log.Error("获取玩家ID失败：%v", err)
+			}
 			account := &mode.Account{
 				Id:       id,
 				PlayerId: playerId,
 			}
-			_, err := collection.InsertOne(ctx, account)
+			_, err = collection.InsertOne(ctx, account)
 			if err != nil {
 				log.Error("创建账号错误：%v", err)
 			}
@@ -150,4 +154,21 @@ func (dataManager *DataManager) DeleteAccount(id int64) {
 		return
 	}
 	log.Debug("删除账号%v %v", id, result.DeletedCount)
+}
+
+func (dataManager *DataManager) GetNextSequence(sequenceName string) (int64, error) {
+	collection := manager.GetMongoManager().GetProductionDB().Database(config.BaseConfig.MongoDbName).Collection("counter")
+
+	filter := bson.M{"_id": sequenceName}
+	update := bson.M{"$inc": bson.M{"value": 1}}
+
+	opts := options.FindOneAndUpdate().SetUpsert(true).SetReturnDocument(options.After)
+	result := collection.FindOneAndUpdate(context.Background(), filter, update, opts)
+
+	var counter mode.Counter
+	if err := result.Decode(&counter); err != nil {
+		return 0, err
+	}
+
+	return counter.Value, nil
 }

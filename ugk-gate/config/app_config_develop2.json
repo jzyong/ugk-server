@@ -7,8 +7,8 @@
   "zookeeperUrls": [
     "192.168.110.2:2181"
   ],
-  "publicIp": "192.168.110.2",
+  "publicIp": "47.76.40.9",
   "privateIp": "192.168.110.2",
-  "clientPort": 5002,
+  "clientPort": 40020,
   "gamePort": 5003
 }

@@ -78,19 +78,16 @@
 * 物理同步，动画同步、延迟补偿、预测、aoi管理（参考Mirror的NetworkAnimator、NetworkRigidbody、LagCompensation、Prediction）
 * 显示网络同步统计信息，快照同步调试：只发送改变和全部发送的流量消耗对比
 自己实现UI相关逻辑，不参考;敌人、Boss同步；
-* 同步添加判断是世界坐标还是相对坐标系
 * 添加[com.unity.multiplayer.samples.bitesize](https://github.com/Unity-Technologies/com.unity.multiplayer.samples.bitesize)中的机器人同步demo **_Client Driven Overview_**
-* 测试Unity服务器运行CPU，内存，网络消耗统计，通过docker实现
 * Websocket网络通信
 * GalacticKittens 血量，UI；音效调优；添加护盾开启关闭消息；场景切换渐入渐出效果;
-* 部署到公网测试网络
+
 
 
 ### 计划
 * 压力测试客户端使用ugk-web开发界面（vue3）
 * 添加聊天、排行、匹配、房间（Mirror）服务
 * 广告、充值接取
-* 断线重连(ugk-client,unity后端服务器与网关等)
 * 使用c#开发导表等图形化工具
 * 服务器unity提取公共包，unity的package
 * ugk-client 弹窗增加tween动画
