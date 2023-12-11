@@ -413,7 +413,7 @@ func (client *GameKcpClient) messageDistribute(data []byte) {
 		if user == nil {
 			log.Warn("玩家：%d 已离线，消息%d转发失败", playerId, messageId)
 		} else {
-			user.TransmitToClient(data, messageId)
+			user.TransmitToClient(data, messageId) // TODO 没有交个用户routine执行，而是 GameKcpClient，会产生并发问题
 		}
 	}
 }
