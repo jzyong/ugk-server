@@ -1,13 +1,14 @@
 # UGK-Server
 
 &emsp;&emsp;快节奏多人联网游戏Demo，UGK-Server：unity、go、kcp server 。
-服务器使用微服务架构，服务器游戏逻辑需要物理碰撞、寻路的使用Unity、C#开发，其他使用Go开发。
+服务器使用微服务架构，服务器端游戏逻辑需要物理碰撞、寻路的使用Unity、C#开发，其他使用Go开发。
 对应客户端[ugk-client](https://github.com/jzyong/ugk-client)。 开发中......
 ![ugk-architecture](ugk-resource/img/ugk_architecture.png)
 
 ## 特性
+* 微服务架构
+* 前后端分离
 * 自动化编排Docker容器(Unity dedicated server)
-* 前后端分离，最小化unity服务器资源内存、cpu消耗
 * 快照同步，状态同步预测插值
 
 ### 前后端分离
@@ -19,7 +20,7 @@
 ### 通用
 | 服务	                | 描述                        |
 |--------------------|---------------------------|
-| ugk-agent          | 执行unity服务器docker进程的创建销毁   |
+| ugk-agent          | docker中运行的unity服务器的创建与销毁  |
 | ugk-agent-manager  | 管理ugk-agent服务，为玩家房间分配游戏进程 |
 | ugk-api            | HTTP Restful请求接口          |
 | ugk-charge         | 充值                        |
@@ -84,7 +85,7 @@
 * 测试Unity服务器运行CPU，内存，网络消耗统计，通过docker实现
 * Websocket网络通信
 * GalacticKittens 血量，UI；音效调优；添加护盾开启关闭消息；场景切换渐入渐出效果;
-* 网关消息合并，偶发性出现会导致客户端收到不完整的消息包，导致坐标对应不上？
+* 网关消息合并，偶发性出现会导致客户端收到不完整的消息包，导致坐标对应不上（并发问题）？
 * 部署到公网测试网络
 
 
