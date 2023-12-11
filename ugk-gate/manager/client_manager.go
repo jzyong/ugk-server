@@ -138,7 +138,7 @@ func channelRead(user *User) {
 			//packetData := make([]byte, length)
 			packetData := mode.GetBytes()[:length] //用缓存池，减少垃圾回收，能有性能提升？
 			copy(packetData, receiveBytes[index:index+length])
-			user.ReceiveBytes <- packetData
+			user.ReceiveClientBytes <- packetData
 			remainBytes = remainBytes - length
 			index += length
 			//log.Info("收到消息：读取长度=%v 消息长度=%v 剩余长度=%v", n, length, remainBytes)
@@ -157,4 +157,9 @@ func (m *ClientManager) Run() {
 }
 
 func (m *ClientManager) Stop() {
+}
+
+// 从bytes数组中获取uint32
+func getUint32(data []byte, offset int) uint32 {
+	return uint32(data[offset]) | uint32(data[offset+1])<<8 | uint32(data[offset+2])<<16 | uint32(data[offset+3])<<24
 }

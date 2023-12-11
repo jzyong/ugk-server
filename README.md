@@ -76,16 +76,13 @@
 ## TODO
 * GalacticKittens --> PushCoin --> Client Driven Overview --> coop 
 * 物理同步，动画同步、延迟补偿、预测、aoi管理（参考Mirror的NetworkAnimator、NetworkRigidbody、LagCompensation、Prediction）
-* 显示网络同步统计信息
+* 显示网络同步统计信息，快照同步调试：只发送改变和全部发送的流量消耗对比
 自己实现UI相关逻辑，不参考;敌人、Boss同步；
 * 同步添加判断是世界坐标还是相对坐标系
-* 快照同步调试：只发送改变和全部发送的流量消耗对比
-* 获取飞船对象，激活或取消护盾
 * 添加[com.unity.multiplayer.samples.bitesize](https://github.com/Unity-Technologies/com.unity.multiplayer.samples.bitesize)中的机器人同步demo **_Client Driven Overview_**
 * 测试Unity服务器运行CPU，内存，网络消耗统计，通过docker实现
 * Websocket网络通信
 * GalacticKittens 血量，UI；音效调优；添加护盾开启关闭消息；场景切换渐入渐出效果;
-* 网关消息合并，偶发性出现会导致客户端收到不完整的消息包，导致坐标对应不上（并发问题）？
 * 部署到公网测试网络
 
 

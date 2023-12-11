@@ -72,31 +72,33 @@ const (
 
 // User 网关用户，每个用户一个routine接收消息，一个routine处理逻辑和发送消息，会不会创建太多routine？
 type User struct {
-	Id               int64                 //唯一id
-	ClientSession    *kcp.UDPSession       //客户端连接会话
-	LobbyClient      *GameKcpClient        //大厅连接会话
-	GameClient       *GameKcpClient        //游戏连接会话
-	SendBuffer       *bytes.Buffer         //发送缓冲区，消息批量合并，单线程调用
-	ReceiveBuffer    *bytes.Buffer         //接收缓冲区,
-	ReceiveBytes     chan []byte           //接收到的消息
-	GameMessages     chan *mode.UgkMessage //游戏服返回的消息 proto字节流、消息id、序列号、客户端
-	ReceiveReadCache []byte                // 接收端读取Byte缓存
-	CloseChan        chan struct{}         //离线等关闭Chan
-	State            UserState             //用户状态
-	HeartTime        time.Time             //心跳时间
+	Id                 int64                 //唯一id
+	ClientSession      *kcp.UDPSession       //客户端连接会话
+	LobbyClient        *GameKcpClient        //大厅连接会话
+	GameClient         *GameKcpClient        //游戏连接会话
+	SendBuffer         *bytes.Buffer         //发送缓冲区，消息批量合并，单线程调用
+	ReceiveBuffer      *bytes.Buffer         //接收缓冲区,
+	ReceiveClientBytes chan []byte           //接收来自客户端的消息
+	ReceiveGameBytes   chan []byte           //接收来自服务器的消息
+	GameMessages       chan *mode.UgkMessage //游戏服返回的消息 proto字节流、消息id、序列号、客户端
+	ReceiveReadCache   []byte                // 接收端读取Byte缓存
+	CloseChan          chan struct{}         //离线等关闭Chan
+	State              UserState             //用户状态
+	HeartTime          time.Time             //心跳时间
 }
 
 // NewUser 构建用户
 func NewUser(clientSession *kcp.UDPSession) *User {
 	user := &User{ClientSession: clientSession,
-		SendBuffer:       bytes.NewBuffer([]byte{}),
-		ReceiveBuffer:    bytes.NewBuffer([]byte{}),
-		ReceiveBytes:     make(chan []byte, 1024),
-		GameMessages:     make(chan *mode.UgkMessage, 1024), //proto字节流、消息id、序列号、客户端
-		ReceiveReadCache: make([]byte, 1500),                //每次最多读取1500-消息头字节
-		CloseChan:        make(chan struct{}),
-		State:            NetWorkActive,
-		HeartTime:        time.Now(),
+		SendBuffer:         bytes.NewBuffer([]byte{}),
+		ReceiveBuffer:      bytes.NewBuffer([]byte{}),
+		ReceiveClientBytes: make(chan []byte, 1024),
+		ReceiveGameBytes:   make(chan []byte, 1024),
+		GameMessages:       make(chan *mode.UgkMessage, 1024), //proto字节流、消息id、序列号、客户端
+		ReceiveReadCache:   make([]byte, 1500),                //每次最多读取1500-消息头字节
+		CloseChan:          make(chan struct{}),
+		State:              NetWorkActive,
+		HeartTime:          time.Now(),
 	}
 	//只在此处添加
 	//GetUserManager().ipUsers[clientSession.RemoteAddr().String()] = user
@@ -110,8 +112,10 @@ func (user *User) run() {
 	secondTicker := time.Tick(time.Second)
 	for {
 		select {
-		case receiveByte := <-user.ReceiveBytes: //用户消息分发
-			user.messageDistribute(receiveByte)
+		case receiveClientByte := <-user.ReceiveClientBytes: //用户消息分发给服务器
+			user.messageDistribute(receiveClientByte)
+		case receiveGameByte := <-user.ReceiveGameBytes: //转发接受到服务器都消息给用户
+			user.TransmitToClient(receiveGameByte)
 		case gameMessage := <-user.GameMessages: //处理服务器返回消息
 			handFunc := ServerHandlers[gameMessage.MessageId]
 			handFunc(user, gameMessage.Client.(*GameKcpClient), gameMessage)
@@ -300,37 +304,38 @@ func (user *User) toGameBytes(clientData []byte, messageId uint32) ([]byte, erro
 }
 
 // TransmitToClient 转发到客户端
-func (user *User) TransmitToClient(gameData []byte, messageId uint32) error {
+func (user *User) TransmitToClient(gameData []byte) error {
+	defer mode.ReturnBytes(gameData)
 	if user.ClientSession == nil {
 		log.Warn("玩家：%d无客户端连接", user.Id)
 		return errors.New(fmt.Sprintf("玩家：%d无客户端连接", user.Id))
 	}
 	gameLength := len(gameData)
 	if gameLength > config.MessageLimit {
-		log.Error("%d - %s 发送消息 %d  失败：消息太长", user.Id, user.ClientSession.RemoteAddr().String(), messageId)
+		log.Error("%d - %s 发送消息 %d  失败：消息太长", user.Id, user.ClientSession.RemoteAddr().String(), getUint32(gameData, 12))
 		return errors.New("消息超长")
 	}
 
 	//直接发送
 	if config2.BaseConfig.BatchMessage == false {
-		return user.immediateTransmitToClient(gameLength, messageId, gameData)
+		return user.immediateTransmitToClient(gameLength, gameData)
 		// 消息合并批量发送，将小于MTU的消息合并，大于的直接发送，减少丢包重传率，减少IO
 	} else {
 		//当前消息大于mtu，先将老的发送，然后立即发送当前消息
 		if gameLength > config.MTU {
 			user.batchTransmitToClient()
-			user.immediateTransmitToClient(gameLength, messageId, gameData)
+			user.immediateTransmitToClient(gameLength, gameData)
 			//将消息写入缓存
 		} else {
 			//写dataLen 不包含自身长度,比客户端长度多8字节玩家id gameLength-8-4
 			if err := binary.Write(user.SendBuffer, binary.LittleEndian, uint32(gameLength-12)); err != nil {
-				log.Error("%d - %s 发送消息 %d 失败：%v", user.Id, user.ClientSession.RemoteAddr().String(), messageId, err)
+				log.Error("%d - %s 发送消息 %d 失败：%v", user.Id, user.ClientSession.RemoteAddr().String(), getUint32(gameData, 12), err)
 				return err
 			}
 			data := gameData[12:]
 			//写data数据
 			if err := binary.Write(user.SendBuffer, binary.LittleEndian, data); err != nil {
-				log.Error("%d - %s 发送消息 %d 失败：%v", user.Id, user.ClientSession.RemoteAddr().String(), messageId, err)
+				log.Error("%d - %s 发送消息 %d 失败：%v", user.Id, user.ClientSession.RemoteAddr().String(), getUint32(gameData, 12), err)
 				return err
 			}
 
@@ -345,26 +350,26 @@ func (user *User) TransmitToClient(gameData []byte, messageId uint32) error {
 }
 
 // 立即发送客户端
-func (user *User) immediateTransmitToClient(gameLength int, messageId uint32, gameData []byte) error {
+func (user *User) immediateTransmitToClient(gameLength int, gameData []byte) error {
 	//消息长度4+玩家ID+消息id4+序列号4+时间戳8+protobuf消息体 ==》消息长度4+消息id4+序列号4+时间戳8+protobuf消息体
 	buffer := user.SendBuffer
 	//写dataLen 不包含自身长度,比客户端长度多8字节玩家id gameLength-8-4
 	if err := binary.Write(buffer, binary.LittleEndian, uint32(gameLength-12)); err != nil {
-		log.Error("%d - %s 发送消息 %d 失败：%v", user.Id, user.ClientSession.RemoteAddr().String(), messageId, err)
+		log.Error("%d - %s 发送消息 %d 失败：%v", user.Id, user.ClientSession.RemoteAddr().String(), getUint32(gameData, 12), err)
 		return err
 	}
 
 	data := gameData[12:]
 	//写data数据
 	if err := binary.Write(buffer, binary.LittleEndian, data); err != nil {
-		log.Error("%d - %s 发送消息 %d 失败：%v", user.Id, user.ClientSession.RemoteAddr().String(), messageId, err)
+		log.Error("%d - %s 发送消息 %d 失败：%v", user.Id, user.ClientSession.RemoteAddr().String(), getUint32(gameData, 12), err)
 		return err
 	}
 
 	_, err := user.ClientSession.Write(buffer.Bytes())
 	buffer.Reset()
 	if err != nil {
-		log.Error("%d - %s 发送消息 %d 失败：%v", user.Id, user.ClientSession.RemoteAddr().String(), messageId, err)
+		log.Error("%d - %s 发送消息 %d 失败：%v", user.Id, user.ClientSession.RemoteAddr().String(), getUint32(gameData, 12), err)
 		return err
 	}
 

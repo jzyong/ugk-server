@@ -346,7 +346,6 @@ func (client *GameKcpClient) secondUpdate() {
 }
 
 func (client *GameKcpClient) messageDistribute(data []byte) {
-	defer mode.ReturnBytes(data)
 	client.HeartTime = time.Now()
 	//`消息长度4+玩家ID8+消息id4+序列号4+时间戳8+protobuf消息体`
 	//截取消息
@@ -355,6 +354,7 @@ func (client *GameKcpClient) messageDistribute(data []byte) {
 	//log.Debug("收到消息：%d", messageId)
 	handFunc := ServerHandlers[messageId]
 	if handFunc != nil { //本地处理
+		defer mode.ReturnBytes(data)
 		dataReader := bytes.NewReader(data)
 		var messageLength int32
 		if err := binary.Read(dataReader, binary.LittleEndian, &messageLength); err != nil {
@@ -412,8 +412,10 @@ func (client *GameKcpClient) messageDistribute(data []byte) {
 		user := GetUserManager().GetUser(playerId)
 		if user == nil {
 			log.Warn("玩家：%d 已离线，消息%d转发失败", playerId, messageId)
+			mode.ReturnBytes(data)
 		} else {
-			user.TransmitToClient(data, messageId) // TODO 没有交个用户routine执行，而是 GameKcpClient，会产生并发问题
+			user.ReceiveGameBytes <- data
+			//user.TransmitToClient(data, messageId)
 		}
 	}
 }
