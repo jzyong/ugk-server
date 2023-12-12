@@ -100,7 +100,7 @@ message GalacticKittensObjectSpawnResponse{
   message SpawnInfo{
     int64 ownerId = 1; //拥有者Id
     int64 id= 2; //对象唯一id
-    uint32 configId= 3; //配置id 0-3玩家飞船；20Boss；30玩家子弹，31敌人子弹；40射击敌人、41幽灵敌人、41陨石
+    uint32 configId= 3; //配置id 0-3玩家飞船；20Boss；30玩家子弹，31敌人子弹；40射击敌人、41幽灵敌人、41陨石；50能量道具
     Vector3D position =4; //出生位置
     Vector3D linearVelocity = 5; //线速度
     Vector3D scale =6; //缩放

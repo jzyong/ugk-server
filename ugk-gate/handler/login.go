@@ -11,7 +11,7 @@ import (
 
 // 心跳
 func heart(user *manager.User, msg *mode.UgkMessage) {
-	log.Info("%d 心跳 序号=%d 时间=%d", user.Id, msg.Seq, msg.TimeStamp)
+	//log.Trace("%d 心跳 序号=%d 时间=%d", user.Id, msg.Seq, msg.TimeStamp)
 
 	request := &message.HeartRequest{}
 	proto.Unmarshal(msg.Bytes, request)
