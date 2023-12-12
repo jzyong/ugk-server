@@ -22,8 +22,8 @@ namespace kcp2k
         public bool NoDelay = true;
         [Tooltip("KCP internal update interval. 100ms is KCP default, but a lower interval is recommended to minimize latency and to scale to more networked entities.")]
         public uint Interval = 10;
-        [Tooltip("KCP timeout in milliseconds. Note that KCP sends a ping automatically.")]
-        public int Timeout = 10000;
+        [Tooltip("KCP timeout in milliseconds. Note that KCP sends a ping automatically.默认为10s，乘以60方便断点调试")]
+        public int Timeout = 10000*60;
         [Tooltip("Socket receive buffer size. Large buffer helps support more connections. Increase operating system socket buffer size limits if needed.")]
         public int RecvBufferSize = 1024 * 1027 * 7;
         [Tooltip("Socket send buffer size. Large buffer helps support more connections. Increase operating system socket buffer size limits if needed.")]
@@ -53,7 +53,7 @@ namespace kcp2k
 
         // config is created from the serialized properties above.
         // we can expose the config directly in the future.
-        // for now, let's not break people's old settings. @
+        // for now, let's not break people's old settings. 
         protected KcpConfig config;
 
         // use default MTU for this transport.

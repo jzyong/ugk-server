@@ -75,8 +75,8 @@
 
 ## TODO
 * GalacticKittens --> PushCoin --> Client Driven Overview --> coop 
-* 物理同步，动画同步、延迟补偿、预测、aoi管理（参考Mirror的NetworkAnimator、NetworkRigidbody、LagCompensation、Prediction）
-* 显示网络同步统计信息，快照同步调试：只发送改变和全部发送的流量消耗对比
+* 物理同步，动画同步、预测、aoi管理（参考Mirror的NetworkAnimator、NetworkRigidbody、Prediction）
+* 显示网络同步统计信息，快照同步调试：只发送改变和全部发送的流量消耗对比，消息大小及合并统计
 自己实现UI相关逻辑，不参考;敌人、Boss同步；
 * 添加[com.unity.multiplayer.samples.bitesize](https://github.com/Unity-Technologies/com.unity.multiplayer.samples.bitesize)中的机器人同步demo **_Client Driven Overview_**
 * Websocket网络通信
