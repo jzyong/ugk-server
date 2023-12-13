@@ -93,6 +93,8 @@
 * ugk-client 弹窗增加tween动画
 * 后台管理系统查看unity docker服务器
 * Limits how often data is sent for objects distance to players to reduce how much bandwidth the server uses. Tests show this feature can reduce transform updates, such as moving objects, between 90-97%. FishNet解决方案，远的对象，减少同步频率
+* 压力测试，网关CPU消耗高？
+* 打andriod包测试
 
 交流讨论
 ---------
