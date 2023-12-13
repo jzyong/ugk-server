@@ -79,6 +79,7 @@ namespace Common.Network
             //进程超过最大存在时间，直接退出，防止资源泄漏
             if (Time.time > ExistMaxTime)
             {
+                Log.Warning("time out close");
                 Application.Quit();
             }
           

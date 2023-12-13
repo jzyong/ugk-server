@@ -166,7 +166,11 @@ namespace Common.Network
         /// <returns></returns>
         public bool SendMsg(UgkMessage ugkMessage)
         {
-            
+            if (!isConnected)
+            {
+                Log.Warn($"message{ugkMessage.MessageId} seq={ugkMessage.Seq} send fail,network close");
+                return false;
+            }
             var data = ugkMessage.Bytes;
             // 消息长度4+玩家ID8+消息id4+序列号4+时间戳8+protobuf消息体
             byte[] msgLength = BitConverter.GetBytes(data.Length + 24);
@@ -205,7 +209,15 @@ namespace Common.Network
                     while (_batcher.GetBatch(writer))
                     {
                         ArraySegment<byte> segment = writer.ToArraySegment();
-                        Transport.ClientSend(segment);
+                        if (isConnected)
+                        {
+                            Transport.ClientSend(segment);
+                        }
+                        else
+                        {
+                            Log.Warn("网络不可用");
+                        }
+                        
                         // reset writer for each new batch
                         writer.Position = 0;
                     }
