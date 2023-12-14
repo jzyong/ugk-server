@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\Common\Tools\SingletonInstance.cs" />
+    <Compile Include="Assets\Scripts\Common\Tools\Utils.cs" />
     <Compile Include="Assets\Scripts\Game\Bootstrap.cs" />
     <Compile Include="Assets\Scripts\Common\Network\Serialize\NetworkWriter.cs" />
     <Compile Include="Assets\Scripts\Game\Room\Boss\BossController.cs" />
@@ -147,7 +148,6 @@
     <Compile Include="Assets\Scripts\Game\Room\Enemy\SpaceGhostEnemy.cs" />
     <Compile Include="Assets\Scripts\Common\Tools\BaseEventManager.cs" />
     <Folder Include="Assets\Scripts\Common\Network\Kcp" />
-    <Folder Include="Assets\Scripts\Common\Tools" />
     <Folder Include="Assets\Scripts\Common\Network\Kcp\kcp2k\kcp" />
     <Folder Include="Assets\Scripts\Game\Room" />
     <Folder Include="Assets\Scripts\Game\Manager" />
@@ -163,7 +163,6 @@
     <Folder Include="Assets\Scripts\Game\Messages" />
     <Folder Include="Assets\Scripts\Game\Room\Utility" />
     <Folder Include="Assets\Scripts\Common\Network\Serialize" />
-    <Folder Include="Assets\Scripts\Common\Network" />
     <Folder Include="Assets\Scripts\Common\Network\Kcp\kcp2k\highlevel" />
     <Folder Include="Assets\Scripts\Common" />
     <Reference Include="UnityEngine">

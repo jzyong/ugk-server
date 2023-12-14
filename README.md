@@ -75,12 +75,13 @@
 
 ## TODO
 * GalacticKittens --> PushCoin --> Client Driven Overview --> coop 
-* 物理同步，动画同步、预测、aoi管理（参考Mirror的NetworkAnimator、NetworkRigidbody、Prediction）
+* 物理同步、aoi管理（参考Mirror的NetworkRigidbody）
 * 显示网络同步统计信息，快照同步调试：只发送改变和全部发送的流量消耗对比，消息大小及合并统计
 自己实现UI相关逻辑，不参考;敌人、Boss同步；
 * 添加[com.unity.multiplayer.samples.bitesize](https://github.com/Unity-Technologies/com.unity.multiplayer.samples.bitesize)中的机器人同步demo **_Client Driven Overview_**
 * Websocket网络通信
-* GalacticKittens 血量，UI；音效调优；添加护盾开启关闭消息；场景切换渐入渐出效果;能量，boss
+* GalacticKittens 血量，UI；音效调优；添加护盾开启关闭消息；场景切换渐入渐出效果;能量，boss；游戏服务器心跳监测，超过1分钟没消息关闭房间
+* 客户端到服务器坐标同步有问题？子弹可以发送，飞船自己坐标没有同步？
 
 
 
@@ -94,7 +95,7 @@
 * 后台管理系统查看unity docker服务器
 * Limits how often data is sent for objects distance to players to reduce how much bandwidth the server uses. Tests show this feature can reduce transform updates, such as moving objects, between 90-97%. FishNet解决方案，远的对象，减少同步频率
 * 压力测试，网关CPU消耗高？
-* 打andriod包测试
+* 打android包测试
 
 交流讨论
 ---------
