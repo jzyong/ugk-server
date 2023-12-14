@@ -39,7 +39,9 @@ namespace Common.Network
         public Action OnConnectedEvent;
         public Action OnDisconnectedEvent;
         public Action<TransportError, string> OnErrorEvent;
+
         public UgkMessage HeartRequest { get; set; }
+
         //消息批量缓存
         private Batcher _batcher = new Batcher();
 
@@ -120,7 +122,7 @@ namespace Common.Network
         /// </summary>
         private void SendHeart()
         {
-            if (HeartRequest!=null)
+            if (HeartRequest != null)
             {
                 SendMsg(HeartRequest);
                 // Debug.Log("请求心跳");
@@ -135,7 +137,7 @@ namespace Common.Network
         /// <param name="seq"></param>
         /// <param name="message"></param>
         /// <returns></returns>
-        public bool SendMsg(long playerId, int mid, IMessage message,uint seq=0)
+        public bool SendMsg(long playerId, int mid, IMessage message, uint seq = 0)
         {
             var data = message.ToByteArray();
             // 消息长度4+玩家ID8+消息id4+序列号4+时间戳8+protobuf消息体
@@ -143,7 +145,7 @@ namespace Common.Network
             byte[] playerIdBytes = BitConverter.GetBytes(playerId);
             byte[] msgId = BitConverter.GetBytes(mid);
             byte[] seqBytes = BitConverter.GetBytes(seq);
-            long time = (long)(Time.unscaledTime*1000); 
+            long time = (long)(Time.unscaledTime * 1000);
             byte[] timeStamp = BitConverter.GetBytes(time);
             byte[] datas = new byte[28 + data.Length];
 
@@ -158,7 +160,7 @@ namespace Common.Network
             _batcher.AddMessage(segment);
             return true;
         }
-        
+
         /// <summary>
         /// 发送消息
         /// </summary>
@@ -166,18 +168,20 @@ namespace Common.Network
         /// <returns></returns>
         public bool SendMsg(UgkMessage ugkMessage)
         {
-            if (!isConnected)
+            //心跳消息忽略，用于进行是否连接判断
+            if (!isConnected && ugkMessage.MessageId != 1)
             {
                 Log.Warn($"message{ugkMessage.MessageId} seq={ugkMessage.Seq} send fail,network close");
                 return false;
             }
+
             var data = ugkMessage.Bytes;
             // 消息长度4+玩家ID8+消息id4+序列号4+时间戳8+protobuf消息体
             byte[] msgLength = BitConverter.GetBytes(data.Length + 24);
             byte[] playerIdBytes = BitConverter.GetBytes(ugkMessage.PlayerId);
             byte[] msgId = BitConverter.GetBytes(ugkMessage.MessageId);
-            byte[] seq = BitConverter.GetBytes(ugkMessage.Seq); 
-            long time = (long)(Time.time*1000); 
+            byte[] seq = BitConverter.GetBytes(ugkMessage.Seq);
+            long time = (long)(Time.time * 1000);
             byte[] timeStamp = BitConverter.GetBytes(time);
             byte[] datas = new byte[28 + data.Length];
 
@@ -194,7 +198,7 @@ namespace Common.Network
         }
 
         /// <summary>
-        /// 批量发送消息 TODO 待测试
+        /// 批量发送消息
         /// </summary>
         public void BatchSendMsg()
         {
@@ -209,15 +213,7 @@ namespace Common.Network
                     while (_batcher.GetBatch(writer))
                     {
                         ArraySegment<byte> segment = writer.ToArraySegment();
-                        if (isConnected)
-                        {
-                            Transport.ClientSend(segment);
-                        }
-                        else
-                        {
-                            Log.Warn($"网络不可用:{connectState}");
-                        }
-                        
+                        Transport.ClientSend(segment);
                         // reset writer for each new batch
                         writer.Position = 0;
                     }

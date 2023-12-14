@@ -74,18 +74,15 @@
 
 
 ## TODO
-* GalacticKittens --> PushCoin --> Client Driven Overview --> coop 
-* 物理同步、aoi管理（参考Mirror的NetworkRigidbody）
-* 显示网络同步统计信息，快照同步调试：只发送改变和全部发送的流量消耗对比，消息大小及合并统计
-自己实现UI相关逻辑，不参考;敌人、Boss同步；
-* 添加[com.unity.multiplayer.samples.bitesize](https://github.com/Unity-Technologies/com.unity.multiplayer.samples.bitesize)中的机器人同步demo **_Client Driven Overview_**
-* Websocket网络通信
-* GalacticKittens 血量，UI；音效调优；添加护盾开启关闭消息；场景切换渐入渐出效果;能量，boss；游戏服务器心跳监测，超过1分钟没消息关闭房间
+* GalacticKittens --> [Client Driven Overview]((https://github.com/Unity-Technologies/com.unity.multiplayer.samples.bitesize)) --> coop
+* GalacticKittens 血量，UI；音效调优；添加护盾开启关闭消息；场景切换渐入渐出效果;能量，boss；
 * 服务器网络状态判断有问题，客户端心跳超时设置长了，进入选择角色界面显示有问题？
-* 服务器 网络连接状态一直为conneting，没有变为connected？
+* 服务器 网络连接状态一直为connecting，没有变为connected？
+* 大厅玩家UI（头像-ID）
 
 
 ### 计划
+* Websocket网络通信
 * 压力测试客户端使用ugk-web开发界面（vue3）
 * 添加聊天、排行、匹配、房间（Mirror）服务
 * 广告、充值接取

@@ -26,8 +26,8 @@ namespace Game.Manager
         [SerializeField] [Tooltip("陨石")] private Meteor _meteorPrefab;
 
 
-        [Header("Enemies")] [SerializeField] private float m_EnemySpawnTime = 1.8f;
-        [SerializeField] private float m_meteorSpawningTime = 1f;
+        [Header("Enemies")] [SerializeField] private float m_EnemySpawnTime = 1.8f ;
+        [SerializeField] private float m_meteorSpawningTime = 1f ;
         [SerializeField] private float m_bossSpawnTime = 75;
         private Vector3 m_CurrentNewEnemyPosition = new Vector3();
         private float m_CurrentEnemySpawnTime = 0f;
@@ -58,6 +58,7 @@ namespace Game.Manager
 
             m_CurrentNewMeteorPosition.x = 10; //客户端对象出生计算位置时会快速移动一小段，因此从屏幕外出生
             m_CurrentNewMeteorPosition.z = 0f;
+            SyncId = short.MaxValue; //防止和玩家id冲突
         }
 
         private void Update()
@@ -81,10 +82,11 @@ namespace Game.Manager
                     Instance.transform);
                 var snapTransform = spaceShip.GetComponent<SnapTransform>();
                 snapTransform.Id = player.Id;
-                if (player.Id>SyncId) //防止ID重复
+                if (player.Id > SyncId) //防止ID重复
                 {
                     SyncId = player.Id;
                 }
+
                 GalacticKittensObjectSpawnResponse.Types.SpawnInfo spawnInfo =
                     new GalacticKittensObjectSpawnResponse.Types.SpawnInfo()
                     {
