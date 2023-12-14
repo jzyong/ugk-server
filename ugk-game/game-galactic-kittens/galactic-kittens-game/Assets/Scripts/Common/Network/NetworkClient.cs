@@ -215,7 +215,7 @@ namespace Common.Network
                         }
                         else
                         {
-                            Log.Warn("网络不可用");
+                            Log.Warn($"网络不可用:{connectState}");
                         }
                         
                         // reset writer for each new batch

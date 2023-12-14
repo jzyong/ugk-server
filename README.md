@@ -81,8 +81,8 @@
 * 添加[com.unity.multiplayer.samples.bitesize](https://github.com/Unity-Technologies/com.unity.multiplayer.samples.bitesize)中的机器人同步demo **_Client Driven Overview_**
 * Websocket网络通信
 * GalacticKittens 血量，UI；音效调优；添加护盾开启关闭消息；场景切换渐入渐出效果;能量，boss；游戏服务器心跳监测，超过1分钟没消息关闭房间
-* 客户端到服务器坐标同步有问题？子弹可以发送，飞船自己坐标没有同步？
-
+* 服务器网络状态判断有问题，客户端心跳超时设置长了，进入选择角色界面显示有问题？
+* 服务器 网络连接状态一直为conneting，没有变为connected？
 
 
 ### 计划

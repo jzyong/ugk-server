@@ -287,7 +287,7 @@ namespace Common.Network.Sync
                     scale = Compression.ScaleToFloat(quantized, scalePrecision);
                 }
 
-                Debug.Log($"{Id} 接收坐标{position} {lastDeserializedPosition} {ugkMessage.Seq}");
+                Log.Debug($"{Id} 接收坐标{position} {lastDeserializedPosition} {ugkMessage.Seq}");
 
                 //保存sendInterval时间段快照数据，让平滑移动 
                 OnReceiveTransform(position, rotation, scale, ugkMessage.GetTime() + sendInterval);

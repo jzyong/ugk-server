@@ -81,6 +81,10 @@ namespace Game.Manager
                     Instance.transform);
                 var snapTransform = spaceShip.GetComponent<SnapTransform>();
                 snapTransform.Id = player.Id;
+                if (player.Id>SyncId) //防止ID重复
+                {
+                    SyncId = player.Id;
+                }
                 GalacticKittensObjectSpawnResponse.Types.SpawnInfo spawnInfo =
                     new GalacticKittensObjectSpawnResponse.Types.SpawnInfo()
                     {

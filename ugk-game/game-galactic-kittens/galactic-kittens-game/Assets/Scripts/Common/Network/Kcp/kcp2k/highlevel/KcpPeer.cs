@@ -339,6 +339,14 @@ namespace kcp2k
                     {
                         //Log.Warning($"Kcp recv msg: {BitConverter.ToString(message.Array, message.Offset, message.Count)}");
                         OnData?.Invoke(message);
+
+                        //Mirror 有专门的认证消息，我们没有，收到任何消息认为认证
+                        if (state!=KcpState.Authenticated)
+                        {
+                            OnAuthenticated();
+                            state = KcpState.Authenticated;
+                        }
+                        
                     }
                     // empty data = attacker, or something went wrong
                     else

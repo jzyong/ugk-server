@@ -108,7 +108,6 @@ namespace Common.Network
                 return;
             }
 
-            //TODO 断线重连这些？
             foreach (var transport in transports)
             {
                 NetworkClient networkClient = new NetworkClient();
@@ -263,6 +262,7 @@ namespace Common.Network
         /// <param name="data"></param>
         protected virtual void OnTransportData(ArraySegment<byte> data)
         {
+            
         }
 
         /// <summary>
