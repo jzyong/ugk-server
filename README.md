@@ -93,6 +93,7 @@
 * Limits how often data is sent for objects distance to players to reduce how much bandwidth the server uses. Tests show this feature can reduce transform updates, such as moving objects, between 90-97%. FishNet解决方案，远的对象，减少同步频率
 * 压力测试，网关CPU消耗高？
 * 打android包测试
+* lua热更新
 
 交流讨论
 ---------
