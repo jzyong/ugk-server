@@ -1,3 +1,4 @@
+using Common.Tools;
 using UnityEngine;
 
 namespace Game.Room.Boss.States
@@ -16,9 +17,13 @@ namespace Game.Room.Boss.States
     {
         protected Boss M;
 
-        private void Start()
+        protected void Awake()
         {
             M = FindFirstObjectByType<Boss>();
+            if (M==null)
+            {
+                Log.Warn("未找到Boss脚本");
+            }
         }
     
         // Method that should be run on all states

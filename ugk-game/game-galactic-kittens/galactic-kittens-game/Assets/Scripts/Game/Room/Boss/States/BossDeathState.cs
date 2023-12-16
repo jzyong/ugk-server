@@ -30,11 +30,11 @@ namespace Game.Room.Boss.States
 
         void Start()
         {
-                // Add the explosions Positions 
-                foreach (Transform transform in m_explosionPositionsContainer)
-                {
-                    explosionPositions.Add(transform);
-                }
+                // // Add the explosions Positions 
+                // foreach (Transform transform in m_explosionPositionsContainer)
+                // {
+                //     explosionPositions.Add(transform);
+                // }
         }
 
         IEnumerator Shake()

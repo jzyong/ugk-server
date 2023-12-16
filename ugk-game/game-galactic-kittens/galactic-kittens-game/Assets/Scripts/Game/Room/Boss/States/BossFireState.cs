@@ -1,24 +1,19 @@
 using System.Collections;
+using Game.Manager;
 using UnityEngine;
 
 namespace Game.Room.Boss.States
 {
     public class BossFireState : BaseBossState
     {
-        [SerializeField]
-        private Transform[] _fireCannonSpawningArea;
+        [SerializeField] private Transform[] _fireCannonSpawningArea;
 
-        [SerializeField]
-        private GameObject _trioBulletPrefab;
+        [SerializeField] private float _normalShootRateOfFire;
 
-        [SerializeField]
-        private GameObject _circularBulletPrefab;
+        [SerializeField] private float _idleSpeed;
 
-        [SerializeField]
-        private float _normalShootRateOfFire;
+        [SerializeField] [Tooltip("子弹选择方向")] private Vector3[] trangleBulletRotation;
 
-        [SerializeField]
-        private float _idleSpeed;
 
         public override void RunState()
         {
@@ -44,7 +39,7 @@ namespace Game.Room.Boss.States
                 shootTimer += Time.deltaTime;
                 if (shootTimer >= _normalShootRateOfFire)
                 {
-                    GameObject nextBulletPrefabToShoot = GetNextBulletPrefabToShoot();
+                    var nextBulletPrefabToShoot = GetNextBulletPrefabToShoot();
 
                     FireBulletPrefab(nextBulletPrefabToShoot);
 
@@ -55,33 +50,49 @@ namespace Game.Room.Boss.States
 
                 normalStateTimer += Time.deltaTime;
             }
-        
+
             // When we end the time on this state call the special attack, it can be a different state
             // or a random for different states
             M.SetState(BossState.misileBarrage);
         }
 
-        private GameObject GetNextBulletPrefabToShoot()
+        /// <summary>
+        /// 返回子弹类型
+        /// </summary>
+        /// <returns>32 boss三角形小子弹，33 boss环形分裂后小子弹，34 boss环形分裂子弹，35 boss导弹</returns>
+        private uint GetNextBulletPrefabToShoot()
         {
             int randomBulletChoice = Random.Range(0, 10);
 
             // trio -> 7/10, circular -> 3/10
             if (randomBulletChoice < 7)
             {
-                return _trioBulletPrefab;
+                return 32;
             }
 
-            return _circularBulletPrefab;
+            return 34;
         }
 
-        private void FireBulletPrefab(GameObject bulletPrefab)
+        private void FireBulletPrefab(uint type)
         {
             // Because the cannon positions are lower on the sprite with increase the rotation up
             float randomZrotation = Random.Range(-25f, 45f);
 
             foreach (Transform laserCannon in _fireCannonSpawningArea)
             {
-               //TODO 产出boss子弹并广播
+                if (type == 32)
+                {
+                    foreach (var t in trangleBulletRotation)
+                    {
+                        RoomManager.Instance.SpawnBossBullet(type, laserCannon.position,
+                            new Vector3(t.x, t.y, t.z + randomZrotation));
+                    }
+                }
+                else
+                {
+                    RoomManager.Instance.SpawnBossBullet(type, laserCannon.position,
+                        new Vector3(0, 0, randomZrotation));
+                }
             }
         }
     }

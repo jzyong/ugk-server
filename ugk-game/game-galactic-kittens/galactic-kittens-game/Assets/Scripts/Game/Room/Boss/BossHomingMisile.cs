@@ -3,7 +3,10 @@ using UnityEngine;
 
 namespace Game.Room.Boss
 {
-    public class HomingMisile : MonoBehaviour
+    /// <summary>
+    /// 自动跟踪导弹
+    /// </summary>
+    public class BossHomingMisile : MonoBehaviour
     {
         [SerializeField]
         int m_damage = 1;

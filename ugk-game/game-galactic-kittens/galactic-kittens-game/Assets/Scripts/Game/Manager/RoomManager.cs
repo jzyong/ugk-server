@@ -22,6 +22,12 @@ namespace Game.Manager
 
         [SerializeField] [Tooltip("子弹")] private SpaceshipBullet _spaceshipBulletPrefab;
         [SerializeField] [Tooltip("敌人子弹")] private EnemyBullet _enemyBulletPrefab;
+        [SerializeField] [Tooltip("Boss小子弹")] private BossSmallBullet _bossSmallBulletPrefab;
+        [SerializeField] [Tooltip("Boss环形子弹")] private BossCircularBullet _bossCircularBulletPrefab;
+
+        [SerializeField] [Tooltip("Boss自动跟踪导弹")]
+        private BossHomingMisile _bossHomingMisilePrefab;
+
 
         [SerializeField] [Tooltip("不射击的敌人")] private SpaceGhostEnemy _spaceGhostEnemyPrefab;
         [SerializeField] [Tooltip("击的敌人")] private SpaceShooterEnemy _spaceShooterEnemyPrefab;
@@ -38,6 +44,7 @@ namespace Game.Manager
         private float m_CurrentMeteorSpawnTime = 0f;
         private float m_CurrentBossSpawnTime = 0f;
         private bool m_IsSpawning = true;
+        private long bossId;
 
 
         /// <summary>
@@ -234,7 +241,7 @@ namespace Game.Manager
             SpawnBoss(20);
 
             // Same time as audio length
-            yield return new WaitForSeconds(3);
+            yield return new WaitForSeconds(5.5f);
             SpawnBoss(21);
         }
 
@@ -262,7 +269,9 @@ namespace Game.Manager
 
             var snapTransform = boss.GetComponent<SnapTransform>();
             snapTransform.Id = SyncId++;
+            bossId = snapTransform.Id;
             snapTransform.Onwer = true;
+            snapTransform.InitTransform(spawnPosition, null);
             boss.name = $"Boss-{snapTransform.Id}";
             spawnInfo.OwnerId = 0;
             spawnInfo.Id = snapTransform.Id;
@@ -336,6 +345,57 @@ namespace Game.Manager
 
             PlayerManager.Instance.BroadcastMsg(MID.GalacticKittensObjectSpawnRes, spawnResponse);
         }
+
+        /// <summary>
+        /// 产生boss子弹
+        /// </summary>
+        /// <param name="type">32 boss三角形小子弹，33 boss环形分裂后小子弹，34 boss环形分裂子弹，35 boss导弹</param>
+        /// <param name="position"></param>
+        /// <param name="rotation"></param>
+        public void SpawnBossBullet(uint type, Vector3 position, Vector3 rotation)
+        {
+            GalacticKittensObjectSpawnResponse spawnResponse = new GalacticKittensObjectSpawnResponse();
+
+            GameObject bullet = null;
+            switch (type)
+            {
+                case 32:
+                case 33:
+                    bullet = Instantiate(_bossSmallBulletPrefab, position, Quaternion.Euler(rotation),
+                        Instance.transform).gameObject;
+                    break;
+                case 34:
+                    bullet = Instantiate(_bossCircularBulletPrefab, position, Quaternion.Euler(rotation),
+                        Instance.transform).gameObject;
+                    break;
+                case 35:
+                    bullet = Instantiate(_bossHomingMisilePrefab, position, Quaternion.Euler(rotation),
+                        Instance.transform).gameObject;
+                    break;
+                default:
+                    Log.Warn($"bullet type：{type} not find");
+                    return;
+            }
+
+            var snapTransform = bullet.GetComponent<SnapTransform>();
+            snapTransform.Id = SyncId++;
+            snapTransform.Onwer = true;
+            bullet.name = $"BossBullet-{snapTransform.Id}";
+            snapTransform.InitTransform(position, null);
+            GalacticKittensObjectSpawnResponse.Types.SpawnInfo spawnInfo =
+                new GalacticKittensObjectSpawnResponse.Types.SpawnInfo()
+                {
+                    OwnerId = bossId,
+                    Id = snapTransform.Id,
+                    ConfigId = type,
+                    Position = ProtoUtil.BuildVector3D(position),
+                };
+            SyncManager.Instance.AddSnapTransform(snapTransform); //添加同步对象
+            spawnResponse.Spawn.Add(spawnInfo);
+            Log.Info($"Boss bullet born in {position}");
+            PlayerManager.Instance.BroadcastMsg(MID.GalacticKittensObjectSpawnRes, spawnResponse);
+        }
+
 
         /// <summary>
         /// 对象死亡
