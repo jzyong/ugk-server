@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Common.Network.Sync;
 using Common.Tools;
 using Game.Messages;
+using Game.Room.Boss;
 using Game.Room.Enemy;
 using Game.Room.Player;
 using UnityEngine;
@@ -24,11 +26,12 @@ namespace Game.Manager
         [SerializeField] [Tooltip("不射击的敌人")] private SpaceGhostEnemy _spaceGhostEnemyPrefab;
         [SerializeField] [Tooltip("击的敌人")] private SpaceShooterEnemy _spaceShooterEnemyPrefab;
         [SerializeField] [Tooltip("陨石")] private Meteor _meteorPrefab;
+        [SerializeField] [Tooltip("Boss")] private Boss _bossPrefab;
 
 
-        [Header("Enemies")] [SerializeField] private float m_EnemySpawnTime = 1.8f ;
-        [SerializeField] private float m_meteorSpawningTime = 1f ;
-        [SerializeField] private float m_bossSpawnTime = 75;
+        [Header("Enemies")] [SerializeField] private float m_EnemySpawnTime = 1.8f;
+        [SerializeField] private float m_meteorSpawningTime = 1f;
+        [SerializeField] private float m_bossSpawnTime = 45;
         private Vector3 m_CurrentNewEnemyPosition = new Vector3();
         private float m_CurrentEnemySpawnTime = 0f;
         private Vector3 m_CurrentNewMeteorPosition = new Vector3();
@@ -63,8 +66,12 @@ namespace Game.Manager
 
         private void Update()
         {
-            SpawnEnemy();
-            SpawnMeteor();
+            if (m_IsSpawning)
+            {
+                SpawnEnemy();
+                SpawnMeteor();
+                SpawnBoss();
+            }
         }
 
         /// <summary>
@@ -206,6 +213,63 @@ namespace Game.Manager
 
                 m_CurrentMeteorSpawnTime = 0f;
             }
+        }
+
+        /// <summary>
+        /// 出生Boss
+        /// </summary>
+        private void SpawnBoss()
+        {
+            m_CurrentBossSpawnTime += Time.deltaTime;
+            if (m_CurrentBossSpawnTime >= m_bossSpawnTime)
+            {
+                m_IsSpawning = false;
+                StartCoroutine(BossAppear());
+            }
+        }
+
+        IEnumerator BossAppear()
+        {
+            // Warning title and sound
+            SpawnBoss(20);
+
+            // Same time as audio length
+            yield return new WaitForSeconds(3);
+            SpawnBoss(21);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="type">20Boss预警，21Boss</param>
+        public void SpawnBoss(uint type)
+        {
+            GalacticKittensObjectSpawnResponse spawnResponse = new GalacticKittensObjectSpawnResponse();
+            GalacticKittensObjectSpawnResponse.Types.SpawnInfo spawnInfo =
+                new GalacticKittensObjectSpawnResponse.Types.SpawnInfo();
+            spawnInfo.ConfigId = type;
+            spawnResponse.Spawn.Add(spawnInfo);
+            if (type == 20)
+            {
+                PlayerManager.Instance.BroadcastMsg(MID.GalacticKittensObjectSpawnRes, spawnResponse);
+                return;
+            }
+
+            var spawnPosition = new Vector3(5, 0, 0);
+            Boss boss = Instantiate(_bossPrefab, spawnPosition, Quaternion.identity,
+                Instance.transform);
+            boss.StartBoss(spawnPosition);
+
+            var snapTransform = boss.GetComponent<SnapTransform>();
+            snapTransform.Id = SyncId++;
+            snapTransform.Onwer = true;
+            boss.name = $"Boss-{snapTransform.Id}";
+            spawnInfo.OwnerId = 0;
+            spawnInfo.Id = snapTransform.Id;
+            spawnInfo.Position = ProtoUtil.BuildVector3D(spawnPosition);
+            SyncManager.Instance.AddSnapTransform(snapTransform); //添加同步对象
+            Log.Info($"Boss {snapTransform.Id}  born in {m_CurrentNewMeteorPosition}");
+            PlayerManager.Instance.BroadcastMsg(MID.GalacticKittensObjectSpawnRes, spawnResponse);
         }
 
 

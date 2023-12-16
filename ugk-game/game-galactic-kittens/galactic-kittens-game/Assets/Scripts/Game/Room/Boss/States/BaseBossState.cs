@@ -11,14 +11,14 @@ namespace Game.Room.Boss.States
         enter
     };
 
-    [RequireComponent(typeof(BossController))]
+    [RequireComponent(typeof(Boss))]
     public class BaseBossState : MonoBehaviour
     {
-        protected BossController m_controller;
+        protected Boss M;
 
         private void Start()
         {
-            m_controller = FindFirstObjectByType<BossController>();
+            M = FindFirstObjectByType<Boss>();
         }
     
         // Method that should be run on all states

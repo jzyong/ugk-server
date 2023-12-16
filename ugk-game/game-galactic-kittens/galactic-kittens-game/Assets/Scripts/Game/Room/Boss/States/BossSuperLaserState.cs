@@ -19,7 +19,7 @@ namespace Game.Room.Boss.States
 
             // TODO: Wait the time the vfx last
             yield return new WaitForSeconds(5f);
-            m_controller.SetState(BossState.idle);
+            M.SetState(BossState.idle);
         }
         
         public override void RunState()

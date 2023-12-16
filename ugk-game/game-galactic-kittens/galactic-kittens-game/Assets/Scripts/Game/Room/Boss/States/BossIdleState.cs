@@ -15,7 +15,7 @@ namespace Game.Room.Boss.States
             yield return new WaitForSeconds(m_idleTime);
 
             // Call the fire state
-            m_controller.SetState(BossState.fire);
+            M.SetState(BossState.fire);
         }
 
         public override void RunState()

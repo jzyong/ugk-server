@@ -25,7 +25,7 @@ namespace Game.Room.Boss.States
             }
 
             // Go idle from a moment
-            m_controller.SetState(BossState.idle);
+            M.SetState(BossState.idle);
         }
 
         // Spawn the missile prefab

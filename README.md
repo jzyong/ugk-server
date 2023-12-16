@@ -61,24 +61,23 @@
 * [Telepathy](https://github.com/vis2k/Telepathy) TCP前端
 * [kcp2k](https://github.com/vis2k/kcp2k) unity前端
 * [kcp-go](https://github.com/xtaci/kcp-go) go服务器
-* [grpc](https://grpc.io/) 服务器之间通信
+* [grpc](https://grpc.io/) 服务器之间通信··
 * [可靠UDP，KCP协议快在哪？](https://wetest.qq.com/lab/view/391.html)
 #### 同步
 * [Prediction,Reconciliation,Lag Compensation](https://www.gabrielgambetta.com/client-server-game-architecture.html)
 * [Latency Compensating Methods in Client/Server In-game Protocol Design and Optimization](https://developer.valvesoftware.com/wiki/Latency_Compensating_Methods_in_Client/Server_In-game_Protocol_Design_and_Optimization)
 * [无畏契约网络代码](https://technology.riotgames.com/news/peeking-valorants-netcode)
 #### Unity
-* [com.unity.multiplayer.samples.coop](https://github.com/Unity-Technologies/com.unity.multiplayer.samples.coop)3D rpg示例demo
 * [com.unity.multiplayer.samples.bitesize](https://github.com/Unity-Technologies/com.unity.multiplayer.samples.bitesize)小游戏示例demo
 * [GalacticKittens](https://github.com/UnityTechnologies/GalacticKittens) 2D示例demo
 
 
 ## TODO
-* GalacticKittens --> [Client Driven Overview]((https://github.com/Unity-Technologies/com.unity.multiplayer.samples.bitesize)) --> coop
+* GalacticKittens --> [Client Driven Overview]((https://github.com/Unity-Technologies/com.unity.multiplayer.samples.bitesize))
 * GalacticKittens 血量，UI；音效调优；添加护盾开启关闭消息；场景切换渐入渐出效果;能量，boss；
-* 服务器网络状态判断有问题，客户端心跳超时设置长了，进入选择角色界面显示有问题？
-* 服务器 网络连接状态一直为connecting，没有变为connected？
 * 大厅玩家UI（头像-ID）
+* agent 进程会无故关闭？
+* 网关CPU，内存消耗高，进行分析？
 
 
 ### 计划
@@ -91,8 +90,8 @@
 * ugk-client 弹窗增加tween动画
 * 后台管理系统查看unity docker服务器
 * Limits how often data is sent for objects distance to players to reduce how much bandwidth the server uses. Tests show this feature can reduce transform updates, such as moving objects, between 90-97%. FishNet解决方案，远的对象，减少同步频率
-* 压力测试，网关CPU消耗高？
-* 打android包测试
+* 压力测试，网关CPU、内存消耗高？
+* 打android包测试，使用StarterAssets中的资源
 * lua热更新
 
 交流讨论

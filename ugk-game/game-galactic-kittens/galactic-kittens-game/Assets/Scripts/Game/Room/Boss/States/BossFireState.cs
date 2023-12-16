@@ -58,7 +58,7 @@ namespace Game.Room.Boss.States
         
             // When we end the time on this state call the special attack, it can be a different state
             // or a random for different states
-            m_controller.SetState(BossState.misileBarrage);
+            M.SetState(BossState.misileBarrage);
         }
 
         private GameObject GetNextBulletPrefabToShoot()

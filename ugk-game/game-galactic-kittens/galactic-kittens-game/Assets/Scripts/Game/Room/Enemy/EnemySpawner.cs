@@ -142,7 +142,7 @@ namespace Game.Room.Enemy
             //     m_bossPrefabToSpawn,
             //     transform.position);
 
-            // BossController bossController = boss.GetComponent<BossController>();
+            // Boss bossController = boss.GetComponent<Boss>();
             // bossController.StartBoss(m_bossPosition.position);
             // bossController.SetUI(m_bossUI);
             // boss.name = "BOSS";

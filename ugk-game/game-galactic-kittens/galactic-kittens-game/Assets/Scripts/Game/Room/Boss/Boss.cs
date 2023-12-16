@@ -10,7 +10,7 @@ using UnityEngine;
 
 namespace Game.Room.Boss
 {
-    public class BossController : MonoBehaviour
+    public class Boss : MonoBehaviour
     {
         [SerializeField]
         private int m_damage;

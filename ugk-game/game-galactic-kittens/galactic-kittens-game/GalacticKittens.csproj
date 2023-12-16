@@ -63,6 +63,7 @@
      <Compile Include="Assets\Scripts\Game\Handlers\SyncHandler.cs" />
      <Compile Include="Assets\Scripts\Common\Network\Kcp\kcp2k\kcp\Pool.cs" />
      <Compile Include="Assets\Scripts\Common\Network\Kcp\kcp2k\kcp\Segment.cs" />
+     <Compile Include="Assets\Scripts\Game\Room\Boss\Boss.cs" />
      <Compile Include="Assets\Scripts\Common\Network\Serialize\NetworkReaderPooled.cs" />
      <Compile Include="Assets\Scripts\Game\Room\Boss\States\BaseBossState.cs" />
      <Compile Include="Assets\Scripts\Game\Room\Enemy\SpaceShooterEnemy.cs" />
@@ -137,7 +138,6 @@
      <Compile Include="Assets\Scripts\Game\Room\Boss\SmallBullet.cs" />
      <Compile Include="Assets\Scripts\Common\Network\Sync\PredictionTransform.cs" />
      <Compile Include="Assets\Scripts\Game\Room\Enemy\BaseEnemyBehavior.cs" />
-     <Compile Include="Assets\Scripts\Game\Room\Boss\BossController.cs" />
      <Compile Include="Assets\Scripts\Game\Manager\SyncManager.cs" />
      <Compile Include="Assets\Scripts\Game\Messages\Login.cs" />
      <Compile Include="Assets\Scripts\Game\Room\IDamagable.cs" />

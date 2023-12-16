@@ -36,7 +36,7 @@ namespace Game.Room.Boss.States
             }
 
             // When the boss finish the enter movement start with the fire state
-            m_controller.SetState(BossState.fire);
+            M.SetState(BossState.fire);
         }
     }
 }
