@@ -110,6 +110,7 @@
      <Compile Include="Assets\Scripts\Common\Network\Sync\TransformSnapshot.cs" />
      <Compile Include="Assets\Scripts\Game\Room\Boss\States\BossDeathState.cs" />
      <Compile Include="Assets\Scripts\Game\Room\Player\DefenseMatrix.cs" />
+     <Compile Include="Assets\Scripts\Game\Room\Enemy\PowerUp.cs" />
      <Compile Include="Assets\Scripts\Common\Tools\Mathd.cs" />
      <Compile Include="Assets\Scripts\Common\Network\Kcp\kcp2k\kcp\AckItem.cs" />
      <Compile Include="Assets\Scripts\Game\Manager\PlayerManager.cs" />

@@ -33,6 +33,7 @@ namespace Game.Manager
         [SerializeField] [Tooltip("击的敌人")] private SpaceShooterEnemy _spaceShooterEnemyPrefab;
         [SerializeField] [Tooltip("陨石")] private Meteor _meteorPrefab;
         [SerializeField] [Tooltip("Boss")] private Boss _bossPrefab;
+        [SerializeField] [Tooltip("能量道具")] private PowerUp _powerUpPrefab;
 
 
         [Header("Enemies")] [SerializeField] private float m_EnemySpawnTime = 1.8f;
@@ -181,6 +182,46 @@ namespace Game.Manager
         }
 
         /// <summary>
+        ///  出生能量提升
+        /// </summary>
+        public void SpawnPowerUp (Vector3 position)
+        {
+            //概率控制
+            int randomPick = Random.Range(1, 100);
+            if (randomPick>10)
+            {
+                return;
+            }
+            
+            GalacticKittensObjectSpawnResponse spawnResponse = new GalacticKittensObjectSpawnResponse();
+            PowerUp powerUp = Instantiate(_powerUpPrefab, position, Quaternion.identity,
+                Instance.transform);
+            uint configId = 50;
+            var predictionTransform = powerUp.GetComponent<PredictionTransform>();
+            predictionTransform.Id = SyncId++;
+            predictionTransform.Onwer = true;
+            predictionTransform.LinearVelocity = powerUp.linearVelocity;
+            powerUp.name = $"PowerUp-{predictionTransform.Id}";
+            GalacticKittensObjectSpawnResponse.Types.SpawnInfo spawnInfo =
+                new GalacticKittensObjectSpawnResponse.Types.SpawnInfo()
+                {
+                    OwnerId = 0,
+                    Id = predictionTransform.Id,
+                    ConfigId = configId,
+                    Position = ProtoUtil.BuildVector3D(m_CurrentNewMeteorPosition),
+                    LinearVelocity = ProtoUtil.BuildVector3D(predictionTransform.LinearVelocity),
+                };
+            SyncManager.Instance.AddPredictionTransform(predictionTransform); //添加同步对象
+            spawnResponse.Spawn.Add(spawnInfo);
+            Log.Info($"PowerUp {predictionTransform.Id}  born in {m_CurrentNewMeteorPosition}");
+
+            PlayerManager.Instance.BroadcastMsg(MID.GalacticKittensObjectSpawnRes, spawnResponse);
+
+            m_CurrentMeteorSpawnTime = 0f;
+        }
+
+
+        /// <summary>
         /// 出生陨石
         /// </summary>
         private void SpawnMeteor()
@@ -222,6 +263,7 @@ namespace Game.Manager
                 m_CurrentMeteorSpawnTime = 0f;
             }
         }
+
 
         /// <summary>
         /// 出生Boss
@@ -464,10 +506,7 @@ namespace Game.Manager
 
         public void GameFinish()
         {
-            
             SyncManager.Instance.ResetData();
-            
         }
-        
     }
 }

@@ -65,9 +65,8 @@ namespace Game.Room.Enemy
             m_health -= damage;
             if (m_health <= 0)
             {
-                // 产生道具  TODO
-                //PowerUpSpawnController.instance.OnPowerUpSpawn(transform.position);
                 RoomManager.Instance.DespawnObject(killerId, GetComponent<PredictionTransform>().Id);
+                RoomManager.Instance.SpawnPowerUp(gameObject.transform.position);
                 Destroy(gameObject);
             }
         }

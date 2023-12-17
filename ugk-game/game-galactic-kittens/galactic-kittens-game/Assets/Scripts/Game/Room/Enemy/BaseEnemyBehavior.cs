@@ -82,8 +82,6 @@ namespace Game.Room.Enemy
         protected void DespawnEnemy()
         {
             gameObject.SetActive(false);
-            //TODO 广播对象死亡
-            // RoomManager.Instance.DespawnObject();
         }
 
 
@@ -93,7 +91,9 @@ namespace Game.Room.Enemy
             if (m_EnemyHealthPoints < 1)
             {
                 RoomManager.Instance.DespawnObject(0, GetComponent<SnapTransform>().Id);
+                RoomManager.Instance.SpawnPowerUp(gameObject.transform.position);
                 Destroy(gameObject);
+               
             }
         }
     }
