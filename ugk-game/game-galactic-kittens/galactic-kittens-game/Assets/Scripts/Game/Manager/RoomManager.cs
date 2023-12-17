@@ -55,6 +55,7 @@ namespace Game.Manager
 
         private Dictionary<long, SpaceShip> _spaceShips = new Dictionary<long, SpaceShip>(4);
 
+
         /// <summary>
         /// 对象同步Id
         /// </summary>
@@ -459,6 +460,13 @@ namespace Game.Manager
         public int PlayerCount()
         {
             return _spaceShips.Count;
+        }
+
+        public void GameFinish()
+        {
+            
+            SyncManager.Instance.ResetData();
+            
         }
         
     }

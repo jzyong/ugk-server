@@ -33,6 +33,11 @@ namespace Game.Manager
         /// 批量预测同步消息 
         /// </summary>
         private PredictionSyncResponse predictionSyncMessage;
+        
+        /// <summary>
+        /// 关闭同步
+        /// </summary>
+        public bool Close { get; set; }
 
 
         public override void Awake()
@@ -52,16 +57,18 @@ namespace Game.Manager
             ResetData();
         }
 
-        private void ResetData()
+        public void ResetData()
         {
             _snapTransforms.Clear();
             _predictionTransforms.Clear();
+            snapSyncMessage?.Payload.Clear();
+            predictionSyncMessage?.Payload.Clear();
         }
 
         /// <summary>
         /// 收到同步消息
         /// </summary>
-        public void OnSnapSyncReceive(Player player,UgkMessage ugkMessage,SnapSyncRequest request)
+        public void OnSnapSyncReceive(Player player, UgkMessage ugkMessage, SnapSyncRequest request)
         {
             if (!gameObject.activeSelf)
             {
@@ -78,20 +85,19 @@ namespace Game.Manager
                         continue;
                     }
 
-                    if (player.Id!=snapTransform.Id)
+                    if (player.Id != snapTransform.Id)
                     {
                         Log.Warn($"{player.Id} push other people's position");
                         return;
                     }
 
-                    snapTransform.OnDeserialize(ugkMessage,kv.Value, false);
+                    snapTransform.OnDeserialize(ugkMessage, kv.Value, false);
                 }
             }
             catch (Exception e)
             {
-               Log.Error($"解析快照插值消息错误：{e}");
+                Log.Error($"解析快照插值消息错误：{e}");
             }
-           
         }
 
         /// <summary>
@@ -121,7 +127,6 @@ namespace Game.Manager
             {
                 Log.Error($"解析预测同步消息错误：{e}");
             }
-           
         }
 
 
@@ -131,6 +136,11 @@ namespace Game.Manager
         /// </summary>
         private void SyncTransformToPlayers()
         {
+            if (Close)
+            {
+                return;
+            }
+            
             foreach (var kv in _snapTransforms)
             {
                 if (kv.Value.SyncData != null)
@@ -232,7 +242,7 @@ namespace Game.Manager
 
             return RemovePredictionTransform(id, type);
         }
-        
+
         public void AddSnapTransform(SnapTransform snapTransform)
         {
             _snapTransforms[snapTransform.Id] = snapTransform;

@@ -113,6 +113,7 @@ namespace Game.Room.Boss
             helath -= damage;
             if (helath < 1)
             {
+                SetState(BossState.death);
                 RoomManager.Instance.DespawnObject(0, GetComponent<SnapTransform>().Id);
                 Destroy(gameObject);
             }
