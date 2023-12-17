@@ -171,8 +171,11 @@ MonoBehaviour:
   compressRotation: 0
   positionPrecision: 0.01
   scalePrecision: 0.01
-  syncAngularVelocity: 0
-  velocityPrecision: 0.01
+  onlySyncOnChange: 1
+  interpolatePosition: 1
+  interpolateRotation: 1
+  interpolateScale: 1
+  rotationSensitivity: 0.01
   linearVelocity: {x: -2, y: 0, z: 0}
 --- !u!114 &6909116142802255362
 MonoBehaviour:
@@ -186,5 +189,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79304fea33e34ba8a69e9f3fd1fb3405, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_autoDestroyTime: 8
+  m_autoDestroyTime: 12
   target: {fileID: 1093904072508176827}

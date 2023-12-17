@@ -9,7 +9,7 @@ namespace Game.Room.Boss.States
     {
         IEnumerator RunDeath()
         {
-            RoomManager.Instance.GameFinish();
+            RoomManager.Instance.GameFinishSuccess();
             yield return new WaitForSeconds(10);
             
             

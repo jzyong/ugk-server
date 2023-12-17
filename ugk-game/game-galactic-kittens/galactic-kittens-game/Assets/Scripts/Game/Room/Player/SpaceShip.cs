@@ -10,7 +10,10 @@ namespace Game.Room.Player
     /// </summary>
     public class SpaceShip : MonoBehaviour, IDamagable
     {
-        private int powerUpCount;
+        [HideInInspector] public uint powerUpCount;
+
+        [Tooltip("血量")] public uint hp = 30;
+
 
         void OnTriggerEnter2D(Collider2D collider)
         {
@@ -23,18 +26,26 @@ namespace Game.Room.Player
                     // Update var
                     powerUpCount++;
 
-                    // Update UI TODO
-                    // playerUI.UpdatePowerUp(m_specials.Value, true);
+                    // Update UI 
+                    RoomManager.Instance.BroadcastPlayerProperty(this);
 
                     // Remove the power-up
-                    RoomManager.Instance.DespawnObject(0, collider.gameObject.GetComponent<PredictionTransform>().Id);
+                    RoomManager.Instance.DespawnObject(0, collider.gameObject.GetComponent<SnapTransform>().Id);
                 }
             }
         }
 
         public void Hit(int damage)
         {
-            //TODO
+            hp--;
+            if (hp < 1)
+            {
+                gameObject.SetActive(false);
+                RoomManager.Instance.DespawnObject(0, GetComponent<SnapTransform>().Id, false);
+                RoomManager.Instance.GameFinishFail();
+            }
+
+            RoomManager.Instance.BroadcastPlayerProperty(this);
         }
     }
 }

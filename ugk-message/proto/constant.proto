@@ -55,6 +55,7 @@ enum MID {
   GalacticKittensShipShieldStateRes = 4718602;
   GalacticKittensShipMoveStateReq = 4718603;
   GalacticKittensShipMoveStateRes = 4718604;
+  GalacticKittensPlayerPropertyRes=4718606;
 
 
 }

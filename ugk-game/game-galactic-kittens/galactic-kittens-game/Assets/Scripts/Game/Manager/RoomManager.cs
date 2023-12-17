@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Common.Network.Sync;
 using Common.Tools;
 using Game.Messages;
@@ -52,7 +53,7 @@ namespace Game.Manager
         /// 飞船出生坐标
         /// </summary>
         private readonly Vector3[] shipSpawnPositions = new[]
-            { new Vector3(-8, 4), new Vector3(-8, 1.5f), new Vector3(-8, -1f), new Vector3(-8, -3.5f) };
+            { new Vector3(-8, 3), new Vector3(-8, 1f), new Vector3(-8, -1f), new Vector3(-8, -3f) };
 
         private Dictionary<long, SpaceShip> _spaceShips = new Dictionary<long, SpaceShip>(4);
 
@@ -184,36 +185,35 @@ namespace Game.Manager
         /// <summary>
         ///  出生能量提升
         /// </summary>
-        public void SpawnPowerUp (Vector3 position)
+        public void SpawnPowerUp(Vector3 position)
         {
             //概率控制
             int randomPick = Random.Range(1, 100);
-            if (randomPick>10)
+            if (randomPick > 10)
             {
                 return;
             }
-            
+
             GalacticKittensObjectSpawnResponse spawnResponse = new GalacticKittensObjectSpawnResponse();
             PowerUp powerUp = Instantiate(_powerUpPrefab, position, Quaternion.identity,
                 Instance.transform);
             uint configId = 50;
-            var predictionTransform = powerUp.GetComponent<PredictionTransform>();
-            predictionTransform.Id = SyncId++;
-            predictionTransform.Onwer = true;
-            predictionTransform.LinearVelocity = powerUp.linearVelocity;
-            powerUp.name = $"PowerUp-{predictionTransform.Id}";
+            var snapTransform = powerUp.GetComponent<SnapTransform>();
+            snapTransform.Id = SyncId++;
+            snapTransform.Onwer = true;
+            powerUp.name = $"PowerUp-{snapTransform.Id}";
+            snapTransform.InitTransform(position,null);
             GalacticKittensObjectSpawnResponse.Types.SpawnInfo spawnInfo =
                 new GalacticKittensObjectSpawnResponse.Types.SpawnInfo()
                 {
                     OwnerId = 0,
-                    Id = predictionTransform.Id,
+                    Id = snapTransform.Id,
                     ConfigId = configId,
-                    Position = ProtoUtil.BuildVector3D(m_CurrentNewMeteorPosition),
-                    LinearVelocity = ProtoUtil.BuildVector3D(predictionTransform.LinearVelocity),
+                    Position = ProtoUtil.BuildVector3D(position),
                 };
-            SyncManager.Instance.AddPredictionTransform(predictionTransform); //添加同步对象
+            SyncManager.Instance.AddSnapTransform(snapTransform); //添加同步对象
             spawnResponse.Spawn.Add(spawnInfo);
-            Log.Info($"PowerUp {predictionTransform.Id}  born in {m_CurrentNewMeteorPosition}");
+            Log.Info($"PowerUp {snapTransform.Id}  born in {position}");
 
             PlayerManager.Instance.BroadcastMsg(MID.GalacticKittensObjectSpawnRes, spawnResponse);
 
@@ -461,6 +461,24 @@ namespace Game.Manager
             PlayerManager.Instance.BroadcastMsg(MID.GalacticKittensObjectDieRes, response);
         }
 
+        /// <summary>
+        /// 广播属性改变
+        /// </summary>
+        /// <param name="spaceShip"></param>
+        public void BroadcastPlayerProperty(SpaceShip spaceShip)
+        {
+            GalacticKittensPlayerPropertyResponse response = new GalacticKittensPlayerPropertyResponse();
+            GalacticKittensPlayerPropertyResponse.Types.PlayerProperty property =
+                new GalacticKittensPlayerPropertyResponse.Types.PlayerProperty()
+                {
+                    PlayerId = spaceShip.GetComponent<SnapTransform>().Id,
+                    Hp = spaceShip.hp,
+                    PowerUpCount = spaceShip.powerUpCount
+                };
+            response.PlayerProperty.Add(property);
+            PlayerManager.Instance.BroadcastMsg(MID.GalacticKittensPlayerPropertyRes, response);
+        }
+
 
         /// <summary>
         /// 游戏结束 TODO 待测试
@@ -504,8 +522,35 @@ namespace Game.Manager
             return _spaceShips.Count;
         }
 
-        public void GameFinish()
+        /// <summary>
+        /// 失败结束
+        /// </summary>
+        public void GameFinishFail()
         {
+            if (_spaceShips.Values.Any((ship => ship.gameObject.activeSelf)))
+            {
+                return;
+            }
+
+            m_IsSpawning = false;
+
+            SyncManager.Instance.ResetData();
+        }
+
+        public void GameFinishSuccess()
+        {
+            foreach (var component in transform.GetComponents<PredictionTransform>())
+            {
+                DespawnObject(0,component.Id);
+                Destroy(component);
+            }
+
+            foreach (var component in transform.GetComponents<SnapTransform>())
+            {
+                DespawnObject(0,component.Id);
+                Destroy(component);
+            }
+
             SyncManager.Instance.ResetData();
         }
     }

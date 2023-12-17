@@ -22,7 +22,7 @@ public static partial class ConstantReflection {
   static ConstantReflection() {
     byte[] descriptorData = global::System.Convert.FromBase64String(
         string.Concat(
-          "Cg5jb25zdGFudC5wcm90byrCBwoDTUlEEggKBE5vbmUQABISCg5TZXJ2ZXJI",
+          "Cg5jb25zdGFudC5wcm90byrrBwoDTUlEEggKBE5vbmUQABISCg5TZXJ2ZXJI",
           "ZWFydFJlcRABEhIKDlNlcnZlckhlYXJ0UmVzEAISDgoISGVhcnRSZXEQwYQ9",
           "Eg4KCEhlYXJ0UmVzEMKEPRIOCghMb2dpblJlcRDDhD0SDgoITG9naW5SZXMQ",
           "xIQ9EhgKEkJpbmRHYW1lQ29ubmVjdFJlcRDFhD0SGAoSQmluZEdhbWVDb25u",
@@ -43,8 +43,9 @@ public static partial class ConstantReflection {
           "aGllbGRSZXEQh4CgAhIiChtHYWxhY3RpY0tpdHRlbnNVc2VTaGllbGRSZXMQ",
           "iICgAhIoCiFHYWxhY3RpY0tpdHRlbnNTaGlwU2hpZWxkU3RhdGVSZXMQioCg",
           "AhImCh9HYWxhY3RpY0tpdHRlbnNTaGlwTW92ZVN0YXRlUmVxEIuAoAISJgof",
-          "R2FsYWN0aWNLaXR0ZW5zU2hpcE1vdmVTdGF0ZVJlcxCMgKACQgpaCC9tZXNz",
-          "YWdlYgZwcm90bzM="));
+          "R2FsYWN0aWNLaXR0ZW5zU2hpcE1vdmVTdGF0ZVJlcxCMgKACEicKIEdhbGFj",
+          "dGljS2l0dGVuc1BsYXllclByb3BlcnR5UmVzEI6AoAJCCloIL21lc3NhZ2Vi",
+          "BnByb3RvMw=="));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
         new pbr::FileDescriptor[] { },
         new pbr::GeneratedClrTypeInfo(new[] {typeof(global::MID), }, null, null));
@@ -131,6 +132,7 @@ public enum MID {
   [pbr::OriginalName("GalacticKittensShipShieldStateRes")] GalacticKittensShipShieldStateRes = 4718602,
   [pbr::OriginalName("GalacticKittensShipMoveStateReq")] GalacticKittensShipMoveStateReq = 4718603,
   [pbr::OriginalName("GalacticKittensShipMoveStateRes")] GalacticKittensShipMoveStateRes = 4718604,
+  [pbr::OriginalName("GalacticKittensPlayerPropertyRes")] GalacticKittensPlayerPropertyRes = 4718606,
 }
 
 #endregion

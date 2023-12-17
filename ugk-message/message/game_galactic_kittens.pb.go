@@ -1288,6 +1288,54 @@ func (x *GalacticKittensShipMoveStateResponse) GetState() uint32 {
 	return 0
 }
 
+// 玩家属性改变推送
+type GalacticKittensPlayerPropertyResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	PlayerProperty []*GalacticKittensPlayerPropertyResponse_PlayerProperty `protobuf:"bytes,1,rep,name=playerProperty,proto3" json:"playerProperty,omitempty"` //玩家属性
+}
+
+func (x *GalacticKittensPlayerPropertyResponse) Reset() {
+	*x = GalacticKittensPlayerPropertyResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_game_galactic_kittens_proto_msgTypes[24]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *GalacticKittensPlayerPropertyResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GalacticKittensPlayerPropertyResponse) ProtoMessage() {}
+
+func (x *GalacticKittensPlayerPropertyResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_game_galactic_kittens_proto_msgTypes[24]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GalacticKittensPlayerPropertyResponse.ProtoReflect.Descriptor instead.
+func (*GalacticKittensPlayerPropertyResponse) Descriptor() ([]byte, []int) {
+	return file_game_galactic_kittens_proto_rawDescGZIP(), []int{24}
+}
+
+func (x *GalacticKittensPlayerPropertyResponse) GetPlayerProperty() []*GalacticKittensPlayerPropertyResponse_PlayerProperty {
+	if x != nil {
+		return x.PlayerProperty
+	}
+	return nil
+}
+
 type GalacticKittensPlayerServerListResponse_PlayerInfo struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -1299,7 +1347,7 @@ type GalacticKittensPlayerServerListResponse_PlayerInfo struct {
 func (x *GalacticKittensPlayerServerListResponse_PlayerInfo) Reset() {
 	*x = GalacticKittensPlayerServerListResponse_PlayerInfo{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_game_galactic_kittens_proto_msgTypes[27]
+		mi := &file_game_galactic_kittens_proto_msgTypes[28]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1312,7 +1360,7 @@ func (x *GalacticKittensPlayerServerListResponse_PlayerInfo) String() string {
 func (*GalacticKittensPlayerServerListResponse_PlayerInfo) ProtoMessage() {}
 
 func (x *GalacticKittensPlayerServerListResponse_PlayerInfo) ProtoReflect() protoreflect.Message {
-	mi := &file_game_galactic_kittens_proto_msgTypes[27]
+	mi := &file_game_galactic_kittens_proto_msgTypes[28]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1343,7 +1391,7 @@ type GalacticKittensObjectSpawnResponse_SpawnInfo struct {
 
 	OwnerId        int64     `protobuf:"varint,1,opt,name=ownerId,proto3" json:"ownerId,omitempty"`              //拥有者Id
 	Id             int64     `protobuf:"varint,2,opt,name=id,proto3" json:"id,omitempty"`                        //对象唯一id
-	ConfigId       uint32    `protobuf:"varint,3,opt,name=configId,proto3" json:"configId,omitempty"`            //配置id 0-3玩家飞船；20Boss；30玩家子弹，31敌人子弹；40射击敌人、41幽灵敌人、41陨石
+	ConfigId       uint32    `protobuf:"varint,3,opt,name=configId,proto3" json:"configId,omitempty"`            //配置id 0-3玩家飞船；20Boss预警，21Boss；30玩家子弹，31敌人子弹，32 boss三角形小子弹，33 boss环形分裂后小子弹，34 boss环形分裂子弹，35 boss导弹；40射击敌人、41幽灵敌人、41陨石；50能量道具
 	Position       *Vector3D `protobuf:"bytes,4,opt,name=position,proto3" json:"position,omitempty"`             //出生位置
 	LinearVelocity *Vector3D `protobuf:"bytes,5,opt,name=linearVelocity,proto3" json:"linearVelocity,omitempty"` //线速度
 	Scale          *Vector3D `protobuf:"bytes,6,opt,name=scale,proto3" json:"scale,omitempty"`                   //缩放
@@ -1353,7 +1401,7 @@ type GalacticKittensObjectSpawnResponse_SpawnInfo struct {
 func (x *GalacticKittensObjectSpawnResponse_SpawnInfo) Reset() {
 	*x = GalacticKittensObjectSpawnResponse_SpawnInfo{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_game_galactic_kittens_proto_msgTypes[28]
+		mi := &file_game_galactic_kittens_proto_msgTypes[29]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1366,7 +1414,7 @@ func (x *GalacticKittensObjectSpawnResponse_SpawnInfo) String() string {
 func (*GalacticKittensObjectSpawnResponse_SpawnInfo) ProtoMessage() {}
 
 func (x *GalacticKittensObjectSpawnResponse_SpawnInfo) ProtoReflect() protoreflect.Message {
-	mi := &file_game_galactic_kittens_proto_msgTypes[28]
+	mi := &file_game_galactic_kittens_proto_msgTypes[29]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1427,6 +1475,70 @@ func (x *GalacticKittensObjectSpawnResponse_SpawnInfo) GetScale() *Vector3D {
 func (x *GalacticKittensObjectSpawnResponse_SpawnInfo) GetSyncInterval() float32 {
 	if x != nil {
 		return x.SyncInterval
+	}
+	return 0
+}
+
+// 玩家属性
+type GalacticKittensPlayerPropertyResponse_PlayerProperty struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	PlayerId     int64  `protobuf:"varint,1,opt,name=playerId,proto3" json:"playerId,omitempty"`         //玩家id
+	Hp           uint32 `protobuf:"varint,2,opt,name=hp,proto3" json:"hp,omitempty"`                     //血量
+	PowerUpCount uint32 `protobuf:"varint,3,opt,name=powerUpCount,proto3" json:"powerUpCount,omitempty"` //能量提升
+}
+
+func (x *GalacticKittensPlayerPropertyResponse_PlayerProperty) Reset() {
+	*x = GalacticKittensPlayerPropertyResponse_PlayerProperty{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_game_galactic_kittens_proto_msgTypes[30]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *GalacticKittensPlayerPropertyResponse_PlayerProperty) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GalacticKittensPlayerPropertyResponse_PlayerProperty) ProtoMessage() {}
+
+func (x *GalacticKittensPlayerPropertyResponse_PlayerProperty) ProtoReflect() protoreflect.Message {
+	mi := &file_game_galactic_kittens_proto_msgTypes[30]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GalacticKittensPlayerPropertyResponse_PlayerProperty.ProtoReflect.Descriptor instead.
+func (*GalacticKittensPlayerPropertyResponse_PlayerProperty) Descriptor() ([]byte, []int) {
+	return file_game_galactic_kittens_proto_rawDescGZIP(), []int{24, 0}
+}
+
+func (x *GalacticKittensPlayerPropertyResponse_PlayerProperty) GetPlayerId() int64 {
+	if x != nil {
+		return x.PlayerId
+	}
+	return 0
+}
+
+func (x *GalacticKittensPlayerPropertyResponse_PlayerProperty) GetHp() uint32 {
+	if x != nil {
+		return x.Hp
+	}
+	return 0
+}
+
+func (x *GalacticKittensPlayerPropertyResponse_PlayerProperty) GetPowerUpCount() uint32 {
+	if x != nil {
+		return x.PowerUpCount
 	}
 	return 0
 }
@@ -1618,22 +1730,36 @@ var file_game_galactic_kittens_proto_rawDesc = []byte{
 	0x73, 0x75, 0x6c, 0x74, 0x12, 0x16, 0x0a, 0x06, 0x73, 0x68, 0x69, 0x70, 0x49, 0x64, 0x18, 0x02,
 	0x20, 0x01, 0x28, 0x03, 0x52, 0x06, 0x73, 0x68, 0x69, 0x70, 0x49, 0x64, 0x12, 0x14, 0x0a, 0x05,
 	0x73, 0x74, 0x61, 0x74, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x0d, 0x52, 0x05, 0x73, 0x74, 0x61,
-	0x74, 0x65, 0x32, 0xd9, 0x01, 0x0a, 0x1b, 0x47, 0x61, 0x6c, 0x61, 0x63, 0x74, 0x69, 0x63, 0x4b,
-	0x69, 0x74, 0x74, 0x65, 0x6e, 0x73, 0x4d, 0x61, 0x74, 0x63, 0x68, 0x53, 0x65, 0x72, 0x76, 0x69,
-	0x63, 0x65, 0x12, 0x65, 0x0a, 0x10, 0x70, 0x6c, 0x61, 0x79, 0x65, 0x72, 0x53, 0x65, 0x72, 0x76,
-	0x65, 0x72, 0x4c, 0x69, 0x73, 0x74, 0x12, 0x27, 0x2e, 0x47, 0x61, 0x6c, 0x61, 0x63, 0x74, 0x69,
-	0x63, 0x4b, 0x69, 0x74, 0x74, 0x65, 0x6e, 0x73, 0x50, 0x6c, 0x61, 0x79, 0x65, 0x72, 0x53, 0x65,
-	0x72, 0x76, 0x65, 0x72, 0x4c, 0x69, 0x73, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a,
-	0x28, 0x2e, 0x47, 0x61, 0x6c, 0x61, 0x63, 0x74, 0x69, 0x63, 0x4b, 0x69, 0x74, 0x74, 0x65, 0x6e,
-	0x73, 0x50, 0x6c, 0x61, 0x79, 0x65, 0x72, 0x53, 0x65, 0x72, 0x76, 0x65, 0x72, 0x4c, 0x69, 0x73,
-	0x74, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x53, 0x0a, 0x0a, 0x67, 0x61, 0x6d,
-	0x65, 0x46, 0x69, 0x6e, 0x69, 0x73, 0x68, 0x12, 0x21, 0x2e, 0x47, 0x61, 0x6c, 0x61, 0x63, 0x74,
-	0x69, 0x63, 0x4b, 0x69, 0x74, 0x74, 0x65, 0x6e, 0x73, 0x47, 0x61, 0x6d, 0x65, 0x46, 0x69, 0x6e,
-	0x69, 0x73, 0x68, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x22, 0x2e, 0x47, 0x61, 0x6c,
-	0x61, 0x63, 0x74, 0x69, 0x63, 0x4b, 0x69, 0x74, 0x74, 0x65, 0x6e, 0x73, 0x47, 0x61, 0x6d, 0x65,
-	0x46, 0x69, 0x6e, 0x69, 0x73, 0x68, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x42, 0x0a,
-	0x5a, 0x08, 0x2f, 0x6d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74,
-	0x6f, 0x33,
+	0x74, 0x65, 0x22, 0xe8, 0x01, 0x0a, 0x25, 0x47, 0x61, 0x6c, 0x61, 0x63, 0x74, 0x69, 0x63, 0x4b,
+	0x69, 0x74, 0x74, 0x65, 0x6e, 0x73, 0x50, 0x6c, 0x61, 0x79, 0x65, 0x72, 0x50, 0x72, 0x6f, 0x70,
+	0x65, 0x72, 0x74, 0x79, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x5d, 0x0a, 0x0e,
+	0x70, 0x6c, 0x61, 0x79, 0x65, 0x72, 0x50, 0x72, 0x6f, 0x70, 0x65, 0x72, 0x74, 0x79, 0x18, 0x01,
+	0x20, 0x03, 0x28, 0x0b, 0x32, 0x35, 0x2e, 0x47, 0x61, 0x6c, 0x61, 0x63, 0x74, 0x69, 0x63, 0x4b,
+	0x69, 0x74, 0x74, 0x65, 0x6e, 0x73, 0x50, 0x6c, 0x61, 0x79, 0x65, 0x72, 0x50, 0x72, 0x6f, 0x70,
+	0x65, 0x72, 0x74, 0x79, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x2e, 0x50, 0x6c, 0x61,
+	0x79, 0x65, 0x72, 0x50, 0x72, 0x6f, 0x70, 0x65, 0x72, 0x74, 0x79, 0x52, 0x0e, 0x70, 0x6c, 0x61,
+	0x79, 0x65, 0x72, 0x50, 0x72, 0x6f, 0x70, 0x65, 0x72, 0x74, 0x79, 0x1a, 0x60, 0x0a, 0x0e, 0x50,
+	0x6c, 0x61, 0x79, 0x65, 0x72, 0x50, 0x72, 0x6f, 0x70, 0x65, 0x72, 0x74, 0x79, 0x12, 0x1a, 0x0a,
+	0x08, 0x70, 0x6c, 0x61, 0x79, 0x65, 0x72, 0x49, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x03, 0x52,
+	0x08, 0x70, 0x6c, 0x61, 0x79, 0x65, 0x72, 0x49, 0x64, 0x12, 0x0e, 0x0a, 0x02, 0x68, 0x70, 0x18,
+	0x02, 0x20, 0x01, 0x28, 0x0d, 0x52, 0x02, 0x68, 0x70, 0x12, 0x22, 0x0a, 0x0c, 0x70, 0x6f, 0x77,
+	0x65, 0x72, 0x55, 0x70, 0x43, 0x6f, 0x75, 0x6e, 0x74, 0x18, 0x03, 0x20, 0x01, 0x28, 0x0d, 0x52,
+	0x0c, 0x70, 0x6f, 0x77, 0x65, 0x72, 0x55, 0x70, 0x43, 0x6f, 0x75, 0x6e, 0x74, 0x32, 0xd9, 0x01,
+	0x0a, 0x1b, 0x47, 0x61, 0x6c, 0x61, 0x63, 0x74, 0x69, 0x63, 0x4b, 0x69, 0x74, 0x74, 0x65, 0x6e,
+	0x73, 0x4d, 0x61, 0x74, 0x63, 0x68, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x12, 0x65, 0x0a,
+	0x10, 0x70, 0x6c, 0x61, 0x79, 0x65, 0x72, 0x53, 0x65, 0x72, 0x76, 0x65, 0x72, 0x4c, 0x69, 0x73,
+	0x74, 0x12, 0x27, 0x2e, 0x47, 0x61, 0x6c, 0x61, 0x63, 0x74, 0x69, 0x63, 0x4b, 0x69, 0x74, 0x74,
+	0x65, 0x6e, 0x73, 0x50, 0x6c, 0x61, 0x79, 0x65, 0x72, 0x53, 0x65, 0x72, 0x76, 0x65, 0x72, 0x4c,
+	0x69, 0x73, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x28, 0x2e, 0x47, 0x61, 0x6c,
+	0x61, 0x63, 0x74, 0x69, 0x63, 0x4b, 0x69, 0x74, 0x74, 0x65, 0x6e, 0x73, 0x50, 0x6c, 0x61, 0x79,
+	0x65, 0x72, 0x53, 0x65, 0x72, 0x76, 0x65, 0x72, 0x4c, 0x69, 0x73, 0x74, 0x52, 0x65, 0x73, 0x70,
+	0x6f, 0x6e, 0x73, 0x65, 0x12, 0x53, 0x0a, 0x0a, 0x67, 0x61, 0x6d, 0x65, 0x46, 0x69, 0x6e, 0x69,
+	0x73, 0x68, 0x12, 0x21, 0x2e, 0x47, 0x61, 0x6c, 0x61, 0x63, 0x74, 0x69, 0x63, 0x4b, 0x69, 0x74,
+	0x74, 0x65, 0x6e, 0x73, 0x47, 0x61, 0x6d, 0x65, 0x46, 0x69, 0x6e, 0x69, 0x73, 0x68, 0x52, 0x65,
+	0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x22, 0x2e, 0x47, 0x61, 0x6c, 0x61, 0x63, 0x74, 0x69, 0x63,
+	0x4b, 0x69, 0x74, 0x74, 0x65, 0x6e, 0x73, 0x47, 0x61, 0x6d, 0x65, 0x46, 0x69, 0x6e, 0x69, 0x73,
+	0x68, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x42, 0x0a, 0x5a, 0x08, 0x2f, 0x6d, 0x65,
+	0x73, 0x73, 0x61, 0x67, 0x65, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -1648,7 +1774,7 @@ func file_game_galactic_kittens_proto_rawDescGZIP() []byte {
 	return file_game_galactic_kittens_proto_rawDescData
 }
 
-var file_game_galactic_kittens_proto_msgTypes = make([]protoimpl.MessageInfo, 29)
+var file_game_galactic_kittens_proto_msgTypes = make([]protoimpl.MessageInfo, 31)
 var file_game_galactic_kittens_proto_goTypes = []interface{}{
 	(*GalacticKittensEnterRoomRequest)(nil),         // 0: GalacticKittensEnterRoomRequest
 	(*GalacticKittensEnterRoomResponse)(nil),        // 1: GalacticKittensEnterRoomResponse
@@ -1674,47 +1800,50 @@ var file_game_galactic_kittens_proto_goTypes = []interface{}{
 	(*GalacticKittensShipShieldStateResponse)(nil),  // 21: GalacticKittensShipShieldStateResponse
 	(*GalacticKittensShipMoveStateRequest)(nil),     // 22: GalacticKittensShipMoveStateRequest
 	(*GalacticKittensShipMoveStateResponse)(nil),    // 23: GalacticKittensShipMoveStateResponse
-	nil, // 24: GalacticKittensPlayerServerListResponse.PlayerGateServersEntry
-	nil, // 25: GalacticKittensPlayerServerListResponse.PlayerLobbyServersEntry
-	nil, // 26: GalacticKittensPlayerServerListResponse.PlayerInfosEntry
-	(*GalacticKittensPlayerServerListResponse_PlayerInfo)(nil), // 27: GalacticKittensPlayerServerListResponse.PlayerInfo
-	(*GalacticKittensObjectSpawnResponse_SpawnInfo)(nil),       // 28: GalacticKittensObjectSpawnResponse.SpawnInfo
-	(*MessageResult)(nil), // 29: MessageResult
-	(*ServerInfo)(nil),    // 30: ServerInfo
-	(*Vector3D)(nil),      // 31: Vector3D
+	(*GalacticKittensPlayerPropertyResponse)(nil),   // 24: GalacticKittensPlayerPropertyResponse
+	nil, // 25: GalacticKittensPlayerServerListResponse.PlayerGateServersEntry
+	nil, // 26: GalacticKittensPlayerServerListResponse.PlayerLobbyServersEntry
+	nil, // 27: GalacticKittensPlayerServerListResponse.PlayerInfosEntry
+	(*GalacticKittensPlayerServerListResponse_PlayerInfo)(nil),   // 28: GalacticKittensPlayerServerListResponse.PlayerInfo
+	(*GalacticKittensObjectSpawnResponse_SpawnInfo)(nil),         // 29: GalacticKittensObjectSpawnResponse.SpawnInfo
+	(*GalacticKittensPlayerPropertyResponse_PlayerProperty)(nil), // 30: GalacticKittensPlayerPropertyResponse.PlayerProperty
+	(*MessageResult)(nil), // 31: MessageResult
+	(*ServerInfo)(nil),    // 32: ServerInfo
+	(*Vector3D)(nil),      // 33: Vector3D
 }
 var file_game_galactic_kittens_proto_depIdxs = []int32{
-	29, // 0: GalacticKittensEnterRoomResponse.result:type_name -> MessageResult
-	29, // 1: GalacticKittensQuitRoomResponse.result:type_name -> MessageResult
+	31, // 0: GalacticKittensEnterRoomResponse.result:type_name -> MessageResult
+	31, // 1: GalacticKittensQuitRoomResponse.result:type_name -> MessageResult
 	5,  // 2: GalacticKittensRoomInfoResponse.room:type_name -> GalacticKittensRoomInfo
 	6,  // 3: GalacticKittensRoomInfo.player:type_name -> GalacticKittensPlayerInfo
-	29, // 4: GalacticKittenSelectCharacterResponse.result:type_name -> MessageResult
-	29, // 5: GalacticKittensPrepareResponse.result:type_name -> MessageResult
-	29, // 6: GalacticKittensPlayerServerListResponse.result:type_name -> MessageResult
-	24, // 7: GalacticKittensPlayerServerListResponse.playerGateServers:type_name -> GalacticKittensPlayerServerListResponse.PlayerGateServersEntry
-	25, // 8: GalacticKittensPlayerServerListResponse.playerLobbyServers:type_name -> GalacticKittensPlayerServerListResponse.PlayerLobbyServersEntry
-	26, // 9: GalacticKittensPlayerServerListResponse.playerInfos:type_name -> GalacticKittensPlayerServerListResponse.PlayerInfosEntry
-	29, // 10: GalacticKittensGameFinishResponse.result:type_name -> MessageResult
+	31, // 4: GalacticKittenSelectCharacterResponse.result:type_name -> MessageResult
+	31, // 5: GalacticKittensPrepareResponse.result:type_name -> MessageResult
+	31, // 6: GalacticKittensPlayerServerListResponse.result:type_name -> MessageResult
+	25, // 7: GalacticKittensPlayerServerListResponse.playerGateServers:type_name -> GalacticKittensPlayerServerListResponse.PlayerGateServersEntry
+	26, // 8: GalacticKittensPlayerServerListResponse.playerLobbyServers:type_name -> GalacticKittensPlayerServerListResponse.PlayerLobbyServersEntry
+	27, // 9: GalacticKittensPlayerServerListResponse.playerInfos:type_name -> GalacticKittensPlayerServerListResponse.PlayerInfosEntry
+	31, // 10: GalacticKittensGameFinishResponse.result:type_name -> MessageResult
 	5,  // 11: GalacticKittensGameFinishResponse.room:type_name -> GalacticKittensRoomInfo
-	28, // 12: GalacticKittensObjectSpawnResponse.spawn:type_name -> GalacticKittensObjectSpawnResponse.SpawnInfo
-	29, // 13: GalacticKittensFireResponse.result:type_name -> MessageResult
-	29, // 14: GalacticKittensUseShieldResponse.result:type_name -> MessageResult
-	29, // 15: GalacticKittensShipMoveStateResponse.result:type_name -> MessageResult
-	30, // 16: GalacticKittensPlayerServerListResponse.PlayerGateServersEntry.value:type_name -> ServerInfo
-	30, // 17: GalacticKittensPlayerServerListResponse.PlayerLobbyServersEntry.value:type_name -> ServerInfo
-	27, // 18: GalacticKittensPlayerServerListResponse.PlayerInfosEntry.value:type_name -> GalacticKittensPlayerServerListResponse.PlayerInfo
-	31, // 19: GalacticKittensObjectSpawnResponse.SpawnInfo.position:type_name -> Vector3D
-	31, // 20: GalacticKittensObjectSpawnResponse.SpawnInfo.linearVelocity:type_name -> Vector3D
-	31, // 21: GalacticKittensObjectSpawnResponse.SpawnInfo.scale:type_name -> Vector3D
-	11, // 22: GalacticKittensMatchService.playerServerList:input_type -> GalacticKittensPlayerServerListRequest
-	13, // 23: GalacticKittensMatchService.gameFinish:input_type -> GalacticKittensGameFinishRequest
-	12, // 24: GalacticKittensMatchService.playerServerList:output_type -> GalacticKittensPlayerServerListResponse
-	14, // 25: GalacticKittensMatchService.gameFinish:output_type -> GalacticKittensGameFinishResponse
-	24, // [24:26] is the sub-list for method output_type
-	22, // [22:24] is the sub-list for method input_type
-	22, // [22:22] is the sub-list for extension type_name
-	22, // [22:22] is the sub-list for extension extendee
-	0,  // [0:22] is the sub-list for field type_name
+	29, // 12: GalacticKittensObjectSpawnResponse.spawn:type_name -> GalacticKittensObjectSpawnResponse.SpawnInfo
+	31, // 13: GalacticKittensFireResponse.result:type_name -> MessageResult
+	31, // 14: GalacticKittensUseShieldResponse.result:type_name -> MessageResult
+	31, // 15: GalacticKittensShipMoveStateResponse.result:type_name -> MessageResult
+	30, // 16: GalacticKittensPlayerPropertyResponse.playerProperty:type_name -> GalacticKittensPlayerPropertyResponse.PlayerProperty
+	32, // 17: GalacticKittensPlayerServerListResponse.PlayerGateServersEntry.value:type_name -> ServerInfo
+	32, // 18: GalacticKittensPlayerServerListResponse.PlayerLobbyServersEntry.value:type_name -> ServerInfo
+	28, // 19: GalacticKittensPlayerServerListResponse.PlayerInfosEntry.value:type_name -> GalacticKittensPlayerServerListResponse.PlayerInfo
+	33, // 20: GalacticKittensObjectSpawnResponse.SpawnInfo.position:type_name -> Vector3D
+	33, // 21: GalacticKittensObjectSpawnResponse.SpawnInfo.linearVelocity:type_name -> Vector3D
+	33, // 22: GalacticKittensObjectSpawnResponse.SpawnInfo.scale:type_name -> Vector3D
+	11, // 23: GalacticKittensMatchService.playerServerList:input_type -> GalacticKittensPlayerServerListRequest
+	13, // 24: GalacticKittensMatchService.gameFinish:input_type -> GalacticKittensGameFinishRequest
+	12, // 25: GalacticKittensMatchService.playerServerList:output_type -> GalacticKittensPlayerServerListResponse
+	14, // 26: GalacticKittensMatchService.gameFinish:output_type -> GalacticKittensGameFinishResponse
+	25, // [25:27] is the sub-list for method output_type
+	23, // [23:25] is the sub-list for method input_type
+	23, // [23:23] is the sub-list for extension type_name
+	23, // [23:23] is the sub-list for extension extendee
+	0,  // [0:23] is the sub-list for field type_name
 }
 
 func init() { file_game_galactic_kittens_proto_init() }
@@ -2013,8 +2142,8 @@ func file_game_galactic_kittens_proto_init() {
 				return nil
 			}
 		}
-		file_game_galactic_kittens_proto_msgTypes[27].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GalacticKittensPlayerServerListResponse_PlayerInfo); i {
+		file_game_galactic_kittens_proto_msgTypes[24].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*GalacticKittensPlayerPropertyResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2026,7 +2155,31 @@ func file_game_galactic_kittens_proto_init() {
 			}
 		}
 		file_game_galactic_kittens_proto_msgTypes[28].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*GalacticKittensPlayerServerListResponse_PlayerInfo); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_game_galactic_kittens_proto_msgTypes[29].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*GalacticKittensObjectSpawnResponse_SpawnInfo); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_game_galactic_kittens_proto_msgTypes[30].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*GalacticKittensPlayerPropertyResponse_PlayerProperty); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2044,7 +2197,7 @@ func file_game_galactic_kittens_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_game_galactic_kittens_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   29,
+			NumMessages:   31,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

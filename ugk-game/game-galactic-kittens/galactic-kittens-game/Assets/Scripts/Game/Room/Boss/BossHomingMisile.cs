@@ -93,6 +93,7 @@ namespace Game.Room.Boss
                     killerId = snapTransform.Id;
                 }
                 RoomManager.Instance.DespawnObject(killerId, GetComponent<SnapTransform>().Id);
+                Destroy(gameObject);
             }
         }
 

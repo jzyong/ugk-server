@@ -151,6 +151,18 @@ message GalacticKittensShipMoveStateResponse{
   uint32 state =3 ; //0初始化，1向上，2向下
 }
 
+// 玩家属性改变推送
+message GalacticKittensPlayerPropertyResponse{
+  repeated PlayerProperty playerProperty=1; //玩家属性
+
+  //玩家属性
+  message PlayerProperty{
+    int64 playerId =1; //玩家id
+    uint32 hp=2; //血量
+    uint32 powerUpCount =3; //能量提升
+  }
+}
+
 //GalacticKittens Match 服务
 service GalacticKittensMatchService{
   //玩家服务器列表
