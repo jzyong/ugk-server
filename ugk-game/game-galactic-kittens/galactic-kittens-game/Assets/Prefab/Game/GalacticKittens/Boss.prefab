@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &184683201675467169
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 487778898217346959}
+  m_Layer: 0
+  m_Name: MisileArea
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &487778898217346959
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 184683201675467169}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1, y: 2.13, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4300512711844860874}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &509809572789842423
 GameObject:
   m_ObjectHideFlags: 0
@@ -125,6 +156,7 @@ Transform:
   - {fileID: 6370011248517200108}
   - {fileID: 1482114984408976096}
   - {fileID: 3324618336059653506}
+  - {fileID: 487778898217346959}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &3628964057912335001
@@ -298,8 +330,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 613c5d57b9c34940adb48ee511dfac3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_misileSpawningArea: []
-  m_misilePrefab: {fileID: 0}
+  m_misileSpawningArea:
+  - {fileID: 487778898217346959}
   m_misileDelayBetweenSpawns: 0
 --- !u!114 &2351360559425204758
 MonoBehaviour:

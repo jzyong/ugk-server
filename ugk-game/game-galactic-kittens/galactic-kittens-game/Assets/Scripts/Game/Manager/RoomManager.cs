@@ -369,7 +369,7 @@ namespace Game.Manager
                         Instance.transform).gameObject;
                     break;
                 case 35:
-                    bullet = Instantiate(_bossHomingMisilePrefab, position, Quaternion.Euler(rotation),
+                    bullet = Instantiate(_bossHomingMisilePrefab, position, _bossHomingMisilePrefab.transform.rotation,
                         Instance.transform).gameObject;
                     break;
                 default:

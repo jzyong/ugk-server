@@ -104,7 +104,6 @@
      <Compile Include="Assets\Scripts\Common\Network\Serialize\NetworkReaderExtensions.cs" />
      <Compile Include="Assets\Scripts\Common\Network\Serialize\NetworkWriterPooled.cs" />
      <Compile Include="Assets\Scripts\Common\Tools\SnapshotInterpolation\SnapshotInterpolation.cs" />
-     <Compile Include="Assets\Scripts\Game\Room\Boss\States\BossSuperLaserState.cs" />
      <Compile Include="Assets\Scripts\Common\Network\Serialize\Compression.cs" />
      <Compile Include="Assets\Scripts\Common\Network\Serialize\NetworkReader.cs" />
      <Compile Include="Assets\Scripts\Game\Room\Boss\BossHomingMisile.cs" />
