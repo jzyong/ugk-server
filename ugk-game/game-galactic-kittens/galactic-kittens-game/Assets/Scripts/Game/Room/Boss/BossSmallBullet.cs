@@ -1,6 +1,7 @@
 using System;
 using Common.Network.Sync;
 using Game.Manager;
+using Game.Room.Player;
 using UnityEngine;
 
 namespace Game.Room.Boss
@@ -26,12 +27,19 @@ namespace Game.Room.Boss
 
         private void OnTriggerEnter2D(Collider2D collider)
         {
-            if (collider.TryGetComponent(out IDamagable damagable))
+            if (collider.TryGetComponent(out SpaceShip spaceShip))
             {
-                damagable.Hit(m_damage);
+                spaceShip.Hit(m_damage);
+                long killerId = 0;
+
+                var snapTransform = collider.GetComponent<SnapTransform>();
+                if (snapTransform != null)
+                {
+                    killerId = snapTransform.Id;
+                }
 
                 // 移除对象
-                RoomManager.Instance.DespawnObject(0,GetComponent<SnapTransform>().Id);
+                RoomManager.Instance.DespawnObject(killerId,GetComponent<SnapTransform>().Id);
             }
         }
     }

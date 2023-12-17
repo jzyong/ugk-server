@@ -1,3 +1,6 @@
+using System;
+using Common.Network.Sync;
+using Game.Manager;
 using Game.Room.Boss.States;
 using Game.Room.Player;
 using UnityEngine;
@@ -10,34 +13,33 @@ using UnityEngine;
 
 namespace Game.Room.Boss
 {
-    public class Boss : MonoBehaviour
+    public class Boss : MonoBehaviour, IDamagable
     {
-        [SerializeField]
-        private int m_damage;
+        [SerializeField] private int m_damage;
 
-        [Header("States for the boss")]
-        [SerializeField]
+        [Header("States for the boss")] [SerializeField]
         private BossEnterState m_enterState;
 
-        [SerializeField]
-        private BaseBossState m_fireState;
+        [SerializeField] private BaseBossState m_fireState;
 
-        [SerializeField]
-        private BaseBossState m_misileBarrageState;
+        [SerializeField] private BaseBossState m_misileBarrageState;
 
-        [SerializeField]
-        private BaseBossState m_idleState;
+        [SerializeField] private BaseBossState m_idleState;
 
-        [SerializeField]
-        private BaseBossState m_deathState;
+        [SerializeField] private BaseBossState m_deathState;
 
-        [Header("For testing the boss states -> false for production")]
-        [SerializeField]
+        [Header("For testing the boss states -> false for production")] [SerializeField]
         private bool m_isTesting;
 
-        [SerializeField]
-        private BossState m_testState;
+        [SerializeField] private BossState m_testState;
 
+        [SerializeField] [Tooltip("血量")] private float helath = 15;
+
+
+        private void Awake()
+        {
+            helath = helath * RoomManager.Instance.PlayerCount();
+        }
 
         private void OnTriggerEnter2D(Collider2D collider)
         {
@@ -46,7 +48,7 @@ namespace Game.Room.Boss
             {
                 playerShip.Hit(m_damage);
             }
-        }    
+        }
 
 
         // This will set the starting state for the boss -> enter state
@@ -61,7 +63,6 @@ namespace Game.Room.Boss
         //..
         public void SetState(BossState state)
         {
-
             switch (state)
             {
                 case BossState.enter:
@@ -107,5 +108,14 @@ namespace Game.Room.Boss
         //     }
         //     base.OnNetworkSpawn();
         // }
+        public void Hit(int damage)
+        {
+            helath -= damage;
+            if (helath < 1)
+            {
+                RoomManager.Instance.DespawnObject(0, GetComponent<SnapTransform>().Id);
+                Destroy(gameObject);
+            }
+        }
     }
 }

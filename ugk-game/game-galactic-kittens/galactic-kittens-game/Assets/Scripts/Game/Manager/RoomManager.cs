@@ -455,5 +455,11 @@ namespace Game.Manager
             Log.Warn($"ship {id} not find");
             return null;
         }
+
+        public int PlayerCount()
+        {
+            return _spaceShips.Count;
+        }
+        
     }
 }
