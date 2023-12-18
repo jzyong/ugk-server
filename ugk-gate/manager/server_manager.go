@@ -80,8 +80,8 @@ func (m *ServerManager) runKcpServer() {
 			//nc ：Whether to turn off flow control, 0 represents “Do not turn off” by default, 1 represents “Turn off”.
 			//Normal Mode: ikcp_nodelay(kcp, 0, 40, 0, 0);
 			//Turbo Mode： ikcp_nodelay(kcp, 1, 10, 2, 1);
-			//s.SetNoDelay(0, 40, 0, 0)
-			s.SetNoDelay(1, 10, 2, 1)
+			//s.SetNoDelay(1, 10, 2, 1)
+			s.SetNoDelay(0, 40, 0, 0) //省一点CPU，一个连接空载单核CPU从2.5%降到0.5%
 			client := gameChannelActive(s)
 			go gameChannelRead(client)
 
@@ -252,7 +252,6 @@ func gameChannelRead(client *GameKcpClient) {
 			index += length
 			//log.Info("收到消息：读取长度=%v 消息长度=%v 剩余长度=%v", n, length, remainBytes)
 		}
-
 	}
 }
 
@@ -329,6 +328,7 @@ func (client *GameKcpClient) run() {
 		case <-client.CloseChan:
 			log.Info("%v %v chan关闭", client.Id, client.UdpSession.RemoteAddr().String())
 			client.State = Closed
+			client.UdpSession.Close()
 			return
 		case <-secondTicker:
 			client.secondUpdate()

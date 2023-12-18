@@ -5,6 +5,8 @@ import (
 	"flag"
 	"github.com/jzyong/golib/log"
 	config2 "github.com/jzyong/ugk/common/config"
+	"net/http"
+	_ "net/http/pprof"
 	"os"
 )
 
@@ -41,6 +43,14 @@ func InitConfigAndLog() {
 		log.CloseDebug()
 	}
 	log.SetLogFile("log", "gate")
+	startPprof()
+}
+
+func startPprof() {
+	// http://localhost:6060/debug/pprof
+	go func() {
+		http.ListenAndServe("localhost:6060", nil)
+	}()
 }
 
 // PathExists 判断一个文件是否存在

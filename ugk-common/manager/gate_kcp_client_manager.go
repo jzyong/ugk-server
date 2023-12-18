@@ -65,7 +65,8 @@ func (m *GateKcpClientManager) ConnectKcpServer(url string, serverId uint32) {
 		//Normal Mode: ikcp_nodelay(kcp, 0, 40, 0, 0);
 		//Turbo Mode： ikcp_nodelay(kcp, 1, 10, 2, 1);
 		//s.SetNoDelay(0, 40, 0, 0)
-		udpSession.SetNoDelay(1, 10, 2, 1)
+		//udpSession.SetNoDelay(1, 10, 2, 1)
+		udpSession.SetNoDelay(0, 40, 0, 0) //省一点CPU
 		client := channelActive(udpSession, serverId, url)
 		go channelRead(client)
 	} else {

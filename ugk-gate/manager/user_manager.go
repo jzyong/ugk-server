@@ -108,7 +108,8 @@ func NewUser(clientSession *kcp.UDPSession) *User {
 
 // 玩家routine运行
 func (user *User) run() {
-	messageMergeTicker := time.Tick(time.Millisecond * 10) //最小10ms进行一次心跳
+	//kcp是创建了CPU核心数个routine进行监测发送数据，如10和100个玩家，则每个人routine处理10个玩家，玩家共用routine，加锁了，效率好吗？ timedsched.go
+	messageMergeTicker := time.Tick(time.Millisecond * 50) //最小10ms进行一次心跳 ,使用kcp的方式进行定时检测？ 10ms和100ms对CPU的影响挺大的
 	secondTicker := time.Tick(time.Second)
 	for {
 		select {
@@ -123,6 +124,7 @@ func (user *User) run() {
 		case <-user.CloseChan: //关闭用户chan
 			log.Info("%v %v chan关闭", user.Id, user.ClientSession.RemoteAddr().String())
 			user.State = Offline
+			user.ClientSession.Close()
 			return
 		case <-messageMergeTicker:
 			user.batchTransmitToClient()

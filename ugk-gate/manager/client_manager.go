@@ -66,7 +66,8 @@ func (m *ClientManager) runKcpServer() {
 			//Normal Mode: ikcp_nodelay(kcp, 0, 40, 0, 0);
 			//Turbo Mode： ikcp_nodelay(kcp, 1, 10, 2, 1);
 			//s.SetNoDelay(0, 40, 0, 0)
-			s.SetNoDelay(1, 10, 2, 1)
+			//s.SetNoDelay(1, 10, 2, 1)
+			s.SetNoDelay(1, 40, 2, 1)
 			user := channelActive(s)
 			go channelRead(user)
 
