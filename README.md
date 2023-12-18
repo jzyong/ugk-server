@@ -10,6 +10,7 @@
 * 前后端分离
 * 自动化编排Docker容器(Unity dedicated server)
 * 快照同步，状态同步预测插值
+* 多玩家匹配,消息分发
 
 ### 前后端分离
 * 减少服务器所需要的资源，最小化unity服务器资源内存、cpu消耗
@@ -70,6 +71,9 @@
 #### Unity
 * [com.unity.multiplayer.samples.bitesize](https://github.com/Unity-Technologies/com.unity.multiplayer.samples.bitesize)小游戏示例demo
 * [GalacticKittens](https://github.com/UnityTechnologies/GalacticKittens) 2D示例demo
+
+#### 工具
+* [ParrelSync](https://github.com/VeriorPies/ParrelSync) 多窗口调试
 
 
 ## TODO
