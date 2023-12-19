@@ -31,7 +31,6 @@ func main() {
 	util.WaitForTerminate()
 	m.Stop()
 
-	util.WaitForTerminate()
 }
 
 type ModuleManager struct {
