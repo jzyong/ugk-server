@@ -80,8 +80,6 @@
 * GalacticKittens --> [Client Driven Overview]((https://github.com/Unity-Technologies/com.unity.multiplayer.samples.bitesize))
 * GalacticKittens 血量，UI；音效调优；添加护盾开启关闭消息；场景切换渐入渐出效果;能量，boss；
 * 大厅玩家UI（头像-ID）
-* agent 进程会无故关闭？
-* 网关CPU，内存消耗高，进行分析？
 * Boss入场太唐突了？
 * 上传分数到match服,然后进行结算显示
 * docker中服务发现，网络经常出现问题？
@@ -102,7 +100,11 @@
 * Limits how often data is sent for objects distance to players to reduce how much bandwidth the server uses. Tests show this feature can reduce transform updates, such as moving objects, between 90-97%. FishNet解决方案，远的对象，减少同步频率
 * 压力测试，网关CPU、内存消耗高？
 * 打android包测试，使用StarterAssets中的资源
-* lua热更新
+* 断线重连
+* [hybridclr](https://github.com/focus-creative-games/hybridclr) 热更新
+* [ET](https://github.com/egametang/ET)学习研究
+* [luban](https://github.com/focus-creative-games/luban) 游戏配置
+* [xasset](https://github.com/xasset/xasset) 资产系统
 
 交流讨论
 ---------

@@ -11,7 +11,7 @@ namespace Game.Room.Boss
     /// </summary>
     public class BossHomingMisile : MonoBehaviour
     {
-        [SerializeField] int m_damage = 1;
+        [SerializeField] int m_damage = 3;
 
         [SerializeField] float m_startingSpeed = 4f;
 
