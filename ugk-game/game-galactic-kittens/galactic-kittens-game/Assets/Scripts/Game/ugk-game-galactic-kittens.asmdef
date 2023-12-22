@@ -1,12 +1,16 @@
 {
-    "name": "GalacticKittens",
-    "rootNamespace": "",
-    "references": [],
+    "name": "ugk-game-galactic-kittens",
+    "rootNamespace": "ugk",
+    "references": [
+        "GUID:77d54ffad216466409c424b4b73257a1"
+    ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": true,
     "overrideReferences": false,
-    "precompiledReferences": [],
+    "precompiledReferences": [
+        ""
+    ],
     "autoReferenced": true,
     "defineConstraints": [],
     "versionDefines": [],

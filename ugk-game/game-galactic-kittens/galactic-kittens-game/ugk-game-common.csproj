@@ -11,12 +11,12 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <RootNamespace></RootNamespace>
-    <ProjectGuid>{224b827e-2ebf-95f1-c2f9-65459331b31e}</ProjectGuid>
+    <RootNamespace>ugk</RootNamespace>
+    <ProjectGuid>{dae5614a-1b4a-c73e-3edf-f6ae25ebb684}</ProjectGuid>
     <ProjectTypeGuids>{E097FAD1-6243-4DAD-9C02-E9B9EFC3FFC1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <AssemblyName>GalacticKittens</AssemblyName>
+    <AssemblyName>ugk-game-common</AssemblyName>
     <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <BaseDirectory>.</BaseDirectory>
@@ -25,7 +25,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>Temp\Bin\Debug\GalacticKittens\</OutputPath>
+    <OutputPath>Temp\Bin\Debug\ugk-game-common\</OutputPath>
     <DefineConstants>UNITY_2023_1_17;UNITY_2023_1;UNITY_2023;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_6_OR_NEWER;UNITY_2017_1_OR_NEWER;UNITY_2017_2_OR_NEWER;UNITY_2017_3_OR_NEWER;UNITY_2017_4_OR_NEWER;UNITY_2018_1_OR_NEWER;UNITY_2018_2_OR_NEWER;UNITY_2018_3_OR_NEWER;UNITY_2018_4_OR_NEWER;UNITY_2019_1_OR_NEWER;UNITY_2019_2_OR_NEWER;UNITY_2019_3_OR_NEWER;UNITY_2019_4_OR_NEWER;UNITY_2020_1_OR_NEWER;UNITY_2020_2_OR_NEWER;UNITY_2020_3_OR_NEWER;UNITY_2021_1_OR_NEWER;UNITY_2021_2_OR_NEWER;UNITY_2021_3_OR_NEWER;UNITY_2022_1_OR_NEWER;UNITY_2022_2_OR_NEWER;UNITY_2022_3_OR_NEWER;UNITY_2023_1_OR_NEWER;PLATFORM_ARCH_64;UNITY_64;UNITY_INCLUDE_TESTS;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_TEXTURE_STREAMING;ENABLE_VIRTUALTEXTURING;ENABLE_LZMA;ENABLE_UNITYEVENTS;ENABLE_VR;ENABLE_WEBCAM;ENABLE_UNITYWEBREQUEST;ENABLE_WWW;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_SERVICES_USE_WEBREQUEST;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_EDITOR_GAME_SERVICES;ENABLE_UNITY_GAME_SERVICES_ANALYTICS_SUPPORT;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_HUB_LICENSE;ENABLE_WEBSOCKET_CLIENT;ENABLE_GENERATE_NATIVE_PLUGINS_FOR_ASSEMBLIES_API;ENABLE_DIRECTOR_AUDIO;ENABLE_DIRECTOR_TEXTURE;ENABLE_MANAGED_JOBS;ENABLE_MANAGED_TRANSFORM_JOBS;ENABLE_MANAGED_ANIMATION_JOBS;ENABLE_MANAGED_AUDIO_JOBS;ENABLE_MANAGED_UNITYTLS;INCLUDE_DYNAMIC_GI;ENABLE_SCRIPTING_GC_WBARRIERS;PLATFORM_SUPPORTS_MONO;RENDER_SOFTWARE_CURSOR;ENABLE_MARSHALLING_TESTS;ENABLE_VIDEO;ENABLE_ACCELERATOR_CLIENT_DEBUGGING;ENABLE_NAVIGATION_PACKAGE_DEBUG_VISUALIZATION;ENABLE_NAVIGATION_HEIGHTMESH_RUNTIME_SUPPORT;ENABLE_NAVIGATION_UI_REQUIRES_PACKAGE;PLATFORM_STANDALONE;TEXTCORE_1_0_OR_NEWER;PLATFORM_STANDALONE_LINUX;UNITY_STANDALONE_LINUX;UNITY_STANDALONE;UNITY_STANDALONE_LINUX_API;ENABLE_RUNTIME_GI;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_CRUNCH_TEXTURE_COMPRESSION;ENABLE_CLUSTER_SYNC;ENABLE_CLUSTERINPUT;ENABLE_SPATIALTRACKING;ENABLE_MODULAR_UNITYENGINE_ASSEMBLIES;ENABLE_MONO;NET_STANDARD_2_0;NET_STANDARD;NET_STANDARD_2_1;NETSTANDARD;NETSTANDARD2_1;ENABLE_PROFILER;UNITY_SERVER;DEBUG;TRACE;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_WIN;ENABLE_UNITY_COLLECTIONS_CHECKS;ENABLE_BURST_AOT;UNITY_TEAM_LICENSE;ENABLE_CUSTOM_RENDER_TEXTURE;ENABLE_DIRECTOR;ENABLE_LOCALIZATION;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_TILEMAP;ENABLE_TIMELINE;ENABLE_LEGACY_INPUT_MANAGER;TEXTCORE_FONT_ENGINE_1_5_OR_NEWER;CSHARP_7_OR_LATER;CSHARP_7_3_OR_NEWER</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -45,65 +45,69 @@
     <Analyzer Include="G:\Program Files\Unity\2023.1.17f1c1\Editor\Data\Tools\Unity.SourceGenerators\Unity.Properties.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Scripts\Game\Bootstrap.cs" />
-     <Compile Include="Assets\Scripts\Game\Room\Utility\AutoDespawnSyncObject.cs" />
-     <Compile Include="Assets\Scripts\Game\Manager\MessageEventManager.cs" />
-     <Compile Include="Assets\Scripts\Game\Room\Enemy\EnemyBullet.cs" />
-     <Compile Include="Assets\Scripts\Game\Messages\Player.cs" />
-     <Compile Include="Assets\Scripts\Game\Handlers\RoomHandler.cs" />
-     <Compile Include="Assets\Scripts\Game\Room\Boss\BossCircularBullet.cs" />
-     <Compile Include="Assets\Scripts\Game\Handlers\SyncHandler.cs" />
-     <Compile Include="Assets\Scripts\Game\Room\Boss\Boss.cs" />
-     <Compile Include="Assets\Scripts\Game\Room\Boss\States\BaseBossState.cs" />
-     <Compile Include="Assets\Scripts\Game\Room\Boss\BossSmallBullet.cs" />
-     <Compile Include="Assets\Scripts\Game\Room\Enemy\SpaceShooterEnemy.cs" />
-     <Compile Include="Assets\Scripts\Game\Room\Enemy\EnemySpawner.cs" />
-     <Compile Include="Assets\Scripts\Game\Room\BulletController.cs" />
-     <Compile Include="Assets\Scripts\Game\Messages\Gate.cs" />
-     <Compile Include="Assets\Scripts\Game\Messages\PlayerGrpc.cs" />
-     <Compile Include="Assets\Scripts\Game\Manager\RoomManager.cs" />
-     <Compile Include="Assets\Scripts\Game\Messages\Server.cs" />
-     <Compile Include="Assets\Scripts\Game\Messages\ServerGrpc.cs" />
-     <Compile Include="Assets\Scripts\Game\Messages\GameGalacticKittens.cs" />
-     <Compile Include="Assets\Scripts\Game\Room\Player\SpaceShip.cs" />
-     <Compile Include="Assets\Scripts\Game\Manager\DataManager.cs" />
-     <Compile Include="Assets\Scripts\Game\Messages\GameGalacticKittensGrpc.cs" />
-     <Compile Include="Assets\Scripts\Game\Messages\Constant.cs" />
-     <Compile Include="Assets\Scripts\Game\Messages\Sync.cs" />
-     <Compile Include="Assets\Scripts\Game\Room\Boss\BossHomingMisile.cs" />
-     <Compile Include="Assets\Scripts\Game\Room\Boss\States\BossDeathState.cs" />
-     <Compile Include="Assets\Scripts\Game\Room\Player\DefenseMatrix.cs" />
-     <Compile Include="Assets\Scripts\Game\Room\Enemy\PowerUp.cs" />
-     <Compile Include="Assets\Scripts\Game\Manager\PlayerManager.cs" />
-     <Compile Include="Assets\Scripts\Game\Room\Boss\States\BossIdleState.cs" />
-     <Compile Include="Assets\Scripts\Game\Room\Boss\States\BossFireState.cs" />
-     <Compile Include="Assets\Scripts\Game\Handlers\ServerHandler.cs" />
-     <Compile Include="Assets\Scripts\Game\Manager\GalacticKittensNetworkManager.cs" />
-     <Compile Include="Assets\Scripts\Game\Room\Enemy\Meteor.cs" />
-     <Compile Include="Assets\Scripts\Game\Room\Player\SpaceshipBullet.cs" />
-     <Compile Include="Assets\Scripts\Game\Room\Boss\States\BossMisileBarrageState.cs" />
-     <Compile Include="Assets\Scripts\Game\Messages\ProtoUtil.cs" />
-     <Compile Include="Assets\Scripts\Game\Room\Enemy\PowerUpSpawnController.cs" />
-     <Compile Include="Assets\Scripts\Game\Messages\Common.cs" />
-     <Compile Include="Assets\Scripts\Game\Room\Enemy\BaseEnemyBehavior.cs" />
-     <Compile Include="Assets\Scripts\Game\Manager\SyncManager.cs" />
-     <Compile Include="Assets\Scripts\Game\Messages\Login.cs" />
-     <Compile Include="Assets\Scripts\Game\Room\IDamagable.cs" />
-     <Compile Include="Assets\Scripts\Game\Handlers\PlayerHandler.cs" />
-     <Compile Include="Assets\Scripts\Game\Room\Enemy\SpaceGhostEnemy.cs" />
-     <Compile Include="Assets\Scripts\Game\Room\Boss\States\BossEnterState.cs" />
-     <Folder Include="Assets\Scripts\Game\Room" />
-     <Folder Include="Assets\Scripts\Game\Manager" />
-     <Folder Include="Assets\Scripts" />
-     <Folder Include="Assets\Scripts\Game\Room\Enemy" />
-     <Folder Include="Assets\Scripts\Game\Room\Player" />
-     <Folder Include="Assets\Scripts\Game\Handlers" />
-     <None Include="Assets\Scripts\GalacticKittens.asmdef" />
-     <Folder Include="Assets\Scripts\Game" />
-     <Folder Include="Assets\Scripts\Game\Messages" />
-     <Folder Include="Assets\Scripts\Game\Room\Boss" />
-     <Folder Include="Assets\Scripts\Game\Room\Boss\States" />
-     <Folder Include="Assets\Scripts\Game\Room\Utility" />
+     <Compile Include="Assets\Scripts\Common\Tools\SingletonInstance.cs" />
+     <Compile Include="Assets\Scripts\Common\Network\Serialize\NetworkWriter.cs" />
+     <Compile Include="Assets\Scripts\Common\Network\Kcp\kcp2k\highlevel\KcpServerConnection.cs" />
+     <Compile Include="Assets\Scripts\Common\Network\Serialize\NetworkWriterPool.cs" />
+     <Compile Include="Assets\Scripts\Common\Tools\SnapshotInterpolation\TimeSnapshot.cs" />
+     <Compile Include="Assets\Scripts\Common\Network\NetworkManager.cs" />
+     <Compile Include="Assets\Scripts\Common\Network\Serialize\DeltaCompression.cs" />
+     <Compile Include="Assets\Scripts\Common\Network\Kcp\kcp2k\highlevel\Log.cs" />
+     <Compile Include="Assets\Scripts\Common\Tools\Extensions.cs" />
+     <Compile Include="Assets\Scripts\Common\Network\Kcp\kcp2k\kcp\Pool.cs" />
+     <Compile Include="Assets\Scripts\Common\Network\Kcp\kcp2k\kcp\Segment.cs" />
+     <Compile Include="Assets\Scripts\Common\Network\Serialize\NetworkReaderPooled.cs" />
+     <Compile Include="Assets\Scripts\Common\Network\TransportError.cs" />
+     <Compile Include="Assets\Scripts\Common\Network\UgkMessage.cs" />
+     <Compile Include="Assets\Scripts\Common\Tools\ExponentialMovingAverage.cs" />
+     <Compile Include="Assets\Scripts\Common\Network\Kcp\kcp2k\kcp\AssemblyInfo.cs" />
+     <Compile Include="Assets\Scripts\Common\Tools\Vector3Long.cs" />
+     <Compile Include="Assets\Scripts\Common\Network\Kcp\kcp2k\highlevel\KcpPeer.cs" />
+     <Compile Include="Assets\Scripts\Common\Network\Kcp\kcp2k\highlevel\ErrorCode.cs" />
+     <Compile Include="Assets\Scripts\Common\Network\NetworkLoop.cs" />
+     <Compile Include="Assets\Scripts\Common\Tools\Utils.cs" />
+     <Compile Include="Assets\Scripts\Common\Network\Kcp\kcp2k\highlevel\KcpConfig.cs" />
+     <Compile Include="Assets\Scripts\Common\Network\Kcp\kcp2k\highlevel\Extensions.cs" />
+     <Compile Include="Assets\Scripts\Common\Network\Sync\SnapTransform.cs" />
+     <Compile Include="Assets\Scripts\Common\Tools\SnapshotInterpolation\Snapshot.cs" />
+     <Compile Include="Assets\Scripts\Common\Network\Serialize\NetworkReaderPool.cs" />
+     <Compile Include="Assets\Scripts\Common\Tools\Log.cs" />
+     <Compile Include="Assets\Scripts\Common\Network\Sync\NetworkTransform.cs" />
+     <Compile Include="Assets\Scripts\Common\Tools\SnapshotInterpolation\SnapshotInterpolationSettings.cs" />
+     <Compile Include="Assets\Scripts\Common\Network\Serialize\Batcher.cs" />
+     <Compile Include="Assets\Scripts\Common\Network\Exceptions.cs" />
+     <Compile Include="Assets\Scripts\Common\Network\Serialize\NetworkReaderExtensions.cs" />
+     <Compile Include="Assets\Scripts\Common\Network\Serialize\NetworkWriterPooled.cs" />
+     <Compile Include="Assets\Scripts\Common\Tools\SnapshotInterpolation\SnapshotInterpolation.cs" />
+     <Compile Include="Assets\Scripts\Common\Network\Serialize\Compression.cs" />
+     <Compile Include="Assets\Scripts\Common\Network\Serialize\NetworkReader.cs" />
+     <Compile Include="Assets\Scripts\Common\Network\Sync\TransformSnapshot.cs" />
+     <Compile Include="Assets\Scripts\Common\Tools\Mathd.cs" />
+     <Compile Include="Assets\Scripts\Common\Network\Kcp\kcp2k\kcp\AckItem.cs" />
+     <Compile Include="Assets\Scripts\Common\Network\MessageMapAttribute.cs" />
+     <Compile Include="Assets\Scripts\Common\Network\Kcp\KcpTransport.cs" />
+     <Compile Include="Assets\Scripts\Common\Tools\TimeUtil.cs" />
+     <Compile Include="Assets\Scripts\Common\Network\NetworkClient.cs" />
+     <Compile Include="Assets\Scripts\Common\Network\Kcp\kcp2k\kcp\Utils.cs" />
+     <Compile Include="Assets\Scripts\Common\Network\Transport.cs" />
+     <Compile Include="Assets\Scripts\Common\Tools\Person.cs" />
+     <Compile Include="Assets\Scripts\Common\Network\Kcp\kcp2k\highlevel\Common.cs" />
+     <Compile Include="Assets\Scripts\Common\Network\Kcp\kcp2k\kcp\Kcp.cs" />
+     <Compile Include="Assets\Scripts\Common\Network\Kcp\kcp2k\highlevel\KcpClient.cs" />
+     <Compile Include="Assets\Scripts\Common\Network\Serialize\NetworkWriterExtensions.cs" />
+     <Compile Include="Assets\Scripts\Common\Network\Sync\PredictionTransform.cs" />
+     <Compile Include="Assets\Scripts\Common\Tools\BaseEventManager.cs" />
+     <Folder Include="Assets\Scripts\Common\Network\Kcp" />
+     <Folder Include="Assets\Scripts\Common\Tools" />
+     <Folder Include="Assets\Scripts\Common\Network\Kcp\kcp2k\kcp" />
+     <Folder Include="Assets\Scripts\Common\Tools\SnapshotInterpolation" />
+     <None Include="Assets\Scripts\Common\ugk-game-common.asmdef" />
+     <Folder Include="Assets\Scripts\Common\Network\Kcp\kcp2k" />
+     <Folder Include="Assets\Scripts\Common\Network\Sync" />
+     <Folder Include="Assets\Scripts\Common\Network\Serialize" />
+     <Folder Include="Assets\Scripts\Common\Network" />
+     <Folder Include="Assets\Scripts\Common\Network\Kcp\kcp2k\highlevel" />
+     <Folder Include="Assets\Scripts\Common" />
      <Reference Include="UnityEngine">
      <HintPath>G:\Program Files\Unity\2023.1.17f1c1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
      </Reference>

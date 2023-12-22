@@ -1,7 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GalacticKittens", "GalacticKittens.csproj", "{224b827e-2ebf-95f1-c2f9-65459331b31e}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ugk-game-common", "ugk-game-common.csproj", "{dae5614a-1b4a-c73e-3edf-f6ae25ebb684}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ugk-game-galactic-kittens", "ugk-game-galactic-kittens.csproj", "{815a087e-695a-8690-eac0-88c89d24ab88}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp", "Assembly-CSharp.csproj", "{edf000c0-c3db-9cd0-9d8b-13f7ed63c2bc}"
 EndProject
@@ -12,8 +14,10 @@ Global
 		Debug|Any CPU = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{224b827e-2ebf-95f1-c2f9-65459331b31e}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{224b827e-2ebf-95f1-c2f9-65459331b31e}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{dae5614a-1b4a-c73e-3edf-f6ae25ebb684}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{dae5614a-1b4a-c73e-3edf-f6ae25ebb684}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{815a087e-695a-8690-eac0-88c89d24ab88}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{815a087e-695a-8690-eac0-88c89d24ab88}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{edf000c0-c3db-9cd0-9d8b-13f7ed63c2bc}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{edf000c0-c3db-9cd0-9d8b-13f7ed63c2bc}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{681fd712-a997-deb3-824e-114302e43048}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
