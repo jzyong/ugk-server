@@ -12,7 +12,7 @@ namespace Game.Room.Enemy
     public class SpaceShooterEnemy : BaseEnemyBehavior
     {
 
-        [SerializeField] private float m_ShootingCooldown = 2;
+        [SerializeField] private float m_ShootingCooldown = 3;
 
 
         private float m_CurrentCooldownTime = 0f;

@@ -78,7 +78,7 @@
 
 ## TODO
 * GalacticKittens --> [Client Driven Overview]((https://github.com/Unity-Technologies/com.unity.multiplayer.samples.bitesize))
-* GalacticKittens 血量，UI；音效调优；添加护盾开启关闭消息；场景切换渐入渐出效果;能量，boss；
+* GalacticKittens UI；添加护盾开启关闭消息；场景切换渐入渐出效果;能量；
 * 大厅玩家UI（头像-ID）
 * Boss入场太唐突了？
 * 上传分数到match服,然后进行结算显示
