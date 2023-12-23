@@ -1,6 +1,6 @@
 {
     "name": "ugk-game-galactic-kittens",
-    "rootNamespace": "ugk",
+    "rootNamespace": "UGK",
     "references": [
         "GUID:77d54ffad216466409c424b4b73257a1"
     ],

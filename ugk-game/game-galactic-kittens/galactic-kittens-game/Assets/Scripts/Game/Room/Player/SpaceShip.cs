@@ -1,9 +1,11 @@
 ﻿using Common.Network.Sync;
 using Game.Manager;
+using Game.Room;
 using Game.Room.Enemy;
+using UGK.Common.Network.Sync;
 using UnityEngine;
 
-namespace Game.Room.Player
+namespace ugk.Game.Room.Player
 {
     /// <summary>
     /// 玩家飞船

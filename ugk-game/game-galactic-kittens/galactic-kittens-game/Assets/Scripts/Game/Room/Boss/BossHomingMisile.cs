@@ -1,7 +1,8 @@
 using System.Collections;
 using Common.Network.Sync;
 using Game.Manager;
-using Game.Room.Player;
+using UGK.Common.Network.Sync;
+using ugk.Game.Room.Player;
 using UnityEngine;
 
 namespace Game.Room.Boss

@@ -3,7 +3,7 @@ using Common.Tools;
 using Game.Manager;
 using Google.Protobuf;
 
-namespace Game.Handlers
+namespace UGK.Game.Handlers
 {
     /// <summary>
     /// 房间内消息处理

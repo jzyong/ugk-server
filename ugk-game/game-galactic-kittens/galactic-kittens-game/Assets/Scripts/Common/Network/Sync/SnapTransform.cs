@@ -3,14 +3,15 @@
 using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using Common.Network;
 using Common.Network.Serialize;
+using Common.Network.Sync;
 using Common.Tools;
 using Common.Tools.SnapshotInterpolation;
 using Google.Protobuf;
-using JetBrains.Annotations;
 using UnityEngine;
 
-namespace Common.Network.Sync
+namespace UGK.Common.Network.Sync
 {
     /// <summary>
     /// 快照同步
@@ -287,7 +288,7 @@ namespace Common.Network.Sync
                     scale = Compression.ScaleToFloat(quantized, scalePrecision);
                 }
 
-                //Log.Debug($"{Id} 接收坐标{position} {lastDeserializedPosition} {ugkMessage.Seq}");
+                Log.Debug($"{Id} 接收坐标{position} {lastDeserializedPosition} {ugkMessage.Seq}");
 
                 //保存sendInterval时间段快照数据，让平滑移动 
                 OnReceiveTransform(position, rotation, scale, ugkMessage.GetTime() + sendInterval);

@@ -7,7 +7,10 @@ using Common.Tools;
 using Game.Messages;
 using Game.Room.Boss;
 using Game.Room.Enemy;
-using Game.Room.Player;
+using UGK.Common.Network.Sync;
+using ugk.Game.Room.Boss;
+using ugk.Game.Room.Player;
+using UGK.Game.Room.Player;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -319,6 +322,7 @@ namespace Game.Manager
             spawnInfo.OwnerId = 0;
             spawnInfo.Id = snapTransform.Id;
             spawnInfo.Position = ProtoUtil.BuildVector3D(spawnPosition);
+            spawnInfo.Hp = boss.helath;
             SyncManager.Instance.AddSnapTransform(snapTransform); //添加同步对象
             Log.Info($"Boss {snapTransform.Id}  born in {m_CurrentNewMeteorPosition}");
             PlayerManager.Instance.BroadcastMsg(MID.GalacticKittensObjectSpawnRes, spawnResponse);

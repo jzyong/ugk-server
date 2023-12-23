@@ -1,6 +1,7 @@
 using System.Collections;
 using Common.Network.Sync;
 using Game.Manager;
+using UGK.Common.Network.Sync;
 using UnityEngine;
 
 namespace Game.Room.Enemy

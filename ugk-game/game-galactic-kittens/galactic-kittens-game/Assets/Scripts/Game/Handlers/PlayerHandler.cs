@@ -1,12 +1,10 @@
-﻿using System;
+﻿using Common.Network;
+using Common.Tools;
 using Game.Manager;
 using Google.Protobuf;
-using Common.Network;
-using Common.Tools;
 using UnityEngine;
 
-
-namespace Game.Handlers
+namespace UGK.Game.Handlers
 {
     /// <summary>
     /// 玩家消息处理器
@@ -21,7 +19,7 @@ namespace Game.Handlers
         {
             var request = new HeartRequest();
             request.MergeFrom(ugkMessage.Bytes);
-            Log.Trace($" receive player heart: {ugkMessage.TimeStamp} clientTime={request.ClientTime} serverTime={Time.time}");
+            Log.Debug($" receive player heart: {ugkMessage.TimeStamp} clientTime={request.ClientTime} serverTime={Time.time}");
             var response = new HeartResponse()
             {
                 ClientTime = request.ClientTime

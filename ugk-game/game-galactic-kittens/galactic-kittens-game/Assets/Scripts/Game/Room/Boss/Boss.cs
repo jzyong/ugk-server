@@ -1,8 +1,9 @@
-using System;
 using Common.Network.Sync;
 using Game.Manager;
+using Game.Room;
 using Game.Room.Boss.States;
-using Game.Room.Player;
+using UGK.Common.Network.Sync;
+using ugk.Game.Room.Player;
 using UnityEngine;
 
 /*
@@ -11,7 +12,7 @@ using UnityEngine;
     Here you can add new states
 */
 
-namespace Game.Room.Boss
+namespace ugk.Game.Room.Boss
 {
     public class Boss : MonoBehaviour, IDamagable
     {
@@ -33,12 +34,12 @@ namespace Game.Room.Boss
 
         [SerializeField] private BossState m_testState;
 
-        [SerializeField] [Tooltip("血量")] private float helath = 15;
+        [Tooltip("血量")] public uint helath = 15;
 
 
         private void Awake()
         {
-            helath = helath * RoomManager.Instance.PlayerCount();
+            helath = helath * (uint)RoomManager.Instance.PlayerCount();
         }
 
         private void OnTriggerEnter2D(Collider2D collider)
@@ -110,7 +111,7 @@ namespace Game.Room.Boss
         // }
         public void Hit(int damage)
         {
-            helath -= damage;
+            helath -= (uint)damage;
             if (helath < 1)
             {
                 SetState(BossState.death);

@@ -1,11 +1,12 @@
-using System;
 using Common.Network.Sync;
 using Game.Manager;
-using Game.Room.Enemy;
+using Game.Room;
 using kcp2k;
+using UGK.Common.Network.Sync;
+using ugk.Game.Room.Player;
 using UnityEngine;
 
-namespace Game.Room.Player
+namespace UGK.Game.Room.Player
 {
     /// <summary>
     /// 飞船子弹

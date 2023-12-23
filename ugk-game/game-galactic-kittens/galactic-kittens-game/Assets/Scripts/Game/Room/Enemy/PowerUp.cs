@@ -1,4 +1,5 @@
 ﻿using Common.Network.Sync;
+using UGK.Common.Network.Sync;
 using UnityEngine;
 
 namespace Game.Room.Enemy

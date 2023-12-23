@@ -2,7 +2,7 @@
 using Game.Manager;
 using Google.Protobuf;
 
-namespace Game.Handlers
+namespace UGK.Game.Handlers
 {
     /// <summary>
     /// 同步消息处理器

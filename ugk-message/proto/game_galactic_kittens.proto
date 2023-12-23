@@ -105,6 +105,7 @@ message GalacticKittensObjectSpawnResponse{
     Vector3D linearVelocity = 5; //线速度
     Vector3D scale =6; //缩放
     float syncInterval= 7; //同步间隔，服务器告知，用于两边同步
+    uint32 hp =8 ; //血量
   }
 
 }

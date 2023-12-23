@@ -216,7 +216,7 @@ func gameChannelRead(client *GameKcpClient) {
 		//但是接收端每次只能读取1段（因为每段frg=0）， 需要自己截取几段字节流封装
 		n, err := session.Read(client.ReceiveReadCache)
 		if err != nil {
-			log.Error("kcp启动失败：%v", err)
+			log.Error("kcp消息读取失败：%v", err)
 			gameChannelInactive(client, err)
 			return
 		}

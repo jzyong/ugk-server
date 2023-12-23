@@ -196,9 +196,15 @@ namespace Common.Network
         /// 参考：
         /// </summary>
         /// <exception cref="NonStaticHandlerException"></exception>
-        private void CreateMessageHandlersDictionary()
+        protected void CreateMessageHandlersDictionary()
         {
-            MethodInfo[] methods = FindMessageHandlers();
+            // MethodInfo[] methods = FindMessageHandlers();
+            MethodInfo[] methods=  Assembly.GetCallingAssembly().GetTypes().SelectMany(t =>
+                    t.GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static |
+                                 BindingFlags
+                                     .Instance)) // Include instance methods in the search so we can show the developer an error instead of silently not adding instance methods to the dictionary
+                .Where(m => m.GetCustomAttributes(typeof(MessageMapAttribute), false).Length > 0)
+                .ToArray();
 
             messageHandlers = new Dictionary<int, MessageHandler<T>>(methods.Length);
             foreach (MethodInfo method in methods)
@@ -228,10 +234,10 @@ namespace Common.Network
 
         /// <summary>查找消息处理方法</summary>
         /// <returns>An array containing message handler methods.</returns>
+        [Obsolete]
         private MethodInfo[] FindMessageHandlers()
         {
             // string thisAssemblyName = Assembly.GetExecutingAssembly().GetName().FullName;
-
             return Assembly.GetExecutingAssembly().GetTypes().SelectMany(t =>
                     t.GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static |
                                  BindingFlags

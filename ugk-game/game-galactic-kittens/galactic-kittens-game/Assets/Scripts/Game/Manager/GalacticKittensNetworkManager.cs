@@ -34,6 +34,8 @@ namespace Game.Manager
         {
             Log.WriteLevel = Log.LogLevel.Info;
             base.Awake();
+            //由于使用了不同的 Assembly ,因此需要手动调用一下加载handler
+             CreateMessageHandlersDictionary();
             Application.targetFrameRate = 30;
             Instance = this;
         }

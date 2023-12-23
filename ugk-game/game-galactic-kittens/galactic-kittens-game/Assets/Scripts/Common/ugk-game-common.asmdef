@@ -1,6 +1,6 @@
 {
     "name": "ugk-game-common",
-    "rootNamespace": "ugk",
+    "rootNamespace": "UGK",
     "references": [],
     "includePlatforms": [],
     "excludePlatforms": [],
