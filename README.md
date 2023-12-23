@@ -36,9 +36,9 @@
 | ugk-stress-testing | 压力测试客户端集群                 |
 
 ### 游戏
-| 游戏	                                                               | 描述         |
-|-------------------------------------------------------------------|------------|
-| [game-galactic-kittens](ugk-game/game-galactic-kittens/README.md) | 2D多人飞船射击游戏 |
+| 游戏	                                                               | 视频展示                                                                                                                      | 描述         |
+|-------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------|------------|
+| [game-galactic-kittens](ugk-game/game-galactic-kittens/README.md) | [bilibili](https://www.bilibili.com/video/BV1sp4y1Z7mX/?share_source=copy_web&vd_source=7996a7271402d2a8165bb8016e5478c1) | 2D多人飞船射击游戏 |
 
 
 
@@ -77,14 +77,10 @@
 
 
 ## TODO
-* GalacticKittens --> [Client Driven Overview]((https://github.com/Unity-Technologies/com.unity.multiplayer.samples.bitesize))
-* GalacticKittens UI；添加护盾开启关闭消息；场景切换渐入渐出效果;能量；
-* 大厅玩家UI（头像-ID）
-* Boss入场太唐突了？
-* 上传分数到match服,然后进行结算显示
-* docker中服务发现，网络经常出现问题？
+* [Client Driven Overview]((https://github.com/Unity-Technologies/com.unity.multiplayer.samples.bitesize))开发
 * 客户端存在卡死情况
-* 房间结算后进行销毁
+* hybridclr热更代码打包
+* 音频播放优化，抽出全局的
 
 
 ### 计划

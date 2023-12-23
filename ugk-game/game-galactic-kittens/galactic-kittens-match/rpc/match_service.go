@@ -84,12 +84,12 @@ func (service *MatchService) PlayerServerList(ctx context.Context, request *mess
 	return response, nil
 }
 
-// GameFinish 游戏完成 TODO 待测试
+// GameFinish 游戏完成
 func (service *MatchService) GameFinish(ctx context.Context, request *message.GalacticKittensGameFinishRequest) (*message.GalacticKittensGameFinishResponse, error) {
 	var wg sync.WaitGroup
 	wg.Add(2)
 	response := &message.GalacticKittensGameFinishResponse{}
-	log.Debug("房间 %d 结束:%v", request.GetRoomId(), request)
+	log.Info("房间 %d 结束:%v", request.GetRoomId(), request)
 	manager2.GetRoomManager().ProcessFun <- func() {
 		room := manager2.GetRoomManager().GetRoom(request.GetRoomId())
 		room.ProcessFun <- func() {

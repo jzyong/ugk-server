@@ -1,19 +1,18 @@
 using Common.Network.Sync;
-using Game.Manager;
 using kcp2k;
 using UGK.Common.Network.Sync;
 using UGK.Game.Manager;
 using ugk.Game.Room.Player;
 using UnityEngine;
 
-namespace Game.Room.Enemy
+namespace UGK.Game.Room.Enemy
 {
     /// <summary>
     /// 飞船子弹
     /// </summary>
     public class EnemyBullet : MonoBehaviour
     {
-        [Tooltip("线速度")] public Vector3 linearVelocity = Vector3.left * 5;
+        [Tooltip("线速度")] public Vector3 linearVelocity = Vector3.left * 8;
 
         public int damage = 1;
         private PredictionTransform _predictionTransform;

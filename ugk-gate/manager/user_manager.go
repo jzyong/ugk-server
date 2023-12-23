@@ -324,7 +324,7 @@ func (user *User) TransmitToClient(gameData []byte) error {
 		// 消息合并批量发送，将小于MTU的消息合并，大于的直接发送，减少丢包重传率，减少IO
 	} else {
 		//当前消息大于mtu，先将老的发送，然后立即发送当前消息
-		if gameLength > config.MTU {
+		if gameLength+user.SendBuffer.Len() > config.MTU {
 			user.batchTransmitToClient()
 			user.immediateTransmitToClient(gameLength, gameData)
 			//将消息写入缓存

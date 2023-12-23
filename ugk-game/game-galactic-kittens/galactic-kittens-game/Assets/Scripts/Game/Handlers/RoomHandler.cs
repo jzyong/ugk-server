@@ -46,7 +46,6 @@ namespace UGK.Game.Handlers
             request.MergeFrom(ugkMessage.Bytes);
             Log.Trace($" receive use shield {player.Id}-{player.Nick}");
 
-            //TODO 使用护盾逻辑,获取玩家飞船，并添加护盾 ，广播护盾消息 GalacticKittensShipShieldStateResponse
             GalacticKittensUseShieldResponse response = new GalacticKittensUseShieldResponse()
             {
                 Result = new MessageResult()
@@ -55,8 +54,19 @@ namespace UGK.Game.Handlers
                     Msg = "Success"
                 }
             };
+            
+            var spaceShip = RoomManager.Instance.GetSpaceShip(player.Id);
+            if (spaceShip.powerUpCount<1)
+            {
+                response.Result.Msg = "道具不足";
+                response.Result.Status = 404;
+                PlayerManager.Instance.SendMsg(player, MID.GalacticKittensFireRes, response, ugkMessage.Seq);
+                return;
+            }
 
+            
             PlayerManager.Instance.SendMsg(player, MID.GalacticKittensFireRes, response, ugkMessage.Seq);
+            spaceShip.UseShield();
         }
 
         /// <summary>

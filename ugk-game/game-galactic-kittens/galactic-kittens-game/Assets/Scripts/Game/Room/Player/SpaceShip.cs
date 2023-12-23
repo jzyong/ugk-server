@@ -1,4 +1,5 @@
-﻿using Game.Room;
+﻿using Game.Manager;
+using Game.Room;
 using Game.Room.Enemy;
 using UGK.Common.Network.Sync;
 using UGK.Game.Manager;
@@ -19,6 +20,8 @@ namespace ugk.Game.Room.Player
         public uint UsePopwerCount { get; set; }
 
         public uint KillEnemyCount { get; set; }
+
+        public bool IsShield { get; set; }
 
 
         void OnTriggerEnter2D(Collider2D collider2D)
@@ -43,15 +46,43 @@ namespace ugk.Game.Room.Player
 
         public void Hit(int damage)
         {
-            hp--;
-            if (hp < 1)
+            if (!IsShield)
             {
-                gameObject.SetActive(false);
-                RoomManager.Instance.DespawnObject(0, GetComponent<SnapTransform>().Id, false);
-                RoomManager.Instance.GameFinishFail();
+                hp--;
+                RoomManager.Instance.BroadcastPlayerProperty(this);
+                if (hp < 1)
+                {
+                    gameObject.SetActive(false);
+                    RoomManager.Instance.DespawnObject(0, GetComponent<SnapTransform>().Id, false);
+                    RoomManager.Instance.GameFinishFail();
+                }
             }
+            else
+            {
+                IsShield = false;
+                GalacticKittensShipShieldStateResponse stateResponse = new GalacticKittensShipShieldStateResponse()
+                {
+                    ShipId = GetComponent<SnapTransform>().Id,
+                    State = 0
+                };
+                PlayerManager.Instance.BroadcastMsg(MID.GalacticKittensShipShieldStateRes, stateResponse);
+            }
+           
+           
+        }
 
+        public void UseShield()
+        {
+            powerUpCount -= 1;
+            UsePopwerCount += 1;
+            IsShield = true;
             RoomManager.Instance.BroadcastPlayerProperty(this);
+            GalacticKittensShipShieldStateResponse stateResponse = new GalacticKittensShipShieldStateResponse()
+            {
+                ShipId = GetComponent<SnapTransform>().Id,
+                State = 1
+            };
+            PlayerManager.Instance.BroadcastMsg(MID.GalacticKittensShipShieldStateRes, stateResponse);
         }
     }
 }

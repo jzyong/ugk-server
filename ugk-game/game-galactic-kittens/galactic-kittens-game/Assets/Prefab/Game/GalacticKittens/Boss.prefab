@@ -252,7 +252,7 @@ MonoBehaviour:
   m_deathState: {fileID: 9212371605844444937}
   m_isTesting: 0
   m_testState: 0
-  helath: 15
+  helath: 25
 --- !u!114 &9212371605844444937
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -265,12 +265,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60fee16fe0d140a7b209440153842819, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_maxNumberOfExplosions: 40
-  m_explosionDuration: 2
-  m_explosionPositionsContainer: {fileID: 0}
-  m_explosionVfx: {fileID: 0}
-  m_shakeSpeed: 25
-  m_shakeAmount: 0.2
 --- !u!114 &8520957436547234386
 MonoBehaviour:
   m_ObjectHideFlags: 0

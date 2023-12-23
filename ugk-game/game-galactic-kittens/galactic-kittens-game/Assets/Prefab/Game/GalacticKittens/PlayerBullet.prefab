@@ -174,7 +174,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c7963d12bfa463cb7b0abbdf73ccca3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  linearVelocity: {x: 10, y: 0, z: 0}
+  linearVelocity: {x: 13, y: 0, z: 0}
   damage: 1
 --- !u!114 &5038884130832919424
 MonoBehaviour:
@@ -210,5 +210,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79304fea33e34ba8a69e9f3fd1fb3405, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_autoDestroyTime: 10
+  m_autoDestroyTime: 6
   target: {fileID: 2483423767853313527}

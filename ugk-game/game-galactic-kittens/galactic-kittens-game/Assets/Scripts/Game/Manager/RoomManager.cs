@@ -487,31 +487,6 @@ namespace UGK.Game.Manager
         }
 
 
-        /// <summary>
-        /// 游戏结束 TODO 待测试
-        /// </summary>
-        private void GameFinishReq()
-        {
-            var client =
-                new GalacticKittensMatchService.GalacticKittensMatchServiceClient(GalacticKittensNetworkManager
-                    .Instance.MatchChannel);
-            var request = new GalacticKittensGameFinishRequest()
-            {
-                RoomId = GalacticKittensNetworkManager.Instance.ServerId
-            };
-            var response = client.gameFinishAsync(request).ResponseAsync.Result;
-            Log.Info($"game finish :{response}");
-            if (response.Result?.Status != 200)
-            {
-                Log.Error($"game finish error:{response.Result?.Msg}");
-                return;
-            }
-
-            // 解绑玩家网关映射
-            PlayerManager.Instance.BindGateGameMapReq(false);
-
-            Application.Quit();
-        }
 
         public SpaceShip GetSpaceShip(long id)
         {
@@ -587,12 +562,14 @@ namespace UGK.Game.Manager
                     .Instance.MatchChannel);
             var response = client.gameFinishAsync(request).ResponseAsync.Result;
 
-            Log.Info($"player list :{response.Result}");
+            Log.Info($"上报战况 :{response.Result}");
             if (response.Result != null && response.Result.Status != 200)
             {
                 Log.Error($"game finish error:{response.Result.Msg}");
                 return;
             }
+            // 解绑玩家网关映射
+            // PlayerManager.Instance.BindGateGameMapReq(false);
 
             Application.Quit();
         }

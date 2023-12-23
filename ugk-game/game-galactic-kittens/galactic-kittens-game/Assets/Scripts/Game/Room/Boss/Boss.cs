@@ -35,7 +35,7 @@ namespace ugk.Game.Room.Boss
 
         [SerializeField] private BossState m_testState;
 
-        [Tooltip("血量")] public uint helath = 15;
+        [Tooltip("血量")] public uint helath = 25;
 
 
         private void Awake()
