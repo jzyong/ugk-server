@@ -1,20 +1,22 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Common.Network.Sync;
 using Common.Tools;
+using Game.Manager;
 using Game.Messages;
 using Game.Room.Boss;
 using Game.Room.Enemy;
 using UGK.Common.Network.Sync;
+using UGK.Common.Tools;
 using ugk.Game.Room.Boss;
+using UGK.Game.Room.Enemy;
 using ugk.Game.Room.Player;
 using UGK.Game.Room.Player;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace Game.Manager
+namespace UGK.Game.Manager
 {
     /// <summary>
     /// 房间管理
@@ -205,7 +207,7 @@ namespace Game.Manager
             snapTransform.Id = SyncId++;
             snapTransform.Onwer = true;
             powerUp.name = $"PowerUp-{snapTransform.Id}";
-            snapTransform.InitTransform(position,null);
+            snapTransform.InitTransform(position, null);
             GalacticKittensObjectSpawnResponse.Types.SpawnInfo spawnInfo =
                 new GalacticKittensObjectSpawnResponse.Types.SpawnInfo()
                 {
@@ -345,6 +347,7 @@ namespace Game.Manager
             var predictionTransform = spaceshipBullet.GetComponent<PredictionTransform>();
             predictionTransform.Id = SyncId++;
             spaceshipBullet.name = $"SpaceBullet{player.Id}-{predictionTransform.Id}";
+            spaceshipBullet.OwnerId = player.Id;
             predictionTransform.LinearVelocity = spaceshipBullet.linearVelocity;
             GalacticKittensObjectSpawnResponse.Types.SpawnInfo spawnInfo =
                 new GalacticKittensObjectSpawnResponse.Types.SpawnInfo()
@@ -539,23 +542,59 @@ namespace Game.Manager
             m_IsSpawning = false;
 
             SyncManager.Instance.ResetData();
+            BroadcastReslut(false);
         }
 
         public void GameFinishSuccess()
         {
             foreach (var component in transform.GetComponents<PredictionTransform>())
             {
-                DespawnObject(0,component.Id);
+                DespawnObject(0, component.Id);
                 Destroy(component);
             }
 
             foreach (var component in transform.GetComponents<SnapTransform>())
             {
-                DespawnObject(0,component.Id);
+                DespawnObject(0, component.Id);
                 Destroy(component);
             }
 
             SyncManager.Instance.ResetData();
+            BroadcastReslut(true);
+        }
+
+        private void BroadcastReslut(bool victory)
+        {
+            GalacticKittensGameFinishRequest request = new GalacticKittensGameFinishRequest();
+            request.Victory = victory;
+            request.RoomId = GalacticKittensNetworkManager.Instance.ServerId;
+            foreach (var kv in _spaceShips)
+            {
+                var space = kv.Value;
+                GalacticKittensGameFinishRequest.Types.PlayerStatistics statistics =
+                    new GalacticKittensGameFinishRequest.Types.PlayerStatistics()
+                    {
+                        PlayerId = space.GetComponent<SnapTransform>().Id,
+                        KillCount = space.KillEnemyCount,
+                        UsePowerCount = space.UsePopwerCount,
+                        Victory = space.hp > 0
+                    };
+                request.Statistics.Add(statistics);
+            }
+
+            var client =
+                new GalacticKittensMatchService.GalacticKittensMatchServiceClient(GalacticKittensNetworkManager
+                    .Instance.MatchChannel);
+            var response = client.gameFinishAsync(request).ResponseAsync.Result;
+
+            Log.Info($"player list :{response.Result}");
+            if (response.Result != null && response.Result.Status != 200)
+            {
+                Log.Error($"game finish error:{response.Result.Msg}");
+                return;
+            }
+
+            Application.Quit();
         }
     }
 }

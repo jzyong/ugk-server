@@ -1,8 +1,7 @@
-﻿using Common.Network.Sync;
-using Game.Manager;
-using Game.Room;
+﻿using Game.Room;
 using Game.Room.Enemy;
 using UGK.Common.Network.Sync;
+using UGK.Game.Manager;
 using UnityEngine;
 
 namespace ugk.Game.Room.Player
@@ -17,10 +16,15 @@ namespace ugk.Game.Room.Player
         [Tooltip("血量")] public uint hp = 30;
 
 
-        void OnTriggerEnter2D(Collider2D collider)
+        public uint UsePopwerCount { get; set; }
+
+        public uint KillEnemyCount { get; set; }
+
+
+        void OnTriggerEnter2D(Collider2D collider2D)
         {
-            // If the collider hit a power-up
-            if (collider.TryGetComponent(out PowerUp powerUp))
+            // If the collider2D hit a power-up
+            if (collider2D.TryGetComponent(out PowerUp powerUp))
             {
                 // Check if I have space to take the special
                 if (powerUpCount < 2)
@@ -32,7 +36,7 @@ namespace ugk.Game.Room.Player
                     RoomManager.Instance.BroadcastPlayerProperty(this);
 
                     // Remove the power-up
-                    RoomManager.Instance.DespawnObject(0, collider.gameObject.GetComponent<SnapTransform>().Id);
+                    RoomManager.Instance.DespawnObject(0, collider2D.gameObject.GetComponent<SnapTransform>().Id);
                 }
             }
         }

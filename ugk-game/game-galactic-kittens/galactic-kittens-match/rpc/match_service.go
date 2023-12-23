@@ -89,11 +89,37 @@ func (service *MatchService) GameFinish(ctx context.Context, request *message.Ga
 	var wg sync.WaitGroup
 	wg.Add(2)
 	response := &message.GalacticKittensGameFinishResponse{}
-
+	log.Debug("房间 %d 结束:%v", request.GetRoomId(), request)
 	manager2.GetRoomManager().ProcessFun <- func() {
 		room := manager2.GetRoomManager().GetRoom(request.GetRoomId())
 		room.ProcessFun <- func() {
 			defer wg.Done()
+
+			// 分数计算，推送给客户端,传回大厅等
+			clientResponse := &message.GalacticKittensGameFinishResponse{}
+			clientResponse.Victory = request.Victory
+
+			bestIndex := 0
+			var bestScore uint32 = 0
+			statistics := make([]*message.GalacticKittensGameFinishResponse_PlayerStatistics, 0, len(request.Statistics))
+			for i, statistic := range request.Statistics {
+				info := &message.GalacticKittensGameFinishResponse_PlayerStatistics{
+					PlayerId:      statistic.GetPlayerId(),
+					KillCount:     statistic.GetKillCount(),
+					Score:         statistic.GetKillCount()*100 - statistic.GetUsePowerCount()*50,
+					UsePowerCount: statistic.GetUsePowerCount(),
+					Best:          false,
+					Victory:       statistic.GetVictory(),
+				}
+				if info.KillCount > bestScore {
+					bestScore = info.KillCount
+					bestIndex = i
+				}
+				statistics = append(statistics, info)
+			}
+			statistics[bestIndex].Best = true
+			clientResponse.Statistics = statistics
+			manager2.GetRoomManager().BroadcastMsg(room, message.MID_GalacticKittensGameFinishRes, clientResponse)
 			close(room.GetCloseChan())
 			response.Result = &message.MessageResult{
 				Status: 200,

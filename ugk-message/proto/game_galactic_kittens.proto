@@ -82,11 +82,31 @@ message GalacticKittensPlayerServerListResponse {
 //游戏完成 内部
 message GalacticKittensGameFinishRequest {
   uint32 roomId = 1; //房间id
+  bool victory =2; //胜利
+  repeated PlayerStatistics statistics =3; //战况统计
+
+  message PlayerStatistics{
+    int64 playerId=1; //玩家id
+    uint32 killCount =2; //击杀数
+    uint32 usePowerCount=3; //使用道具数
+    bool victory= 4; //自己是否胜利
+  }
 }
 //游戏完成 内部
 message GalacticKittensGameFinishResponse {
   MessageResult result = 1; //错误信息
   GalacticKittensRoomInfo room = 2; //房间信息
+  bool victory =3; //胜利
+  repeated PlayerStatistics statistics =4; //战况统计
+
+  message PlayerStatistics{
+    int64 playerId=1; //玩家id
+    uint32 killCount =2; //击杀数
+    uint32 usePowerCount=3; //使用道具数
+    bool best=4; //是否为最好战绩
+    uint32 score = 5; //分数
+    bool victory= 6; //自己是否胜利
+  }
 }
 
 

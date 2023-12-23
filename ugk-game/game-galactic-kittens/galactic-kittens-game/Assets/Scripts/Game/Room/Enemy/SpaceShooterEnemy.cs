@@ -1,10 +1,11 @@
-using Common.Network.Sync;
 using Game.Manager;
+using Game.Room.Enemy;
 using UGK.Common.Network.Sync;
+using UGK.Game.Manager;
 using ugk.Game.Room.Player;
 using UnityEngine;
 
-namespace Game.Room.Enemy
+namespace UGK.Game.Room.Enemy
 {
     /// <summary>
     /// 发射子弹的敌人

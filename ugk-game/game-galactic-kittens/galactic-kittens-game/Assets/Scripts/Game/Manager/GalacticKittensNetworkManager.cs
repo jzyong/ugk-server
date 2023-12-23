@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using Common.Network;
+using Game.Manager;
 using Google.Protobuf;
 using Grpc.Core;
 using kcp2k;
 using UnityEngine;
-using Log = Common.Tools.Log;
+using Log = UGK.Common.Tools.Log;
 
-namespace Game.Manager
+namespace UGK.Game.Manager
 {
     /// <summary>
     /// 自定义网络管理

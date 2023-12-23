@@ -44,6 +44,7 @@ enum MID {
   GalacticKittenSelectCharacterRes = 3670024;
   GalacticKittensQuitRoomReq = 3670025;
   GalacticKittensQuitRoomRes = 3670026;
+  GalacticKittensGameFinishRes = 3670028;
 
   //Galactic-kittens game 4194304(4<<20)+ 524288(1<19)= 4718592
   GalacticKittensObjectSpawnRes = 4718594;

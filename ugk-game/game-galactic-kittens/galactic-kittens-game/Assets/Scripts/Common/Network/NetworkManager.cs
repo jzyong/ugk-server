@@ -62,9 +62,9 @@ namespace Common.Network
 
         public virtual void Awake()
         {
-            Log.Info = Tools.Log.Info;
-            Log.Error = Tools.Log.Error;
-            Log.Warning = Tools.Log.Warn;
+            Log.Info = UGK.Common.Tools.Log.Info;
+            Log.Error = UGK.Common.Tools.Log.Error;
+            Log.Warning = UGK.Common.Tools.Log.Warn;
             Application.targetFrameRate = 30;
             Application.runInBackground = true;
             if (!InitializeSingleton()) return;
@@ -226,7 +226,7 @@ namespace Common.Network
                     else
                     {
                         messageHandlers.Add(attribute.mid, (MessageHandler<T>)clientMessageHandler);
-                        Tools.Log.Debug($"message {attribute.mid} add handler :{clientMessageHandler.Method.Name}");
+                        UGK.Common.Tools.Log.Debug($"message {attribute.mid} add handler :{clientMessageHandler.Method.Name}");
                     }
                 }
             }

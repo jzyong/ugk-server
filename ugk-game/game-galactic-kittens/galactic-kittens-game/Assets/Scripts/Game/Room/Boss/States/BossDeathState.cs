@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Game.Manager;
+using UGK.Game.Manager;
 using UnityEngine;
 
 namespace Game.Room.Boss.States

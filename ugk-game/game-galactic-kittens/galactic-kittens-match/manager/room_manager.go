@@ -9,6 +9,7 @@ import (
 	mode2 "github.com/jzyong/ugk/common/mode"
 	"github.com/jzyong/ugk/galactic-kittens-match/mode"
 	"github.com/jzyong/ugk/message/message"
+	"google.golang.org/protobuf/proto"
 	"sync"
 	"time"
 )
@@ -136,6 +137,12 @@ func (m *RoomManager) BroadcastRoomInfo(room *mode.Room) {
 	msg := &message.GalacticKittensRoomInfoResponse{Room: roomInfo}
 	for _, player := range room.Players {
 		player.SendMsg(message.MID_GalacticKittensRoomInfoRes, msg)
+	}
+}
+
+func (m *RoomManager) BroadcastMsg(room *mode.Room, mid message.MID, msg proto.Message) {
+	for _, player := range room.Players {
+		player.SendMsg(mid, msg)
 	}
 }
 

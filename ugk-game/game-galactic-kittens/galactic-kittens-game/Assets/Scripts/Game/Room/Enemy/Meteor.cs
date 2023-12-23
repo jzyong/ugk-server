@@ -2,6 +2,7 @@ using System.Collections;
 using Common.Network.Sync;
 using Game.Manager;
 using UGK.Common.Network.Sync;
+using UGK.Game.Manager;
 using ugk.Game.Room.Player;
 using UnityEngine;
 

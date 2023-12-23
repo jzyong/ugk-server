@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using Common.Tools;
 using Google.Protobuf;
+using UGK.Common.Tools;
+using UGK.Game.Manager;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 

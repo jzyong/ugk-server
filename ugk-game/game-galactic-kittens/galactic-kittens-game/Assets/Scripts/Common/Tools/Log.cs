@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Threading;
+using Common.Tools;
 
-namespace Common.Tools
+namespace UGK.Common.Tools
 {
     /**
      * 自定义日志写文件

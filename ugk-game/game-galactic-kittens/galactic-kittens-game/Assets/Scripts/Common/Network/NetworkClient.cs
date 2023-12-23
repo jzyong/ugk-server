@@ -2,6 +2,7 @@ using System;
 using Common.Network.Serialize;
 using Common.Tools;
 using Google.Protobuf;
+using UGK.Common.Tools;
 using UnityEngine;
 
 namespace Common.Network

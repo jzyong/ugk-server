@@ -3,6 +3,7 @@ using Game.Manager;
 using Game.Room;
 using kcp2k;
 using UGK.Common.Network.Sync;
+using UGK.Game.Manager;
 using ugk.Game.Room.Player;
 using UnityEngine;
 
@@ -17,6 +18,8 @@ namespace UGK.Game.Room.Player
 
         public int damage = 1;
         private PredictionTransform _predictionTransform;
+
+        public long OwnerId { get; set; }
 
         private void Awake()
         {
@@ -42,8 +45,14 @@ namespace UGK.Game.Room.Player
                 {
                     killerId = snapTransform.Id;
                 }
+
                 //  广播子弹消失
                 RoomManager.Instance.DespawnObject(killerId, _predictionTransform.Id);
+                var spaceShip = RoomManager.Instance.GetSpaceShip(OwnerId);
+                if (spaceShip != null)
+                {
+                    spaceShip.KillEnemyCount++;
+                }
             }
         }
     }

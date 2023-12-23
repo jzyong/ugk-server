@@ -3,6 +3,7 @@ using Game.Manager;
 using Game.Room;
 using Game.Room.Boss.States;
 using UGK.Common.Network.Sync;
+using UGK.Game.Manager;
 using ugk.Game.Room.Player;
 using UnityEngine;
 

@@ -2,6 +2,7 @@ using System;
 using Common.Network.Sync;
 using Game.Manager;
 using UGK.Common.Network.Sync;
+using UGK.Game.Manager;
 using UnityEngine;
 
 namespace Game.Room.Utility

@@ -9,6 +9,7 @@ using Common.Network.Sync;
 using Common.Tools;
 using Common.Tools.SnapshotInterpolation;
 using Google.Protobuf;
+using UGK.Common.Tools;
 using UnityEngine;
 
 namespace UGK.Common.Network.Sync
