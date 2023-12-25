@@ -2,10 +2,13 @@
 
 &emsp;&emsp;快节奏多人联网游戏Demo，UGK-Server：unity、go、kcp server 。
 服务器使用微服务架构，服务器端游戏逻辑需要物理碰撞、寻路的使用Unity、C#开发，其他使用Go开发。
-对应客户端[ugk-client](https://github.com/jzyong/ugk-client)。 开发中......
+对应客户端[ugk-client](https://github.com/jzyong/ugk-client)。
+实现原理和腾讯[合金弹头](https://www.bilibili.com/video/BV1we411r757/?share_source=copy_web&vd_source=607b72b5d6040b90ae9daf87e9518f3b)
+如出一辙,开发中......
 ![ugk-architecture](ugk-resource/img/ugk_architecture.png)
 
 ## 特性
+
 * 微服务架构
 * 前后端分离
 * 自动化编排Docker容器(Unity dedicated server)
@@ -13,12 +16,15 @@
 * 多玩家匹配,消息分发
 
 ### 前后端分离
+
 * 减少服务器所需要的资源，最小化unity服务器资源内存、cpu消耗
 * 游戏逻辑更加简单明了
 * 可以减少网络带宽（Mirror和Unity官方的组件都封装了Spawn和Despawn，需要额外的消息同步特效，音效等）
 
 ## 服务
+
 ### 通用
+
 | 服务	                | 描述                        |
 |--------------------|---------------------------|
 | ugk-agent          | docker中运行的unity服务器的创建与销毁  |
@@ -36,13 +42,13 @@
 | ugk-stress-testing | 压力测试客户端集群                 |
 
 ### 游戏
-| 游戏	                                                               | 视频展示                                                                                                                      | 描述         |
-|-------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------|------------|
-| [game-galactic-kittens](ugk-game/game-galactic-kittens/README.md) | [bilibili](https://www.bilibili.com/video/BV1sp4y1Z7mX/?share_source=copy_web&vd_source=7996a7271402d2a8165bb8016e5478c1) | 2D多人飞船射击游戏 |
 
-
+| 游戏	                                                               | 视频展示                                                                                                | 描述         |
+|-------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------|------------|
+| [game-galactic-kittens](ugk-game/game-galactic-kittens/README.md) | [bilibili](https://www.bilibili.com/video/BV1EG41167Vd/?vd_source=9a3221975d2950e2658876aa87a7f57e) | 2D多人飞船射击游戏 |
 
 ## 技术选择
+
 * Unity、C# 客户端和服务器
 * Go 服务器
 * Kcp 网络通信 客户端和网关，网关和后端服务通信
@@ -51,11 +57,10 @@
 * Mongodb,Redis 数据存储
 * Docker、Jenkins 进行CI/CD
 
-
-
-
 ### 参考资料
+
 #### 网络
+
 * [Mirror](https://github.com/MirrorNetworking/Mirror)
 * [Unity Multiplayer Networking](https://github.com/Unity-Technologies/com.unity.netcode.gameobjects)
 * [FishNet](https://github.com/FirstGearGames/FishNet/)
@@ -64,27 +69,33 @@
 * [kcp-go](https://github.com/xtaci/kcp-go) go服务器
 * [grpc](https://grpc.io/) 服务器之间通信··
 * [可靠UDP，KCP协议快在哪？](https://wetest.qq.com/lab/view/391.html)
+
 #### 同步
+
 * [Prediction,Reconciliation,Lag Compensation](https://www.gabrielgambetta.com/client-server-game-architecture.html)
 * [Latency Compensating Methods in Client/Server In-game Protocol Design and Optimization](https://developer.valvesoftware.com/wiki/Latency_Compensating_Methods_in_Client/Server_In-game_Protocol_Design_and_Optimization)
 * [无畏契约网络代码](https://technology.riotgames.com/news/peeking-valorants-netcode)
+
 #### Unity
-* [com.unity.multiplayer.samples.bitesize](https://github.com/Unity-Technologies/com.unity.multiplayer.samples.bitesize)小游戏示例demo
+
+* [com.unity.multiplayer.samples.bitesize](https://github.com/Unity-Technologies/com.unity.multiplayer.samples.bitesize)
+  小游戏示例demo
 * [GalacticKittens](https://github.com/UnityTechnologies/GalacticKittens) 2D示例demo
 
 #### 工具
+
 * [ParrelSync](https://github.com/VeriorPies/ParrelSync) 多窗口调试
 
-
 ## TODO
+
 * [Client Driven Overview]((https://github.com/Unity-Technologies/com.unity.multiplayer.samples.bitesize))开发
 * 客户端存在卡死情况
 * hybridclr热更代码打包
 * 音频播放优化，抽出全局的
 * 客户端存在获取消息错误，因为超过1200字节？
 
-
 ### 计划
+
 * Websocket网络通信
 * 压力测试客户端使用ugk-web开发界面（vue3）
 * 添加聊天、排行、匹配、房间（Mirror）服务
@@ -93,7 +104,8 @@
 * 服务器unity提取公共包，unity的package
 * ugk-client 弹窗增加tween动画
 * 后台管理系统查看unity docker服务器
-* Limits how often data is sent for objects distance to players to reduce how much bandwidth the server uses. Tests show this feature can reduce transform updates, such as moving objects, between 90-97%. FishNet解决方案，远的对象，减少同步频率
+* Limits how often data is sent for objects distance to players to reduce how much bandwidth the server uses. Tests show
+  this feature can reduce transform updates, such as moving objects, between 90-97%. FishNet解决方案，远的对象，减少同步频率
 * 压力测试，网关CPU、内存消耗高？
 * 打android包测试，使用StarterAssets中的资源
 * 断线重连
@@ -104,6 +116,7 @@
 
 交流讨论
 ---------
+
 * **QQ群：** 236076532
 
 感谢
