@@ -90,7 +90,6 @@
 
 * [Client Driven Overview]((https://github.com/Unity-Technologies/com.unity.multiplayer.samples.bitesize))开发
 * 客户端存在卡死情况
-* hybridclr热更代码打包
 * 音频播放优化，抽出全局的
 * 客户端存在获取消息错误，因为超过1200字节？
 
@@ -109,10 +108,10 @@
 * 压力测试，网关CPU、内存消耗高？
 * 打android包测试，使用StarterAssets中的资源
 * 断线重连
-* [hybridclr](https://github.com/focus-creative-games/hybridclr) 热更新
+* [hybridclr](https://github.com/focus-creative-games/hybridclr)+Addressables 热更新
 * [ET](https://github.com/egametang/ET)学习研究
 * [luban](https://github.com/focus-creative-games/luban) 游戏配置
-* [xasset](https://github.com/xasset/xasset) 资产系统
+
 
 交流讨论
 ---------
