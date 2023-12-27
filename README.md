@@ -89,9 +89,7 @@
 ## TODO
 
 * [Client Driven Overview]((https://github.com/Unity-Technologies/com.unity.multiplayer.samples.bitesize))开发
-* 客户端存在卡死情况
 * 音频播放优化，抽出全局的
-* 客户端存在获取消息错误，因为超过1200字节？
 
 ### 计划
 
