@@ -103,11 +103,9 @@
 * 后台管理系统查看unity docker服务器
 * Limits how often data is sent for objects distance to players to reduce how much bandwidth the server uses. Tests show
   this feature can reduce transform updates, such as moving objects, between 90-97%. FishNet解决方案，远的对象，减少同步频率
-* 压力测试，网关CPU、内存消耗高？
 * 打android包测试，使用StarterAssets中的资源
 * 断线重连
 * [hybridclr](https://github.com/focus-creative-games/hybridclr)+Addressables 热更新
-* [ET](https://github.com/egametang/ET)学习研究
 * [luban](https://github.com/focus-creative-games/luban) 游戏配置
 
 
