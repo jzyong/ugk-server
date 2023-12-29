@@ -23,14 +23,14 @@ type AppConfig struct {
 
 func init() {
 	BaseConfig = &AppConfig{
-		MongoDbName: "ugk-game-galactic-kittens",
+		MongoDbName: "ugk-game-client-drive",
 	}
 }
 
 // InitConfigAndLog 初始化项目配置和日志
 func InitConfigAndLog() {
 	//1.配置文件路径
-	configPath := flag.String("config", "D:\\Go\\ugk-server\\ugk-game\\game-galactic-kittens\\galactic-kittens-match\\config\\app_config_develop.json", "配置文件加载路径")
+	configPath := flag.String("config", "D:\\Go\\ugk-server\\ugk-game\\game-client-drive\\client-drive-match\\config\\app_config_develop.json", "配置文件加载路径")
 	flag.Parse()
 	FilePath = *configPath
 	BaseConfig.Reload()

@@ -1,0 +1,11 @@
+{
+  "id": 1,
+  "name": "game_client_drive_match",
+  "profile": "develop",
+  "logLevel": "DEBUG",
+  "rpcUrl": "192.168.110.2:4001",
+  "zookeeperUrls": [
+    "192.168.110.2:2181"
+  ],
+  "mongoUrl": "mongodb://admin:123456@192.168.110.2:27017/?authSource=admin&readPreference=primary&ssl=false"
+}
