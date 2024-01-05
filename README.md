@@ -90,6 +90,7 @@
 
 * [Client Driven Overview]((https://github.com/Unity-Technologies/com.unity.multiplayer.samples.bitesize))开发
 * 音频播放优化，抽出全局的
+* GalacticKittens 有bug，存在卡死，进入房间存在不显示飞船
 
 ### 计划
 

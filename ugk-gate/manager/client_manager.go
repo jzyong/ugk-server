@@ -65,9 +65,10 @@ func (m *ClientManager) runKcpServer() {
 			//nc ：Whether to turn off flow control, 0 represents “Do not turn off” by default, 1 represents “Turn off”.
 			//Normal Mode: ikcp_nodelay(kcp, 0, 40, 0, 0);
 			//Turbo Mode： ikcp_nodelay(kcp, 1, 10, 2, 1);
+			//NBA2KOnline 游戏设置的是100ms重传监测
 			//s.SetNoDelay(0, 40, 0, 0)
 			//s.SetNoDelay(1, 10, 2, 1)
-			s.SetNoDelay(1, 40, 2, 1)
+			s.SetNoDelay(1, config2.KcpRetransmissionTime, 2, 1)
 			user := channelActive(s)
 			go channelRead(user)
 

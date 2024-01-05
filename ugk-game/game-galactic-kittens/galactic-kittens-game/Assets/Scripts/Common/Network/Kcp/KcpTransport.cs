@@ -21,7 +21,7 @@ namespace kcp2k
         [Tooltip("NoDelay is recommended to reduce latency. This also scales better without buffers getting full.")]
         public bool NoDelay = true;
         [Tooltip("KCP internal update interval. 100ms is KCP default, but a lower interval is recommended to minimize latency and to scale to more networked entities.")]
-        public uint Interval = 10;
+        public uint Interval = 50;
         [Tooltip("KCP timeout in milliseconds. Note that KCP sends a ping automatically.默认为10s，乘以60方便断点调试")]
         public int Timeout = 10000*60;
         [Tooltip("Socket receive buffer size. Large buffer helps support more connections. Increase operating system socket buffer size limits if needed.")]

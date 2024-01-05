@@ -81,7 +81,7 @@ func (m *ServerManager) runKcpServer() {
 			//Normal Mode: ikcp_nodelay(kcp, 0, 40, 0, 0);
 			//Turbo Mode： ikcp_nodelay(kcp, 1, 10, 2, 1);
 			//s.SetNoDelay(1, 10, 2, 1)
-			s.SetNoDelay(0, 40, 0, 0) //省一点CPU，一个连接空载单核CPU从2.5%降到0.5%
+			s.SetNoDelay(0, config2.KcpRetransmissionTime, 0, 0) //省一点CPU，一个连接空载单核CPU从2.5%降到0.5%
 			client := gameChannelActive(s)
 			go gameChannelRead(client)
 
