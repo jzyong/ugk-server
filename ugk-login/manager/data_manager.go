@@ -126,7 +126,7 @@ func (dataManager *DataManager) FindAccount(id string) *mode.Account {
 	return account
 }
 
-// SaveAccount 保存聊天室
+// SaveAccount 保存账号
 func (dataManager *DataManager) SaveAccount(id int64, update *bson.M) {
 	collection := manager.GetMongoManager().GetProductionDB().Database(config.BaseConfig.MongoDbName).Collection("account")
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)

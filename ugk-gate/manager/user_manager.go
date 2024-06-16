@@ -116,7 +116,10 @@ func (user *User) run() {
 		case receiveClientByte := <-user.ReceiveClientBytes: //用户消息分发给服务器
 			user.messageDistribute(receiveClientByte)
 		case receiveGameByte := <-user.ReceiveGameBytes: //转发接受到服务器都消息给用户
-			user.TransmitToClient(receiveGameByte)
+			err := user.TransmitToClient(receiveGameByte)
+			if err != nil {
+				log.Debug("转发消息失败：%v", err)
+			}
 		case gameMessage := <-user.GameMessages: //处理服务器返回消息
 			handFunc := ServerHandlers[gameMessage.MessageId]
 			handFunc(user, gameMessage.Client.(*GameKcpClient), gameMessage)
