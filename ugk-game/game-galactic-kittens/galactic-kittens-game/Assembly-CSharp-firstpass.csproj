@@ -41,45 +41,51 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <Folder Include="Assets\Plugins\Grpc.Core.Api\lib" />
-     <Folder Include="Assets\Plugins\System.Memory\lib\net45" />
-     <Folder Include="Assets\Plugins\Grpc.Core\runtimes\win" />
-     <Folder Include="Assets\Plugins\Grpc.Core" />
-     <Folder Include="Assets\Plugins\System.Buffers\lib\net45" />
-     <Folder Include="Assets\Plugins\Grpc.Core\runtimes\win\x64" />
-     <Folder Include="Assets\Plugins\Grpc.Core\runtimes" />
-     <Folder Include="Assets\Plugins\Google.Protobuf\lib" />
-     <Folder Include="Assets\Plugins\Grpc.Core\runtimes\ios" />
-     <Folder Include="Assets\Plugins\System.Runtime.CompilerServices.Unsafe\lib" />
-     <Folder Include="Assets\Plugins\System.Memory" />
-     <Folder Include="Assets\Plugins\Grpc.Core\runtimes\android" />
-     <Folder Include="Assets\Plugins\Grpc.Core\runtimes\linux\x64" />
-     <Folder Include="Assets\Plugins" />
-     <Folder Include="Assets\Plugins\Grpc.Core\lib\net45" />
-     <Folder Include="Assets\Plugins\System.Buffers" />
-     <None Include="Assets\Plugins\Grpc.Core.Api\lib\net45\Grpc.Core.Api.xml" />
-     <Folder Include="Assets\Plugins\System.Runtime.CompilerServices.Unsafe\lib\net45" />
-     <Folder Include="Assets\Plugins\Google.Protobuf" />
-     <Folder Include="Assets\Plugins\Grpc.Core\runtimes\osx" />
-     <Folder Include="Assets\Plugins\Grpc.Core.Api" />
-     <Folder Include="Assets\Plugins\System.Buffers\lib" />
-     <Folder Include="Assets\Plugins\Google.Protobuf\lib\net45" />
-     <None Include="Assets\Plugins\Grpc.Core\lib\net45\Grpc.Core.xml" />
-     <Folder Include="Assets\Plugins\System.Memory\lib" />
-     <Folder Include="Assets\Plugins\Grpc.Core\runtimes\win\x86" />
-     <Folder Include="Assets\Plugins\Grpc.Core\runtimes\linux" />
-     <Folder Include="Assets\Plugins\Grpc.Core\lib" />
-     <Folder Include="Assets\Plugins\System.Runtime.CompilerServices.Unsafe" />
-     <Folder Include="Assets\Plugins\Grpc.Core.Api\lib\net45" />
-     <Reference Include="UnityEngine">
-     <HintPath>G:\Program Files\Unity\2023.1.17f1c1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
-     </Reference>
-     <Reference Include="UnityEngine.CoreModule">
-     <HintPath>G:\Program Files\Unity\2023.1.17f1c1\Editor\Data\Managed\UnityEngine\UnityEngine.CoreModule.dll</HintPath>
-     </Reference>
-     <Reference Include="UnityEditor">
-     <HintPath>G:\Program Files\Unity\2023.1.17f1c1\Editor\Data\Managed\UnityEngine\UnityEditor.dll</HintPath>
-     </Reference>
+    <None Include="Assets/Plugins/System.Buffers.4.4.0/ref/netstandard2.0/System.Buffers.xml" />
+    <None Include="Assets/Plugins/Grpc.Core.Api.2.63.0/lib/netstandard2.1/Grpc.Core.Api.xml" />
+    <None Include="Assets/Plugins/System.Memory.4.5.3/useSharedDesignerContext.txt" />
+    <None Include="Assets/Plugins/System.Runtime.CompilerServices.Unsafe.4.5.2/ref/netstandard2.0/System.Runtime.CompilerServices.Unsafe.xml" />
+    <None Include="Assets/Plugins/System.Runtime.CompilerServices.Unsafe.4.5.2/version.txt" />
+    <None Include="Assets/Plugins/Google.Protobuf.3.28.0-rc1/lib/netstandard1.1/Google.Protobuf.xml" />
+    <None Include="Assets/Plugins/Grpc.Core.Api.2.63.0/lib/net462/Grpc.Core.Api.xml" />
+    <None Include="Assets/Plugins/System.Numerics.Vectors.4.4.0/lib/netstandard2.0/System.Numerics.Vectors.xml" />
+    <None Include="Assets/Plugins/System.Memory.4.5.3/version.txt" />
+    <None Include="Assets/Plugins/System.Numerics.Vectors.4.4.0/useSharedDesignerContext.txt" />
+    <None Include="Assets/Plugins/System.Runtime.CompilerServices.Unsafe.4.5.2/lib/netstandard1.0/System.Runtime.CompilerServices.Unsafe.xml" />
+    <None Include="Assets/Plugins/System.Numerics.Vectors.4.4.0/lib/netstandard1.0/System.Numerics.Vectors.xml" />
+    <None Include="Assets/Plugins/System.Runtime.CompilerServices.Unsafe.4.5.2/ref/netstandard1.0/System.Runtime.CompilerServices.Unsafe.xml" />
+    <None Include="Assets/Plugins/System.Numerics.Vectors.4.4.0/ref/netstandard1.0/System.Numerics.Vectors.xml" />
+    <None Include="Assets/Plugins/Grpc.Core.2.46.6/lib/netstandard2.0/Grpc.Core.xml" />
+    <None Include="Assets/Plugins/System.Buffers.4.4.0/lib/netstandard2.0/System.Buffers.xml" />
+    <None Include="Assets/Plugins/System.Numerics.Vectors.4.4.0/lib/net46/System.Numerics.Vectors.xml" />
+    <None Include="Assets/Plugins/System.Runtime.CompilerServices.Unsafe.4.5.2/lib/netstandard2.0/System.Runtime.CompilerServices.Unsafe.xml" />
+    <None Include="Assets/Plugins/System.Buffers.4.4.0/lib/netstandard1.1/System.Buffers.xml" />
+    <None Include="Assets/Plugins/System.Buffers.4.4.0/useSharedDesignerContext.txt" />
+    <None Include="Assets/Plugins/System.Numerics.Vectors.4.4.0/version.txt" />
+    <None Include="Assets/Plugins/Grpc.Core.2.46.6/lib/netstandard1.5/Grpc.Core.xml" />
+    <None Include="Assets/Plugins/System.Buffers.4.4.0/version.txt" />
+    <None Include="Assets/Plugins/Grpc.Core.2.46.6/lib/net45/Grpc.Core.xml" />
+    <None Include="Assets/Plugins/System.Numerics.Vectors.4.4.0/ref/netstandard2.0/System.Numerics.Vectors.xml" />
+    <None Include="Assets/Plugins/System.Numerics.Vectors.4.4.0/lib/portable-net45+win8+wp8+wpa81/System.Numerics.Vectors.xml" />
+    <None Include="Assets/Plugins/System.Memory.4.5.3/lib/netstandard2.0/System.Memory.xml" />
+    <None Include="Assets/Plugins/Google.Protobuf.3.28.0-rc1/lib/net45/Google.Protobuf.xml" />
+    <None Include="Assets/Plugins/System.Runtime.CompilerServices.Unsafe.4.5.2/lib/netcoreapp2.0/System.Runtime.CompilerServices.Unsafe.xml" />
+    <None Include="Assets/Plugins/Google.Protobuf.3.28.0-rc1/lib/netstandard2.0/Google.Protobuf.xml" />
+    <None Include="Assets/Plugins/System.Numerics.Vectors.4.4.0/ref/net46/System.Numerics.Vectors.xml" />
+    <None Include="Assets/Plugins/System.Memory.4.5.3/lib/netstandard1.1/System.Memory.xml" />
+    <None Include="Assets/Plugins/Grpc.Core.Api.2.63.0/lib/netstandard2.0/Grpc.Core.Api.xml" />
+    <None Include="Assets/Plugins/System.Buffers.4.4.0/ref/netstandard1.1/System.Buffers.xml" />
+    <None Include="Assets/Plugins/Google.Protobuf.3.28.0-rc1/lib/net5.0/Google.Protobuf.xml" />
+    <None Include="Assets/Plugins/System.Runtime.CompilerServices.Unsafe.4.5.2/useSharedDesignerContext.txt" />
+    <Reference Include="UnityEngine">
+      <HintPath>/Applications/Unity/Hub/Editor/2023.2.20f1c1/Unity.app/Contents/Managed/UnityEngine/UnityEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.CoreModule">
+      <HintPath>/Applications/Unity/Hub/Editor/2023.2.20f1c1/Unity.app/Contents/Managed/UnityEngine/UnityEngine.CoreModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor">
+      <HintPath>/Applications/Unity/Hub/Editor/2023.2.20f1c1/Unity.app/Contents/Managed/UnityEngine/UnityEditor.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

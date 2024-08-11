@@ -108,6 +108,8 @@
 * 断线重连
 * [hybridclr](https://github.com/focus-creative-games/hybridclr)+Addressables 热更新
 * [luban](https://github.com/focus-creative-games/luban) 游戏配置
+* 日志工具替换，支持Elasticsearch搜索
+* 添加https://github.com/Cysharp/UniTask 异步编程
 
 
 交流讨论
