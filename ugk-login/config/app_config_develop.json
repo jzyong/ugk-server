@@ -2,11 +2,11 @@
   "id": 1,
   "name": "login",
   "profile": "develop",
-  "rpcUrl": "192.168.110.2:3011",
+  "rpcUrl": "127.0.0.1:3011",
   "logLevel": "DEBUG",
   "zookeeperUrls": [
-    "192.168.110.2:2181"
+    "127.0.0.1:2181"
   ],
-  "mongoUrl": "mongodb://admin:123456@192.168.110.2:27017/?authSource=admin&readPreference=primary&ssl=false"
+  "mongoUrl": "mongodb://admin:123456@127.0.0.1:27017/?authSource=admin&readPreference=primary&ssl=false"
 }
 

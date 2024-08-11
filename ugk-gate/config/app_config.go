@@ -33,7 +33,8 @@ func init() {
 // InitConfigAndLog 初始化项目配置和日志
 func InitConfigAndLog() {
 	//1.配置文件路径
-	configPath := flag.String("config", "D:\\Go\\ugk-server\\ugk-gate\\config\\app_config_develop.json", "配置文件加载路径")
+	// TODO 通过环境变量传入
+	configPath := flag.String("config", "/Users/jzy/Work/Go/ugk-server/ugk-gate/config/app_config_develop.json", "配置文件加载路径")
 	flag.Parse()
 	FilePath = *configPath
 	BaseConfig.Reload()

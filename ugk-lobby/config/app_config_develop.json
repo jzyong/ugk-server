@@ -3,13 +3,13 @@
   "name": "lobby",
   "profile": "develop",
   "logLevel": "DEBUG",
-  "rpcUrl": "192.168.110.2:3021",
+  "rpcUrl": "127.0.0.1:3021",
   "zookeeperUrls": [
-    "192.168.110.2:2181"
+    "127.0.0.1:2181"
   ],
-  "mongoUrl": "mongodb://admin:123456@192.168.110.2:27017/?authSource=admin&readPreference=primary&ssl=false",
+  "mongoUrl": "mongodb://admin:123456@127.0.0.1:27017/?authSource=admin&readPreference=primary&ssl=false",
   "redis": {
-    "host": "192.168.110.2",
+    "host": "127.0.0.1",
     "password": "",
     "port": 16379
   }
