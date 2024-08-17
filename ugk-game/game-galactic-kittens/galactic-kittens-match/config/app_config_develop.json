@@ -3,9 +3,9 @@
   "name": "game_galactic_kittens_match",
   "profile": "develop",
   "logLevel": "DEBUG",
-  "rpcUrl": "192.168.110.2:4000",
+  "rpcUrl": "127.0.0.1:4000",
   "zookeeperUrls": [
-    "192.168.110.2:2181"
+    "127.0.0.1:2181"
   ],
-  "mongoUrl": "mongodb://admin:123456@192.168.110.2:27017/?authSource=admin&readPreference=primary&ssl=false"
+  "mongoUrl": "mongodb://admin:123456@127.0.0.1:27017/?authSource=admin&readPreference=primary&ssl=false"
 }

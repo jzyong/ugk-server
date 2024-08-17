@@ -3,8 +3,8 @@
   "name": "agent_manager",
   "profile": "develop",
   "logLevel": "DEBUG",
-  "rpcUrl": "192.168.110.2:3030",
+  "rpcUrl": "127.0.0.1:3030",
   "zookeeperUrls": [
-    "192.168.110.2:2181"
+    "127.0.0.1:2181"
   ]
 }

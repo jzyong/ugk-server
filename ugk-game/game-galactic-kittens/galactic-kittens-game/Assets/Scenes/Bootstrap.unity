@@ -13,7 +13,7 @@ OcclusionCullingSettings:
 --- !u!104 &2
 RenderSettings:
   m_ObjectHideFlags: 0
-  serializedVersion: 9
+  serializedVersion: 10
   m_Fog: 0
   m_FogColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   m_FogMode: 3
@@ -44,7 +44,6 @@ RenderSettings:
 LightmapSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 12
-  m_GIWorkflowMode: 1
   m_GISettings:
     serializedVersion: 2
     m_BounceScale: 1
@@ -164,7 +163,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2751c6feca28493da10855878de77c22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  matchGrpcUrl: 192.168.110.2:4000
+  matchGrpcUrl: 127.0.0.1:4000
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0

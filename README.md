@@ -109,7 +109,10 @@
 * [hybridclr](https://github.com/focus-creative-games/hybridclr)+Addressables 热更新
 * [luban](https://github.com/focus-creative-games/luban) 游戏配置
 * 日志工具替换，支持Elasticsearch搜索
-* 添加https://github.com/Cysharp/UniTask 异步编程
+* 使用C#的异步编程
+* 将Unity服务器代码从go中分离出去，单独一个仓库
+* 添加Prometheus监控，和logurs输出日志
+* c# grpc-core不再维护，不支持M1芯片，更新为grpc-dotnet方式
 
 
 交流讨论
