@@ -41,8 +41,38 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-    <None Include="Assets/Plugins/Grpc.Core.Api/lib/net45/Grpc.Core.Api.xml" />
-    <None Include="Assets/Plugins/Grpc.Core/lib/net45/Grpc.Core.xml" />
+    <None Include="Assets/Plugins/Grpc.Net.Client.2.65.0/lib/net8.0/Grpc.Net.Client.xml" />
+    <None Include="Assets/Plugins/Google.Protobuf.3.27.3/lib/net5.0/Google.Protobuf.xml" />
+    <None Include="Assets/Plugins/Grpc.Net.Client.2.65.0/lib/netstandard2.1/Grpc.Net.Client.xml" />
+    <None Include="Assets/Plugins/System.Diagnostics.DiagnosticSource.6.0.1/lib/net6.0/System.Diagnostics.DiagnosticSource.xml" />
+    <None Include="Assets/Plugins/Grpc.Net.Client.2.65.0/lib/net462/Grpc.Net.Client.xml" />
+    <None Include="Assets/Plugins/Grpc.Core.Api.2.65.0/lib/netstandard2.1/Grpc.Core.Api.xml" />
+    <None Include="Assets/Plugins/System.Runtime.CompilerServices.Unsafe.6.0.0/lib/netcoreapp3.1/System.Runtime.CompilerServices.Unsafe.xml" />
+    <None Include="Assets/Plugins/Grpc.Net.Common.2.65.0/lib/net7.0/Grpc.Net.Common.xml" />
+    <None Include="Assets/Plugins/System.Runtime.CompilerServices.Unsafe.6.0.0/lib/netstandard2.0/System.Runtime.CompilerServices.Unsafe.xml" />
+    <None Include="Assets/Plugins/Google.Protobuf.3.27.3/lib/netstandard2.0/Google.Protobuf.xml" />
+    <None Include="Assets/Plugins/System.Diagnostics.DiagnosticSource.6.0.1/lib/netstandard2.0/System.Diagnostics.DiagnosticSource.xml" />
+    <None Include="Assets/Plugins/Microsoft.Extensions.Logging.Abstractions.6.0.0/useSharedDesignerContext.txt" />
+    <None Include="Assets/Plugins/Microsoft.Extensions.Logging.Abstractions.6.0.0/lib/net6.0/Microsoft.Extensions.Logging.Abstractions.xml" />
+    <None Include="Assets/Plugins/Microsoft.Extensions.Logging.Abstractions.6.0.0/lib/netstandard2.0/Microsoft.Extensions.Logging.Abstractions.xml" />
+    <None Include="Assets/Plugins/Grpc.Net.Client.2.65.0/lib/netstandard2.0/Grpc.Net.Client.xml" />
+    <None Include="Assets/Plugins/Grpc.Net.Common.2.65.0/lib/net8.0/Grpc.Net.Common.xml" />
+    <None Include="Assets/Plugins/Grpc.Net.Client.2.65.0/lib/net6.0/Grpc.Net.Client.xml" />
+    <None Include="Assets/Plugins/Grpc.Core.Api.2.65.0/lib/netstandard2.0/Grpc.Core.Api.xml" />
+    <None Include="Assets/Plugins/System.Runtime.CompilerServices.Unsafe.6.0.0/lib/net461/System.Runtime.CompilerServices.Unsafe.xml" />
+    <None Include="Assets/Plugins/Grpc.Net.Client.2.65.0/lib/net7.0/Grpc.Net.Client.xml" />
+    <None Include="Assets/Plugins/Grpc.Net.Common.2.65.0/lib/netstandard2.0/Grpc.Net.Common.xml" />
+    <None Include="Assets/Plugins/Grpc.Net.Common.2.65.0/lib/net6.0/Grpc.Net.Common.xml" />
+    <None Include="Assets/Plugins/Google.Protobuf.3.27.3/lib/netstandard1.1/Google.Protobuf.xml" />
+    <None Include="Assets/Plugins/System.Diagnostics.DiagnosticSource.6.0.1/useSharedDesignerContext.txt" />
+    <None Include="Assets/Plugins/Grpc.Net.Common.2.65.0/lib/netstandard2.1/Grpc.Net.Common.xml" />
+    <None Include="Assets/Plugins/System.Runtime.CompilerServices.Unsafe.6.0.0/useSharedDesignerContext.txt" />
+    <None Include="Assets/Plugins/System.Runtime.CompilerServices.Unsafe.6.0.0/lib/net6.0/System.Runtime.CompilerServices.Unsafe.xml" />
+    <None Include="Assets/Plugins/Microsoft.Extensions.Logging.Abstractions.6.0.0/lib/net461/Microsoft.Extensions.Logging.Abstractions.xml" />
+    <None Include="Assets/Plugins/System.Diagnostics.DiagnosticSource.6.0.1/lib/net5.0/System.Diagnostics.DiagnosticSource.xml" />
+    <None Include="Assets/Plugins/Google.Protobuf.3.27.3/lib/net45/Google.Protobuf.xml" />
+    <None Include="Assets/Plugins/Grpc.Core.Api.2.65.0/lib/net462/Grpc.Core.Api.xml" />
+    <None Include="Assets/Plugins/System.Diagnostics.DiagnosticSource.6.0.1/lib/net461/System.Diagnostics.DiagnosticSource.xml" />
     <Reference Include="UnityEngine">
       <HintPath>/Applications/Unity/Hub/Editor/2023.2.20f1c1/Unity.app/Contents/Managed/UnityEngine/UnityEngine.dll</HintPath>
     </Reference>

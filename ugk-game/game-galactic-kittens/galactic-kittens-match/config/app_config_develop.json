@@ -3,7 +3,7 @@
   "name": "game_galactic_kittens_match",
   "profile": "develop",
   "logLevel": "DEBUG",
-  "rpcUrl": "127.0.0.1:4000",
+  "rpcUrl": "192.168.31.216:4000",
   "zookeeperUrls": [
     "127.0.0.1:2181"
   ],

@@ -41,6 +41,20 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
+    <Analyzer Include="/Users/jzy/Work/Go/ugk-server/ugk-game/game-galactic-kittens/galactic-kittens-game/Assets/Packages/Nuget/Lib/Microsoft.Extensions.Logging.Abstractions.6.0.0/analyzers/dotnet/roslyn4.0/cs/tr/Microsoft.Extensions.Logging.Generators.resources.dll" />
+    <Analyzer Include="/Users/jzy/Work/Go/ugk-server/ugk-game/game-galactic-kittens/galactic-kittens-game/Assets/Packages/Nuget/Lib/Microsoft.Extensions.Logging.Abstractions.6.0.0/analyzers/dotnet/roslyn4.0/cs/fr/Microsoft.Extensions.Logging.Generators.resources.dll" />
+    <Analyzer Include="/Users/jzy/Work/Go/ugk-server/ugk-game/game-galactic-kittens/galactic-kittens-game/Assets/Packages/Nuget/Lib/Microsoft.Extensions.Logging.Abstractions.6.0.0/analyzers/dotnet/roslyn4.0/cs/pt-BR/Microsoft.Extensions.Logging.Generators.resources.dll" />
+    <Analyzer Include="/Users/jzy/Work/Go/ugk-server/ugk-game/game-galactic-kittens/galactic-kittens-game/Assets/Packages/Nuget/Lib/Microsoft.Extensions.Logging.Abstractions.6.0.0/analyzers/dotnet/roslyn4.0/cs/it/Microsoft.Extensions.Logging.Generators.resources.dll" />
+    <Analyzer Include="/Users/jzy/Work/Go/ugk-server/ugk-game/game-galactic-kittens/galactic-kittens-game/Assets/Packages/Nuget/Lib/Microsoft.Extensions.Logging.Abstractions.6.0.0/analyzers/dotnet/roslyn4.0/cs/de/Microsoft.Extensions.Logging.Generators.resources.dll" />
+    <Analyzer Include="/Users/jzy/Work/Go/ugk-server/ugk-game/game-galactic-kittens/galactic-kittens-game/Assets/Packages/Nuget/Lib/Microsoft.Extensions.Logging.Abstractions.6.0.0/analyzers/dotnet/roslyn4.0/cs/Microsoft.Extensions.Logging.Generators.dll" />
+    <Analyzer Include="/Users/jzy/Work/Go/ugk-server/ugk-game/game-galactic-kittens/galactic-kittens-game/Assets/Packages/Nuget/Lib/Microsoft.Extensions.Logging.Abstractions.6.0.0/analyzers/dotnet/roslyn4.0/cs/es/Microsoft.Extensions.Logging.Generators.resources.dll" />
+    <Analyzer Include="/Users/jzy/Work/Go/ugk-server/ugk-game/game-galactic-kittens/galactic-kittens-game/Assets/Packages/Nuget/Lib/Microsoft.Extensions.Logging.Abstractions.6.0.0/analyzers/dotnet/roslyn4.0/cs/pl/Microsoft.Extensions.Logging.Generators.resources.dll" />
+    <Analyzer Include="/Users/jzy/Work/Go/ugk-server/ugk-game/game-galactic-kittens/galactic-kittens-game/Assets/Packages/Nuget/Lib/Microsoft.Extensions.Logging.Abstractions.6.0.0/analyzers/dotnet/roslyn4.0/cs/zh-Hant/Microsoft.Extensions.Logging.Generators.resources.dll" />
+    <Analyzer Include="/Users/jzy/Work/Go/ugk-server/ugk-game/game-galactic-kittens/galactic-kittens-game/Assets/Packages/Nuget/Lib/Microsoft.Extensions.Logging.Abstractions.6.0.0/analyzers/dotnet/roslyn4.0/cs/ja/Microsoft.Extensions.Logging.Generators.resources.dll" />
+    <Analyzer Include="/Users/jzy/Work/Go/ugk-server/ugk-game/game-galactic-kittens/galactic-kittens-game/Assets/Packages/Nuget/Lib/Microsoft.Extensions.Logging.Abstractions.6.0.0/analyzers/dotnet/roslyn4.0/cs/ru/Microsoft.Extensions.Logging.Generators.resources.dll" />
+    <Analyzer Include="/Users/jzy/Work/Go/ugk-server/ugk-game/game-galactic-kittens/galactic-kittens-game/Assets/Packages/Nuget/Lib/Microsoft.Extensions.Logging.Abstractions.6.0.0/analyzers/dotnet/roslyn4.0/cs/ko/Microsoft.Extensions.Logging.Generators.resources.dll" />
+    <Analyzer Include="/Users/jzy/Work/Go/ugk-server/ugk-game/game-galactic-kittens/galactic-kittens-game/Assets/Packages/Nuget/Lib/Microsoft.Extensions.Logging.Abstractions.6.0.0/analyzers/dotnet/roslyn4.0/cs/zh-Hans/Microsoft.Extensions.Logging.Generators.resources.dll" />
+    <Analyzer Include="/Users/jzy/Work/Go/ugk-server/ugk-game/game-galactic-kittens/galactic-kittens-game/Assets/Packages/Nuget/Lib/Microsoft.Extensions.Logging.Abstractions.6.0.0/analyzers/dotnet/roslyn4.0/cs/cs/Microsoft.Extensions.Logging.Generators.resources.dll" />
     <Analyzer Include="/Applications/Unity/Hub/Editor/2023.2.20f1c1/Unity.app/Contents/Tools/Unity.SourceGenerators/Unity.SourceGenerators.dll" />
     <Analyzer Include="/Applications/Unity/Hub/Editor/2023.2.20f1c1/Unity.app/Contents/Tools/Unity.SourceGenerators/Unity.Properties.SourceGenerator.dll" />
     <Analyzer Include="/Applications/Unity/Hub/Editor/2023.2.20f1c1/Unity.app/Contents/Tools/Unity.SourceGenerators/Unity.UIToolkit.SourceGenerator.dll" />
@@ -435,17 +449,14 @@
     <Reference Include="UnityEditor.OSXStandalone.Extensions">
       <HintPath>/Applications/Unity/Hub/Editor/2023.2.20f1c1/Unity.app/Contents/PlaybackEngines/MacStandaloneSupport/UnityEditor.OSXStandalone.Extensions.dll</HintPath>
     </Reference>
-    <Reference Include="Grpc.Core">
-      <HintPath>/Users/jzy/Work/Go/ugk-server/ugk-game/game-galactic-kittens/galactic-kittens-game/Assets/Plugins/Grpc.Core/lib/net45/Grpc.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Runtime.CompilerServices.Unsafe">
-      <HintPath>/Users/jzy/Work/Go/ugk-server/ugk-game/game-galactic-kittens/galactic-kittens-game/Assets/Plugins/System.Runtime.CompilerServices.Unsafe/lib/net45/System.Runtime.CompilerServices.Unsafe.dll</HintPath>
-    </Reference>
     <Reference Include="Unity.VisualScripting.YamlDotNet">
       <HintPath>/Users/jzy/Work/Go/ugk-server/ugk-game/game-galactic-kittens/galactic-kittens-game/Library/PackageCache/com.unity.visualscripting@1.8.0/Editor/VisualScripting.Core/Dependencies/YamlDotNet/Unity.VisualScripting.YamlDotNet.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Collections.LowLevel.ILSupport">
       <HintPath>/Users/jzy/Work/Go/ugk-server/ugk-game/game-galactic-kittens/galactic-kittens-game/Library/PackageCache/com.unity.collections@1.2.4/Unity.Collections.LowLevel.ILSupport/Unity.Collections.LowLevel.ILSupport.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Logging.Abstractions">
+      <HintPath>/Users/jzy/Work/Go/ugk-server/ugk-game/game-galactic-kittens/galactic-kittens-game/Assets/Packages/Nuget/Lib/Microsoft.Extensions.Logging.Abstractions.6.0.0/lib/netstandard2.0/Microsoft.Extensions.Logging.Abstractions.dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework">
       <HintPath>/Users/jzy/Work/Go/ugk-server/ugk-game/game-galactic-kittens/galactic-kittens-game/Library/PackageCache/com.unity.ext.nunit@2.0.5/net40/unity-custom/nunit.framework.dll</HintPath>
@@ -453,14 +464,14 @@
     <Reference Include="unityplastic">
       <HintPath>/Users/jzy/Work/Go/ugk-server/ugk-game/game-galactic-kittens/galactic-kittens-game/Library/PackageCache/com.unity.collab-proxy@2.3.1/Lib/Editor/PlasticSCM/unityplastic.dll</HintPath>
     </Reference>
-    <Reference Include="Google.Protobuf">
-      <HintPath>/Users/jzy/Work/Go/ugk-server/ugk-game/game-galactic-kittens/galactic-kittens-game/Assets/Plugins/Google.Protobuf/lib/net45/Google.Protobuf.dll</HintPath>
-    </Reference>
     <Reference Include="Unity.Plastic.Antlr3.Runtime">
       <HintPath>/Users/jzy/Work/Go/ugk-server/ugk-game/game-galactic-kittens/galactic-kittens-game/Library/PackageCache/com.unity.collab-proxy@2.3.1/Lib/Editor/PlasticSCM/Unity.Plastic.Antlr3.Runtime.dll</HintPath>
     </Reference>
-    <Reference Include="Grpc.Core.Api">
-      <HintPath>/Users/jzy/Work/Go/ugk-server/ugk-game/game-galactic-kittens/galactic-kittens-game/Assets/Plugins/Grpc.Core.Api/lib/net45/Grpc.Core.Api.dll</HintPath>
+    <Reference Include="Google.Protobuf">
+      <HintPath>/Users/jzy/Work/Go/ugk-server/ugk-game/game-galactic-kittens/galactic-kittens-game/Assets/Packages/Nuget/Lib/Google.Protobuf.3.27.3/lib/netstandard2.0/Google.Protobuf.dll</HintPath>
+    </Reference>
+    <Reference Include="Grpc.Net.Client">
+      <HintPath>/Users/jzy/Work/Go/ugk-server/ugk-game/game-galactic-kittens/galactic-kittens-game/Assets/Packages/Nuget/Lib/Grpc.Net.Client.2.65.0/lib/netstandard2.1/Grpc.Net.Client.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Plastic.Newtonsoft.Json">
       <HintPath>/Users/jzy/Work/Go/ugk-server/ugk-game/game-galactic-kittens/galactic-kittens-game/Library/PackageCache/com.unity.collab-proxy@2.3.1/Lib/Editor/PlasticSCM/Unity.Plastic.Newtonsoft.Json.dll</HintPath>
@@ -471,11 +482,35 @@
     <Reference Include="Unity.VisualScripting.IonicZip">
       <HintPath>/Users/jzy/Work/Go/ugk-server/ugk-game/game-galactic-kittens/galactic-kittens-game/Library/PackageCache/com.unity.visualscripting@1.8.0/Editor/VisualScripting.Core/Dependencies/DotNetZip/Unity.VisualScripting.IonicZip.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Bcl.AsyncInterfaces">
+      <HintPath>/Users/jzy/Work/Go/ugk-server/ugk-game/game-galactic-kittens/galactic-kittens-game/Assets/Packages/Nuget/Lib/Microsoft.Bcl.AsyncInterfaces.8.0.0/lib/netstandard2.1/Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.VisualScripting.Antlr3.Runtime">
       <HintPath>/Users/jzy/Work/Go/ugk-server/ugk-game/game-galactic-kittens/galactic-kittens-game/Library/PackageCache/com.unity.visualscripting@1.8.0/Runtime/VisualScripting.Flow/Dependencies/NCalc/Unity.VisualScripting.Antlr3.Runtime.dll</HintPath>
     </Reference>
+    <Reference Include="System.Diagnostics.DiagnosticSource">
+      <HintPath>/Users/jzy/Work/Go/ugk-server/ugk-game/game-galactic-kittens/galactic-kittens-game/Assets/Packages/Nuget/Lib/System.Diagnostics.DiagnosticSource.6.0.1/lib/netstandard2.0/System.Diagnostics.DiagnosticSource.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO.Pipelines">
+      <HintPath>/Users/jzy/Work/Go/ugk-server/ugk-game/game-galactic-kittens/galactic-kittens-game/Assets/Packages/Nuget/Lib/System.IO.Pipelines.8.0.0/lib/netstandard2.0/System.IO.Pipelines.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe">
+      <HintPath>/Users/jzy/Work/Go/ugk-server/ugk-game/game-galactic-kittens/galactic-kittens-game/Assets/Packages/Nuget/Lib/System.Runtime.CompilerServices.Unsafe.6.0.0/lib/netstandard2.0/System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="NuGetForUnity.PluginAPI">
+      <HintPath>/Users/jzy/Work/Go/ugk-server/ugk-game/game-galactic-kittens/galactic-kittens-game/Library/PackageCache/com.github-glitchenzo.nugetforunity@a011c51ed6/Editor/PluginAPI/NuGetForUnity.PluginAPI.dll</HintPath>
+    </Reference>
+    <Reference Include="Grpc.Core.Api">
+      <HintPath>/Users/jzy/Work/Go/ugk-server/ugk-game/game-galactic-kittens/galactic-kittens-game/Assets/Packages/Nuget/Lib/Grpc.Core.Api.2.65.0/lib/netstandard2.1/Grpc.Core.Api.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.VisualScripting.TextureAssets">
       <HintPath>/Users/jzy/Work/Go/ugk-server/ugk-game/game-galactic-kittens/galactic-kittens-game/Library/PackageCache/com.unity.visualscripting@1.8.0/Editor/VisualScripting.Core/EditorAssetResources/Unity.VisualScripting.TextureAssets.dll</HintPath>
+    </Reference>
+    <Reference Include="Grpc.Net.Common">
+      <HintPath>/Users/jzy/Work/Go/ugk-server/ugk-game/game-galactic-kittens/galactic-kittens-game/Assets/Packages/Nuget/Lib/Grpc.Net.Common.2.65.0/lib/netstandard2.1/Grpc.Net.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Grpc.Core">
+      <HintPath>/Users/jzy/Work/Go/ugk-server/ugk-game/game-galactic-kittens/galactic-kittens-game/Assets/Packages/Nuget/Lib/Grpc.Core.2.46.6/lib/netstandard2.0/Grpc.Core.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.iOS.Extensions.Xcode">
       <HintPath>/Applications/Unity/Hub/Editor/2023.2.20f1c1/Unity.app/Contents/PlaybackEngines/MacStandaloneSupport/UnityEditor.iOS.Extensions.Xcode.dll</HintPath>

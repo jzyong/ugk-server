@@ -4,6 +4,7 @@ using Common.Network;
 using Game.Manager;
 using Google.Protobuf;
 using Grpc.Core;
+using Grpc.Net.Client;
 using kcp2k;
 using UnityEngine;
 using Log = UGK.Common.Tools.Log;
@@ -23,10 +24,10 @@ namespace UGK.Game.Manager
 
 
         //匹配服channel
-        private Channel matchChannel;
+        private GrpcChannel matchChannel;
 
         //大厅服channel
-        private Dictionary<uint, Channel> lobbyChannels = new Dictionary<uint, Channel>(2);
+        private Dictionary<uint, GrpcChannel> lobbyChannels = new Dictionary<uint, GrpcChannel>(2);
 
         public uint ServerId { get; set; }
 
@@ -36,7 +37,7 @@ namespace UGK.Game.Manager
             Log.WriteLevel = Log.LogLevel.Info;
             base.Awake();
             //由于使用了不同的 Assembly ,因此需要手动调用一下加载handler
-             CreateMessageHandlersDictionary();
+            CreateMessageHandlersDictionary();
             Application.targetFrameRate = 30;
             Instance = this;
         }
@@ -105,12 +106,14 @@ namespace UGK.Game.Manager
         /// <summary>
         /// 匹配服grpc连接
         /// </summary>
-        public Channel MatchChannel
+        public GrpcChannel MatchChannel
         {
             get
             {
-                if (matchChannel == null || matchChannel.State == ChannelState.Shutdown ||
-                    matchChannel.State == ChannelState.TransientFailure)
+
+                // if (matchChannel == null || matchChannel.State == ConnectivityState.Shutdown ||
+                //     matchChannel.State == ChannelState.TransientFailure)
+                if (matchChannel == null)
                 {
                     //从命令行获取服务器grpc地址
                     var args = Environment.GetCommandLineArgs();
@@ -128,7 +131,11 @@ namespace UGK.Game.Manager
                     }
 
                     var urlPort = matchGrpcUrl.Split(":");
-                    matchChannel = new Channel(urlPort[0], Int32.Parse(urlPort[1]), ChannelCredentials.Insecure);
+                    // matchChannel = new Channel(urlPort[0], Int32.Parse(urlPort[1]), ChannelCredentials.Insecure);
+                    matchChannel = GrpcChannel.ForAddress($"tcp://{urlPort[0]}:{urlPort[1]}",new GrpcChannelOptions()
+                    {
+                        Credentials = ChannelCredentials.Insecure
+                    });
                     Log.Info($"create match connect {matchGrpcUrl}");
                 }
 
@@ -139,7 +146,7 @@ namespace UGK.Game.Manager
         /// <summary>
         /// 匹配服grpc连接
         /// </summary>
-        public Channel GetLobbyChannel(uint id)
+        public GrpcChannel GetLobbyChannel(uint id)
         {
             lobbyChannels.TryGetValue(id, out var channel);
             return channel;
@@ -158,7 +165,8 @@ namespace UGK.Game.Manager
                 if (serverInfo.Name.Equals("lobby"))
                 {
                     var urlPort = serverInfo.GrpcUrl.Split(":");
-                    var lobbyChannel = new Channel(urlPort[0], Int32.Parse(urlPort[1]), ChannelCredentials.Insecure);
+                    // var lobbyChannel = new Channel(urlPort[0], Int32.Parse(urlPort[1]), ChannelCredentials.Insecure);
+                    var lobbyChannel = GrpcChannel.ForAddress($"http://{urlPort[0]}:urlPort[1]");
                     lobbyChannels.Add(serverInfo.Id, lobbyChannel);
                     Log.Info($"create {serverInfo.Name} connect {serverInfo.GrpcUrl}");
                 }
@@ -192,7 +200,7 @@ namespace UGK.Game.Manager
             }
             StartClient();
         }
-        
+
         /// <summary>
         ///  创建大厅grpc连接
         /// </summary>
@@ -203,7 +211,8 @@ namespace UGK.Game.Manager
             {
                 var serverInfo = info.Value;
                 var urlPort = serverInfo.GrpcUrl.Split(":");
-                var lobbyChannel = new Channel(urlPort[0], Int32.Parse(urlPort[1]), ChannelCredentials.Insecure);
+                // var lobbyChannel = new Channel(urlPort[0], Int32.Parse(urlPort[1]), ChannelCredentials.Insecure);
+                var lobbyChannel = GrpcChannel.ForAddress($"http://{urlPort[0]}:urlPort[1]");
                 lobbyChannels.Add(serverInfo.Id, lobbyChannel);
                 Log.Info($"create {serverInfo.Name} connect {serverInfo.GrpcUrl}");
             }

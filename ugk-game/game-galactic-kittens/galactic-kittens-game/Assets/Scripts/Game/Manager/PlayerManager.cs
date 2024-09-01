@@ -89,18 +89,26 @@ namespace Game.Manager
         /// 请求玩家列表，并初始化网络
         /// <param name="roomId">0 编辑器测试模式，匹配服分配，其他需要正确的id</param>
         /// </summary>
-        public void PlayerListReq(uint roomId=1)
+        public void PlayerListReq(uint roomId = 1)
         {
             var client =
                 new GalacticKittensMatchService.GalacticKittensMatchServiceClient(GalacticKittensNetworkManager
                     .Instance.MatchChannel);
+
+            // TODO 临时测试
+            // var channel = GrpcChannel.ForAddress("http://127.0.0.1:4000", new GrpcChannelOptions()
+            // {
+            //     HttpClient = new SocketsHttpHandler { UseProxy = false, PooledConnectionLifetime = TimeSpan.FromMinutes(5)
+            // });
+            // var client =
+            //     new GalacticKittensMatchService.GalacticKittensMatchServiceClient(channel);
+
             var request = new GalacticKittensPlayerServerListRequest()
             {
-                RoomId =roomId==0?roomId: GalacticKittensNetworkManager.Instance.ServerId
+                RoomId = roomId == 0 ? roomId : GalacticKittensNetworkManager.Instance.ServerId
             };
-            
-            
-            var response = client.playerServerListAsync(request).ResponseAsync.Result;
+
+            var response = client.playerServerList(request);
             Log.Info($"player list :{response}");
             if (response.Result != null && response.Result.Status != 200)
             {

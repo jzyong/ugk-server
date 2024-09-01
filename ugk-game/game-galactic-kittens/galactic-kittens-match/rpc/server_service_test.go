@@ -13,7 +13,7 @@ import (
 // 获取服务器信息
 func TestGetServerInfo(t *testing.T) {
 	dialOption := grpc.WithTransportCredentials(insecure.NewCredentials())
-	conn, err := grpc.Dial("0.0.0.0:4000", dialOption)
+	conn, err := grpc.Dial("127.0.0.1:4000", dialOption)
 	if err != nil {
 		log.Fatalf("%v", err)
 	}
