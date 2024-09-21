@@ -31,7 +31,12 @@ func (m *GRpcManager) Init() error {
 		log.Fatal("%v", err)
 	}
 	log.Info("grpc listen on:%v", config.BaseConfig.RpcUrl)
-	go server.Serve(listen)
+	go func() {
+		err = server.Serve(listen)
+		if err != nil {
+			log.Fatal("grpc err:%v", err)
+		}
+	}()
 	log.Info("GRpcManager:init end......")
 
 	return nil
