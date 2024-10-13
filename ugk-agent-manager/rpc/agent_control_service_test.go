@@ -19,7 +19,9 @@ func TestCreateGameContainer(t *testing.T) {
 	if err != nil {
 		log.Fatalf("%v", err)
 	}
-	defer conn.Close()
+	defer func() {
+		_ = conn.Close()
+	}()
 
 	client := message.NewAgentControlServiceClient(conn)
 
@@ -47,7 +49,9 @@ func TestCloseGameContainer(t *testing.T) {
 	if err != nil {
 		log.Fatalf("%v", err)
 	}
-	defer conn.Close()
+	defer func() {
+		_ = conn.Close()
+	}()
 
 	client := message.NewAgentControlServiceClient(conn)
 
