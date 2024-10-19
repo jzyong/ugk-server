@@ -53,12 +53,12 @@ func (s *BaseController) AjaxTable(list interface{}, cnt int, recordsTotal int, 
 		}
 	}
 	s.Data["json"] = json
-	s.ServeJSON()
+	_ = s.ServeJSON()
 	s.StopRun()
 }
 
 // replayJson 返回json
 func (s *BaseController) replayJson(data any) {
 	s.Data["json"] = data
-	s.ServeJSON()
+	_ = s.ServeJSON()
 }
