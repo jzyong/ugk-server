@@ -96,9 +96,6 @@
 
 * Websocket网络通信
 * 压力测试客户端使用ugk-web开发界面（vue3）
-* 添加聊天、排行、匹配、房间（Mirror）服务
-* 广告、充值接取
-* 使用c#开发导表等图形化工具
 * 服务器unity提取公共包，unity的package
 * ugk-client 弹窗增加tween动画
 * 后台管理系统查看unity docker服务器
