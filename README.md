@@ -30,8 +30,6 @@
 | ugk-agent          | docker中运行的unity服务器的创建与销毁  |
 | ugk-agent-manager  | 管理ugk-agent服务，为玩家房间分配游戏进程 |
 | ugk-api            | HTTP Restful请求接口          |
-| ugk-charge         | 充值                        |
-| ugk-chat           | 聊天                        |
 | ugk-common         | 公共逻辑封装                    |
 | ugk-game           | 游戏微服务                     |
 | ugk-gate           | 网关，消息转换                   |
