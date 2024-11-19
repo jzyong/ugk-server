@@ -37,7 +37,6 @@
 | ugk-login          | 登录、账号                     |
 | ugk-message        | 协议消息                      |
 | ugk-resource       | 文档、脚本                     |
-| ugk-stress-testing | 压力测试客户端集群                 |
 
 ### 游戏
 
