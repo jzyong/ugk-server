@@ -37,8 +37,14 @@ func GetDataManager() *DataManager {
 // Init 开始启动
 func (dataManager *DataManager) Init() error {
 	//1.连接数据库
-	manager.GetMongoManager().StartConfigDB()
-	manager.GetMongoManager().StartProductionDB(config.BaseConfig.MongoUrl)
+	err := manager.GetMongoManager().StartConfigDB()
+	if err != nil {
+		log.Fatal("config MongoDB error:%v", err)
+	}
+	err = manager.GetMongoManager().StartProductionDB(config.BaseConfig.MongoUrl)
+	if err != nil {
+		log.Fatal("production MongoDB error:%v", err)
+	}
 
 	//2. 加载配置
 	dataManager.ReloadConfig(context.Background())
